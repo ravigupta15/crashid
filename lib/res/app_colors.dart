@@ -8,26 +8,31 @@ class AppColors {
   static const accentColor = Color(0xffffd500);
   static const blackColor = Color(0xff000000);
   static const whiteColor = Color(0xffffffff);
+  static const lightGrayColor = Color(0xffDADADA);
+  
+  static const Color redColor = Color(0xffED1C24);
 
-
-    // “On” colors (text/icons on top of backgrounds)
-  static const Color onPrimary = whiteColor;
-  static const Color onSecondary = whiteColor;
-  static const Color onBackground = whiteColor;
-  static const Color onSurface = Color(0xE6FFFFFF); // 90% white
-
-  static const Color bodyMedium = Color(0xB3FFFFFF); // 70% white on dark bg
+// “On” colors (Now Dark for White Backgrounds)
+  static const Color onPrimary = whiteColor;    // Keep white if Primary Button is dark
+  static const Color onSecondary = whiteColor;  // Keep white if Secondary Button is dark
+  static const Color onBackground = blackColor; // Text on the main screen
+  static const Color onSurface = Color(0xDE000000); // 87% Black for primary text
+// Typography Colors
   static const Color titleMedium = onBackground;
-  static const Color labelMedium = Color(0x99FFFFFF); // 60% white
   static const Color headlineMedium = onBackground;
   static const Color displayMedium = onBackground;
-
-  static const Color bodySmall = Color(0x99FFFFFF); // 60% white
-  static const Color titleSmall = Color(0xCCFFFFFF); // 80% white
-  static const Color headlineSmall = onBackground;
-  static const Color labelSmall = Color(0x80FFFFFF); // 50% white
-  static const Color displaySmall = onBackground;
   static const Color headlineLarge = onBackground;
-  static const Color bodyLarge = onSurface;
+  static const Color displaySmall = onBackground;
+  static const Color headlineSmall = onBackground;
+
+  // Medium emphasis text (Body)
+  static const Color bodyLarge = Color(0xDE000000);  // 87% black
+  static const Color bodyMedium = Color(0xBD000000); // 74% black
+  static const Color titleSmall = Color(0xDE000000); // 87% black
+
+  // Low emphasis text (Labels / Captions)
+  static const Color labelMedium = Color(0x99000000); // 60% black
+  static const Color bodySmall = Color(0x99000000);  // 60% black
+  static const Color labelSmall = Color(0x80000000);  // 50% black
 
 }
