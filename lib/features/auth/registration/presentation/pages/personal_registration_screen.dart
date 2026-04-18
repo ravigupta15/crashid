@@ -1,16 +1,15 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/features/auth/registration/presentation/widgets/upload_card_widget.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_checkbox/app_checkbox_widget.dart';
 import 'package:crashid/features/widgets/app_radio_button/app_radio_button.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/l10n/app_localizations.dart';
-import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/empty/empty_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class PersonalRegistrationScreen extends StatefulWidget {
@@ -123,19 +122,19 @@ class _PersonalRegistrationScreenState
               const SizedBox(height: 24),
               Row(
                 children: [
-                  _uploadCard(
+                  UploadCardWidget(title: 
                     AppLocalizations.of(context)!.drivingLicenseFront,
                   ),
                   const SizedBox(width: 16),
-                  _uploadCard(AppLocalizations.of(context)!.drivingLicenseBack),
+                  UploadCardWidget(title: AppLocalizations.of(context)!.drivingLicenseBack),
                 ],
               ),
               const SizedBox(height: 24),
               Row(
                 children: [
-                  _uploadCard(AppLocalizations.of(context)!.idDocumentFront),
+                  UploadCardWidget(title: AppLocalizations.of(context)!.idDocumentFront),
                   const SizedBox(width: 16),
-                  _uploadCard(AppLocalizations.of(context)!.idDocumentBack),
+                  UploadCardWidget(title: AppLocalizations.of(context)!.idDocumentBack),
                 ],
               ),
               const SizedBox(height: 24),
@@ -227,43 +226,6 @@ class _PersonalRegistrationScreenState
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _uploadCard(String title) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: context.bodyMedium.copyWith(
-              color: AppColors.darkGrayColor.withValues(alpha: .6),
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 10),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              height: 92,
-              decoration: BoxDecoration(
-                color: AppColors.whiteColor,
-                borderRadius: BorderRadius.circular(40),
-                border: Border.all(color: AppColors.lightGrayColor),
-              ),
-              child: Center(
-                child: Image.asset(
-                  AppAssetPaths.uploadIcon,
-                  height: 38,
-                  width: 50,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

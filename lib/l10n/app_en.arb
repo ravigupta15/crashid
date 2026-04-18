@@ -50,5 +50,7 @@
   "privacyPolicyAcceptance" : "Privacy Policy Acceptance",
   "register" : "Register",
   "alreadyHaveAccount" : "Already Have an Account?",
-  "logIn" : "Log In"
+  "logIn" : "Log In",
+  "addCarTitle" : "Add Car",
+  "myCarsTitle" : "My Cars"
 }

@@ -27,4 +27,10 @@ class AppAssetPaths {
   static const sosIcon = "assets/icons/sos_ic.png";
   static const myInsuranceIcon = "assets/icons/my_insurance_ic.png";
   static const myCarIcon = "assets/icons/my_car_ic.png";
+  static const roundStrokeIcon = "assets/icons/round_stroke_ic.png";
+
+  static const horizontalLineImg = "assets/images/horizontal_line.png";
+  static const dummyCarImg = "assets/images/dummy_car (2).png";
+  /// Profile / document placeholders (`assets/images/dummy_image.png`).
+  static const dummyImage = "assets/images/dummy_image.png";
 }

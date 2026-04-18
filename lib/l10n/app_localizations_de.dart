@@ -172,4 +172,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get logIn => 'Log In';
+
+  @override
+  String get addCarTitle => 'Add Car';
+
+  @override
+  String get myCarsTitle => 'My Cars';
 }

@@ -36,7 +36,7 @@ class AppTextButton extends StatelessWidget {
     return TextButton(
         style: TextButton.styleFrom(
           padding: padding ?? buttonPadding,
-          shape: buttonShape,
+          shape: buttonShape(40),
         ),
         onPressed: onPressed,
         child: child);

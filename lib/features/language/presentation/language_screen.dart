@@ -75,7 +75,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               iconPath: AppAssetPaths.englishIcon,
             ),
             const Spacer(),
-            AppElevatedButton.withTitle(title: AppLocalizations.of( context)!.continueTitle, onPressed: _openOnboardingScreen)
+            AppElevatedButton.withTitle(title: AppLocalizations.of( context)!.continueTitle, onPressed: _openMyCarScreen)
               ],
         ),
       ),
@@ -141,5 +141,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
 void _openOnboardingScreen() {
     context.push(AppRoutesPath.onboardingScreen);
+  }
+  
+void _openMyCarScreen() {
+    context.push(AppRoutesPath.emergencyScreen);
   }
 }

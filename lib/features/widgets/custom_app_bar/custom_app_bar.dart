@@ -40,21 +40,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             onTap: onPressed ?? () => Navigator.pop(context),
             child: Padding(
               padding: const EdgeInsets.only(left: 20),
-              child: Row(
-                children: [
-                  Icon(
+              child:  Icon(
                     Icons.arrow_back_ios,
                     color: AppColors.blackColor,
                     size: 20,
-                  ),
-                  Text(
-                    'Back',
-                    style: context.titleMedium.copyWith(
-                      fontSize: 19,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
+                  
               ),
             ),
           ),

@@ -409,6 +409,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log In'**
   String get logIn;
+
+  /// No description provided for @addCarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Car'**
+  String get addCarTitle;
+
+  /// No description provided for @myCarsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Cars'**
+  String get myCarsTitle;
 }
 
 class _AppLocalizationsDelegate

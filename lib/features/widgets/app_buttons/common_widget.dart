@@ -37,8 +37,8 @@ Widget labelIconWidget(String title, Widget icon, Color? color, bool iconFirst,
   );
 }
 
-RoundedRectangleBorder buttonShape = RoundedRectangleBorder(
-  borderRadius: BorderRadius.circular(40),
+RoundedRectangleBorder buttonShape(double? borderRadius) => RoundedRectangleBorder(
+  borderRadius: BorderRadius.circular(borderRadius ?? 40),
 );
 EdgeInsets buttonPadding =
     const EdgeInsets.symmetric(horizontal: 15, vertical: 12);

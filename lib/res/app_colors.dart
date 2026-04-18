@@ -1,4 +1,4 @@
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 
 class AppColors {
   AppColors._();
@@ -9,7 +9,19 @@ class AppColors {
   static const blackColor = Color(0xff000000);
   static const whiteColor = Color(0xffffffff);
   static const lightGrayColor = Color(0xffDADADA);
-  
+
+  /// Off-white scaffold behind elevated cards (e.g. car detail).
+  static const Color screenBackground = Color(0xFFF5F5F5);
+
+  /// Cool grey scaffold for list-style screens (e.g. my insurance).
+  static const Color screenBackgroundCool = Color(0xFFF5F6F8);
+
+  /// Muted blue-grey for insurance labels, policy ids, and secondary lines.
+  static const Color insuranceMutedText = Color(0xFF5A7C9A);
+
+  /// Soft fill behind PDF / document icon tiles (~10% opacity, blue `0x003FB1`).
+  static const Color documentIconBackground = Color(0x1A003FB1);
+
   static const Color redColor = Color(0xffED1C24);
 
 // “On” colors (Now Dark for White Backgrounds)

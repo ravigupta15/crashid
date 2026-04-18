@@ -33,6 +33,7 @@ class AppElevatedButton extends StatelessWidget {
     double? width,
     Color? borderColor,
     double? fontSize,
+    double? borderRadius,
     FontWeight? fontWeight,
   }) {
     return AppElevatedButton(
@@ -41,6 +42,7 @@ class AppElevatedButton extends StatelessWidget {
       color: color,
       width: width,
       borderColor: borderColor,
+      borderRadius: borderRadius,
       label: labelTextWidget(
         title,
         textColor ?? AppColors.accentColor,
@@ -59,6 +61,8 @@ class AppElevatedButton extends StatelessWidget {
     MainAxisAlignment? mainAxisAlignment,
     bool iconFirst = true,
     EdgeInsets? padding,
+    double? borderRadius,
+    double? width,
     required Widget icon,
     required String title,
   }) {
@@ -66,8 +70,10 @@ class AppElevatedButton extends StatelessWidget {
         key: key,
         onPressed: onPressed,
         padding: padding,
-        color: color,
-        label: labelIconWidget(title, icon, textColor, iconFirst,
+        color: color ,
+        width: width,
+        borderRadius: borderRadius,
+        label: labelIconWidget(title, icon, textColor ?? AppColors.accentColor, iconFirst,
             mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center));
   }
 
@@ -90,7 +96,7 @@ class AppElevatedButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           elevation: 0,
           padding: padding ?? buttonPadding,
-          shape: shape ?? buttonShape,
+          shape: shape ?? buttonShape(borderRadius),
           backgroundColor: color ?? AppColors.primaryColor,
         ),
         onPressed: onPressed,
