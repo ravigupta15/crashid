@@ -24,6 +24,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       scrolledUnderElevation: 0.0,
       leadingWidth: leadingWidget != null ? null : 90,
+      centerTitle: true,
       title:
           titleWidget ??
           Text(
@@ -38,14 +39,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: onPressed ?? () => Navigator.pop(context),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child:  Icon(
-                    Icons.arrow_back_ios,
-                    color: AppColors.blackColor,
-                    size: 20,
-                  
-              ),
+            child: Icon(
+                  Icons.arrow_back_ios,
+                  color: AppColors.blackColor,
+                  size: 20,
+                
             ),
           ),
       actions: actions,

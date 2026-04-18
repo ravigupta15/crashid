@@ -50,6 +50,7 @@ class _MyCarsScreenState extends State<MyCarsScreen> {
             icon: Icon(Icons.add, color: AppColors.accentColor,),
              title: AppLocalizations.of(context)!.addCarTitle, 
              width: 120,
+             height: 48,
              borderRadius: 12,
              onPressed: (){},), ),
              const SizedBox(height: 2,),

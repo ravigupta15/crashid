@@ -1,14 +1,13 @@
-import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
 /// Two side-by-side document previews with FRONT / BACK corner labels.
 class ProfileDocumentPair extends StatelessWidget {
-  final String assetPath;
+  final String? assetPath;
 
   const ProfileDocumentPair({
     super.key,
-    this.assetPath = AppAssetPaths.dummyImage,
+    this.assetPath,
   });
 
   @override
@@ -18,14 +17,14 @@ class ProfileDocumentPair extends StatelessWidget {
         Expanded(
           child: _DocumentThumb(
             label: 'FRONT',
-            assetPath: assetPath,
+            assetPath: assetPath ?? '',
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: _DocumentThumb(
             label: 'BACK',
-            assetPath: assetPath,
+            assetPath: assetPath ?? '',
           ),
         ),
       ],

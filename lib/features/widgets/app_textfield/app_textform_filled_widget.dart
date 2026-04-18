@@ -38,6 +38,7 @@ class AppTextFormField extends StatefulWidget {
   final Function()? onTap;
   final bool? isUnderlineBorder;
   final Color? textColor;
+  final double? borderRadius;
 
   AppTextFormField({
     super.key,
@@ -74,6 +75,7 @@ class AppTextFormField extends StatefulWidget {
     this.onTap,
     this.isUnderlineBorder,
     this.textColor,
+    this.borderRadius,
   }) : assert(initialValue == null || controller == null);
 
   @override
@@ -199,29 +201,29 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   }
 
   OutlineInputBorder get textFormFieldErrorBorder => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
+    borderRadius: BorderRadius.circular(widget.borderRadius ?? 40),
     borderSide: BorderSide(color: AppColors.lightGrayColor),
   );
 
   OutlineInputBorder get textFormFieldFocusBorder => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
+    borderRadius: BorderRadius.circular(widget.borderRadius ?? 40),
     borderSide: BorderSide(color: AppColors.primaryColor),
   );
 
   OutlineInputBorder get textFormFieldFocusErrorBorder => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
+    borderRadius: BorderRadius.circular(widget.borderRadius ?? 40),
     borderSide: BorderSide(color: AppColors.redColor),
   );
 
   OutlineInputBorder get textFormFieldEnabledBorder => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
+    borderRadius: BorderRadius.circular(widget.borderRadius ?? 40),
     borderSide: BorderSide(
       color: widget.enableBorderColor ?? AppColors.lightGrayColor,
     ),
   );
 
   OutlineInputBorder get textFormFieldDisabledBorder => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(40),
+    borderRadius: BorderRadius.circular(widget.borderRadius ?? 40),
     borderSide: BorderSide(
       color: widget.enableBorderColor ?? AppColors.lightGrayColor,
     ),

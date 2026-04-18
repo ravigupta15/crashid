@@ -45,7 +45,7 @@ class MyCarCardWidget extends StatelessWidget {
             child: SizedBox(
               height: 180,
               child: Image.asset(
-                AppAssetPaths.dummyCarImg,
+                "assets/images/dummy_car (2).png",
                 fit: BoxFit.cover,
               ),
             ),

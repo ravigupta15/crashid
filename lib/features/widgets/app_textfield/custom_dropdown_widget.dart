@@ -53,7 +53,8 @@ class CustomDropDownFormFiledWidget extends StatelessWidget {
   final double? dropdownMaxHeight;
   final FocusNode? focusNode;
   final Widget? prefixIcon;
-  final Widget? helperWidget;
+  final Widget? helperWidget; 
+  final double? borderRadius;
   final Widget Function(CustomDropDownItem item)? selectedItemBuilder;
 
   CustomDropDownFormFiledWidget({
@@ -79,6 +80,7 @@ class CustomDropDownFormFiledWidget extends StatelessWidget {
     this.helperWidget,
     this.selectedItemBuilder,
     this.showOptional = false,
+    this.borderRadius
   });
 
   @override
@@ -183,29 +185,29 @@ class CustomDropDownFormFiledWidget extends StatelessWidget {
   }
 
   OutlineInputBorder get textFormFieldErrorBorder => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: BorderRadius.circular(borderRadius ??40),
         borderSide: const BorderSide(color: AppColors.redColor),
       );
 
   OutlineInputBorder get textFormFieldFocusBorder => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: BorderRadius.circular(borderRadius ?? 40),
         borderSide:  BorderSide(color: AppColors.primaryColor),
       );
 
   OutlineInputBorder get textFormFieldFocusErrorBorder => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: BorderRadius.circular(borderRadius ??40),
         borderSide: const BorderSide(color: AppColors.redColor),
       );
 
   OutlineInputBorder get textFormFieldEnabledBorder => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: BorderRadius.circular(borderRadius ??40),
         borderSide: BorderSide(
           color: enableBorderColor ?? AppColors.lightGrayColor,
         ),
       );
 
   OutlineInputBorder get textFormFieldDisabledBorder => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: BorderRadius.circular(borderRadius ?? 40),
         borderSide: BorderSide(
           color: enableBorderColor ?? AppColors.lightGrayColor,
         ),

@@ -144,6 +144,6 @@ void _openOnboardingScreen() {
   }
   
 void _openMyCarScreen() {
-    context.push(AppRoutesPath.emergencyScreen);
+    context.push(AppRoutesPath.addAccidentScreen);
   }
 }

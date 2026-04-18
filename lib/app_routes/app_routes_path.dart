@@ -17,4 +17,6 @@ class AppRoutesPath {
   static const myInsuranceScreen = "/myInsuranceScreen";
   static const profileScreen = "/profileScreen";
   static const emergencyScreen = "/emergencyScreen";
+  static const appNavigationScreen = "/appNavigationScreen";
+  static const notificationScreen = "/notificationScreen";
 }

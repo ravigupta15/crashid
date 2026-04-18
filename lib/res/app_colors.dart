@@ -18,12 +18,13 @@ class AppColors {
 
   /// Muted blue-grey for insurance labels, policy ids, and secondary lines.
   static const Color insuranceMutedText = Color(0xFF5A7C9A);
-
-  /// Soft fill behind PDF / document icon tiles (~10% opacity, blue `0x003FB1`).
+  
   static const Color documentIconBackground = Color(0x1A003FB1);
 
   static const Color redColor = Color(0xffED1C24);
-
+  static const Color aliceBlueColor = Color(0xffDFE9FA);
+  static const Color iceColor = Color(0xffF4F4FA);
+  static const Color crimsonRedColor = Color(0xffBA1A1A);
 // “On” colors (Now Dark for White Backgrounds)
   static const Color onPrimary = whiteColor;    // Keep white if Primary Button is dark
   static const Color onSecondary = whiteColor;  // Keep white if Secondary Button is dark

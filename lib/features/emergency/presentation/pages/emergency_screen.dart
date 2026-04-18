@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class EmergencyScreen extends StatefulWidget {
+  
   static void open(BuildContext context) {
     context.push(AppRoutesPath.emergencyScreen);
   }
@@ -62,41 +63,49 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
   Widget _screenContent() {
     return ColoredBox(
       color: AppColors.screenBackground,
-      child: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
-        children: [
-          Align(
-            alignment: Alignment.centerRight,
-            child: AppElevatedButton.withTitleAndIcon(
-                        icon: Icon(Icons.add, color: AppColors.whiteColor,),
-                         title: "Add New", 
-                         width: 120,
-                         textColor: AppColors.whiteColor,
-                         onPressed: (){},),
-          ),
-                        Text(
-              'Trusted Friends',
-              style: context.titleMedium.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                    color: AppColors.blackColor,
-                  ),
+      child: Padding( padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+       
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: AppElevatedButton.withTitleAndIcon(
+                          icon: Icon(Icons.add, color: AppColors.whiteColor,),
+                           title: "Add New", 
+                           width: 120,
+                           height: 48,
+                           textColor: AppColors.whiteColor,
+                           onPressed: (){},),
             ),
-          const SizedBox(height: 20),
-          ..._friends.map(
-            (f) => Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: TrustedFriendCardWidget(
-                name: f.name,
-                email: f.email,
-                plateNumber: f.plateNumber,
-                badgeLabel: f.badgeLabel,
-                initial: f.initial,
-                onDetails: () {},
+                          Text(
+                'Trusted Friends',
+                style: context.titleMedium.copyWith(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      color: AppColors.blackColor,
+                    ),
               ),
-            ),
-          ),
-        ],
+            Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context,sb) => const SizedBox(height: 24,),
+                itemCount: _friends.length,
+                padding: EdgeInsets.only(top: 20, bottom: 30),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  var f = _friends[index];
+                return TrustedFriendCardWidget(
+                  name: f.name,
+                  email: f.email,
+                  plateNumber: f.plateNumber,
+                  badgeLabel: f.badgeLabel,
+                  initial: f.initial,
+                  onDetails: () {},
+                );
+              }),
+            )
+          ],
+        ),
       ),
     );
   }

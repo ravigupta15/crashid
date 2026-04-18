@@ -40,135 +40,100 @@ class TrustedFriendCardWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _Avatar(initial: initial),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                  color: AppColors.blackColor,
-                                ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 5,
-                          ),
-                          decoration: BoxDecoration(
-                            color:
-                                AppColors.primaryColor.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Text(
-                            badgeLabel.toUpperCase(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 0.4,
-                                  color: AppColors.primaryColor,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 2),
-                          child: Icon(
-                            Icons.mail_outline_rounded,
-                            size: 16,
-                            color: AppColors.labelMedium,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            email,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                                  fontSize: 13,
-                                  color: AppColors.labelMedium,
-                                  height: 1.35,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+              Container(
+                height: 23,
+                width: 67,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppColors.aliceBlueColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  badgeLabel.toUpperCase(),
+                  style: context.labelSmall.copyWith(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.primaryColor,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
+          Text(
+            name,
+            style: context.titleMedium.copyWith(
+              fontWeight: FontWeight.w700,
+              fontSize: 24,
+              color: Color(0xff121C28),
+            ),
+          ),
+          const SizedBox(height: 3),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.mail_outline_rounded,
+                size: 16,
+                color: Color(0xff434654),
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  email,
+                  style: context.bodySmall.copyWith(
+                    fontSize: 14,
+                    color: Color(0xff434654),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 25),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             decoration: BoxDecoration(
-              color: AppColors.primaryColor.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
+              color: Color(0xffEEF4FF),
+              borderRadius: BorderRadius.circular(16),
             ),
             child: Row(
               children: [
                 Text(
                   'PLATE NUMBER',
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.3,
-                        color: AppColors.labelMedium,
-                      ),
+                  style: context.bodyMedium.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff737686),
+                  ),
                 ),
                 const Spacer(),
                 Text(
                   plateNumber,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 15,
-                        color: AppColors.primaryColor,
-                      ),
+                  style: context.titleSmall.copyWith(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                    color: AppColors.primaryColor,
+                  ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 14),
-          SizedBox(
+          const SizedBox(height: 30),
+          AppElevatedButton.withTitle(
+            title: 'Details',
+            onPressed: onDetails,
+            color: AppColors.aliceBlueColor,
+            textColor: Color(0xff434654),
+            fontWeight: FontWeight.w500,
+            fontSize: 14,
+            isBoxShadow: false,
             width: double.infinity,
-            child: AppElevatedButton.withTitle(
-              title: 'Details',
-              onPressed: onDetails,
-              color: AppColors.primaryColor.withValues(alpha: 0.12),
-              textColor: AppColors.primaryColor,
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
-              width: double.infinity,
-              borderRadius: 28,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            ),
           ),
         ],
       ),
@@ -187,16 +152,24 @@ class _Avatar extends StatelessWidget {
       width: 52,
       height: 52,
       decoration: BoxDecoration(
-        color: AppColors.whiteColor.withValues(alpha: 0.65),
+        color: AppColors.darkGrayColor.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 2),
+            blurRadius: 4,
+            color: AppColors.blackColor.withValues(alpha: .05),
+          ),
+        ],
       ),
       alignment: Alignment.center,
       child: Text(
         initial,
         style: context.headlineSmall.copyWith(
-              fontWeight: FontWeight.w700,
-              color: AppColors.darkGrayColor,
-            ),
+          fontWeight: FontWeight.w700,
+          fontSize: 35,
+          color: AppColors.darkGrayColor,
+        ),
       ),
     );
   }

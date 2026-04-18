@@ -9,12 +9,13 @@ import 'package:crashid/features/auth/registration/presentation/pages/personal_r
 import 'package:crashid/features/auth/reset_password/presentation/pages/reset_password_screen.dart';
 import 'package:crashid/features/auth/signin/presentation/pages/signin_screen.dart';
 import 'package:crashid/features/emergency/presentation/pages/emergency_screen.dart';
-import 'package:crashid/features/home/presentation/pages/home_screen.dart';
+import 'package:crashid/features/app_navigation/presentation/pages/app_navigation_screen.dart';
 import 'package:crashid/features/language/presentation/language_screen.dart';
 import 'package:crashid/features/my_cars/presentation/pages/add_car_screen.dart';
 import 'package:crashid/features/my_cars/presentation/pages/car_details_screen.dart';
 import 'package:crashid/features/my_cars/presentation/pages/my_cars_screen.dart';
 import 'package:crashid/features/my_insurance/presentation/pages/my_insurance_screen.dart';
+import 'package:crashid/features/notification/presentation/pages/notification_screen.dart';
 import 'package:crashid/features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
 import 'package:crashid/features/splash_screen/presentation/splash_screen.dart';
@@ -78,7 +79,7 @@ class AppRouter {
       
       GoRoute(
         path: AppRoutesPath.homeScreen,
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) => const AppNavigationScreen(),
       ),
       GoRoute(
         path: AppRoutesPath.myCarsScreen,
@@ -108,6 +109,14 @@ class AppRouter {
       GoRoute(
         path: AppRoutesPath.emergencyScreen,
         builder: (context, state) => const EmergencyScreen(),
+      ),
+      GoRoute(
+        path: AppRoutesPath.appNavigationScreen,
+        builder: (context, state) => const AppNavigationScreen(),
+      ),
+      GoRoute(
+        path: AppRoutesPath.notificationScreen,
+        builder: (context, state) => const NotificationScreen(),
       ),
       // GoRoute(
       //   path: OtpVerifyScreen.routeName,

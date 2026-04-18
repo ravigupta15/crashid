@@ -30,7 +30,15 @@ class AppAssetPaths {
   static const roundStrokeIcon = "assets/icons/round_stroke_ic.png";
 
   static const horizontalLineImg = "assets/images/horizontal_line.png";
-  static const dummyCarImg = "assets/images/dummy_car (2).png";
-  /// Profile / document placeholders (`assets/images/dummy_image.png`).
-  static const dummyImage = "assets/images/dummy_image.png";
+
+  static const drawerIcon = "assets/icons/drawer_ic.png";
+  static const logoCarImg = "assets/images/logo_car_img.png";
+  static const homeIcon  = "assets/icons/home_ic.png";
+  static const caseFileIcon = "assets/icons/case_file_ic.png";
+  static const userIcon = "assets/icons/user_ic.png";
+  static const graySosIcon = "assets/icons/gray_sos_ic.png";
+  static const accidentRequestIcon = "assets/icons/accident_request_ic.png";
+  static const emergencyRequestIcon = "assets/icons/emergency_request_ic.png";
+  static const witnessRequestIcon = "assets/icons/witness_request_ic.png";
+  static const runIcon = "assets/icons/run_ic.png";
 }
