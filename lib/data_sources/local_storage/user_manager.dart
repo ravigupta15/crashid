@@ -1,0 +1,39 @@
+import 'package:crashid/data_sources/local_storage/share_preference_keys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class UserManager {
+  late final SharedPreferences _sharedPrefs;
+
+  // Call this once during app startup
+  Future<void> init() async {
+    _sharedPrefs = await SharedPreferences.getInstance();
+  }
+
+  bool get isFirstTime =>
+      _sharedPrefs.getBool(SharePreferenceKeys.IS_FIRST_TIME.name) ?? true;
+  set setFirstTime(bool value) =>
+      _sharedPrefs.setBool(SharePreferenceKeys.IS_FIRST_TIME.name, value);
+
+  bool get isRememberMe =>
+      _sharedPrefs.getBool(SharePreferenceKeys.IS_REMEMBER_ME.name) ?? false;
+  set setIsRememberMe(bool value) =>
+      _sharedPrefs.setBool(SharePreferenceKeys.IS_REMEMBER_ME.name, value);
+
+  String get email =>
+      _sharedPrefs.getString(SharePreferenceKeys.EMAIL.name) ?? '';
+  set setEmail(String value) =>
+      _sharedPrefs.setString(SharePreferenceKeys.EMAIL.name, value);
+
+  String get password =>
+      _sharedPrefs.getString(SharePreferenceKeys.PASSWORD.name) ?? '';
+  set setPassword(String value) =>
+      _sharedPrefs.setString(SharePreferenceKeys.PASSWORD.name, value);
+  String get fcmToken =>
+      _sharedPrefs.getString(SharePreferenceKeys.FCM_TOKEN.name) ?? '';
+  set setFcmToken(String value) =>
+      _sharedPrefs.setString(SharePreferenceKeys.FCM_TOKEN.name, value);
+
+  void clearValues() {
+    _sharedPrefs.clear();
+  }
+}

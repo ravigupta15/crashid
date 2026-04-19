@@ -3,14 +3,21 @@ import 'package:crashid/core/lookup/language_provider.dart';
 import 'package:crashid/core/theme/app_theme.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async{
+   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => LanguageProvider())],
-      child: const MyApp(),
+      child: ProviderScope(child: const MyApp()),
     ),
   );
 }
