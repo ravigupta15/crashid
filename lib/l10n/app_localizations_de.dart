@@ -9,10 +9,10 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
-  String get english => 'English';
+  String get english => 'Englisch';
 
   @override
-  String get german => 'German';
+  String get german => 'Deutsch';
 
   @override
   String get continueTitle => 'Continue';

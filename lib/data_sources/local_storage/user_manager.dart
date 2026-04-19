@@ -19,6 +19,12 @@ class UserManager {
   set setIsRememberMe(bool value) =>
       _sharedPrefs.setBool(SharePreferenceKeys.IS_REMEMBER_ME.name, value);
 
+  String get language =>
+      _sharedPrefs.getString(SharePreferenceKeys.LANGUAGE.name) ?? '';
+  set setLanguage(String value) =>
+      _sharedPrefs.setString(SharePreferenceKeys.LANGUAGE.name, value);
+
+
   String get email =>
       _sharedPrefs.getString(SharePreferenceKeys.EMAIL.name) ?? '';
   set setEmail(String value) =>

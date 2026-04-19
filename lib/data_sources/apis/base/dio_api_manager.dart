@@ -13,7 +13,6 @@ import 'package:get_it/get_it.dart';
 
 class DioApiManager {
   DioApiManager();
-
   final _performanceInterceptor = DioFirebasePerformanceInterceptor();
 
   Dio get dio =>

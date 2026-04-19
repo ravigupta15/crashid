@@ -1,9 +1,9 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
-import 'package:crashid/features/app_navigation/presentation/pages/app_navigation_screen.dart';
 import 'package:crashid/features/auth/forget_password/presentation/pages/forget_password_screen.dart';
 import 'package:crashid/features/auth/registration/presentation/pages/choose_account_type_screen.dart';
 import 'package:crashid/features/auth/signin/model/sign_in_model.dart';
+import 'package:crashid/features/auth/signin/provider/singin_notifier.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_checkbox/app_checkbox_widget.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
@@ -14,9 +14,10 @@ import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class SigninScreen extends StatefulWidget {
+class SigninScreen extends ConsumerStatefulWidget {
   static void open(BuildContext context) {
     context.push(AppRoutesPath.signinScreen);
   }
@@ -28,10 +29,10 @@ class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
 
   @override
-  State<SigninScreen> createState() => _SigninScreenState();
+  ConsumerState<SigninScreen> createState() => _SigninScreenState();
 }
 
-class _SigninScreenState extends State<SigninScreen> with AppValidation {
+class _SigninScreenState extends ConsumerState<SigninScreen> with AppValidation {
   final _formKey = GlobalKey<FormState>();
 
   SignInSendModel? sendModel;
@@ -44,6 +45,18 @@ class _SigninScreenState extends State<SigninScreen> with AppValidation {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(signinNotifierProvider, (previous, next) {
+      next.whenOrNull(
+        error: (error, _) {
+          showFeedbackMessage(
+            error.toString(),
+            context: context,
+            feedbackStyle: FeedbackStyle.snackBar,
+            snackBarBgColor: AppColors.redColor,
+          );
+        },
+      );
+    });
     return Scaffold(body: _screenContent());
   }
 
@@ -230,20 +243,22 @@ class _SigninScreenState extends State<SigninScreen> with AppValidation {
     sendModel?.password = value;
   }
 
-  void _submitSignIn() {
+  Future<void> _submitSignIn() async {
     FocusScope.of(context).unfocus();
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      if (!(sendModel?.acceptTerms ?? false)) {
-        showFeedbackMessage(
-          'Please accept the terms & conditions and the privacy policy.',
-          context: context,
-          feedbackStyle: FeedbackStyle.snackBar,
-          snackBarBgColor: AppColors.redColor,
-        );
-        return;
-      }
+    if (!_formKey.currentState!.validate()) return;
+    _formKey.currentState!.save();
+    if (!(sendModel?.acceptTerms ?? false)) {
+      showFeedbackMessage(
+        'Please accept the terms & conditions and the privacy policy.',
+        context: context,
+        feedbackStyle: FeedbackStyle.snackBar,
+        snackBarBgColor: AppColors.redColor,
+      );
+      return;
     }
+    final model = sendModel;
+    if (model == null) return;
+    await ref.read(signinNotifierProvider.notifier).login(context, model);
   }
 
   void _openForgetPasswordScreen() {
@@ -254,7 +269,4 @@ class _SigninScreenState extends State<SigninScreen> with AppValidation {
     ChooseAccountTypeScreen.open(context);
   }
 
-  void _openAppNavigationScreen() {
-    AppNavigationScreen.open(context);
-  }
 }

@@ -1,10 +1,13 @@
 import 'package:crashid/app_routes/app_routes.dart';
 import 'package:crashid/core/lookup/language_provider.dart';
 import 'package:crashid/core/theme/app_theme.dart';
+import 'package:crashid/data_sources/local_storage/user_manager.dart';
+import 'package:crashid/di/service_locator.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
+import 'package:get_it/get_it.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +17,8 @@ void main() async{
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await ServiceLocator.init();
+  
   runApp(
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => LanguageProvider())],
@@ -28,6 +33,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LanguageProvider>(context);
+    String language = GetIt.I<UserManager>().language == "de" ? "de" : 'en';
+    provider.setLocale(Locale(language));
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
@@ -50,7 +57,10 @@ class MyApp extends StatelessWidget {
           theme: AppTheme.light,
           routerConfig: AppRouter.router,
           builder: (context, child) {
-            return LoaderOverlay(child: child!, overlayWholeScreen: false);
+            return LoaderOverlay(
+              overlayWholeScreen: false,
+              child: child!,
+            );
           },
         ),
       ),

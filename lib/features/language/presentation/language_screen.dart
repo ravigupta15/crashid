@@ -1,14 +1,18 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
+import 'package:crashid/core/lookup/language_provider.dart';
+import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/data_sources/local_storage/user_manager.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_radio_button/app_radio_button.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
-import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/utils/empty/empty_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class LanguageScreen extends StatefulWidget {
   static const kRoute = "/kRoute";
@@ -29,8 +33,20 @@ class LanguageScreen extends StatefulWidget {
 }
 
 class _LanguageScreenState extends State<LanguageScreen> {
+
   int _selectedLanguageIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final current = Provider.of<LanguageProvider>(context, listen: false).locale;
+      setState(() {
+        _selectedLanguageIndex = current.languageCode == 'de' ? 0 : 1;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,17 +167,23 @@ class _LanguageScreenState extends State<LanguageScreen> {
   // Helper Methods
   // -----------------------------------------------------------------------------
 
- void _onLanguageChanged(int index) {
-    setState(() {
-      _selectedLanguageIndex = index;
-    });
+  void _onLanguageChanged(int index) {
+    setState(() => _selectedLanguageIndex = index);
   }
 
-void _openOnboardingScreen() {
+  void _openOnboardingScreen() {
+    _applySelectedLocale();
     context.push(AppRoutesPath.onboardingScreen);
   }
-  
+
   void _onPop() {
+    _applySelectedLocale();
     context.pop();
+  }
+
+  void _applySelectedLocale() {
+    final locale = _selectedLanguageIndex == 0 ? const Locale('de') : const Locale('en');
+    Provider.of<LanguageProvider>(context, listen: false).setLocale(locale);
+    GetIt.I<UserManager>().setLanguage = _selectedLanguageIndex == 0 ? "de" : "en";
   }
 }

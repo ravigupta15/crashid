@@ -1,4 +1,5 @@
 {
       
-      "helloWorld":"helloworkd"
+      "english" : "Englisch",
+      "german" : "Deutsch"
 }
