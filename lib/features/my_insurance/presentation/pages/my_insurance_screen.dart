@@ -40,15 +40,7 @@ class _MyInsuranceScreenState extends State<MyInsuranceScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: "My Insurance",
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Icon(
-              Icons.notifications,
-              color: AppColors.primaryColor,
-            ),
-          )
-        ],
+        
       ),
       body: _screenContent(),
     );

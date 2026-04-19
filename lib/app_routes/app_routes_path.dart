@@ -9,6 +9,7 @@ class AppRoutesPath {
   static const resetPasswordScreen = "/resetPasswordScreen";
   static const chooseAccountTypeScreen = "/chooseAccountTypeScreen";
   static const personalRegisterScreen = "/personalRegisterScreen";
+  static const companyRegistrationScreen = "/companyRegistrationScreen";
   static const homeScreen = "/homeScreen";
   static const myCarsScreen = "/myCarsScreen";
   static const addCarScreen = "/addCarScreen";
@@ -19,4 +20,7 @@ class AppRoutesPath {
   static const emergencyScreen = "/emergencyScreen";
   static const appNavigationScreen = "/appNavigationScreen";
   static const notificationScreen = "/notificationScreen";
+  static const otherAccidentScreen = "/otherAccidentScreen";
+  static const caseHistoryScreen = "/caseHistoryScreen";
+  static const editProfileScreen = "/editProfileScreen";
 }

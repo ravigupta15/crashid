@@ -1,5 +1,6 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/features/app_navigation/presentation/pages/app_navigation_screen.dart';
 import 'package:crashid/features/auth/forget_password/presentation/pages/forget_password_screen.dart';
 import 'package:crashid/features/auth/registration/presentation/pages/choose_account_type_screen.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
@@ -89,7 +90,7 @@ class _SigninScreenState extends State<SigninScreen> {
             ],
           ),
           const SizedBox(height: 33,),
-          AppElevatedButton.withTitle(title: "Sign In", onPressed: (){},),
+          AppElevatedButton.withTitle(title: "Sign In", onPressed: _openAppNavigationScreen,),
           const SizedBox(height: 20,),
     _cotinueWithWidget(),
     const SizedBox(height: 18,),
@@ -176,5 +177,9 @@ class _SigninScreenState extends State<SigninScreen> {
 
  void _openChooseAccountTypeScreen() {
   ChooseAccountTypeScreen.open(context);
+ }
+
+ void _openAppNavigationScreen() {
+  AppNavigationScreen.open(context);
  }
 }

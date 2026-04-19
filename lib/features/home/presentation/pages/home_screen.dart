@@ -1,6 +1,10 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/features/add_accident/presentation/pages/add_accident_screen.dart';
+import 'package:crashid/features/emergency/presentation/pages/emergency_screen.dart';
 import 'package:crashid/features/home/presentation/widgets/home_action_widget.dart';
+import 'package:crashid/features/my_cars/presentation/pages/my_cars_screen.dart';
+import 'package:crashid/features/my_insurance/presentation/pages/my_insurance_screen.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +64,7 @@ Widget _actionGridWidget() {
                 child: HomeActionWidget(
                   iconAsset: AppAssetPaths.crashedCarIcon,
                   label: 'ADD ACCIDENT',
-                  onTap: () => context.push(AppRoutesPath.addAccidentScreen),
+                  onTap: _openAddAccidentScreen,
                 ),
               ),
               const SizedBox(width: 16),
@@ -68,7 +72,7 @@ Widget _actionGridWidget() {
                 child: HomeActionWidget(
                   iconAsset: AppAssetPaths.myCarIcon,
                   label: 'MY CAR',
-                  onTap: () => context.push(AppRoutesPath.myCarsScreen),
+                  onTap: _openMycarScreen,
                 ),
               ),
             ],
@@ -81,7 +85,7 @@ Widget _actionGridWidget() {
                 child: HomeActionWidget(
                   iconAsset: AppAssetPaths.myInsuranceIcon,
                   label: 'MY INSURANCE',
-                  onTap: () => context.push(AppRoutesPath.myInsuranceScreen),
+                  onTap: _openInsuranceScreen,
                 ),
               ),
               const SizedBox(width: 16),
@@ -89,12 +93,33 @@ Widget _actionGridWidget() {
                 child: HomeActionWidget(
                   iconAsset: AppAssetPaths.sosIcon,
                   label: '',
-                  onTap: () => context.push(AppRoutesPath.emergencyScreen),
+                  onTap: _openEmergencyScreen,
                 ),
               ),        ],
           ),
         ],
       ),
     );
+}
+
+
+// -----------------------------------------------------------------------------
+// Widget Methods
+// -----------------------------------------------------------------------------
+
+void _openAddAccidentScreen() {
+  AddAccidentScreen.open(context);
+}
+
+void _openMycarScreen() {
+  MyCarsScreen.open(context);
+}
+
+void _openInsuranceScreen() {
+  MyInsuranceScreen.open(context);
+}
+
+void _openEmergencyScreen() {
+  EmergencyScreen.open(context);
 }
 }

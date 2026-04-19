@@ -1,19 +1,28 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_radio_button/app_radio_button.dart';
+import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/utils/empty/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class LanguageScreen extends StatefulWidget {
-  static void open(BuildContext context) {
-    context.push(AppRoutesPath.languageScreen);
+  static const kRoute = "/kRoute";
+  
+  final bool? isChangeLanguageRoute;
+  static void open(BuildContext context, {
+    bool? isChangeLanguageRoute
+  }) {
+    context.push(AppRoutesPath.languageScreen, extra: {
+      kRoute: isChangeLanguageRoute
+    });
   }
 
-  const LanguageScreen({super.key});
+  const LanguageScreen({super.key, this.isChangeLanguageRoute});
 
   @override
   State<LanguageScreen> createState() => _LanguageScreenState();
@@ -25,7 +34,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _screenContent());
+    return Scaffold(
+      appBar: (widget.isChangeLanguageRoute ?? false) ? CustomAppBar(
+        title: 
+              AppLocalizations.of( context)!.changeLanguage ,
+      ) : null,
+      body: _screenContent());
   }
 
   // -----------------------------------------------------------------------------
@@ -39,11 +53,14 @@ class _LanguageScreenState extends State<LanguageScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            (widget.isChangeLanguageRoute ?? false) ? EmptyWidget() :
             Center(
               child: Image.asset(AppAssetPaths.appLogoIcon, height: 40,),
             ),
             const Spacer(),
             Text(
+             (widget.isChangeLanguageRoute ?? false) ? 
+              AppLocalizations.of( context)!.changeLanguage :
               AppLocalizations.of( context)!.selectLangauge,
               style: context.headlineMedium.copyWith(
                 fontWeight: FontWeight.w800,
@@ -75,7 +92,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
               iconPath: AppAssetPaths.englishIcon,
             ),
             const Spacer(),
-            AppElevatedButton.withTitle(title: AppLocalizations.of( context)!.continueTitle, onPressed: _openMyCarScreen)
+            AppElevatedButton.withTitle(title: AppLocalizations.of( context)!.continueTitle, 
+            onPressed: (widget.isChangeLanguageRoute ?? false) ? _onPop : _openOnboardingScreen)
               ],
         ),
       ),
@@ -143,7 +161,7 @@ void _openOnboardingScreen() {
     context.push(AppRoutesPath.onboardingScreen);
   }
   
-void _openMyCarScreen() {
-    context.push(AppRoutesPath.addAccidentScreen);
+  void _onPop() {
+    context.pop();
   }
 }

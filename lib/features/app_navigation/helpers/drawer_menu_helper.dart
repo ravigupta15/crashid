@@ -1,4 +1,3 @@
-import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:flutter/material.dart';
 
 class DrawerMenuConfig {
@@ -20,12 +19,10 @@ class DrawerMenuHelper {
     DrawerMenuConfig(
       title: 'My Profile',
       icon: Icons.person,
-      routePath: AppRoutesPath.profileScreen,
     ),
     DrawerMenuConfig(
       title: 'Case History',
       icon: Icons.description_outlined,
-      routePath: AppRoutesPath.myCarsScreen,
     ),
     DrawerMenuConfig(
       title: 'Change Language',
@@ -35,7 +32,7 @@ class DrawerMenuHelper {
       title: 'Emergency Settings',
       icon: Icons.add_alert_outlined,
     ),
-    DrawerMenuConfig(title: 'Imprint', icon: Icons.receipt_long_rounded),
+    DrawerMenuConfig(title: 'Imprint', icon: Icons.receipt_long_rounded,),
     DrawerMenuConfig(title: 'AGB', icon: Icons.article_outlined),
     DrawerMenuConfig(title: 'Data Security', icon: Icons.privacy_tip_outlined),
     DrawerMenuConfig(title: 'Privacy Policy', icon: Icons.shield_outlined),

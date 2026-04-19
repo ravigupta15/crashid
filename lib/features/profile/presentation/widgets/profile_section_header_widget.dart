@@ -3,7 +3,7 @@ import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSectionHeader extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final String title;
 
   const ProfileSectionHeader({
@@ -16,11 +16,7 @@ class ProfileSectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-       Icon(
-            icon,
-            size: 22,
-            color: AppColors.primaryColor,
-          ),
+       icon,
         const SizedBox(width: 8),
         Text(
           title,

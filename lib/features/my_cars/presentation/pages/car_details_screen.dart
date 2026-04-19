@@ -25,15 +25,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
     return Scaffold(
        appBar: CustomAppBar(
         title: "Car Details",
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Icon(
-              Icons.notifications,
-              color: AppColors.primaryColor,
-            ),
-          )
-        ],
+      
       ),
     
       body: _screenContent()

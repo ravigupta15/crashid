@@ -1,20 +1,22 @@
+import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final Function()? onPressed;
   final Widget? leadingWidget;
-  final List<Widget>? actions;
   final Widget? titleWidget;
+  final bool? isShowAction;
   const CustomAppBar({
     super.key,
     this.title,
     this.onPressed,
     this.leadingWidget,
-    this.actions,
     this.titleWidget,
+    this.isShowAction = true
   });
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
@@ -46,7 +48,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 
             ),
           ),
-      actions: actions,
+      actions: (isShowAction ?? false) ?  [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: InkWell(
+              onTap: () => context.push(AppRoutesPath.notificationScreen),
+              child: Icon(
+                Icons.notifications,
+                color: AppColors.primaryColor,
+              ),
+            ),
+          ),
+        ] : [],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
+import 'package:crashid/features/my_cars/presentation/pages/add_car_screen.dart';
 import 'package:crashid/features/my_cars/presentation/widgets/my_car_card_widget.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
@@ -10,7 +11,7 @@ import 'package:go_router/go_router.dart';
 class MyCarsScreen extends StatefulWidget {
 
    static void open(BuildContext context) {
-    context.push(AppRoutesPath.homeScreen);
+    context.push(AppRoutesPath.myCarsScreen);
   }
   const MyCarsScreen({super.key});
 
@@ -24,12 +25,7 @@ class _MyCarsScreenState extends State<MyCarsScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.myCarsTitle,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Icon(Icons.notifications, color: AppColors.primaryColor,),
-          )
-        ],
+        
       ),
       body: _screenContent(),
     );
@@ -52,7 +48,8 @@ class _MyCarsScreenState extends State<MyCarsScreen> {
              width: 120,
              height: 48,
              borderRadius: 12,
-             onPressed: (){},), ),
+             isBoxShadow: false,
+             onPressed: _openAddCarScreen,), ),
              const SizedBox(height: 2,),
         Expanded(
           child: ListView.separated(
@@ -74,5 +71,14 @@ class _MyCarsScreenState extends State<MyCarsScreen> {
       ],
     ),
   );
+ }
+
+ 
+   // -----------------------------------------------------------------------------
+  // Helper Methods
+  // -----------------------------------------------------------------------------
+ 
+ void _openAddCarScreen() {
+  AddCarScreen.open(context);
  }
 }

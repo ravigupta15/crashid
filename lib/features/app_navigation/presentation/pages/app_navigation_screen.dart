@@ -1,18 +1,23 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/app_navigation/presentation/pages/drawer_screen.dart';
+import 'package:crashid/features/app_navigation/presentation/widgets/add_car_diloag_content.dart';
+import 'package:crashid/features/case_history/presentation/pages/case_history_screen.dart';
+import 'package:crashid/features/emergency/presentation/pages/emergency_screen.dart';
 import 'package:crashid/features/home/presentation/pages/home_screen.dart';
+import 'package:crashid/features/my_cars/presentation/pages/add_car_screen.dart';
+import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Main shell: [HomeScreen] plus custom bottom bar (no app bar).
 class AppNavigationScreen extends StatefulWidget {
  
  static void open(BuildContext context) {
-    context.push(AppRoutesPath.emergencyScreen);
+    context.push(AppRoutesPath.appNavigationScreen);
   }
 
   const AppNavigationScreen({super.key});
@@ -50,6 +55,18 @@ class _AppNavigationScreenState extends State<AppNavigationScreen> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+ @override
+  void initState() {
+    callInitFunction();
+    super.initState();
+  }
+
+  void callInitFunction() {
+    Future.microtask(() {
+      _openAddCarDialogBox();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,15 +94,7 @@ class _AppNavigationScreenState extends State<AppNavigationScreen> {
                   ),
                 ],
               ),
-        actions: [
-           Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Icon(
-              Icons.notifications,
-              color: AppColors.primaryColor,
-            ),
-          ),
-        ],
+      
       ),
       drawer: DrawerScreen(),
       body: _screenContent(),
@@ -98,16 +107,16 @@ class _AppNavigationScreenState extends State<AppNavigationScreen> {
   // -----------------------------------------------------------------------------
 
 Widget _screenContent() {
-  return HomeScreen();
-   // body: IndexedStack(
-      //   index: _stackIndex,
-      //   children: const [
-      //     HomeScreen(),
-      //     _UserTabBody(),
-      //     _CaseFileTabBody(),
-      //     _SosTabBody(),
-      //   ],
-      // ),
+  return IndexedStack(
+        index: _stackIndex,
+        children: const [
+          HomeScreen(),
+          ProfileScreen(isAppBarHide: true,),
+          CaseHistoryScreen(isAppBarHide: true,),
+          EmergencyScreen(isAppBarHide: true,),
+        ],
+      );
+   
      
 }
 
@@ -165,6 +174,25 @@ Widget _screenContent() {
       ],
     );
   }
+
+   // -----------------------------------------------------------------------------
+  // Helper Methods
+  // -----------------------------------------------------------------------------
+
+
+void _openAddCarDialogBox() {
+  AppDialogBox().openBox(
+    maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
+    screenContent: AddCarDiloagContent(
+      onClickAddCar: _openAddCarScreen,
+    )
+  );
+}
+
+void _openAddCarScreen() {
+  Navigator.pop(context);
+  AddCarScreen.open(context);
+}
 }
 
 class _CenterAddFab extends StatelessWidget {

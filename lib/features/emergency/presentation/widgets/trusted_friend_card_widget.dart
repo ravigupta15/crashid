@@ -67,7 +67,7 @@ class TrustedFriendCardWidget extends StatelessWidget {
           Text(
             name,
             style: context.titleMedium.copyWith(
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               fontSize: 24,
               color: Color(0xff121C28),
             ),
@@ -108,7 +108,7 @@ class TrustedFriendCardWidget extends StatelessWidget {
                   'PLATE NUMBER',
                   style: context.bodyMedium.copyWith(
                     fontSize: 12,
-                    fontWeight: FontWeight.w500,
+                    // fontWeight: FontWeight.w500,
                     color: Color(0xff737686),
                   ),
                 ),
@@ -167,7 +167,7 @@ class _Avatar extends StatelessWidget {
         initial,
         style: context.headlineSmall.copyWith(
           fontWeight: FontWeight.w700,
-          fontSize: 35,
+          fontSize: 30,
           color: AppColors.darkGrayColor,
         ),
       ),

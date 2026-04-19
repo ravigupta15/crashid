@@ -8,12 +8,20 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class EmergencyScreen extends StatefulWidget {
-  
-  static void open(BuildContext context) {
-    context.push(AppRoutesPath.emergencyScreen);
+    static const kIsAppbarHide = "/kIsAppbarHide";
+
+  final bool? isAppBarHide;
+
+ 
+  static void open(BuildContext context, {
+    bool? isAppBarHide
+  }) {
+    context.push(AppRoutesPath.emergencyScreen, extra: {
+      kIsAppbarHide: isAppBarHide
+    });
   }
 
-  const EmergencyScreen({super.key});
+  const EmergencyScreen({super.key, this.isAppBarHide});
 
   @override
   State<EmergencyScreen> createState() => _EmergencyScreenState();
@@ -40,17 +48,8 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: (widget.isAppBarHide ?? false)? null : CustomAppBar(
         title: 'Emergency',
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Icon(
-              Icons.notifications,
-              color: AppColors.primaryColor,
-            ),
-          ),
-        ],
       ),
       body: _screenContent(),
     );

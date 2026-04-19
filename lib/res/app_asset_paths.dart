@@ -41,4 +41,20 @@ class AppAssetPaths {
   static const emergencyRequestIcon = "assets/icons/emergency_request_ic.png";
   static const witnessRequestIcon = "assets/icons/witness_request_ic.png";
   static const runIcon = "assets/icons/run_ic.png";
+  static const videoCameraIcon = "assets/icons/video_camera_ic.png";
+  static const clockIcon = "assets/icons/clock_ic.png";
+  static const dateIcon = "assets/icons/date_ic.png";
+  static const locationIcon = "assets/icons/location_ic.png";
+
+  static const paypalIcon = "assets/icons/paypal_ic.png";
+  static const pdfIcon = "assets/icons/pdf_ic.png";
+  static const creditCardIcon = "assets/icons/credit_card_ic.png";
+  static const viewSummaryIcon = "assets/icons/view_summary_ic.png";
+
+  static const sericeGridIcon = "assets/icons/services_grid_ic.png";
+  static const walletPaymentIcon = "assets/icons/wallet_payment_ic.png";
+  static const userDetailsIcon = "assets/icons/user_details_ic.png";
+  static const divingLicenseIcon = "assets/icons/driving_license_ic.png";
+  static const addCarIcon = "assets/icons/add_car_ic.png";
+  
 }

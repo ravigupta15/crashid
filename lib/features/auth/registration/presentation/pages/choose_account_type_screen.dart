@@ -1,5 +1,6 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/features/auth/registration/presentation/pages/company_registration_screen.dart';
 import 'package:crashid/features/auth/registration/presentation/pages/personal_registration_screen.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_radio_button/app_radio_button_with_checkIcon.dart';
@@ -87,7 +88,7 @@ class _ChooseAccountTypeScreenState extends State<ChooseAccountTypeScreen> {
             const SizedBox(height: 100,),
             AppElevatedButton.withTitle(
               title: AppLocalizations.of(context)!.continueTitle,
-              onPressed: selectedIndex == 0 ? _openPersonalAccountScreen : null,
+              onPressed: selectedIndex == 0 ? _openPersonalAccountScreen : _openCompanyAccountScreen,
             ),
           ],
         ),
@@ -186,5 +187,8 @@ class _ChooseAccountTypeScreenState extends State<ChooseAccountTypeScreen> {
 
   void _openPersonalAccountScreen() {
     PersonalRegistrationScreen.open(context);
+  }
+  void _openCompanyAccountScreen() {
+    CompanyRegistrationScreen.open(context);
   }
 }

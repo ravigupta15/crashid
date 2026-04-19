@@ -178,4 +178,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get myCarsTitle => 'My Cars';
+
+  @override
+  String get changeLanguage => 'Change Language';
 }

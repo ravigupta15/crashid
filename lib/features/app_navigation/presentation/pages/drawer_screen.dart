@@ -1,6 +1,10 @@
 import 'package:crashid/features/app_navigation/helpers/drawer_menu_helper.dart';
 import 'package:crashid/features/app_navigation/presentation/widgets/drawer_profile_banner_widget.dart';
 import 'package:crashid/features/app_navigation/presentation/widgets/drawer_vertical_menu_widget.dart';
+import 'package:crashid/features/case_history/presentation/pages/case_history_screen.dart';
+import 'package:crashid/features/emergency/presentation/pages/emergency_screen.dart';
+import 'package:crashid/features/language/presentation/language_screen.dart';
+import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -27,26 +31,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
     });
   }
 
-  void _handleDrawerItemTap(int index) {
-    final config = DrawerMenuHelper.menuConfigs[index];
-    setState(() => _selectedIndex = index);
-
-    if (config.routePath != null) {
-      context.push(config.routePath!);
-      return;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Icon(Icons.notifications, color: AppColors.primaryColor),
-          ),
-        ],
+       
       ),
       body: _screenContent(),
     );
@@ -72,5 +62,46 @@ class _DrawerScreenState extends State<DrawerScreen> {
         ],
       ),
     );
+  }
+
+    // -----------------------------------------------------------------------------
+  // Helper Methods
+  // -----------------------------------------------------------------------------
+
+  void _handleDrawerItemTap(int index) {
+    setState(() => _selectedIndex = index);
+    switch (index) {
+    case 0:
+      _openMyProfileScreen();
+      break;
+    case 1:
+      _openCaseHistoryScreen();
+      break;
+    case 2:
+      _openLanguageScreen();
+      break;
+    case 3:
+      _openEmergencyScreen();
+      break;
+    default:
+      debugPrint("No screen defined for index $index");
+  }
+  
+  }
+  
+  void _openMyProfileScreen() {
+    ProfileScreen.open(context);
+  }
+
+  void _openCaseHistoryScreen() {
+    CaseHistoryScreen.open(context);
+  }
+
+  void _openLanguageScreen() {
+    LanguageScreen.open(context, isChangeLanguageRoute: true);
+  }
+
+  void _openEmergencyScreen() {
+    EmergencyScreen.open(context);
   }
 }

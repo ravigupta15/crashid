@@ -52,5 +52,6 @@
   "alreadyHaveAccount" : "Already Have an Account?",
   "logIn" : "Log In",
   "addCarTitle" : "Add Car",
-  "myCarsTitle" : "My Cars"
+  "myCarsTitle" : "My Cars",
+  "changeLanguage" : "Change Language"
 }

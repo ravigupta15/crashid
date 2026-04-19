@@ -24,12 +24,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       backgroundColor: AppColors.screenBackground,
       appBar: CustomAppBar(
         title: 'Notifications',
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Icon(Icons.notifications, color: AppColors.primaryColor),
-          ),
-        ],
+       
       ),
       body: _screenContent(),
     );

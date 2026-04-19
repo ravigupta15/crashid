@@ -40,8 +40,8 @@ class AppRadioBtnWithOptionalTitle extends StatelessWidget {
             ),
           ],
           Container(
-            height: 17,
-            width: 17,
+            height: 15,
+            width: 15,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: AppColors.blackColor),

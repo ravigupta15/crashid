@@ -27,16 +27,7 @@ class _AddCarScreenState extends State<AddCarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: AppLocalizations.of(context)!.addCarTitle,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Icon(
-              Icons.notifications,
-              color: AppColors.primaryColor,
-            ),
-          )
-        ],
+        title: AppLocalizations.of(context)!.addCarTitle ,
       ),
       body: _screenContent(),
     );
