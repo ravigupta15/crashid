@@ -1,5 +1,6 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/data_sources/local_storage/user_manager.dart';
 import 'package:crashid/features/onboarding/helper/onboarding_helper.dart';
 import 'package:crashid/features/onboarding/presentation/widgets/indicator_widget.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
@@ -7,6 +8,7 @@ import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -116,6 +118,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   // -----------------------------------------------------------------------------
 
 void _openSigninScreen() {
+  GetIt.I<UserManager>().setFirstTime = true;
     context.push(AppRoutesPath.signinScreen);
   }
 

@@ -202,7 +202,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
 
   OutlineInputBorder get textFormFieldErrorBorder => OutlineInputBorder(
     borderRadius: BorderRadius.circular(widget.borderRadius ?? 40),
-    borderSide: BorderSide(color: AppColors.lightGrayColor),
+    borderSide: BorderSide(color: AppColors.redColor),
   );
 
   OutlineInputBorder get textFormFieldFocusBorder => OutlineInputBorder(

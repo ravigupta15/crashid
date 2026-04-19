@@ -3,7 +3,8 @@ import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/auth/forget_password/presentation/pages/forget_password_screen.dart';
 import 'package:crashid/features/auth/registration/presentation/pages/choose_account_type_screen.dart';
 import 'package:crashid/features/auth/signin/model/sign_in_model.dart';
-import 'package:crashid/features/auth/signin/provider/singin_notifier.dart';
+import 'package:crashid/features/auth/signin/provider/signin_notifier.dart';
+import 'package:crashid/features/auth/signin/provider/signin_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_checkbox/app_checkbox_widget.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
@@ -12,8 +13,10 @@ import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/extensions/extension_navigator.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
+import 'package:crashid/utils/validators/validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -42,21 +45,11 @@ class _SigninScreenState extends ConsumerState<SigninScreen> with AppValidation 
     super.initState();
     sendModel = SignInSendModel();
   }
+final signinNotifierProvider =
+    AsyncNotifierProvider<SigninNotifier, SigninState>(SigninNotifier.new);
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(signinNotifierProvider, (previous, next) {
-      next.whenOrNull(
-        error: (error, _) {
-          showFeedbackMessage(
-            error.toString(),
-            context: context,
-            feedbackStyle: FeedbackStyle.snackBar,
-            snackBarBgColor: AppColors.redColor,
-          );
-        },
-      );
-    });
     return Scaffold(body: _screenContent());
   }
 
@@ -94,6 +87,9 @@ class _SigninScreenState extends ConsumerState<SigninScreen> with AppValidation 
                   height: 12,
                   width: 16,
                 ),
+                inputFormatters: [
+                    FilteringTextInputFormatter.allow(Validator.regEmail),
+                ],
                 textInputType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 initialValue: sendModel?.email,
@@ -104,6 +100,10 @@ class _SigninScreenState extends ConsumerState<SigninScreen> with AppValidation 
               AppTextFormField(
                 hintText: "Password",
                 obscure: (sendModel?.password ?? '').isEmpty ? false : true,
+                inputFormatters: [
+                    Validator.emojiRestrict(),
+                    Validator.removeWhiteSpace(),
+                  ],
                 prefixIcon: Image.asset(
                   AppAssetPaths.lockIcon,
                   height: 20,
@@ -241,6 +241,9 @@ class _SigninScreenState extends ConsumerState<SigninScreen> with AppValidation 
 
   void _savedPassword(String? value) {
     sendModel?.password = value;
+    setState(() {
+      
+    });
   }
 
   Future<void> _submitSignIn() async {
@@ -255,10 +258,9 @@ class _SigninScreenState extends ConsumerState<SigninScreen> with AppValidation 
         snackBarBgColor: AppColors.redColor,
       );
       return;
+    } else {
+      _callSignApi();
     }
-    final model = sendModel;
-    if (model == null) return;
-    await ref.read(signinNotifierProvider.notifier).login(context, model);
   }
 
   void _openForgetPasswordScreen() {
@@ -267,6 +269,10 @@ class _SigninScreenState extends ConsumerState<SigninScreen> with AppValidation 
 
   void _openChooseAccountTypeScreen() {
     ChooseAccountTypeScreen.open(context);
+  }
+
+  void _callSignApi() async{
+    await ref.read(signinNotifierProvider.notifier).login(context, sendModel);
   }
 
 }

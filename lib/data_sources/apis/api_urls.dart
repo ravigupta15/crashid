@@ -1,9 +1,10 @@
 abstract class ApiUrls {
   ApiUrls._();
 
-  /// Set your API host (e.g. `https://api.example.com`).
-  static const baseUrl = "";
+  static const baseUrl = "https://apicrid.forthprodigital.in/api/";
 
-  /// Relative path appended to [baseUrl]. Adjust to match your backend contract.
-  static const login = '/auth/login';
+  static const loginUrl = 'user/auth/login';
+  static const forgotPasswordUrl = 'user/auth/forgot-password';
+  static const verifyOtpUrl = "user/auth/verify-otp";
+  static const resendUrl = "user/auth/resend-otp";
 }

@@ -13,79 +13,83 @@ class AppDialogBox {
     Color? titleColor,
     String? leftBtnTitle,
     String? rightBtnTitle,
-    double? maxWidthMinWidth
+    double? maxWidthMinWidth,
+    bool? barrierDismissible
   }) {
     showGeneralDialog(
       context: AppRouter.mainNavigatorKey.currentContext!,
       barrierLabel: "Barrier",
-      barrierDismissible: true,
+      barrierDismissible: barrierDismissible ?? true,
       barrierColor: Colors.black.withValues(alpha: 0.5),
       transitionDuration: const Duration(milliseconds: 400),
       pageBuilder: (_, __, ___) {
-        return Center(
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            constraints:   BoxConstraints(maxWidth: maxWidthMinWidth ?? 340, minWidth: maxWidthMinWidth ?? 340),
-            decoration: BoxDecoration(
-              color: AppColors.whiteColor,
-              borderRadius: BorderRadius.circular(12),
+        return PopScope(
+          canPop: barrierDismissible ?? true,
+          child: Center(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              constraints:   BoxConstraints(maxWidth: maxWidthMinWidth ?? 340, minWidth: maxWidthMinWidth ?? 340),
+              decoration: BoxDecoration(
+                color: AppColors.whiteColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child:
+                  screenContent ??
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 15,
+                      left: 20,
+                      right: 20,
+                      bottom: 33,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title ?? '',
+                          style: AppRouter
+                              .mainNavigatorKey
+                              .currentContext!
+                              .titleMedium
+                              .copyWith(fontSize: 16, color: titleColor),
+                        ),
+                        const SizedBox(height: 25),
+                        Text(
+                          subTitle ?? '',
+                          style: AppRouter
+                              .mainNavigatorKey
+                              .currentContext!
+                              .titleMedium
+                              .copyWith(fontSize: 14),
+                        ),
+          
+                        const SizedBox(height: 30),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: AppElevatedButton.withTitle(
+                                title: leftBtnTitle ?? "No",
+                                onPressed: () {
+                                  Navigator.pop(
+                                    AppRouter.mainNavigatorKey.currentContext!,
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: AppElevatedButton.withTitle(
+                                title: rightBtnTitle ?? "Yes",
+                                onPressed: yesTap,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
             ),
-            child:
-                screenContent ??
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 15,
-                    left: 20,
-                    right: 20,
-                    bottom: 33,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title ?? '',
-                        style: AppRouter
-                            .mainNavigatorKey
-                            .currentContext!
-                            .titleMedium
-                            .copyWith(fontSize: 16, color: titleColor),
-                      ),
-                      const SizedBox(height: 25),
-                      Text(
-                        subTitle ?? '',
-                        style: AppRouter
-                            .mainNavigatorKey
-                            .currentContext!
-                            .titleMedium
-                            .copyWith(fontSize: 14),
-                      ),
-
-                      const SizedBox(height: 30),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: AppElevatedButton.withTitle(
-                              title: leftBtnTitle ?? "No",
-                              onPressed: () {
-                                Navigator.pop(
-                                  AppRouter.mainNavigatorKey.currentContext!,
-                                );
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          Expanded(
-                            child: AppElevatedButton.withTitle(
-                              title: rightBtnTitle ?? "Yes",
-                              onPressed: yesTap,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
           ),
         );
       },

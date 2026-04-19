@@ -27,14 +27,31 @@ void main() async{
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+
+@override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (mounted) {
+      final provider = Provider.of<LanguageProvider>(context, listen: false);
+      String language = GetIt.I<UserManager>().language == "de" ? "de" : 'en';
+      provider.setLocale(Locale(language));
+    }
+  });
+    super.initState();
+  }
+  
+  @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LanguageProvider>(context);
-    String language = GetIt.I<UserManager>().language == "de" ? "de" : 'en';
-    provider.setLocale(Locale(language));
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {

@@ -11,13 +11,14 @@ import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
+import 'package:crashid/utils/extensions/extension_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppNavigationScreen extends StatefulWidget {
  
  static void open(BuildContext context) {
-    context.push(AppRoutesPath.appNavigationScreen);
+    context.pushNamedAndRemoveUntil(AppRoutesPath.appNavigationScreen);
   }
 
   const AppNavigationScreen({super.key});

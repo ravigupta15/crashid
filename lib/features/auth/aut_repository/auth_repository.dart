@@ -1,5 +1,6 @@
 import 'package:crashid/data_sources/apis/api_urls.dart';
 import 'package:crashid/data_sources/apis/base/dio_api_manager.dart';
+import 'package:crashid/features/auth/forget_password/model/forget_send_model.dart';
 import 'package:crashid/features/auth/signin/model/sign_in_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +13,11 @@ class AuthRepository {
   AuthRepository(this._dio);
 
   Future<Response> login({SignInSendModel? model}) {
-    return _dio.post(ApiUrls.login, data: model?.toMap());
+    return _dio.post(ApiUrls.loginUrl, data: model?.toMap());
+  }
+
+  Future<Response> forgotPassword({ForgetPasswordSendModel? model}) {
+    return _dio.post(ApiUrls.forgotPasswordUrl, data: model?.toMap());
   }
 }
 

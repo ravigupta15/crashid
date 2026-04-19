@@ -2,6 +2,9 @@ import 'package:crashid/utils/extensions/extension_string.dart';
 import 'package:flutter/services.dart';
 
 class Validator {
+  
+  static final regEmail = RegExp(r'[\x20-\x7E]');
+  
   static bool isEmail(String email) {
     const String pattern = r'^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
 

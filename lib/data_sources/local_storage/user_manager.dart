@@ -10,7 +10,7 @@ class UserManager {
   }
 
   bool get isFirstTime =>
-      _sharedPrefs.getBool(SharePreferenceKeys.IS_FIRST_TIME.name) ?? true;
+      _sharedPrefs.getBool(SharePreferenceKeys.IS_FIRST_TIME.name) ?? false;
   set setFirstTime(bool value) =>
       _sharedPrefs.setBool(SharePreferenceKeys.IS_FIRST_TIME.name, value);
 
