@@ -9,6 +9,8 @@ class AppColors {
   static const blackColor = Color(0xff000000);
   static const whiteColor = Color(0xffffffff);
   static const lightGrayColor = Color(0xffDADADA);
+  
+  static Color shadowColor = const Color(0xff504DE4).withValues(alpha: .2);
 
   /// Off-white scaffold behind elevated cards (e.g. car detail).
   static const Color screenBackground = Color(0xFFF5F5F5);

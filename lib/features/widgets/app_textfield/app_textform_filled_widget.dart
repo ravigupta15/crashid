@@ -39,6 +39,7 @@ class AppTextFormField extends StatefulWidget {
   final bool? isUnderlineBorder;
   final Color? textColor;
   final double? borderRadius;
+  final double? prefixWidth;
 
   AppTextFormField({
     super.key,
@@ -76,6 +77,7 @@ class AppTextFormField extends StatefulWidget {
     this.isUnderlineBorder,
     this.textColor,
     this.borderRadius,
+    this.prefixWidth
   }) : assert(initialValue == null || controller == null);
 
   @override
@@ -129,7 +131,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
           decoration: InputDecoration(
             errorMaxLines: 2,
             prefixIcon:widget.prefixIcon != null ? Container(
-              width: 40,
+              width: widget.prefixWidth ??  40,
               margin: const EdgeInsets.only(right: 8),
               alignment: Alignment.centerRight,
               child: widget.prefixIcon,

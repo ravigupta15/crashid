@@ -4,9 +4,11 @@ import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_checkbox/app_checkbox_widget.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
 import 'package:crashid/features/widgets/app_textfield/custom_dropdown_widget.dart';
+import 'package:crashid/features/widgets/country_code_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/country_code_selector.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -23,10 +25,17 @@ class CompanyRegistrationScreen extends StatefulWidget {
       _CompanyRegistrationScreenState();
 }
 
-class _CompanyRegistrationScreenState extends State<CompanyRegistrationScreen> {
+class _CompanyRegistrationScreenState extends State<CompanyRegistrationScreen> with CountryPickerMixin {
     bool termsAccepted = false;
   bool privacyAccepted = false;
 
+ @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      initCountry(phoneCode: "49");
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +60,13 @@ class _CompanyRegistrationScreenState extends State<CompanyRegistrationScreen> {
           const SizedBox(height: 24),
           AppTextFormField(hintText: 'General Company Email'),
           const SizedBox(height: 24),
-          AppTextFormField(hintText: 'Company Phone Number'),
+          AppTextFormField(
+            prefixWidth: 63,
+            prefixIcon: CountryCodeWidget(
+              onTap: countryPicker,
+              country: country,
+            ),
+            hintText: 'Company Phone Number'),
           const SizedBox(height: 24),
           AppTextFormField(hintText: 'VIT ID'),
           const SizedBox(height: 24),
