@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
@@ -6,7 +8,13 @@ import 'package:flutter/material.dart';
 class UploadCardWidget extends StatelessWidget {
   final String? title;
   final VoidCallback? onTap;
-  const UploadCardWidget({super.key, this.title, this.onTap});
+  final File? hasFile;
+  const UploadCardWidget({
+    super.key,
+    this.title,
+    this.onTap,
+    this.hasFile,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +38,23 @@ class UploadCardWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.whiteColor,
                 borderRadius: BorderRadius.circular(40),
-                border: Border.all(color: AppColors.lightGrayColor),
+                border: Border.all(
+                  color: hasFile != null
+                      ? AppColors.primaryColor
+                      : AppColors.lightGrayColor,
+                ),
               ),
               child: Center(
-                child: Image.asset(
-                  AppAssetPaths.uploadIcon,
-                  height: 38,
-                  width: 50,
-                ),
+                child: hasFile != null
+                    ? ClipRRect(
+                      borderRadius: BorderRadiusGeometry.circular(30),
+                      child: Image.file(hasFile!, height: 92, width: double.infinity,
+                       fit: BoxFit.cover))
+                    : Image.asset(
+                        AppAssetPaths.uploadIcon,
+                        height: 38,
+                        width: 50,
+                      ),
               ),
             ),
           ),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class RegistrationSendModel {
   String? firstName;
   String? lastName;
@@ -12,7 +14,10 @@ class RegistrationSendModel {
   String? city;
   bool? termsAccepted;
   bool? privacyAccepted;
-
+  File? drivingLicenseFront;
+  File? drivingLicenseBack;
+  File? idDocumentFront;
+  File? idDocumentBack;
   // company 
   String? legalCompanyName;
   String? registerCompanyName;
@@ -35,6 +40,10 @@ class RegistrationSendModel {
     this.city,
     this.termsAccepted,
     this.privacyAccepted,
+    this.drivingLicenseFront,
+    this.drivingLicenseBack,
+    this.idDocumentFront,
+    this.idDocumentBack,
 
     //company
     this.legalCompanyName,

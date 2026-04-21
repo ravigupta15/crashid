@@ -8,4 +8,5 @@ abstract class ApiUrls {
   static const verifyOtpUrl = "user/auth/verify-otp";
   static const resendOtpUrl = "user/auth/resend-otp";
   static const resetPasswordUrl = "";
+  static const personalRegistrationUrl = "auth/register/personal";
 }

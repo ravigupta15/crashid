@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:crashid/app_routes/app_routes_path.dart';
+import 'package:crashid/core/service/date_picker_service.dart';
+import 'package:crashid/core/service/image_picker_service.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/auth/registration/model/registration_send_model.dart';
 import 'package:crashid/features/auth/registration/presentation/widgets/upload_card_widget.dart';
@@ -15,6 +19,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PersonalRegistrationScreen extends StatefulWidget {
   static void open(BuildContext context) {
@@ -33,13 +38,22 @@ class _PersonalRegistrationScreenState
   int selectedGenderIndex = 0;
 
   final _formKey = GlobalKey<FormState>();
- 
- RegistrationSendModel? sendModel;
+  final TextEditingController _dobController = TextEditingController();
+  DateTime? _selectedDob;
 
- @override
+  RegistrationSendModel? sendModel;
+  
+
+  @override
   void initState() {
     sendModel = RegistrationSendModel();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _dobController.dispose();
+    super.dispose();
   }
 
   @override
@@ -97,9 +111,14 @@ Widget _screenContent() {
                   Flexible(
                     child: AppTextFormField(
                       hintText: AppLocalizations.of(context)!.dateOfBirth,
+                      controller: _dobController,
                       textInputType: TextInputType.datetime,
                       isReadOnly: true,
                       validator: validateEmpty,
+                      onTap: _pickDob,
+                      onSaved: (_) {
+                        sendModel?.dob = _dobController.text.trim();
+                      },
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -171,19 +190,42 @@ Widget _screenContent() {
               const SizedBox(height: 24),
               Row(
                 children: [
-                  UploadCardWidget(title: 
+                  UploadCardWidget(
+                    title:
                     AppLocalizations.of(context)!.drivingLicenseFront,
+                    hasFile: sendModel?.drivingLicenseFront,
+                    onTap: () => _pickDocumentImage(
+                      onPicked: (file) => sendModel?.drivingLicenseFront = file,
+                    ),
                   ),
                   const SizedBox(width: 16),
-                  UploadCardWidget(title: AppLocalizations.of(context)!.drivingLicenseBack),
+                  UploadCardWidget(
+                    title: AppLocalizations.of(context)!.drivingLicenseBack,
+                    hasFile: sendModel?.drivingLicenseBack,
+                    onTap: () => _pickDocumentImage(
+                      onPicked: (file) => sendModel?.drivingLicenseBack = file,
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 24),
               Row(
                 children: [
-                  UploadCardWidget(title: AppLocalizations.of(context)!.idDocumentFront),
+                  UploadCardWidget(
+                    title: AppLocalizations.of(context)!.idDocumentFront,
+                    hasFile: sendModel?.idDocumentFront,
+                    onTap: () => _pickDocumentImage(
+                      onPicked: (file) => sendModel?.idDocumentFront = file,
+                    ),
+                  ),
                   const SizedBox(width: 16),
-                  UploadCardWidget(title: AppLocalizations.of(context)!.idDocumentBack),
+                  UploadCardWidget(
+                    title: AppLocalizations.of(context)!.idDocumentBack,
+                    hasFile: sendModel?.idDocumentBack,
+                    onTap: () => _pickDocumentImage(
+                      onPicked: (file) => sendModel?.idDocumentBack = file,
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 24),
@@ -249,6 +291,39 @@ Widget _screenContent() {
               
               ),
               const SizedBox(height: 24),
+               AppTextFormField(
+              obscure: (sendModel?.password ?? '').isEmpty ? false : true,
+               inputFormatters: [
+                    Validator.emojiRestrict(),
+                    Validator.removeWhiteSpace(),
+                  ],
+              hintText: "Password", 
+                textInputAction: TextInputAction.done,
+                initialValue: sendModel?.password,
+                validator: validatePassword,
+                onChanged: (val) => setState(() {
+                  sendModel?.password = val;
+                }),
+              
+            ),
+            const SizedBox(height: 24,),
+            AppTextFormField(
+               obscure: (sendModel?.confirmPassword ?? '').isEmpty ? false : true,
+               inputFormatters: [
+                    Validator.emojiRestrict(),
+                    Validator.removeWhiteSpace(),
+                  ],
+             
+              hintText: AppLocalizations.of(context)!.confirmPassword,
+                textInputAction: TextInputAction.done,
+                initialValue: sendModel?.password,
+                validator: (val) => validateConfirmPassword(val, sendModel?.password),
+                onChanged: (val) => setState(() {
+                  sendModel?.confirmPassword = val;
+                }),
+              
+            ),
+            const SizedBox(height: 24,),
               AppCheckbox(
                 value: sendModel?.termsAccepted ?? false,
                 onChanged: (value) {
@@ -289,7 +364,7 @@ Widget _screenContent() {
                 alignment: Alignment.center,
                 child: AppElevatedButton.withTitle(
                   title: AppLocalizations.of(context)!.register,
-                  onPressed: () {},
+                  onPressed: _checkValidation,
                 ),
               ),
               const SizedBox(height: 20),
@@ -336,9 +411,95 @@ Widget _screenContent() {
   void _checkValidation() {
     FocusScope.of(context).unfocus();
     if (!_formKey.currentState!.validate()) return;
+    if (!_isAllDocumentSelected()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please upload all required documents.'),
+        ),
+      );
+      return;
+    } else if (sendModel?.termsAccepted != true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please accept the terms and conditions.'),
+        ),
+      );
+      return;
+    } else if (sendModel?.privacyAccepted != true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please accept the privacy policy.'),
+        ),
+      );
+      return;
+    }
     _formKey.currentState!.save();
   }
-  
+
+  Future<void> _pickDob() async {
+    final DateTime? pickedDate = await DatePickerService.pickDob(
+      context,
+      initialDate: _selectedDob,
+    );
+    if (pickedDate == null) return;
+
+    setState(() {
+      _selectedDob = pickedDate;
+      _dobController.text = DatePickerService.formatForDisplay(pickedDate);
+      sendModel?.dob = DatePickerService.formatForApi(pickedDate);
+    });
+  }
+
+  bool _isAllDocumentSelected() {
+    return sendModel?.drivingLicenseFront != null &&
+        sendModel?.drivingLicenseBack != null &&
+        sendModel?.idDocumentFront != null &&
+        sendModel?.idDocumentBack != null;
+  }
+
+  Future<void> _pickDocumentImage({
+    required ValueChanged<File?> onPicked,
+  }) async {
+    final ImageSource? source = await _showImageSourcePicker();
+    if (source == null) return;
+    final File? file = await ImagePickerService.imagePicker(source);
+    if (file == null) return;
+    setState(() {
+      onPicked(file);
+    });
+  }
+
+  Future<ImageSource?> _showImageSourcePicker() {
+    return showModalBottomSheet<ImageSource>(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.photo_library_outlined),
+                title:  Text('Gallery', style: context.bodyMedium.copyWith(
+                  color: AppColors.darkGrayColor,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                )),
+                onTap: () => Navigator.pop(context, ImageSource.gallery),
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt_outlined),
+                title:  Text('Camera', style: context.bodyMedium.copyWith(
+                  color: AppColors.darkGrayColor,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                )),
+                onTap: () => Navigator.pop(context, ImageSource.camera),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   void _backToSignIn() {
     context.pop();
