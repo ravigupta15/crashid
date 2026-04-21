@@ -5,9 +5,11 @@ import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_radio_button/app_radio_button.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
 import 'package:crashid/features/widgets/app_textfield/custom_dropdown_widget.dart';
+import 'package:crashid/features/widgets/country_code_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/country_code_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,9 +23,17 @@ class EditProfileScreen extends StatefulWidget {
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
+class _EditProfileScreenState extends State<EditProfileScreen> with CountryPickerMixin {
 
   int selectedGenderIndex = 0;
+
+  @override
+  void initState() {
+    Future.microtask(() {
+      initCountry(phoneCode: "49");
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +71,11 @@ Widget _screenContent() {
         ),
         const SizedBox(height: 29,),
         AppTextFormField(
-          initialValue: "6376487712",
+          initialValue: "6376487712",prefixWidth: 63,
+            prefixIcon: CountryCodeWidget(
+              onTap: countryPicker,
+              country: country,
+            ),
         ),
         const SizedBox(height: 29,),
         CustomDropDownFormFiledWidget(),
@@ -147,6 +161,7 @@ Widget _screenContent() {
         const SizedBox(height: 29,),
         AppTextFormField(
           initialValue: "6376066019",
+          
         ),
         const SizedBox(height: 29,),
         AppTextFormField(
