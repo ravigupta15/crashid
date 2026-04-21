@@ -1,15 +1,19 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/features/auth/forget_password/model/otp_send_model.dart';
+import 'package:crashid/features/auth/forget_password/provider/forget_password_notifier.dart';
+import 'package:crashid/features/auth/forget_password/provider/forget_password_state.dart';
 import 'package:crashid/features/auth/reset_password/presentation/pages/reset_password_screen.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class OtpScreen extends StatefulWidget {
+class OtpScreen extends ConsumerStatefulWidget {
   static void open(BuildContext context) {
     context.push(AppRoutesPath.otpScreen);
   }
@@ -17,12 +21,27 @@ class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
 
   @override
-  State<OtpScreen> createState() => _OtpScreenState();
+  ConsumerState<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _OtpScreenState extends State<OtpScreen> {
+class _OtpScreenState extends ConsumerState<OtpScreen> {
   final TextEditingController _otpController = TextEditingController();
   bool _showInvalidOtp = false;
+
+  final _formKey = GlobalKey<FormState>();
+
+  OtpSendModel? sendModel;
+
+  final forgetPasswordProvider =
+      AsyncNotifierProvider<ForgetPasswordNotifier, ForgetPasswordState>(
+        ForgetPasswordNotifier.new,
+      );
+
+  @override
+  void initState() {
+    super.initState();
+    sendModel = OtpSendModel();
+  }
 
   @override
   void dispose() {
@@ -33,7 +52,6 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       bottomNavigationBar: _bottomWidget(),
       body: _screenContent(context),
     );
@@ -45,41 +63,49 @@ class _OtpScreenState extends State<OtpScreen> {
 
   Widget _screenContent(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Enter OTP',
-              style: context.titleLarge.copyWith(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
+      child: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 40,
+            bottom: 30,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Enter OTP',
+                style: context.titleLarge.copyWith(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            const Spacer(),
-            Image.asset(AppAssetPaths.otpImg, height: 190),
-            const SizedBox(height: 32),
-            Text(
-              'A magic code to sign in was sent to',
-              textAlign: TextAlign.center,
-              style: context.bodyMedium.copyWith(
-                fontSize: 12,
-                color: AppColors.darkGrayColor.withValues(alpha: .6),
+              const Spacer(),
+              Image.asset(AppAssetPaths.otpImg, height: 190),
+              const SizedBox(height: 32),
+              Text(
+                'A magic code to sign in was sent to',
+                textAlign: TextAlign.center,
+                style: context.bodyMedium.copyWith(
+                  fontSize: 12,
+                  color: AppColors.darkGrayColor.withValues(alpha: .6),
+                ),
               ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              'sukru2@gmail.com',
-              style: context.titleMedium.copyWith(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
+              const SizedBox(height: 4),
+              Text(
+                'sukru2@gmail.com',
+                style: context.titleMedium.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-            const SizedBox(height: 40),
-            _otpTextField(context),
-            const Spacer(),
-           ],
+              const SizedBox(height: 40),
+              _otpTextField(context),
+              const Spacer(),
+            ],
+          ),
         ),
       ),
     );
@@ -91,40 +117,41 @@ class _OtpScreenState extends State<OtpScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-           AppElevatedButton.withTitle(
-                title: 'Continue',
-                onPressed: _openResetPasswordScreen,
+          AppElevatedButton.withTitle(
+            title: 'Continue',
+            onPressed: _validateOtp,
+          ),
+          const SizedBox(height: 30),
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              style: context.titleMedium.copyWith(
+                fontSize: 14,
+                color: AppColors.darkGrayColor.withValues(alpha: .7),
               ),
-              const SizedBox(height: 30),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  style: context.titleMedium.copyWith(
-                    fontSize: 14,
-                    color: AppColors.darkGrayColor.withValues(alpha: .7),
+              children: [
+                TextSpan(
+                  text: 'Didn’t Get OTP? ',
+                  style: context.bodyMedium.copyWith(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
+                    color: AppColors.darkGrayColor,
                   ),
-                  children: [
-                     TextSpan(text: 'Didn’t Get OTP? ',
-                    style: context.bodyMedium.copyWith(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12, color: AppColors.darkGrayColor
-                    )
-                    ),
-                    TextSpan(
-                      text: 'Resend OTP',
-                      style: context.titleMedium.copyWith(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.primaryColor,
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppColors.primaryColor
-                      ),
-                      // recognizer: _resendOtpRecognizer,
-                    ),
-                  ],
                 ),
-              ),
-            
+                TextSpan(
+                  text: 'Resend OTP',
+                  style: context.titleMedium.copyWith(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryColor,
+                    decoration: TextDecoration.underline,
+                    decorationColor: AppColors.primaryColor,
+                  ),
+                  // recognizer: _resendOtpRecognizer,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -141,15 +168,15 @@ class _OtpScreenState extends State<OtpScreen> {
         pinTheme: PinTheme(
           shape: PinCodeFieldShape.circle,
           borderRadius: BorderRadius.circular(8),
-          activeColor:  const Color(0xffF2F3F4),
-          disabledColor:  const Color(0xffF2F3F4),
-          selectedColor:  const Color(0xffF2F3F4),
+          activeColor: const Color(0xffF2F3F4),
+          disabledColor: const Color(0xffF2F3F4),
+          selectedColor: const Color(0xffF2F3F4),
           inactiveColor: const Color(0xffF2F3F4),
           fieldHeight: 48,
           fieldWidth: 48,
           inactiveFillColor: const Color(0xffF2F3F4),
           selectedFillColor: const Color(0xffF2F3F4),
-          activeFillColor:  const Color(0xffF2F3F4),
+          activeFillColor: const Color(0xffF2F3F4),
         ),
         cursorColor: AppColors.primaryColor,
         blinkWhenObscuring: true,
@@ -186,15 +213,10 @@ class _OtpScreenState extends State<OtpScreen> {
   // -----------------------------------------------------------------------------
 
   void _validateOtp() {
-    if (_otpController.text.trim().length == 5) {
-      setState(() {
-        _showInvalidOtp = false;
-      });
-    } else {
-      setState(() {
-        _showInvalidOtp = true;
-      });
-    }
+    FocusScope.of(context).unfocus();
+    if (!_formKey.currentState!.validate()) return;
+    _formKey.currentState!.save();
+    _callVerifyOtpApi();
   }
 
   void _resendOtp() {
@@ -202,9 +224,19 @@ class _OtpScreenState extends State<OtpScreen> {
       _showInvalidOtp = false;
       _otpController.clear();
     });
+    _callResendOtpApi();
   }
 
-  void _openResetPasswordScreen() {
-    ResetPasswordScreen.open(context);
+
+  void _callVerifyOtpApi() async {
+    await ref
+        .read(forgetPasswordProvider.notifier)
+        .verifyOtp(context, model: sendModel);
+  }
+
+  void _callResendOtpApi() async {
+    await ref
+        .read(forgetPasswordProvider.notifier)
+        .resendOtp(context, model: sendModel);
   }
 }

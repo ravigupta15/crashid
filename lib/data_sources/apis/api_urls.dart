@@ -6,5 +6,6 @@ abstract class ApiUrls {
   static const loginUrl = 'user/auth/login';
   static const forgotPasswordUrl = 'user/auth/forgot-password';
   static const verifyOtpUrl = "user/auth/verify-otp";
-  static const resendUrl = "user/auth/resend-otp";
+  static const resendOtpUrl = "user/auth/resend-otp";
+  static const resetPasswordUrl = "";
 }
