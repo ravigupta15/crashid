@@ -7,6 +7,7 @@ import 'package:crashid/features/language/presentation/language_screen.dart';
 import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/logout/app_logout.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -83,6 +84,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
     case 3:
       _openEmergencyScreen();
       break;
+    case 8:
+    AppLogoutHelper.logout();
+      break;  
     default:
       debugPrint("No screen defined for index $index");
   }

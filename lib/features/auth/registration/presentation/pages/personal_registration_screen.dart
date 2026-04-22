@@ -4,8 +4,11 @@ import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/service/date_picker_service.dart';
 import 'package:crashid/core/service/image_picker_service.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/data_sources/apis/api_urls.dart';
 import 'package:crashid/features/auth/registration/model/registration_send_model.dart';
 import 'package:crashid/features/auth/registration/presentation/widgets/upload_card_widget.dart';
+import 'package:crashid/features/auth/registration/provider/registration_notifier.dart';
+import 'package:crashid/features/auth/registration/provider/registration_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_checkbox/app_checkbox_widget.dart';
 import 'package:crashid/features/widgets/app_radio_button/app_radio_button.dart';
@@ -15,15 +18,17 @@ import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/country_code_selector.dart';
+import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
 import 'package:crashid/utils/validators/validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
-class PersonalRegistrationScreen extends StatefulWidget {
+class PersonalRegistrationScreen extends ConsumerStatefulWidget {
   static void open(BuildContext context) {
     context.push(AppRoutesPath.personalRegisterScreen);
   }
@@ -31,12 +36,12 @@ class PersonalRegistrationScreen extends StatefulWidget {
   const PersonalRegistrationScreen({super.key});
 
   @override
-  State<PersonalRegistrationScreen> createState() =>
+  ConsumerState<PersonalRegistrationScreen> createState() =>
       _PersonalRegistrationScreenState();
 }
 
 class _PersonalRegistrationScreenState
-    extends State<PersonalRegistrationScreen> with AppValidation, CountryPickerMixin {
+    extends ConsumerState<PersonalRegistrationScreen> with AppValidation, CountryPickerMixin {
   int selectedGenderIndex = 0;
 
   final _formKey = GlobalKey<FormState>();
@@ -45,10 +50,15 @@ class _PersonalRegistrationScreenState
 
   RegistrationSendModel? sendModel;
   
+  final registrationProvider =
+    AsyncNotifierProvider<RegistrationNotifier, RegistrationState>(RegistrationNotifier.new);
+
 
   @override
   void initState() {
-    sendModel = RegistrationSendModel();
+    sendModel = RegistrationSendModel(
+      gender: "male"
+    );
     Future.microtask(() {
       initCountry(phoneCode: "49");
     });
@@ -65,6 +75,7 @@ class _PersonalRegistrationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        isShowAction: false,
         title: AppLocalizations.of(context)!.personalRegistrationTitle,
       ),
       body: _screenContent()
@@ -121,9 +132,6 @@ Widget _screenContent() {
                       isReadOnly: true,
                       validator: validateEmpty,
                       onTap: _pickDob,
-                      onSaved: (_) {
-                        sendModel?.dob = _dobController.text.trim();
-                      },
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -160,7 +168,7 @@ Widget _screenContent() {
                         AppRadioBtnWithOptionalTitle(
                           selectedIndex: selectedGenderIndex,
                           index: 2,
-                          title: AppLocalizations.of(context)!.driver,
+                          title: "Divers",
                           onChanged: _onGenderChanged,
                           isTitleFirst: true,
                         ),
@@ -190,6 +198,10 @@ Widget _screenContent() {
               onTap: countryPicker,
               country: country,
             ),
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(10)
+            ],
                 textInputType: TextInputType.phone,
                 textInputAction: TextInputAction.next,
                 validator: validateEmpty,
@@ -281,6 +293,9 @@ Widget _screenContent() {
                 hintText: AppLocalizations.of(context)!.postalCode,
                  textInputAction: TextInputAction.next,
                  textInputType: TextInputType.phone,
+                 inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   validator: validateEmpty,
                   onSaved: (val) => setState(() {
                     sendModel?.postalCode = val;
@@ -415,35 +430,41 @@ Widget _screenContent() {
   void _onGenderChanged(int index) {
     setState(() {
       selectedGenderIndex = index;
+      if (index == 0) {
+        sendModel?.gender = 'male';
+      } else if (index == 1) {
+        sendModel?.gender = 'female';
+      } else {
+        sendModel?.gender = 'divers';
+      }
     });
   }
 
   void _checkValidation() {
     FocusScope.of(context).unfocus();
+    sendModel?.countryCode = country?.phoneCode;
     if (!_formKey.currentState!.validate()) return;
     if (!_isAllDocumentSelected()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please upload all required documents.'),
-        ),
+      showFeedbackMessage(  
+        context: context,
+         'Please upload all required documents.',
+        
       );
       return;
     } else if (sendModel?.termsAccepted != true) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please accept the terms and conditions.'),
-        ),
+      showFeedbackMessage(
+        context: context,
+         'Please accept the terms and conditions.',
       );
       return;
     } else if (sendModel?.privacyAccepted != true) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please accept the privacy policy.'),
-        ),
+      showFeedbackMessage(context: context, 
+       'Please accept the privacy policy.',
       );
       return;
     }
     _formKey.currentState!.save();
+    _callPersonalAccountApi();
   }
 
   Future<void> _pickDob() async {
@@ -516,4 +537,10 @@ Widget _screenContent() {
     context.pop();
   }
 
+
+  void _callPersonalAccountApi() async{
+    await ref
+        .read(registrationProvider.notifier)
+        .personalRegistration(context, sendModel: sendModel);
+  }
 }

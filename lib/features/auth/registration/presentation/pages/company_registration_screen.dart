@@ -1,6 +1,9 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/core/widget/app_dropdown_item_widget.dart';
 import 'package:crashid/features/auth/registration/model/registration_send_model.dart';
+import 'package:crashid/features/auth/registration/provider/registration_notifier.dart';
+import 'package:crashid/features/auth/registration/provider/registration_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_checkbox/app_checkbox_widget.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
@@ -10,13 +13,16 @@ import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/country_code_selector.dart';
+import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
 import 'package:crashid/utils/validators/validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class CompanyRegistrationScreen extends StatefulWidget {
+class CompanyRegistrationScreen extends ConsumerStatefulWidget {
   static void open(BuildContext context) {
     context.push(AppRoutesPath.companyRegistrationScreen);
   }
@@ -24,22 +30,27 @@ class CompanyRegistrationScreen extends StatefulWidget {
   const CompanyRegistrationScreen({super.key});
 
   @override
-  State<CompanyRegistrationScreen> createState() =>
+  ConsumerState<CompanyRegistrationScreen> createState() =>
       _CompanyRegistrationScreenState();
 }
 
-class _CompanyRegistrationScreenState extends State<CompanyRegistrationScreen> with AppValidation, CountryPickerMixin {
-    bool termsAccepted = false;
-  bool privacyAccepted = false;
+class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationScreen>
+    with AppValidation, CountryPickerMixin {
 
-final _formKey = GlobalKey<FormState>();
- 
- RegistrationSendModel? sendModel;
+  final _formKey = GlobalKey<FormState>();
+  RegistrationSendModel? sendModel;
+  final registrationProvider =
+      AsyncNotifierProvider<RegistrationNotifier, RegistrationState>(
+        RegistrationNotifier.new,
+      );
 
- @override
+  @override
   void initState() {
-    sendModel = RegistrationSendModel();
-     Future.microtask(() {
+    sendModel = RegistrationSendModel(
+      termsAccepted: false,
+      privacyAccepted: false,
+    );
+    Future.microtask(() {
       initCountry(phoneCode: "49");
     });
     super.initState();
@@ -48,7 +59,7 @@ final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Company Registration"),
+      appBar: CustomAppBar(title: "Company Registration",isShowAction: false,),
       body: _screenContent(),
     );
   }
@@ -106,7 +117,10 @@ final _formKey = GlobalKey<FormState>();
               onTap: countryPicker,
               country: country,
             ),
+            textInputType: TextInputType.number,
               inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(10)
                   ],
                   textInputAction: TextInputAction.next,
                   validator: validateEmpty,
@@ -126,17 +140,53 @@ final _formKey = GlobalKey<FormState>();
                     sendModel?.vitId = val;
                   }),),
             const SizedBox(height: 24),
-            CustomDropDownFormFiledWidget(hintText: "Industry Type",),
+            CustomDropDownFormFiledWidget(
+              hintText: "Industry Type",
+              items: AppDropdownItemWidget.industryTypeList,
+              onSaved: (newValue) {
+                setState(() {
+                  sendModel?.industryType = newValue?.value;
+                });
+              },
+              validator: (val) {
+                if (val == null ) {
+                  return 'Required';
+                }
+                return null;
+              },
+            ),
             const SizedBox(height: 24),
-            AppTextFormField(hintText: 'Password'),
+            AppTextFormField(
+              hintText: 'Password',
+              obscure: (sendModel?.password ?? '').isNotEmpty,
+              inputFormatters: [
+                Validator.emojiRestrict(),
+                Validator.removeWhiteSpace(),
+              ],
+              validator: validatePassword,
+              onChanged: (val) => setState(() {
+                sendModel?.password = val;
+              }),
+            ),
             const SizedBox(height: 24),
-            AppTextFormField(hintText: 'Comfirm Password'),
+            AppTextFormField(
+              hintText: 'Comfirm Password',
+              obscure: (sendModel?.confirmPassword ?? '').isNotEmpty,
+              inputFormatters: [
+                Validator.emojiRestrict(),
+                Validator.removeWhiteSpace(),
+              ],
+              validator: (val) => validateConfirmPassword(val, sendModel?.password),
+              onChanged: (val) => setState(() {
+                sendModel?.confirmPassword = val;
+              }),
+            ),
             const SizedBox(height: 24,),
              AppCheckbox(
-                value: termsAccepted,
+                value: sendModel?.termsAccepted ?? false,
                 onChanged: (value) {
                   setState(() {
-                    termsAccepted = value;
+                    sendModel?.termsAccepted = value;
                   });
                 },
                 activeColor: AppColors.primaryColor,
@@ -152,10 +202,10 @@ final _formKey = GlobalKey<FormState>();
               ),
               const SizedBox(height: 20),
               AppCheckbox(
-                value: privacyAccepted,
+                value: sendModel?.privacyAccepted ?? false,
                 onChanged: (value) {
                   setState(() {
-                    privacyAccepted = value;
+                    sendModel?.privacyAccepted = value;
                   });
                 },
                 activeColor: AppColors.primaryColor,
@@ -172,7 +222,7 @@ final _formKey = GlobalKey<FormState>();
                 alignment: Alignment.center,
                 child: AppElevatedButton.withTitle(
                   title: AppLocalizations.of(context)!.register,
-                  onPressed: () {},
+                  onPressed: _checkValidation,
                 ),
               ),
               const SizedBox(height: 20),
@@ -215,4 +265,32 @@ final _formKey = GlobalKey<FormState>();
     context.pop();
   }
 
+  void _checkValidation() {
+    FocusScope.of(context).unfocus();
+    if (!_formKey.currentState!.validate()) return;
+    if (!(sendModel?.termsAccepted ?? false)) {
+      showFeedbackMessage(
+        'Please accept the terms and conditions.',
+        context: context,
+      );
+      return;
+    }
+    if (!(sendModel?.privacyAccepted ?? false)) {
+      showFeedbackMessage(
+        'Please accept the privacy policy.',
+        context: context,
+      );
+      return;
+    }
+    
+    sendModel?.countryCode = country?.phoneCode;
+    _formKey.currentState!.save();
+    _callCompanyAccountApi();
+  }
+
+  void _callCompanyAccountApi() async {
+    await ref
+        .read(registrationProvider.notifier)
+        .companyRegistration(context, sendModel: sendModel);
+  }
 }

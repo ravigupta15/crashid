@@ -1,18 +1,13 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
-import 'package:crashid/features/auth/forget_password/provider/forget_password_notifier.dart';
-import 'package:crashid/features/auth/forget_password/provider/forget_password_state.dart';
 import 'package:crashid/features/auth/reset_password/model/reset_password_send_model.dart';
-import 'package:crashid/features/auth/reset_password/presentation/widgets/password_change_confirmation_widget.dart';
 import 'package:crashid/features/auth/reset_password/provider/reset_password_notifier.dart';
 import 'package:crashid/features/auth/reset_password/provider/reset_password_state.dart';
-import 'package:crashid/features/auth/signin/presentation/pages/signin_screen.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
-import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
 import 'package:crashid/utils/validators/validator.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +16,17 @@ import 'package:go_router/go_router.dart';
 
 
 class ResetPasswordScreen extends ConsumerStatefulWidget {
+  static const kToken = "/kToken";
+
+  final String? token;
  
  
- static void open(BuildContext context) {
-    context.push(AppRoutesPath.resetPasswordScreen);
+ static void open(BuildContext context, {String? token}) {
+    context.push(AppRoutesPath.resetPasswordScreen, extra: {
+      kToken: token,
+    });
   }
-  const ResetPasswordScreen({super.key});
+  const ResetPasswordScreen({super.key, this.token});
 
   @override
   ConsumerState<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -35,7 +35,7 @@ class ResetPasswordScreen extends ConsumerStatefulWidget {
 class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> with AppValidation {
 
 
-final forgetPasswordProvider =
+final resetPasswordProvider =
     AsyncNotifierProvider<ResetPasswordNotifier, ResetPasswordState>(ResetPasswordNotifier.new);
 
 
@@ -45,7 +45,9 @@ final forgetPasswordProvider =
   @override
   void initState() {
     super.initState();
-    sendModel = ResetPasswordSendModel();
+    sendModel = ResetPasswordSendModel(
+      token: widget.token,
+    );
   }
 
   @override
@@ -172,7 +174,7 @@ void _savedConfirmPassword(String? value) {
   
   void _callResetPasswordApi() async{
     await ref
-        .read(forgetPasswordProvider.notifier)
+        .read(resetPasswordProvider.notifier)
         .resetPassword(context, model: sendModel);
   }
 

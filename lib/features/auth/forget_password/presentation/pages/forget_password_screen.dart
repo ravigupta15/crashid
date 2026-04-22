@@ -1,7 +1,7 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/auth/forget_password/model/forget_send_model.dart';
-import 'package:crashid/features/auth/forget_password/presentation/pages/otp_screen.dart';
+import 'package:crashid/features/auth/otp/presentation/pages/otp_screen.dart';
 import 'package:crashid/features/auth/forget_password/presentation/widgets/check_email_widget.dart';
 import 'package:crashid/features/auth/forget_password/provider/forget_password_notifier.dart';
 import 'package:crashid/features/auth/forget_password/provider/forget_password_state.dart';
@@ -126,6 +126,6 @@ final forgetPasswordProvider =
   void _callForgetApi() async{
     await ref
         .read(forgetPasswordProvider.notifier)
-        .forgotPassword(context, model: sendModel);
+        .forgotPassword(context, sendModel: sendModel);
   }
 }

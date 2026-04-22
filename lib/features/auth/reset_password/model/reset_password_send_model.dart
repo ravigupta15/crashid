@@ -1,14 +1,20 @@
 class ResetPasswordSendModel {
   String? password;
   String? confirmPassword;
+  String? token;
 
   ResetPasswordSendModel({
     this.password,
-    this.confirmPassword
+    this.confirmPassword,
+    this.token,
   });
 
   Map<String, dynamic> toMap() {
-    return {'email': password};
+    return {
+      'new_password': password,
+      'confirm_password': confirmPassword,
+      'reset_token': token,
+    };
   }
 }
 

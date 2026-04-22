@@ -32,9 +32,28 @@ class SecureStorage {
     );
   }
 
+  
+  Future setRefreshToken(String token) async {
+    await storage.write(
+      key: SharePreferenceKeys.REFRESH_TOKEN.name,
+      value: token,
+      aOptions: AndroidOptions(),
+      iOptions: IOSOptions(accessibility: KeychainAccessibility.unlocked),
+    );
+  }
+
   Future getUserToken() async {
     return await storage.read(
       key: SharePreferenceKeys.TOKEN.name,
+      aOptions: AndroidOptions(),
+      iOptions: IOSOptions(accessibility: KeychainAccessibility.unlocked),
+    );
+  }
+
+  
+  Future getRefreshToken() async {
+    return await storage.read(
+      key: SharePreferenceKeys.REFRESH_TOKEN.name,
       aOptions: AndroidOptions(),
       iOptions: IOSOptions(accessibility: KeychainAccessibility.unlocked),
     );

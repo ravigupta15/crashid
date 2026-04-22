@@ -1,12 +1,12 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
-import 'package:crashid/features/auth/forget_password/model/otp_send_model.dart';
-import 'package:crashid/features/auth/forget_password/provider/forget_password_notifier.dart';
-import 'package:crashid/features/auth/forget_password/provider/forget_password_state.dart';
-import 'package:crashid/features/auth/reset_password/presentation/pages/reset_password_screen.dart';
+import 'package:crashid/features/auth/otp/model/otp_send_model.dart';
+import 'package:crashid/features/auth/otp/provider/otp_notifier.dart';
+import 'package:crashid/features/auth/otp/provider/otp_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,11 +14,26 @@ import 'package:go_router/go_router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpScreen extends ConsumerStatefulWidget {
-  static void open(BuildContext context) {
-    context.push(AppRoutesPath.otpScreen);
+  static const  kId = 'kId';
+  static const kType = 'kType';
+  static const kEmail = 'kEmail';
+
+  final String? id;
+  final String? type;
+  final String? email;
+  static void open(BuildContext context, {
+    String? id,
+    String? type,
+    String? email,
+  }) {
+    context.push(AppRoutesPath.otpScreen, extra: {
+      kId: id,
+      kType: type,
+      kEmail: email,
+    });
   }
 
-  const OtpScreen({super.key});
+  const OtpScreen({super.key, this.id, this.type, this.email});
 
   @override
   ConsumerState<OtpScreen> createState() => _OtpScreenState();
@@ -26,26 +41,29 @@ class OtpScreen extends ConsumerStatefulWidget {
 
 class _OtpScreenState extends ConsumerState<OtpScreen> {
   final TextEditingController _otpController = TextEditingController();
-  bool _showInvalidOtp = false;
+  final TapGestureRecognizer _resendOtpRecognizer = TapGestureRecognizer();
 
   final _formKey = GlobalKey<FormState>();
 
   OtpSendModel? sendModel;
 
-  final forgetPasswordProvider =
-      AsyncNotifierProvider<ForgetPasswordNotifier, ForgetPasswordState>(
-        ForgetPasswordNotifier.new,
+  final otpProvider =
+      AsyncNotifierProvider<OtpNotifier, OtpState>(
+        OtpNotifier.new,
       );
 
   @override
   void initState() {
     super.initState();
-    sendModel = OtpSendModel();
+    sendModel = OtpSendModel(
+      id: widget.id,
+      type: widget.type,
+    );
+    _resendOtpRecognizer.onTap = _resendOtp;
   }
 
   @override
   void dispose() {
-    _otpController.dispose();
     super.dispose();
   }
 
@@ -95,7 +113,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                'sukru2@gmail.com',
+                widget.email ?? '',
                 style: context.titleMedium.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
@@ -147,7 +165,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                     decoration: TextDecoration.underline,
                     decorationColor: AppColors.primaryColor,
                   ),
-                  // recognizer: _resendOtpRecognizer,
+                  recognizer: _resendOtpRecognizer,
                 ),
               ],
             ),
@@ -158,53 +176,42 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
   }
 
   Widget _otpTextField(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
-      child: PinCodeTextField(
-        controller: _otpController,
-        autovalidateMode: AutovalidateMode.disabled,
-        cursorHeight: 20,
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        pinTheme: PinTheme(
-          shape: PinCodeFieldShape.circle,
-          borderRadius: BorderRadius.circular(8),
-          activeColor: const Color(0xffF2F3F4),
-          disabledColor: const Color(0xffF2F3F4),
-          selectedColor: const Color(0xffF2F3F4),
-          inactiveColor: const Color(0xffF2F3F4),
-          fieldHeight: 48,
-          fieldWidth: 48,
-          inactiveFillColor: const Color(0xffF2F3F4),
-          selectedFillColor: const Color(0xffF2F3F4),
-          activeFillColor: const Color(0xffF2F3F4),
-        ),
-        cursorColor: AppColors.primaryColor,
-        blinkWhenObscuring: true,
-        animationType: AnimationType.fade,
-        length: 4,
-        animationDuration: const Duration(milliseconds: 300),
-        appContext: context,
-        keyboardType: TextInputType.number,
-        textStyle: const TextStyle(color: AppColors.blackColor),
-        enableActiveFill: true,
-        onChanged: (_) {
-          if (_showInvalidOtp) {
-            setState(() {
-              _showInvalidOtp = false;
-            });
-          }
-        },
-        onCompleted: (_) {},
-        validator: (val) {
-          if (val == null || val.isEmpty) {
-            return 'Required';
-          }
-          if (val.length < 5) {
-            return 'Invalid OTP';
-          }
-          return null;
-        },
+    return PinCodeTextField(
+      controller: _otpController,
+      autovalidateMode: AutovalidateMode.disabled,
+      cursorHeight: 20,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+      pinTheme: PinTheme(
+        shape: PinCodeFieldShape.circle,
+        borderRadius: BorderRadius.circular(8),
+        activeColor: const Color(0xffF2F3F4),
+        disabledColor: const Color(0xffF2F3F4),
+        selectedColor: const Color(0xffF2F3F4),
+        inactiveColor: const Color(0xffF2F3F4),
+        fieldHeight: 45,
+        fieldWidth: 45,
+        inactiveFillColor: const Color(0xffF2F3F4),
+        selectedFillColor: const Color(0xffF2F3F4),
+        activeFillColor: const Color(0xffF2F3F4),
       ),
+      cursorColor: AppColors.primaryColor,
+      blinkWhenObscuring: true,
+      animationType: AnimationType.fade,
+      length: 6,
+      animationDuration: const Duration(milliseconds: 300),
+      appContext: context,
+      keyboardType: TextInputType.number,
+      textStyle: const TextStyle(color: AppColors.blackColor),
+      enableActiveFill: true,
+      validator: (val) {
+        if (val == null || val.isEmpty) {
+          return 'Required';
+        }
+        if (val.length < 6) {
+          return 'Invalid OTP';
+        }
+        return null;
+      },
     );
   }
 
@@ -216,12 +223,13 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
     FocusScope.of(context).unfocus();
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
+    sendModel?.otp = _otpController.text;
     _callVerifyOtpApi();
   }
 
   void _resendOtp() {
     setState(() {
-      _showInvalidOtp = false;
+      sendModel?.otp = null;
       _otpController.clear();
     });
     _callResendOtpApi();
@@ -230,13 +238,13 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
 
   void _callVerifyOtpApi() async {
     await ref
-        .read(forgetPasswordProvider.notifier)
+        .read(otpProvider.notifier)
         .verifyOtp(context, model: sendModel);
   }
 
   void _callResendOtpApi() async {
     await ref
-        .read(forgetPasswordProvider.notifier)
+        .read(otpProvider.notifier)
         .resendOtp(context, model: sendModel);
   }
 }

@@ -25,7 +25,8 @@ class ResetPasswordNotifier extends AsyncNotifier<ResetPasswordState> {
     LoaderService().showLoader();
     try {
       final repo = ref.read(authRepositoryProvider);
-      await repo.resetPassword(model: model);
+      final response = await repo.resetPassword(model: model);
+      if (response == null) return false;
       _openDialogBox();
       return true;
     } catch (_) {
@@ -46,6 +47,7 @@ class ResetPasswordNotifier extends AsyncNotifier<ResetPasswordState> {
 
 void _openDialogBox() {
     AppDialogBox().openBox(
+      barrierDismissible: false,
       maxWidthMinWidth: MediaQuery.of(AppRouter.mainNavigatorKey.currentContext!).size.width * .8,
       screenContent: PasswordChangeConfirmationWidget(
         onTap: _openSignInSCreen,

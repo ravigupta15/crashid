@@ -4,7 +4,7 @@ import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/features/add_accident/presentation/pages/add_accident_screen.dart';
 import 'package:crashid/features/add_accident/presentation/pages/other_accident_screen.dart';
 import 'package:crashid/features/auth/forget_password/presentation/pages/forget_password_screen.dart';
-import 'package:crashid/features/auth/forget_password/presentation/pages/otp_screen.dart';
+import 'package:crashid/features/auth/otp/presentation/pages/otp_screen.dart';
 import 'package:crashid/features/auth/registration/presentation/pages/choose_account_type_screen.dart';
 import 'package:crashid/features/auth/registration/presentation/pages/company_registration_screen.dart';
 import 'package:crashid/features/auth/registration/presentation/pages/personal_registration_screen.dart';
@@ -70,12 +70,24 @@ class AppRouter {
       
       GoRoute(
         path: AppRoutesPath.otpScreen,
-        builder: (context, state) => const OtpScreen(),
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return OtpScreen(
+          id: argument?[OtpScreen.kId],
+          type: argument?[OtpScreen.kType],
+          email: argument?[OtpScreen.kEmail],
+          );
+        }
       ),
       
       GoRoute(
         path: AppRoutesPath.resetPasswordScreen,
-        builder: (context, state) => const ResetPasswordScreen(),
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return ResetPasswordScreen(
+            token: argument?[ResetPasswordScreen.kToken],
+          );
+        },
       ),
       
       GoRoute(

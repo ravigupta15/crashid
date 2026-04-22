@@ -40,8 +40,8 @@ mixin AppValidation {
   String? validatePassword(String? val) {
     if (val.isNullOrEmpty) {
       return 'Required';
-    } else if ((val ?? '').length < 6) {
-      return 'The password must be at least 6 characters.';
+    } else if ((val ?? '').length < 8) {
+      return 'The password must be at least 8 characters.';
     }
     return null;
   }
@@ -49,8 +49,8 @@ mixin AppValidation {
   String? validateConfirmPassword(String? val, String? previousPassword) {
     if (val.isNullOrEmpty) {
       return 'Required';
-    } else if ((val ?? '').length < 6) {
-      return 'Password must be at least 6 characters.';
+    } else if ((val ?? '').length < 8) {
+      return 'Password must be at least 8 characters.';
     } else if (val != previousPassword) {
       return "Password does not match";
     }

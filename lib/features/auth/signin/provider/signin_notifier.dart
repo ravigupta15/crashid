@@ -28,9 +28,11 @@ class SigninNotifier extends AsyncNotifier<SigninState> {
     try {
       final repo = ref.read(authRepositoryProvider);
       final response = await repo.login(model: model);
-       if (response.statusCode == 200) {
-        var model = SignInResponseModel.fromJson(response.data);
-        GetIt.I<SecureStorage>().setUserToken(model.data?.accessToken ?? '');
+
+       if (response?.statusCode == 200) {
+          var model = SignInResponseModel.fromJson(response?.data);
+          GetIt.I<SecureStorage>().setUserToken(model.data?.accessToken ?? '');
+          GetIt.I<SecureStorage>().setRefreshToken(model.data?.refreshToken ?? '');        
         _openAppNavigationScreen();
        }
     } 
