@@ -1,13 +1,16 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/features/profile/presentation/pages/edit_profile_screen.dart';
 import 'package:crashid/features/profile/presentation/widgets/company_account_widget.dart';
+import 'package:crashid/features/profile/presentation/widgets/personal_account_widget.dart';
 import 'package:crashid/features/profile/presentation/widgets/profile_header_widget.dart';
+import 'package:crashid/features/profile/provider/profile_notifier.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   static const kIsAppbarHide = "/kIsAppbarHide";
 
   final bool? isAppBarHide;
@@ -23,10 +26,20 @@ class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, this.isAppBarHide});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+ 
+
+@override
+  void initState() {
+    _callProfileApi();
+    super.initState();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +54,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // -----------------------------------------------------------------------------
 
   Widget _screenContent() {
+    final refState = ref.watch(profileNotifier);
+    var model = refState.value?.profileResponseModel?.data;
+    final String fullName =
+        '${(model?.firstName ?? '').toString().trim()} ${(model?.lastName ?? '').toString().trim()}'
+            .trim();
+    final String initials = _buildInitials(fullName);
+
     return ColoredBox(
       color: AppColors.screenBackground,
       child: SingleChildScrollView(
@@ -49,12 +69,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ProfileHeader(
-              initials: 'R',
-              displayName: 'Roman Henderson',
+              initials: initials,
+              displayName: fullName.isNotEmpty ? fullName : '',
               onEdit: _openEditProfileScreen,
             ),
             const SizedBox(height: 50),
-            CompanyAccountWidget(),
+            model?.accountType == "personal" ?
+             PersonalAccountWidget(profileData: model) :
+            CompanyAccountWidget(profileData: model),
           ],
         ),
       ),
@@ -67,5 +89,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 void _openEditProfileScreen(){
   EditProfileScreen.open(context);
+}
+
+void _callProfileApi() async{
+    await ref
+        .read(profileNotifier.notifier)
+        .getProfile(context);
+  }
+
+String _buildInitials(String fullName) {
+  if (fullName.trim().isEmpty) return '';
+  final parts = fullName.trim().split(RegExp(r'\s+'));
+  if (parts.length == 1) return parts.first[0].toUpperCase();
+  return '${parts.first[0]}${parts.last[0]}'.toUpperCase();
 }
 }

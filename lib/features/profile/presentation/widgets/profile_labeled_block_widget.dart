@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class ProfileLabeledBlock extends StatelessWidget {
   final String label;
-  final String value;
+  final String? value;
 
   const ProfileLabeledBlock({
     super.key,
@@ -27,7 +27,7 @@ class ProfileLabeledBlock extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          value,
+          value ?? 'NA',
           style: context.bodyLarge.copyWith(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,

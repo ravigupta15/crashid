@@ -2,12 +2,16 @@ import 'package:crashid/features/profile/presentation/widgets/profile_document_p
 import 'package:crashid/features/profile/presentation/widgets/profile_info_card_widget.dart';
 import 'package:crashid/features/profile/presentation/widgets/profile_labeled_block_widget.dart';
 import 'package:crashid/features/profile/presentation/widgets/profile_section_header_widget.dart';
+import 'package:crashid/features/profile/model/profile_response_model.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/date_format/app_date_format.dart';
 import 'package:flutter/material.dart';
 
 class PersonalAccountWidget extends StatelessWidget {
-  const PersonalAccountWidget({super.key});
+  final Data? profileData;
+
+  const PersonalAccountWidget({super.key, this.profileData});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +19,7 @@ class PersonalAccountWidget extends StatelessWidget {
   }
 
   Widget _screenContent() {
+  
     return Column(
       children: [
          const ProfileSectionHeader(
@@ -30,9 +35,9 @@ class PersonalAccountWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const ProfileLabeledBlock(
+                  ProfileLabeledBlock(
                     label: 'Full name',
-                    value: 'Roman Richard Henderson',
+                    value: "${profileData?.firstName} ${profileData?.lastName}",
                   ),
                   const SizedBox(height: 20),
                   Row(
@@ -41,14 +46,14 @@ class PersonalAccountWidget extends StatelessWidget {
                       Expanded(
                         child: ProfileLabeledBlock(
                           label: 'Date of birth',
-                          value: 'March 12, 1985',
+                          value: AppDateFormat.formatDob(profileData?.dateOfBirth ?? ''),
                         ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
                         child: ProfileLabeledBlock(
                           label: 'Gender',
-                          value: 'Male',
+                          value: profileData?.gender,
                         ),
                       ),
                     ],
@@ -67,23 +72,22 @@ class PersonalAccountWidget extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             ProfileInfoCard(
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ProfileLabeledBlock(
                     label: 'Phone number',
-                    value: '+41 (555) 234-8901',
+                    value: "${profileData?.countryCode ?? ''} ${profileData?.mobileNumber ?? ''}",
                   ),
-                  SizedBox(height: 29),
+                  const SizedBox(height: 29),
                   ProfileLabeledBlock(
                     label: 'Email address',
-                    value: 'romanrichardhenderson@gmai.com',
+                    value: profileData?.email,
                   ),
-                  SizedBox(height: 29),
+                  const SizedBox(height: 29),
                   ProfileLabeledBlock(
                     label: 'Residential address',
-                    value:
-                        '782 Oakwood Avenue, Suite 400, Chicago, 60605',
+                    value: profileData?.address,
                   ),
                 ],
               ),
@@ -109,4 +113,5 @@ class PersonalAccountWidget extends StatelessWidget {
       ],
     );
   }
+
 }

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:crashid/core/service/internet_connectivity.dart';
 import 'package:crashid/data_sources/local_storage/secure_storage.dart';
+import 'package:crashid/features/lookup/repository/refresh_token_repository.dart';
 import 'package:crashid/utils/extensions/extension_string.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/logout/app_logout.dart';
@@ -44,9 +45,20 @@ class ApiService {
     } on DioException catch (e) {
       if (e.response != null && e.response!.statusCode == 401  && retry) {
         // Refresh token
+          final refreshed = await RefreshTokenRepository.refreshTokenApi();
+        if (refreshed) {
+          return sendRequest(
+            apiUrl: apiUrl,
+            method: method,
+            data: data,
+            queryParameters: queryParameters,
+            isErrorMessageShow: isErrorMessageShow,
+            retry: false, // only retry once
+          );
+        } else {
           showFeedbackMessage("Session expired. Please log in again.");
           AppLogoutHelper.logout();
-        
+        }
       } else if (e.response != null) {
         _processResponse(e.response!, isErrorMessageShow);
       } else {

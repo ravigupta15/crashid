@@ -1,15 +1,12 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/auth/forget_password/model/forget_send_model.dart';
-import 'package:crashid/features/auth/otp/presentation/pages/otp_screen.dart';
-import 'package:crashid/features/auth/forget_password/presentation/widgets/check_email_widget.dart';
 import 'package:crashid/features/auth/forget_password/provider/forget_password_notifier.dart';
 import 'package:crashid/features/auth/forget_password/provider/forget_password_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
-import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
 import 'package:crashid/utils/validators/validator.dart';
 import 'package:flutter/material.dart';

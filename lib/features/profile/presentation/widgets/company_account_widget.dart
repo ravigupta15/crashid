@@ -1,4 +1,5 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/features/profile/model/profile_response_model.dart';
 import 'package:crashid/features/profile/presentation/widgets/company_legal_pdf_info_widget.dart';
 import 'package:crashid/features/profile/presentation/widgets/profile_document_pair_widget.dart';
 import 'package:crashid/features/profile/presentation/widgets/profile_info_card_widget.dart';
@@ -6,10 +7,13 @@ import 'package:crashid/features/profile/presentation/widgets/profile_labeled_bl
 import 'package:crashid/features/profile/presentation/widgets/profile_section_header_widget.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/date_format/app_date_format.dart';
 import 'package:flutter/material.dart';
 
 class CompanyAccountWidget extends StatefulWidget {
-  const CompanyAccountWidget({super.key});
+  final Data? profileData;
+
+  const CompanyAccountWidget({super.key, this.profileData});
 
   @override
   State<CompanyAccountWidget> createState() => _CompanyAccountWidgetState();
@@ -22,6 +26,7 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
   }
 
   Widget _screenContent() {
+
     return Column(
       children: [
         ProfileSectionHeader(
@@ -33,37 +38,37 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ProfileLabeledBlock(
+              ProfileLabeledBlock(
                 label: 'Legal company name',
-                value: 'Global Logistics Solutions GmbH',
+                value: widget.profileData?.legalCompanyName,
               ),
               const SizedBox(height: 20),
-              const ProfileLabeledBlock(
+              ProfileLabeledBlock(
                 label: 'Registered name',
-                value: 'GLS GmbH',
+                value: widget.profileData?.registeredCompanyName,
               ),
               const SizedBox(height: 20),
-              const ProfileLabeledBlock(
+              ProfileLabeledBlock(
                 label: 'VAT ID',
-                value: 'DE 123 456 789',
+                value: widget.profileData?.vatId,
               ),
               const SizedBox(height: 20),
-              const ProfileLabeledBlock(
+              ProfileLabeledBlock(
                 label: 'Comm. reg. number',
-                value: 'HRB 98765 B',
+                value: widget.profileData?.commercialRegistrationNumber,
               ),
               const SizedBox(height: 20),
-              const ProfileLabeledBlock(
+              ProfileLabeledBlock(
                 label: 'Company email',
-                value: 'global.logistics.gls@gmail.com',
+                value: widget.profileData?.generalEmail,
               ),
               const SizedBox(height: 20),
-              const ProfileLabeledBlock(
+              ProfileLabeledBlock(
                 label: 'Company phone number',
-                value: '+49 0378099876',
+                value: "${widget.profileData?.countryCode ?? ''} ${widget.profileData?.companyPhone ?? ''}",
               ),
               const SizedBox(height: 20),
-              const ProfileLabeledBlock(label: 'Industry', value: 'LOGISTICS'),
+              ProfileLabeledBlock(label: 'Industry', value: widget.profileData?.industry),
               const SizedBox(height: 20),
               CompanyLegalPdfInfoWidget(),
             ],
@@ -79,24 +84,24 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ProfileLabeledBlock(
+              ProfileLabeledBlock(
                 label: 'Full name',
-                value: 'Alexander von Weber',
+                value: widget.profileData?.contactFirstName,
               ),
               const SizedBox(height: 20),
-              const ProfileLabeledBlock(
+              ProfileLabeledBlock(
                 label: 'Job title',
-                value: 'Head Safety Manager',
+                value: widget.profileData?.jobTitle,
               ),
               const SizedBox(height: 20),
-              const ProfileLabeledBlock(
+              ProfileLabeledBlock(
                 label: 'Email address',
-                value: 'a.weber@gls-global.com',
+                value: widget.profileData?.email,
               ),
               const SizedBox(height: 20),
-              const ProfileLabeledBlock(
+              ProfileLabeledBlock(
                 label: 'Mobile number',
-                value: '+49 1512345678',
+                value: widget.profileData?.mobileNumber,
               ),
               const SizedBox(height: 20),
               Row(
@@ -105,19 +110,19 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
                   Expanded(
                     child: ProfileLabeledBlock(
                       label: 'Date of birth',
-                      value: 'March 12, 1985',
+                      value: AppDateFormat.formatDob( widget.profileData?.dateOfBirth ?? ''),
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: ProfileLabeledBlock(label: 'Gender', value: 'Male'),
+                    child: ProfileLabeledBlock(label: 'Gender', value: widget.profileData?.gender),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              const ProfileLabeledBlock(
+              ProfileLabeledBlock(
                 label: 'Website',
-                value: 'www.gls-global.com',
+                value: widget.profileData?.websiteLink,
               ),
             ],
           ),
@@ -184,6 +189,7 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
       ],
     );
   }
+
   Widget _companyAddressTile(
     BuildContext context, {
     required String country,
