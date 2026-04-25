@@ -15,7 +15,7 @@ import 'package:crashid/features/emergency/presentation/pages/emergency_screen.d
 import 'package:crashid/features/app_navigation/presentation/pages/app_navigation_screen.dart';
 import 'package:crashid/features/home/presentation/pages/home_screen.dart';
 import 'package:crashid/features/language/presentation/language_screen.dart';
-import 'package:crashid/features/my_cars/presentation/pages/add_car_screen.dart';
+import 'package:crashid/features/add_car/presentation/pages/add_car_screen.dart';
 import 'package:crashid/features/my_cars/presentation/pages/car_details_screen.dart';
 import 'package:crashid/features/my_cars/presentation/pages/my_cars_screen.dart';
 import 'package:crashid/features/my_insurance/presentation/pages/my_insurance_screen.dart';
@@ -118,7 +118,10 @@ class AppRouter {
       ),
       GoRoute(
         path: AppRoutesPath.carDetailsScreen,
-        builder: (context, state) => const CarDetailsScreen(),
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return CarDetailsScreen(id: argument?[CarDetailsScreen.kId]);
+        },
       ),
       
       GoRoute(

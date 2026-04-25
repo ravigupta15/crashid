@@ -173,7 +173,7 @@ class _ImageErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return  FittedBox(
       child: Center(
-        child: Padding(padding: EdgeInsets.all(20.0), child: SvgPicture.asset(AppAssetPaths.appLogoIcon)
+        child: Padding(padding: EdgeInsets.all(20.0), child: Image.asset(AppAssetPaths.appLogoIcon)
         ),
       ),
     );

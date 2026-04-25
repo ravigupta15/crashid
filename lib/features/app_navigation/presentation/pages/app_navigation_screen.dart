@@ -5,7 +5,9 @@ import 'package:crashid/features/app_navigation/presentation/widgets/add_car_dil
 import 'package:crashid/features/case_history/presentation/pages/case_history_screen.dart';
 import 'package:crashid/features/emergency/presentation/pages/emergency_screen.dart';
 import 'package:crashid/features/home/presentation/pages/home_screen.dart';
-import 'package:crashid/features/my_cars/presentation/pages/add_car_screen.dart';
+import 'package:crashid/features/add_car/presentation/pages/add_car_screen.dart';
+import 'package:crashid/features/my_cars/provider/my_car_notifier.dart';
+import 'package:crashid/features/my_cars/provider/my_car_state.dart';
 import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_asset_paths.dart';
@@ -13,9 +15,10 @@ import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/extensions/extension_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class AppNavigationScreen extends StatefulWidget {
+class AppNavigationScreen extends ConsumerStatefulWidget {
  
  static void open(BuildContext context) {
     context.pushNamedAndRemoveUntil(AppRoutesPath.appNavigationScreen);
@@ -24,10 +27,10 @@ class AppNavigationScreen extends StatefulWidget {
   const AppNavigationScreen({super.key});
 
   @override
-  State<AppNavigationScreen> createState() => _AppNavigationScreenState();
+  ConsumerState<AppNavigationScreen> createState() => _AppNavigationScreenState();
 }
 
-class _AppNavigationScreenState extends State<AppNavigationScreen> {
+class _AppNavigationScreenState extends ConsumerState<AppNavigationScreen> {
   int _selectedBarIndex = 0;
 
 
@@ -56,15 +59,26 @@ class _AppNavigationScreenState extends State<AppNavigationScreen> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+
+final myCarNotifierProvider =
+    AsyncNotifierProvider<MyCarNotifier, MyCarState>(MyCarNotifier.new);
+
+   
  @override
   void initState() {
     callInitFunction();
     super.initState();
   }
 
-  void callInitFunction() {
-    Future.microtask(() {
-      _openAddCarDialogBox();
+  void callInitFunction() async{
+    Future.microtask(() async{
+      await ref
+        .read(myCarNotifierProvider.notifier)
+        .myCar(context).then((val) {
+          if (val == false) {
+            _openAddCarDialogBox();
+          }
+        });
     });
   }
 

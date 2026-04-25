@@ -4,14 +4,16 @@ class DatePickerService {
   static Future<DateTime?> pickDob(
     BuildContext context, {
     DateTime? initialDate,
+    int? previousYearLimit,
+    DateTime? firstDate
   }) async {
     final DateTime now = DateTime.now();
-    final DateTime defaultInitialDate = DateTime(now.year - 18, now.month, now.day);
+    final DateTime defaultInitialDate = DateTime(previousYearLimit ?? now.year - 18, now.month, now.day);
 
     return showDatePicker(
       context: context,
       initialDate: initialDate ?? defaultInitialDate,
-      firstDate: DateTime(1900),
+      firstDate: firstDate ?? DateTime(1900),
       lastDate: now,
       initialEntryMode: DatePickerEntryMode.calendarOnly,
       builder: (context, child) {

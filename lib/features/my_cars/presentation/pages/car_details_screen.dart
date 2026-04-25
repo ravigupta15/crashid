@@ -1,25 +1,49 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/my_cars/presentation/widgets/car_detail_info_row_widget.dart';
+import 'package:crashid/features/my_cars/provider/my_car_notifier.dart';
+import 'package:crashid/features/my_cars/provider/my_car_state.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
+import 'package:crashid/utils/date_format/app_date_format.dart';
+import 'package:crashid/utils/empty/empty_widget.dart';
+import 'package:crashid/utils/linkers/launch_url.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class CarDetailsScreen extends StatefulWidget {
-  
-  static void open(BuildContext context) {
-    context.push(AppRoutesPath.carDetailsScreen);
+class CarDetailsScreen extends ConsumerStatefulWidget {
+  static const String kId = "kId";
+
+  final String? id;
+  static void open(BuildContext context, String? id) {
+    context.push(AppRoutesPath.carDetailsScreen, extra: {kId: id});
   }
 
-  const CarDetailsScreen({super.key});
+  const CarDetailsScreen({super.key, this.id});
 
   @override
-  State<CarDetailsScreen> createState() => _CarDetailsScreenState();
+  ConsumerState<CarDetailsScreen> createState() => _CarDetailsScreenState();
 }
 
-class _CarDetailsScreenState extends State<CarDetailsScreen> {
+class _CarDetailsScreenState extends ConsumerState<CarDetailsScreen> {
+  
+
+  
+final myCarNotifierProvider =
+    AsyncNotifierProvider<MyCarNotifier, MyCarState>(MyCarNotifier.new);
+
+    @override
+  void initState() {
+    _callMyCarDetailsApi();
+    super.initState();
+   }
+
+  void _callMyCarDetailsApi() async{
+     await ref.read(myCarNotifierProvider.notifier).myCarDetails(widget.id ?? '');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,11 +61,14 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
   // -----------------------------------------------------------------------------
 
   Widget _screenContent() {
-    return ColoredBox(
+    final refState = ref.watch(myCarNotifierProvider);
+    final model = refState.value?.carDetailsResponseModel?.data;
+    return model != null ? ColoredBox(
       color: AppColors.screenBackground,
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 30),
         child: Container(
+          padding: EdgeInsets.only(bottom: 20),
         decoration: BoxDecoration(
           color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(20),
@@ -61,68 +88,75 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),
-              child: SizedBox(
-                height: 200,
-                child: Image.asset(
-                  "assets/images/dummy_car (2).png",
-                  fit: BoxFit.cover,
-                ),
-              ),
+              child: AppCachedNetworkImage(imageUrl: model.images?.first.imageUrl ?? '', height: 200, boxFit: BoxFit.cover,),
+              //  SizedBox(
+              //   height: 200,
+              //   child: Image.asset(
+              //     "assets/images/dummy_car (2).png",
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
             ),
             const SizedBox(height: 20),
-            const CarDetailInfoRow(label: 'Brand', value: 'Volkswagen'),
+             CarDetailInfoRow(label: 'Brand', value: model.brand ?? '-'),
             const SizedBox(height: 20),
-            const CarDetailInfoRow(label: 'Model', value: 'Zxi'),
+             CarDetailInfoRow(label: 'Model', value: model.model ?? '-'),
             const SizedBox(height: 20),
-            const CarDetailInfoRow(label: 'Car Name', value: 'Ameo'),
+             CarDetailInfoRow(label: 'Car Name', value: model.carName ?? ''),
             const SizedBox(height: 20),
-            const CarDetailInfoRow(label: 'Fuel Type', value: 'Petrol'),
+             CarDetailInfoRow(label: 'Fuel Type', value: model.fuelType ?? '-'),
             const SizedBox(height: 20),
-            const CarDetailInfoRow(
+             CarDetailInfoRow(
               label: 'Registration Date',
-              value: '14/12/1998',
+              value: AppDateFormat.formatDate(model.registrationDate),
             ),
             const SizedBox(height: 20),
-            const CarDetailInfoRow(label: 'Color', value: 'Metal Grey'),
+             CarDetailInfoRow(label: 'Color', value: model.color ?? '-'),
             const SizedBox(height: 20),
-            const CarDetailInfoRow(
+             CarDetailInfoRow(
               label: 'FIN/VIN',
-              value: '1HGBH41JXMN109186',
+              value: model.finVin ?? '-',
             ),
             const SizedBox(height: 20),
-            const CarDetailInfoRow(
+             CarDetailInfoRow(
               label: 'Insurance Company',
-              value: 'Yes Bank',
+              value: model.insuranceCompanyName ?? '-',
             ),
             const SizedBox(height: 20),
-            const CarDetailInfoRow(
+             CarDetailInfoRow(
               label: 'Insurance Number',
-              value: '123456789',
+              value: model.insuranceNumber ?? '-',
             ),
             const SizedBox(height: 20),
-            const CarDetailInfoRow(
+             CarDetailInfoRow(
               label: 'Insurance Expiry',
-              value: '14/12/2026',
+              value: AppDateFormat.formatDate(model.validUntil),
             ),
+            if ((model.insuranceImage ?? '').isNotEmpty)...[
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: _InsurancePdfCard(
-                onView: () {},
+                date: AppDateFormat.formatMonthYear(model.createdAt),
+                onView: () {
+                  LaunchURLUtils().launchStringURL(model.insuranceImage ?? '');
+                },
               ),
             ),
+            ]
           ],
         ),
       ),
       ),
-    );
+    ) : EmptyWidget();
   }
 }
 
 class _InsurancePdfCard extends StatelessWidget {
   final VoidCallback onView;
+  final String? date;
 
-  const _InsurancePdfCard({required this.onView});
+  const _InsurancePdfCard({required this.onView, this.date});
 
 
   @override
@@ -164,7 +198,7 @@ class _InsurancePdfCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Last updated: Oct 2023',
+                  'Last updated: ${date ?? ''}',
                   style: context.bodySmall.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,

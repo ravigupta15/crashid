@@ -5,6 +5,14 @@ class AppDropdownItemWidget {
     CustomDropDownItem(value: "Transportation", key: "Transportation"),
   ];
 
+
+
+  static List<CustomDropDownItem> fuelTypes = const [
+    CustomDropDownItem(key: "petrol", value: "Petrol"),
+    CustomDropDownItem(key: "diesel", value: "Diesel"),
+    CustomDropDownItem(key: "EV", value: "EV"),
+    CustomDropDownItem(key: "Cng", value: "Cng"),
+  ];
   // static List<CustomDropDownItem> operatorDropdown(List<Operators> list) {
   //   final List<CustomDropDownItem> menuItems = [];
   //   for (final item in list) {

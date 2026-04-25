@@ -20,6 +20,25 @@ class AppDateFormat {
     return '';
   }
 
+  
+  static String formatDate(String utcTimestamp) {
+    if (utcTimestamp.isNotNullOrNotEmpty) {
+      DateTime dateTime = DateTime.parse(utcTimestamp).toLocal();
+      DateFormat formatter = DateFormat('dd/MM/yyyy');
+      return formatter.format(dateTime);
+    }
+    return '';
+  }
+
+  
+  static String formatMonthYear(String utcTimestamp) {
+    if (utcTimestamp.isNotNullOrNotEmpty) {
+      DateTime dateTime = DateTime.parse(utcTimestamp).toLocal();
+      DateFormat formatter = DateFormat('MMM yyyy');
+      return formatter.format(dateTime);
+    }
+    return '';
+  }
 
 static String formatUtcToOrder(String utcTimestamp) {
   if (utcTimestamp.isNotNullOrNotEmpty) {

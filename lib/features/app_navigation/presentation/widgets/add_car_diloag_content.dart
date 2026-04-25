@@ -1,5 +1,5 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
-import 'package:crashid/features/my_cars/presentation/pages/add_car_screen.dart';
+import 'package:crashid/features/add_car/presentation/pages/add_car_screen.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';

@@ -40,6 +40,7 @@ class AppTextFormField extends StatefulWidget {
   final Color? textColor;
   final double? borderRadius;
   final double? prefixWidth;
+  final TextCapitalization? textCapitalization;
 
   AppTextFormField({
     super.key,
@@ -77,7 +78,8 @@ class AppTextFormField extends StatefulWidget {
     this.isUnderlineBorder,
     this.textColor,
     this.borderRadius,
-    this.prefixWidth
+    this.prefixWidth,
+    this.textCapitalization,
   }) : assert(initialValue == null || controller == null);
 
   @override
@@ -121,6 +123,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             fontWeight: FontWeight.w500,
             color: widget.textColor,
           ),
+          textCapitalization: widget.textCapitalization ?? TextCapitalization.none,
           controller: widget.controller,
           autofillHints: widget.autofillHints,
           inputFormatters: widget.inputFormatters,

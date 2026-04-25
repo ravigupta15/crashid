@@ -17,5 +17,7 @@ abstract class ApiUrls {
   static const profileImageUrl = "${baseUrl}user/auth/profile/image";
 
   //vechile
-  static const addVehicleUrl = "${baseUrl}user/vehicles";
+  static const carBrandsUrl = "${baseUrl}vehicle-masters/brands";
+  static const carColorUrl = "${baseUrl}vehicle-masters/colors";
+  static const vehicleUrl = "${baseUrl}user/vehicles";
 }
