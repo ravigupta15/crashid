@@ -1,4 +1,5 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
+import 'package:crashid/features/profile/model/profile_response_model.dart';
 import 'package:crashid/features/profile/presentation/pages/edit_profile_screen.dart';
 import 'package:crashid/features/profile/presentation/widgets/company_account_widget.dart';
 import 'package:crashid/features/profile/presentation/widgets/personal_account_widget.dart';
@@ -57,7 +58,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final refState = ref.watch(profileNotifier);
     var model = refState.value?.profileResponseModel?.data;
     final String fullName =
-        '${(model?.firstName ?? '').toString().trim()} ${(model?.lastName ?? '').toString().trim()}'
+        '${(model?.firstName ?? model?.legalCompanyName ?? '').toString().trim()} ${(model?.lastName ?? '').toString().trim()}'
             .trim();
     final String initials = _buildInitials(fullName);
 
@@ -71,7 +72,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             ProfileHeader(
               initials: initials,
               displayName: fullName.isNotEmpty ? fullName : '',
-              onEdit: _openEditProfileScreen,
+              onEdit: () => _openEditProfileScreen( model),
             ),
             const SizedBox(height: 50),
             model?.accountType == "personal" ?
@@ -87,8 +88,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   // Helper Methods
   // -----------------------------------------------------------------------------
 
-void _openEditProfileScreen(){
-  EditProfileScreen.open(context);
+void _openEditProfileScreen(ProfileModel? model) {
+  EditProfileScreen.open(context, model: model).then((val) {
+      _callProfileApi();
+  });
 }
 
 void _callProfileApi() async{
@@ -103,4 +106,6 @@ String _buildInitials(String fullName) {
   if (parts.length == 1) return parts.first[0].toUpperCase();
   return '${parts.first[0]}${parts.last[0]}'.toUpperCase();
 }
+
+
 }

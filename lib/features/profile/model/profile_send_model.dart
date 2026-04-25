@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:crashid/data_sources/local_storage/user_manager.dart';
 import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
 
-class RegistrationSendModel {
+class ProfileSendModel {
   String? firstName;
   String? lastName;
   String? dob;
@@ -27,8 +29,19 @@ class RegistrationSendModel {
   String? industryType;
   String? password;
   String? confirmPassword;
-
-  RegistrationSendModel({
+  String? contactFirstName;
+  String? contactLastName;
+  String? jobTitle;
+  String? websiteLink;
+  String? primaryPhone;
+  String? billingAddress;
+  String? billingStreet;
+  String? billingHouseNumber;
+  String? billingPostalCode;
+  String? billingCity;
+    File? selectedInsurancePdf;
+  
+  ProfileSendModel({
     this.firstName,
     this.lastName,
     this.dob,
@@ -47,6 +60,7 @@ class RegistrationSendModel {
     this.drivingLicenseBack,
     this.idDocumentFront,
     this.idDocumentBack,
+    
 
     //company
     this.legalCompanyName,
@@ -55,15 +69,38 @@ class RegistrationSendModel {
     this.industryType,
     this.password,
     this.confirmPassword,
+    this.contactFirstName,
+    this.contactLastName,
+    this.jobTitle,
+    this.primaryPhone,
+    this.websiteLink,
+    this.billingAddress,
+    this.billingStreet,
+    this.billingHouseNumber,
+    this.billingPostalCode,
+    this.billingCity,
+    this.selectedInsurancePdf,
   });
 
 
   Map<String, dynamic> toCompanyMap() {
     return {
+      'contact_first_name': contactFirstName,
+      'contact_last_name': contactLastName,
+      'job_title': jobTitle,
+      'date_of_birth': dob,
+      'gender': gender,
+      'general_email': email,
+      'country_code': "+$countryCode",
+      'company_phone': mobileNumber,
+      'industry': industryType,
+      'website_link': websiteLink,
+      
+      
         'legal_company_name': legalCompanyName,
         'register_company_name': registerCompanyName,
         'general_email': email,
-        'country_code': "+$countryCode",
+        'country_code': countryCode,
         'company_phone': mobileNumber,
         'vat_id': vitId,
         'industry': industryType,
@@ -83,32 +120,13 @@ class RegistrationSendModel {
       "email": email,
       "country_code": "+$countryCode",
       "mobile_number": mobileNumber,
-      "password": password,
-      "confirm_password": confirmPassword,
       "address": address,
       "street": street,
       "house_number": houseNumber,
       "postal_code": postalCode,
       "city": city,
-      "terms_accepted": termsAccepted,
-      "privacy_accepted": privacyAccepted,
-
+      "language" : GetIt.I<UserManager>().language,
     };
-
-    // Handle Files - Only add if they are not null
-    if (drivingLicenseFront != null) {
-      map["driving_license_front"] = await MultipartFile.fromFile(drivingLicenseFront!.path);
-    }
-    if (drivingLicenseBack != null) {
-      map["driving_license_back"] = await MultipartFile.fromFile(drivingLicenseBack!.path);
-    }
-    if (idDocumentFront != null) {
-      map["id_document_front"] = await MultipartFile.fromFile(idDocumentFront!.path);
-    }
-    if (idDocumentBack != null) {
-      map["id_document_back"] = await MultipartFile.fromFile(idDocumentBack!.path);
-    }
-
     return FormData.fromMap(map);
   }
 }

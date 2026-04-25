@@ -19,6 +19,7 @@ import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/country_code_selector.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
+import 'package:crashid/utils/image_picker_bottom_sheet.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
 import 'package:crashid/utils/validators/validator.dart';
 import 'package:flutter/gestures.dart';
@@ -491,45 +492,13 @@ Widget _screenContent() {
   Future<void> _pickDocumentImage({
     required ValueChanged<File?> onPicked,
   }) async {
-    final ImageSource? source = await _showImageSourcePicker();
+    final ImageSource? source = await showImageSourcePicker();
     if (source == null) return;
     final File? file = await ImagePickerService.imagePicker(source);
     if (file == null) return;
     setState(() {
       onPicked(file);
     });
-  }
-
-  Future<ImageSource?> _showImageSourcePicker() {
-    return showModalBottomSheet<ImageSource>(
-      context: context,
-      builder: (context) {
-        return SafeArea(
-          child: Wrap(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.photo_library_outlined),
-                title:  Text('Gallery', style: context.bodyMedium.copyWith(
-                  color: AppColors.darkGrayColor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w500,
-                )),
-                onTap: () => Navigator.pop(context, ImageSource.gallery),
-              ),
-              ListTile(
-                leading: const Icon(Icons.camera_alt_outlined),
-                title:  Text('Camera', style: context.bodyMedium.copyWith(
-                  color: AppColors.darkGrayColor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w500,
-                )),
-                onTap: () => Navigator.pop(context, ImageSource.camera),
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 
   void _backToSignIn() {

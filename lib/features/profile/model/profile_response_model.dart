@@ -1,14 +1,14 @@
 class ProfileResponseModel {
   bool? success;
   String? message;
-  Data? data;
+  ProfileModel? data;
 
   ProfileResponseModel({this.success, this.message, this.data});
 
   ProfileResponseModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
-    data = json['data'] != null ?  Data.fromJson(json['data']) : null;
+    data = json['data'] != null ?  ProfileModel.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,7 +22,7 @@ class ProfileResponseModel {
   }
 }
 
-class Data {
+class ProfileModel {
   dynamic id;
   dynamic accountType;
   dynamic email;
@@ -62,7 +62,7 @@ class Data {
   dynamic postalCode;
   dynamic city;
 
-  Data(
+  ProfileModel(
       {this.id,
       this.accountType,
       this.email,
@@ -102,7 +102,7 @@ class Data {
       this.postalCode,
       this.city});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  ProfileModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     accountType = json['account_type'];
     email = json['email'];

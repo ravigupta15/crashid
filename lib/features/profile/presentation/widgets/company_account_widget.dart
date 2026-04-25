@@ -8,10 +8,11 @@ import 'package:crashid/features/profile/presentation/widgets/profile_section_he
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/date_format/app_date_format.dart';
+import 'package:crashid/utils/empty/empty_widget.dart';
 import 'package:flutter/material.dart';
 
 class CompanyAccountWidget extends StatefulWidget {
-  final Data? profileData;
+  final ProfileModel? profileData;
 
   const CompanyAccountWidget({super.key, this.profileData});
 
@@ -69,8 +70,10 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(label: 'Industry', value: widget.profileData?.industry),
+              if (widget.profileData?.legalFormPdf != null)...[ 
               const SizedBox(height: 20),
               CompanyLegalPdfInfoWidget(),
+              ]
             ],
           ),
         ),
@@ -127,6 +130,7 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
             ],
           ),
         ),
+        if (widget.profileData?.drivingLicenseFront != null)...[
           const SizedBox(height: 32),
              ProfileSectionHeader(
               icon: Image.asset(AppAssetPaths.divingLicenseIcon),
@@ -135,7 +139,9 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
             const SizedBox(height: 16),
             const ProfileDocumentPair(
               assetPath: "assets/images/License Back.png",
-            ),
+            )
+            ],
+             if (widget.profileData?.idDocumentFront != null)...[
             const SizedBox(height: 32),
              ProfileSectionHeader(
               icon: Image.asset(AppAssetPaths.divingLicenseIcon),
@@ -143,7 +149,8 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
             ),
             const SizedBox(height: 12),
             const ProfileDocumentPair(
-              assetPath: "assets/images/License Back.png",),
+              assetPath: "assets/images/License Back.png",)
+             ],
             const SizedBox(height: 32),
             ProfileInfoCard(
               child: Column(
@@ -157,10 +164,11 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
               title: 'Business Address',
             ),
           const SizedBox(height: 24,),
+           widget.profileData?.businessAddress != null ?
                   _companyAddressTile(
                     context,
                     country: 'Germany',
-                  ),
+                  ): EmptyWidget(),
                 ],
               ),
             ),
@@ -177,11 +185,11 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
               title: 'Billing Address',
             ),
             const SizedBox(height: 24),
-            
+               widget.profileData?.billingAddress != null ?
                   _companyAddressTile(
                     context,
                     country: 'Germany',
-                  ),
+                  ) : EmptyWidget(),
                 ],
               ),
             ),

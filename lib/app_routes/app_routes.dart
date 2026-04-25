@@ -158,7 +158,12 @@ class AppRouter {
       ),
       GoRoute(
         path: AppRoutesPath.editProfileScreen,
-        builder: (context, state) => const EditProfileScreen(),
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return  EditProfileScreen(
+            model: argument?[EditProfileScreen.kModel],
+          );
+        },
       ),
       // GoRoute(
       //   path: OtpVerifyScreen.routeName,

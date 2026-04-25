@@ -1,8 +1,13 @@
+import 'dart:io';
+
+import 'package:crashid/core/service/image_picker_service.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/image_picker_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ProfileHeader extends StatelessWidget {
+class ProfileHeader extends StatefulWidget {
   final String initials;
   final String displayName;
   final VoidCallback? onEdit;
@@ -15,13 +20,18 @@ class ProfileHeader extends StatelessWidget {
   });
 
   @override
+  State<ProfileHeader> createState() => _ProfileHeaderState();
+}
+
+class _ProfileHeaderState extends State<ProfileHeader> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Align(
           alignment: Alignment.centerRight,
           child: TextButton.icon(
-            onPressed: onEdit,
+            onPressed: widget.onEdit,
             icon: Icon(
               Icons.edit_outlined,
               size: 18,
@@ -65,7 +75,7 @@ class ProfileHeader extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: Text(
-              initials,
+              widget.initials,
               style: context.headlineMedium.copyWith(
                     fontWeight: FontWeight.w700,
                     fontSize: 35,
@@ -76,7 +86,7 @@ class ProfileHeader extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          displayName,
+          widget.displayName,
           textAlign: TextAlign.center,
           style: context.titleLarge.copyWith(
                 fontWeight: FontWeight.w700,
@@ -87,4 +97,17 @@ class ProfileHeader extends StatelessWidget {
       ],
     );
   }
+
+    Future<void> _pickDocumentImage({
+    required ValueChanged<File?> onPicked,
+  }) async {
+    final ImageSource? source = await showImageSourcePicker();
+    if (source == null) return;
+    final File? file = await ImagePickerService.imagePicker(source);
+    if (file == null) return;
+    setState(() {
+      onPicked(file);
+    });
+  }
+
 }

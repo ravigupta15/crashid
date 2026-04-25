@@ -1,9 +1,13 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
 import 'package:flutter/material.dart';
 
 class DrawerProfileBannerWidget extends StatelessWidget {
-  const DrawerProfileBannerWidget({super.key});
+  final String? name;
+  final String? profileImageUrl;
+  final String? initials;
+  const DrawerProfileBannerWidget({super.key, this.name, this.profileImageUrl, this.initials });
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +31,18 @@ class DrawerProfileBannerWidget extends StatelessWidget {
               color: AppColors.whiteColor,
             ),
             alignment: Alignment.center,
-            child: Text(
-              'R',
+            child: profileImageUrl != null && profileImageUrl!.isNotEmpty ?
+             AppCachedNetworkImage(imageUrl: profileImageUrl!, width: 63, height: 63, boxFit: BoxFit.cover, ) :
+             Text(
+              initials ?? '',
               style: context.displaySmall.copyWith(
                 color: AppColors.primaryColor,
                 fontWeight: FontWeight.w700,
-                fontSize: 44,
+                fontSize: 34,
                 height: 1,
               ),
             ),
-          ),
+          ),  
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -52,7 +58,7 @@ class DrawerProfileBannerWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Harvey Specter',
+                  name ?? '',
                   style: context.titleMedium.copyWith(
                     color: AppColors.accentColor,
                     fontWeight: FontWeight.w700,

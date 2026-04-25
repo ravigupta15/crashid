@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:crashid/app_routes/app_routes.dart';
 import 'package:crashid/features/profile/model/profile_response_model.dart';
+import 'package:crashid/features/profile/model/profile_send_model.dart';
 import 'package:crashid/features/profile/provider/profile_state.dart';
 import 'package:crashid/features/profile/repostiory/profile_repository.dart';
 import 'package:crashid/utils/loader/loader_service.dart';
@@ -28,7 +30,22 @@ class ProfileNotifier extends AsyncNotifier<ProfileState> {
      finally {
       LoaderService().hideLoader();
     }
+  }
 
+  
+  Future<void> editProfile(ProfileSendModel? sendModel) async {
+    try {
+      LoaderService().showLoader();
+      final repo = ref.read(profileRepositoryProvider);
+      final response = await repo.editProfile(sendModel);
+      if (response?.statusCode == 200 ) {
+        Navigator.pop(AppRouter.mainNavigatorKey.currentContext!);
+      }
+    } catch (_) {
+    }
+     finally {
+      LoaderService().hideLoader();
+    }
   }
   
 }

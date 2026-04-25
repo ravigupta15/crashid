@@ -1,10 +1,6 @@
 import 'package:crashid/data_sources/apis/api_urls.dart';
 import 'package:crashid/data_sources/apis/base/api_service.dart';
-import 'package:crashid/features/auth/forget_password/model/forget_send_model.dart';
-import 'package:crashid/features/auth/otp/model/otp_send_model.dart';
-import 'package:crashid/features/auth/registration/model/registration_send_model.dart';
-import 'package:crashid/features/auth/reset_password/model/reset_password_send_model.dart';
-import 'package:crashid/features/auth/signin/model/sign_in_model.dart';
+import 'package:crashid/features/profile/model/profile_send_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,6 +13,15 @@ class ProfileRepository {
     return _apiService.sendRequest(
       apiUrl: ApiUrls.profileUrl,
       method: ApiMethod.get,
+    );
+  }
+
+  Future<Response?> editProfile(ProfileSendModel? model) async {
+    FormData formData = await model!.toFormData();
+    return _apiService.sendRequest(
+      apiUrl: ApiUrls.profileUrl,
+      method: ApiMethod.put,
+      data: formData,
     );
   }
 

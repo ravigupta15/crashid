@@ -9,7 +9,7 @@ import 'package:crashid/utils/date_format/app_date_format.dart';
 import 'package:flutter/material.dart';
 
 class PersonalAccountWidget extends StatelessWidget {
-  final Data? profileData;
+  final ProfileModel? profileData;
 
   const PersonalAccountWidget({super.key, this.profileData});
 

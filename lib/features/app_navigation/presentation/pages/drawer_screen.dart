@@ -5,20 +5,21 @@ import 'package:crashid/features/case_history/presentation/pages/case_history_sc
 import 'package:crashid/features/emergency/presentation/pages/emergency_screen.dart';
 import 'package:crashid/features/language/presentation/language_screen.dart';
 import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
+import 'package:crashid/features/profile/provider/profile_notifier.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/logout/app_logout.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DrawerScreen extends StatefulWidget {
+class DrawerScreen extends ConsumerStatefulWidget {
   const DrawerScreen({super.key});
 
   @override
-  State<DrawerScreen> createState() => _DrawerScreenState();
+  ConsumerState<DrawerScreen> createState() => _DrawerScreenState();
 }
 
-class _DrawerScreenState extends State<DrawerScreen> {
+class _DrawerScreenState extends ConsumerState<DrawerScreen> {
   int _selectedIndex = -1;
 
   List<DrawerMenuItemData> get _menuItems {
@@ -47,12 +48,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
   // Widget Methods
   // -----------------------------------------------------------------------------
 
-  Widget _screenContent() {
+  Widget _screenContent() {    
+    final refState = ref.watch(profileNotifier);
+    var model = refState.value?.profileResponseModel?.data;
+      final String fullName =
+        '${(model?.firstName ?? model?.legalCompanyName ?? '').toString().trim()} ${(model?.lastName ?? '').toString().trim()}'
+            .trim();
+    final String initials = _buildInitials(fullName);
+
     return SingleChildScrollView(
       padding: const EdgeInsets.only(bottom: 24, top: 20),
       child: Column(
         children: [
-          const DrawerProfileBannerWidget(),
+           DrawerProfileBannerWidget(name: fullName,
+            profileImageUrl: model?.profileImage, initials: initials),
           Padding(
             padding: const EdgeInsets.fromLTRB(25, 22, 16, 0),
             child: DrawerVerticalMenuWidget(
@@ -85,7 +94,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       _openEmergencyScreen();
       break;
     case 8:
-    AppLogoutHelper.logout();
+    _logoutDialog();
       break;  
     default:
       debugPrint("No screen defined for index $index");
@@ -108,4 +117,24 @@ class _DrawerScreenState extends State<DrawerScreen> {
   void _openEmergencyScreen() {
     EmergencyScreen.open(context);
   }
+
+  
+String _buildInitials(String fullName) {
+  if (fullName.trim().isEmpty) return '';
+  final parts = fullName.trim().split(RegExp(r'\s+'));
+  if (parts.length == 1) return parts.first[0].toUpperCase();
+  return '${parts.first[0]}${parts.last[0]}'.toUpperCase();
+}
+
+
+void _logoutDialog() {
+  AppDialogBox().openBox(
+    maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
+    title: 'Logout',
+    subTitle: "Are you sure you want to logout?",
+    
+    yesTap: () => AppLogoutHelper.logout(),
+  );
+  }
+
 }

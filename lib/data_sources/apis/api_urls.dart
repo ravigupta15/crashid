@@ -20,4 +20,7 @@ abstract class ApiUrls {
   static const carBrandsUrl = "${baseUrl}vehicle-masters/brands";
   static const carColorUrl = "${baseUrl}vehicle-masters/colors";
   static const vehicleUrl = "${baseUrl}user/vehicles";
+
+  // notification
+  static const notificationUrl = "${baseUrl}notifications";
 }
