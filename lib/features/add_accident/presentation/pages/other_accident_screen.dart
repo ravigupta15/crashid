@@ -71,6 +71,13 @@ class _OtherAccidentScreenState extends State<OtherAccidentScreen> {
         ),
         ),
         AccidentDetailsWidget(),
+        
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 13),
+          child: Divider(
+            color: AppColors.blackColor.withValues(alpha: .2),
+          ),
+        ),
         PaymentMethodWidget(),
         const SizedBox(height: 33,),
         Center(child:

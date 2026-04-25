@@ -4,22 +4,25 @@ import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AccidentDetailsWidget extends StatelessWidget {
-  const AccidentDetailsWidget({super.key});
+  final bool? isAccidentTitle;
+  const AccidentDetailsWidget({super.key, this.isAccidentTitle= true});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Accident Details",
-          style: context.titleMedium.copyWith(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            color: AppColors.blackColor,
+        if (isAccidentTitle ?? false) ...[
+           Text(
+            "Accident Details",
+            style: context.titleMedium.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: AppColors.blackColor,
+            ),
           ),
-        ),
-        const SizedBox(height: 12),
+          const SizedBox(height: 12),
+        ],
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,12 +51,6 @@ class AccidentDetailsWidget extends StatelessWidget {
           icon: AppAssetPaths.locationIcon,
           label: "Current Location",
           value: "123, Market Street, San Francisco, CA 94105",
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 13),
-          child: Divider(
-            color: AppColors.blackColor.withValues(alpha: .2),
-          ),
         ),
       ],
     );

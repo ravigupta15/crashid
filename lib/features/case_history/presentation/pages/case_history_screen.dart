@@ -1,5 +1,6 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/features/case_history/presentation/pages/case_details_screen.dart';
 import 'package:crashid/features/case_history/presentation/widgets/case_detail_card_widget.dart';
 import 'package:crashid/features/case_history/presentation/widgets/case_history_section_header.dart';
 import 'package:crashid/features/case_history/presentation/widgets/case_history_tab_toggle.dart';
@@ -81,7 +82,7 @@ class _CaseHistoryScreenState extends State<CaseHistoryScreen> {
               overflowCount: 2,
               statusLabel: isCurrent ? 'In Review' : "CLOSURE DATE",
               clouserDate: isCurrent ? null : "Sep 28, 2023",
-              onViewSummary: () {},
+              onViewSummary: () => _openCaseDetailsScreen('id'),
             ),
             const SizedBox(height: 30,),
             AppElevatedButton.withTitleAndIcon(
@@ -103,4 +104,7 @@ class _CaseHistoryScreenState extends State<CaseHistoryScreen> {
     });
   }
 
+void _openCaseDetailsScreen(String? id) {
+    CaseDetailsScreen.open(context, id: id);
+}
 }

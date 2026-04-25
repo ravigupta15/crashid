@@ -10,6 +10,7 @@ import 'package:crashid/features/auth/registration/presentation/pages/company_re
 import 'package:crashid/features/auth/registration/presentation/pages/personal_registration_screen.dart';
 import 'package:crashid/features/auth/reset_password/presentation/pages/reset_password_screen.dart';
 import 'package:crashid/features/auth/signin/presentation/pages/signin_screen.dart';
+import 'package:crashid/features/case_history/presentation/pages/case_details_screen.dart';
 import 'package:crashid/features/case_history/presentation/pages/case_history_screen.dart';
 import 'package:crashid/features/emergency/presentation/pages/emergency_screen.dart';
 import 'package:crashid/features/app_navigation/presentation/pages/app_navigation_screen.dart';
@@ -165,6 +166,16 @@ class AppRouter {
           );
         },
       ),
+       GoRoute(
+        path: AppRoutesPath.caseDetailsScreen,
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return  CaseDetailsScreen(
+            id: argument?[CaseDetailsScreen.kId],
+          );
+        },
+      ),
+      
       // GoRoute(
       //   path: OtpVerifyScreen.routeName,
       //   builder: (context, state) {

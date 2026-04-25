@@ -23,4 +23,5 @@ class AppRoutesPath {
   static const otherAccidentScreen = "/otherAccidentScreen";
   static const caseHistoryScreen = "/caseHistoryScreen";
   static const editProfileScreen = "/editProfileScreen";
+  static const caseDetailsScreen = "/caseDetailsScreen";
 }

@@ -56,5 +56,8 @@ class AppAssetPaths {
   static const userDetailsIcon = "assets/icons/user_details_ic.png";
   static const divingLicenseIcon = "assets/icons/driving_license_ic.png";
   static const addCarIcon = "assets/icons/add_car_ic.png";
+
+  static const circlePersonIcon = "assets/icons/circle_person_ic.png";
+  static const checkIcon = "assets/icons/check_ic.png";
   
 }
