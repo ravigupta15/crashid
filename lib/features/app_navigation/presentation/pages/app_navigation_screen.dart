@@ -159,23 +159,23 @@ Widget _screenContent() {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _BarIconButton(
-                asset: AppAssetPaths.homeIcon,
+                asset:  _selectedBarIndex == 0 ? AppAssetPaths.homeIcon : AppAssetPaths.homeGrayIcon,
                 selected: _selectedBarIndex == 0,
                 onTap: () => _onBarTap(0),
               ),
               _BarIconButton(
-                asset: AppAssetPaths.userIcon,
+                asset:_selectedBarIndex == 1 ? AppAssetPaths.userBlackIcon : AppAssetPaths.userIcon,
                 selected: _selectedBarIndex == 1,
                 onTap: () => _onBarTap(1),
               ),
               const SizedBox(width: 56),
               _BarIconButton(
-                asset: AppAssetPaths.caseFileIcon,
+                asset:_selectedBarIndex == 3 ? AppAssetPaths.caseFileBlackIcon : AppAssetPaths.caseFileIcon,
                 selected: _selectedBarIndex == 3,
                 onTap: () => _onBarTap(3),
               ),
               _BarIconButton(
-                asset: AppAssetPaths.graySosIcon,
+                asset: _selectedBarIndex == 4 ? AppAssetPaths.sosBlackIcon : AppAssetPaths.graySosIcon,
                 selected: _selectedBarIndex == 4,
                 onTap: () => _onBarTap(4),
               ),

@@ -1,12 +1,15 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/notification/presentation/widgets/notification_card_widget.dart';
+import 'package:crashid/features/notification/provider/notification_notifier.dart';
+import 'package:crashid/features/notification/provider/notification_state.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class NotificationScreen extends StatefulWidget {
+class NotificationScreen extends ConsumerStatefulWidget {
   static void open(BuildContext context) {
     context.push(AppRoutesPath.notificationScreen);
   }
@@ -14,10 +17,23 @@ class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
 
   @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
+  ConsumerState<NotificationScreen> createState() => _NotificationScreenState();
 }
 
-class _NotificationScreenState extends State<NotificationScreen> {
+class _NotificationScreenState extends ConsumerState<NotificationScreen> {
+  
+  
+final notificationProvider =
+    AsyncNotifierProvider<NotificationNotifier, NotificationState>(NotificationNotifier.new);
+
+@override
+  void initState() {
+    _callNotificationApi();
+    super.initState();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,5 +84,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ],
       ),
     );
+  }
+
+  
+void _callNotificationApi() async{
+    await ref
+        .read(notificationProvider.notifier)
+        .getNotificationn(context);
   }
 }

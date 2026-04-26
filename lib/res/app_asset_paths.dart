@@ -59,5 +59,9 @@ class AppAssetPaths {
 
   static const circlePersonIcon = "assets/icons/circle_person_ic.png";
   static const checkIcon = "assets/icons/check_ic.png";
+  static const caseFileBlackIcon = "assets/icons/case_file_black_ic.png";
+  static const sosBlackIcon = "assets/icons/sos_black_ic.png";
+  static const userBlackIcon = "assets/icons/user_black_ic.png";
+  static const homeGrayIcon = "assets/icons/home_gray_ic.png";
   
 }
