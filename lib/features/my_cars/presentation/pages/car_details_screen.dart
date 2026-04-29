@@ -88,7 +88,7 @@ final myCarNotifierProvider =
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),
-              child: AppCachedNetworkImage(imageUrl: model.images?.first.imageUrl ?? '', height: 200, boxFit: BoxFit.cover,),
+              child: AppCachedNetworkImage(imageUrl: model.images?.first.imageUrl ?? '', height: 200, boxFit: BoxFit.cover,canOpenImage: true,),
               //  SizedBox(
               //   height: 200,
               //   child: Image.asset(
@@ -139,7 +139,8 @@ final myCarNotifierProvider =
               child: _InsurancePdfCard(
                 date: AppDateFormat.formatMonthYear(model.createdAt),
                 onView: () {
-                  LaunchURLUtils().launchStringURL(model.insuranceImage ?? '');
+                  print(model.insuranceImageUrl ?? '');
+                  LaunchURLUtils().launchStringURL(model.insuranceImageUrl ?? '');
                 },
               ),
             ),

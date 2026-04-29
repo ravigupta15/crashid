@@ -50,6 +50,30 @@ ProfileSendModel? sendModel;
   @override
  void initState() {
     super.initState();
+    var model = widget.profileData;
+    sendModel = ProfileSendModel(
+      accountType: model?.accountType,
+      legalCompanyName: model?.legalCompanyName,
+      registerCompanyName: model?.registeredCompanyName,
+      vitId: model?.vatId,
+      commercialRegNumber: model?.commercialRegistrationNumber,
+      email: model?.generalEmail,
+      countryCode: (model?.countryCode ?? '49').replaceAll('+', ''),
+      mobileNumber: model?.companyPhone,
+      industryType: model?.industry,
+      contactFirstName: model?.contactFirstName,
+      contactLastName: model?.contactLastName,
+      contactEmail: model?.contactEmail,
+      contactPhone: model?.contactPhone,
+      dob: model?.dateOfBirth,
+      gender: model?.gender,
+      websiteLink: model?.websiteLink,
+      drivingLicenseFrontUrl: model?.drivingLicenseFront,
+      drivingLicenseBackUrl: model?.drivingLicenseBack,
+      idDocumentFrontUrl: model?.idDocumentFront,
+      idDocumentBackUrl: model?.idDocumentBack
+    );
+
     _dobController = TextEditingController(text: 
     (widget.profileData?.dateOfBirth ?? '').isNotEmpty
      ? DatePickerService.formatForDisplay(DateTime.parse(widget.profileData?.dateOfBirth))
@@ -69,17 +93,18 @@ ProfileSendModel? sendModel;
   }
 
   Widget _screenContent() {
+    var model = widget.profileData;
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
              AppTextFormField(
-              initialValue: widget.profileData?.legalCompanyName,
+              initialValue: model?.legalCompanyName,
               hintText: 'Legal Company Name',
                 inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     textInputAction: TextInputAction.next,
                     validator: validateEmpty,
@@ -89,11 +114,11 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24),
               AppTextFormField(
-                initialValue: widget.profileData?.registeredCompanyName,
+                initialValue: model?.registeredCompanyName,
                 hintText: 'Registered Company Name (Optional)',
                 inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     textInputAction: TextInputAction.next,
                     onSaved: (val) => setState(() {
@@ -102,7 +127,20 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24),
               AppTextFormField(
-                initialValue: widget.profileData?.email,
+                initialValue: model?.commercialRegistrationNumber,
+                hintText: 'Commercial Registered Number',
+                inputFormatters: [
+                      Validator.emojiRestrict(),
+                      Validator.removeLeadingWhiteSpace(),
+                    ],
+                    textInputAction: TextInputAction.next,
+                    onSaved: (val) => setState(() {
+                      sendModel?.commercialRegNumber = val;
+                    }),
+              ),
+              const SizedBox(height: 24),
+              AppTextFormField(
+                initialValue: model?.generalEmail,
                 hintText: 'General Company Email',
                 inputFormatters: [
                       Validator.emojiRestrict(),
@@ -116,7 +154,7 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24),
               AppTextFormField(
-                initialValue: widget.profileData?.companyPhone,
+                initialValue: model?.companyPhone,
                 hintText: 'Company Phone Number',
                 prefixWidth: 63,
               prefixIcon: CountryCodeWidget(
@@ -136,11 +174,11 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24),
               AppTextFormField(
-                initialValue: widget.profileData?.vatId,
+                initialValue: model?.vatId,
                 hintText: 'VIT ID',
                 inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     textInputAction: TextInputAction.next,
                     validator: validateEmpty,
@@ -151,8 +189,8 @@ ProfileSendModel? sendModel;
               CustomDropDownFormFiledWidget(
                 hintText: "Industry Type",
                 selectedValue: CustomDropDownItem(
-                  value: widget.profileData?.industry,
-                  key: widget.profileData?.industry,
+                  value: model?.industry,
+                  key: model?.industry,
                  ),
                 items: AppDropdownItemWidget.industryTypeList,
                 onSaved: (newValue) {
@@ -191,11 +229,11 @@ ProfileSendModel? sendModel;
               // CompanyLegalPdfInfoWidget(),
               const SizedBox(height: 24),
                 AppTextFormField(
-              initialValue: widget.profileData?.contactFirstName,
+              initialValue: model?.contactFirstName,
               hintText: 'Primary First Name',
                 inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     textInputAction: TextInputAction.next,
                     validator: validateEmpty,
@@ -206,11 +244,11 @@ ProfileSendModel? sendModel;
               
               const SizedBox(height: 24),
                 AppTextFormField(
-              initialValue: widget.profileData?.contactLastName,
+              initialValue: model?.contactLastName,
               hintText: 'Primary Last Name',
                 inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     textInputAction: TextInputAction.next,
                     validator: validateEmpty,
@@ -221,11 +259,11 @@ ProfileSendModel? sendModel;
               
               const SizedBox(height: 24),
                 AppTextFormField(
-              initialValue: widget.profileData?.jobTitle,
+              initialValue: model?.jobTitle,
               hintText: 'Job Title',
                 inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     textInputAction: TextInputAction.next,
                     validator: validateEmpty,
@@ -233,6 +271,21 @@ ProfileSendModel? sendModel;
                       sendModel?.jobTitle = val;
                     }),
               ),
+               const SizedBox(height: 24),
+              AppTextFormField(
+                initialValue: model?.contactEmail,
+                hintText: 'Contact Email',
+                inputFormatters: [
+                      Validator.emojiRestrict(),
+                      Validator.removeWhiteSpace(),
+                    ],
+                    textInputAction: TextInputAction.next,
+                    validator: validateEmail,
+                    onSaved: (val) => setState(() {
+                      sendModel?.contactEmail = val;
+                    }),
+              ),
+             
               const SizedBox(height: 24),
               Row(
                 children: [
@@ -240,6 +293,7 @@ ProfileSendModel? sendModel;
                     title:
                     AppLocalizations.of(context)!.drivingLicenseFront,
                     hasFile: sendModel?.drivingLicenseFront,
+                    imgUrl: model?.drivingLicenseFront,
                     onTap: () => _pickDocumentImage(
                       onPicked: (file) => sendModel?.drivingLicenseFront = file,
                     ),
@@ -248,6 +302,7 @@ ProfileSendModel? sendModel;
                   UploadCardWidget(
                     title: AppLocalizations.of(context)!.drivingLicenseBack,
                     hasFile: sendModel?.drivingLicenseBack,
+                    imgUrl: model?.drivingLicenseBack,
                     onTap: () => _pickDocumentImage(
                       onPicked: (file) => sendModel?.drivingLicenseBack = file,
                     ),
@@ -260,6 +315,7 @@ ProfileSendModel? sendModel;
                   UploadCardWidget(
                     title: AppLocalizations.of(context)!.idDocumentFront,
                     hasFile: sendModel?.idDocumentFront,
+                    imgUrl: model?.idDocumentFront,
                     onTap: () => _pickDocumentImage(
                       onPicked: (file) => sendModel?.idDocumentFront = file,
                     ),
@@ -268,6 +324,7 @@ ProfileSendModel? sendModel;
                   UploadCardWidget(
                     title: AppLocalizations.of(context)!.idDocumentBack,
                     hasFile: sendModel?.idDocumentBack,
+                    imgUrl: model?.idDocumentBack,
                     onTap: () => _pickDocumentImage(
                       onPicked: (file) => sendModel?.idDocumentBack = file,
                     ),
@@ -332,7 +389,7 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24,),
            AppTextFormField(
-                // initialValue: widget.profileData?.mobileNumber,
+                initialValue: model?.contactPhone,
                 hintText: 'Primary Phone Number',
                 prefixWidth: 63,
               prefixIcon: CountryCodeWidget(
@@ -347,7 +404,7 @@ ProfileSendModel? sendModel;
                     textInputAction: TextInputAction.next,
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
-                      sendModel?.primaryPhone = val;
+                      sendModel?.contactPhone = val;
                     }),
               ),
               const SizedBox(height: 24),
@@ -504,7 +561,9 @@ ProfileSendModel? sendModel;
                 ),
                const SizedBox(height: 50,),
                
-        AppElevatedButton.withTitle(title: "Save Changes", onPressed: _checkValidation,)
+        Align(
+          alignment: Alignment.center,
+          child: AppElevatedButton.withTitle(title: "Save Changes", onPressed: _checkValidation,))
         ],
       ),
     );
@@ -582,7 +641,8 @@ ProfileSendModel? sendModel;
       return;
     }
     _formKey.currentState!.save();
-    // _callPersonalAccountApi();
+sendModel?.gender = widget.profileData?.gender;
+    _editProfileApi();
   }
 
 
@@ -636,6 +696,11 @@ Future<void> _pickDob() async {
         sendModel?.idDocumentFront != null &&
         sendModel?.idDocumentBack != null;
   }
+
+  // bool _isDocumentUrl() {
+  //   return sendModel
+  // }
+  
 
   Future<void> _pickDocumentImage({
     required ValueChanged<File?> onPicked,

@@ -61,6 +61,9 @@ class ProfileModel {
   dynamic houseNumber;
   dynamic postalCode;
   dynamic city;
+  dynamic contactCountryCode;
+  dynamic contactPhone;
+  dynamic contactEmail;
 
   ProfileModel(
       {this.id,
@@ -100,7 +103,10 @@ class ProfileModel {
       this.street,
       this.houseNumber,
       this.postalCode,
-      this.city});
+      this.city,
+      this.contactCountryCode,
+      this.contactPhone,
+      this.contactEmail});
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -132,15 +138,18 @@ class ProfileModel {
     jobTitle = json['job_title'];
     businessAddress = json['business_address'];
     billingAddress = json['billing_address'];
-    drivingLicenseFront = json['driving_license_front'];
-    drivingLicenseBack = json['driving_license_back'];
-    idDocumentFront = json['id_document_front'];
-    idDocumentBack = json['id_document_back'];
+    drivingLicenseFront = json['driving_license_front_url'];
+    drivingLicenseBack = json['driving_license_back_url'];
+    idDocumentFront = json['id_document_front_url'];
+    idDocumentBack = json['id_document_back_url'];
     address = json['address'];
     street = json['street'];
     houseNumber = json['house_number'];
     postalCode = json['postal_code'];
     city = json['city'];
+    contactCountryCode = json['contact_country_code'];
+    contactPhone = json['contact_phone'];
+    contactEmail = json['contact_email'];
   }
 
   Map<String, dynamic> toJson() {
@@ -175,15 +184,18 @@ class ProfileModel {
      data['business_address'] = businessAddress;
     data['billing_address'] = billingAddress;
 
-    data['driving_license_front'] = drivingLicenseFront;
-    data['driving_license_back'] = drivingLicenseBack;
-    data['id_document_front'] = idDocumentFront;
-    data['id_document_back'] = idDocumentBack;
+    data['driving_license_front_url'] = drivingLicenseFront;
+    data['driving_license_back_url'] = drivingLicenseBack;
+    data['id_document_front_url'] = idDocumentFront;
+    data['id_document_back_url'] = idDocumentBack;
     data['address'] = address;
     data['street'] = street;
     data['house_number'] = houseNumber;
     data['postal_code'] = postalCode;
     data['city'] = city;
+    data['contact_country_code'] = contactCountryCode;
+    data['contact_phone'] = contactPhone;
+    data['contact_email'] = contactEmail;
     return data;
   }
 }

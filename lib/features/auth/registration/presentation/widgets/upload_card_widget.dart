@@ -3,17 +3,20 @@ import 'dart:io';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
 import 'package:flutter/material.dart';
 
 class UploadCardWidget extends StatelessWidget {
   final String? title;
   final VoidCallback? onTap;
   final File? hasFile;
+  final String? imgUrl;
   const UploadCardWidget({
     super.key,
     this.title,
     this.onTap,
     this.hasFile,
+    this.imgUrl
   });
 
   @override
@@ -50,7 +53,9 @@ class UploadCardWidget extends StatelessWidget {
                       borderRadius: BorderRadiusGeometry.circular(30),
                       child: Image.file(hasFile!, height: 92, width: double.infinity,
                        fit: BoxFit.cover))
-                    : Image.asset(
+                    : imgUrl != null ?
+                    AppCachedNetworkImage(imageUrl: imgUrl ?? '', boxFit: BoxFit.cover,) :
+                     Image.asset(
                         AppAssetPaths.uploadIcon,
                         height: 38,
                         width: 50,

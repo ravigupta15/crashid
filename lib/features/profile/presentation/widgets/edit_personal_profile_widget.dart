@@ -46,6 +46,7 @@ ProfileSendModel? sendModel;
 );
     });
     sendModel = ProfileSendModel(
+      accountType: widget.profileData?.accountType,
       firstName: widget.profileData?.firstName,
       lastName: widget.profileData?.lastName,
       email: widget.profileData?.email,

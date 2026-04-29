@@ -5,7 +5,8 @@ class DatePickerService {
     BuildContext context, {
     DateTime? initialDate,
     int? previousYearLimit,
-    DateTime? firstDate
+    DateTime? firstDate,
+    DateTime? lastDate
   }) async {
     final DateTime now = DateTime.now();
     final DateTime defaultInitialDate = DateTime(previousYearLimit ?? now.year - 18, now.month, now.day);
@@ -14,7 +15,7 @@ class DatePickerService {
       context: context,
       initialDate: initialDate ?? defaultInitialDate,
       firstDate: firstDate ?? DateTime(1900),
-      lastDate: now,
+      lastDate: lastDate ?? now,
       initialEntryMode: DatePickerEntryMode.calendarOnly,
       builder: (context, child) {
         final ThemeData theme = Theme.of(context);

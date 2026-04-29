@@ -7,6 +7,7 @@ import 'package:crashid/features/profile/presentation/widgets/profile_labeled_bl
 import 'package:crashid/features/profile/presentation/widgets/profile_section_header_widget.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
 import 'package:crashid/utils/date_format/app_date_format.dart';
 import 'package:crashid/utils/empty/empty_widget.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
   }
 
   Widget _screenContent() {
-
+    var model = widget.profileData;
     return Column(
       children: [
         ProfileSectionHeader(
@@ -41,36 +42,36 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
             children: [
               ProfileLabeledBlock(
                 label: 'Legal company name',
-                value: widget.profileData?.legalCompanyName,
+                value: model?.legalCompanyName,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'Registered name',
-                value: widget.profileData?.registeredCompanyName,
+                value: model?.registeredCompanyName,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'VAT ID',
-                value: widget.profileData?.vatId,
+                value: model?.vatId,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'Comm. reg. number',
-                value: widget.profileData?.commercialRegistrationNumber,
+                value: model?.commercialRegistrationNumber,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'Company email',
-                value: widget.profileData?.generalEmail,
+                value: model?.generalEmail,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'Company phone number',
-                value: "${widget.profileData?.countryCode ?? ''} ${widget.profileData?.companyPhone ?? ''}",
+                value: "${model?.countryCode ?? ''} ${model?.companyPhone ?? ''}",
               ),
               const SizedBox(height: 20),
-              ProfileLabeledBlock(label: 'Industry', value: widget.profileData?.industry),
-              if (widget.profileData?.legalFormPdf != null)...[ 
+              ProfileLabeledBlock(label: 'Industry', value: model?.industry),
+              if (model?.legalFormPdf != null)...[ 
               const SizedBox(height: 20),
               CompanyLegalPdfInfoWidget(),
               ]
@@ -89,22 +90,22 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
             children: [
               ProfileLabeledBlock(
                 label: 'Full name',
-                value: widget.profileData?.contactFirstName,
+                value: "${model?.contactFirstName} ${model?.contactLastName}",
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'Job title',
-                value: widget.profileData?.jobTitle,
+                value: model?.jobTitle,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'Email address',
-                value: widget.profileData?.email,
+                value: model?.contactEmail,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'Mobile number',
-                value: widget.profileData?.mobileNumber,
+                value: "${model?.contactCountryCode} ${model?.contactPhone}",
               ),
               const SizedBox(height: 20),
               Row(
@@ -113,43 +114,47 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
                   Expanded(
                     child: ProfileLabeledBlock(
                       label: 'Date of birth',
-                      value: AppDateFormat.formatDob( widget.profileData?.dateOfBirth ?? ''),
+                      value: AppDateFormat.formatDob( model?.dateOfBirth ?? ''),
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: ProfileLabeledBlock(label: 'Gender', value: widget.profileData?.gender),
+                    child: ProfileLabeledBlock(label: 'Gender', value: model?.gender),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'Website',
-                value: widget.profileData?.websiteLink,
+                value: model?.websiteLink,
               ),
             ],
           ),
         ),
-        if (widget.profileData?.drivingLicenseFront != null)...[
+        if (model?.drivingLicenseFront != null)...[
           const SizedBox(height: 32),
              ProfileSectionHeader(
               icon: Image.asset(AppAssetPaths.divingLicenseIcon),
               title: 'Driving License',
             ),
             const SizedBox(height: 16),
-            const ProfileDocumentPair(
-              assetPath: "assets/images/License Back.png",
+             ProfileDocumentPair(
+              frontImage: 
+              AppCachedNetworkImage(imageUrl: model?.drivingLicenseFront, boxFit: BoxFit.cover,),
+              backImage: AppCachedNetworkImage(imageUrl: model?.drivingLicenseBack, boxFit: BoxFit.cover,),
             )
             ],
-             if (widget.profileData?.idDocumentFront != null)...[
+             if (model?.idDocumentFront != null)...[
             const SizedBox(height: 32),
              ProfileSectionHeader(
               icon: Image.asset(AppAssetPaths.divingLicenseIcon),
               title: 'ID Document',
             ),
             const SizedBox(height: 12),
-            const ProfileDocumentPair(
-              assetPath: "assets/images/License Back.png",)
+             ProfileDocumentPair(
+              frontImage: AppCachedNetworkImage(imageUrl: model?.idDocumentFront, boxFit: BoxFit.cover,),
+              backImage: AppCachedNetworkImage(imageUrl: model?.idDocumentBack, boxFit: BoxFit.cover,),
+              )
              ],
             const SizedBox(height: 32),
             ProfileInfoCard(
@@ -164,7 +169,7 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
               title: 'Business Address',
             ),
           const SizedBox(height: 24,),
-           widget.profileData?.businessAddress != null ?
+           model?.businessAddress != null ?
                   _companyAddressTile(
                     context,
                     country: 'Germany',
@@ -185,7 +190,7 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
               title: 'Billing Address',
             ),
             const SizedBox(height: 24),
-               widget.profileData?.billingAddress != null ?
+               model?.billingAddress != null ?
                   _companyAddressTile(
                     context,
                     country: 'Germany',

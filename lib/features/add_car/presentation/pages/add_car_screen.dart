@@ -116,7 +116,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               textInputAction: TextInputAction.next,
               inputFormatters: [
                 Validator.emojiRestrict(),
-                Validator.removeWhiteSpace(),
+                Validator.removeLeadingWhiteSpace(),
               ],
               validator: validateEmpty,
               onSaved: (value) => sendModel?.plateNumber = value?.trim(),
@@ -151,7 +151,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               hintText: "Car Name",
               inputFormatters: [
                 Validator.emojiRestrict(),
-                Validator.removeWhiteSpace(),
+                Validator.removeLeadingWhiteSpace(),
               ],
               validator: validateEmpty,
               onChanged: (value) => sendModel?.carName = value,
@@ -190,7 +190,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               textInputAction: TextInputAction.next,
               inputFormatters: [
                 Validator.emojiRestrict(),
-                Validator.removeWhiteSpace(),
+                Validator.removeLeadingWhiteSpace(),
               ],
               validator: validateEmpty,
               onSaved: (value) => sendModel?.vinNumber = value?.trim(),
@@ -208,7 +208,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               textInputAction: TextInputAction.next,
               inputFormatters: [
                 Validator.emojiRestrict(),
-                Validator.removeWhiteSpace(),
+                Validator.removeLeadingWhiteSpace(),
               ],
               validator: validateEmpty,
               onSaved: (value) => sendModel?.insuranceCompany = value?.trim(),
@@ -239,7 +239,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               textInputAction: TextInputAction.next,
               inputFormatters: [
                 Validator.emojiRestrict(),
-                Validator.removeWhiteSpace(),
+                Validator.removeLeadingWhiteSpace(),
               ],
               validator: validateEmpty,
               onSaved: (value) => sendModel?.insuranceNumber = value?.trim(),
@@ -477,6 +477,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
     final pickedDate = await DatePickerService.pickDob(
       context,
       previousYearLimit: DateTime.now().year,
+      lastDate: DateTime(2100),
       initialDate: _insuranceStartDateController.text.isEmpty
           ? null
           : _parseCurrentText(_insuranceStartDateController.text),
@@ -510,6 +511,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
    final pickedDate = await DatePickerService.pickDob(
       context,
       firstDate: startDate,
+      lastDate: DateTime(2100),
       initialDate: initialDate.isBefore(startDate) ? startDate : initialDate
     );
    

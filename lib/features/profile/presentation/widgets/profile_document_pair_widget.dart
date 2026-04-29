@@ -1,13 +1,16 @@
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/empty/empty_widget.dart';
 import 'package:flutter/material.dart';
 
 /// Two side-by-side document previews with FRONT / BACK corner labels.
 class ProfileDocumentPair extends StatelessWidget {
-  final String? assetPath;
+  final Widget? frontImage;
+  final Widget? backImage;
 
   const ProfileDocumentPair({
     super.key,
-    this.assetPath,
+    this.frontImage,
+    this.backImage
   });
 
   @override
@@ -17,14 +20,14 @@ class ProfileDocumentPair extends StatelessWidget {
         Expanded(
           child: _DocumentThumb(
             label: 'FRONT',
-            assetPath: assetPath ?? '',
+            image: frontImage,
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: _DocumentThumb(
             label: 'BACK',
-            assetPath: assetPath ?? '',
+            image: backImage,
           ),
         ),
       ],
@@ -34,11 +37,11 @@ class ProfileDocumentPair extends StatelessWidget {
 
 class _DocumentThumb extends StatelessWidget {
   final String label;
-  final String assetPath;
+  final Widget? image;
 
   const _DocumentThumb({
     required this.label,
-    required this.assetPath,
+    required this.image,
   });
 
   @override
@@ -62,10 +65,7 @@ class _DocumentThumb extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.asset(
-                assetPath,
-                fit: BoxFit.cover,
-              ),
+              image ?? EmptyWidget(),
               Positioned(
                 left: 8,
                 bottom: 8,

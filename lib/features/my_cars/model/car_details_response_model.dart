@@ -46,6 +46,7 @@ class CarDetailsModel {
   dynamic validFrom;
   dynamic validUntil;
   dynamic insuranceImage;
+  dynamic insuranceImageUrl;
   List<Images>? images;
 
   CarDetailsModel(
@@ -72,6 +73,7 @@ class CarDetailsModel {
       this.validFrom,
       this.validUntil,
       this.insuranceImage,
+      this.insuranceImageUrl,
       this.images});
 
   CarDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -98,6 +100,7 @@ class CarDetailsModel {
     validFrom = json['valid_from'];
     validUntil = json['valid_until'];
     insuranceImage = json['insurance_image'];
+    insuranceImageUrl = json['insurance_image_url'];
     if (json['images'] != null) {
       images = <Images>[];
       json['images'].forEach((v) {
@@ -131,6 +134,7 @@ class CarDetailsModel {
     data['valid_from'] = validFrom;
     data['valid_until'] = validUntil;
     data['insurance_image'] = insuranceImage;
+    data['insurance_image_url'] = insuranceImageUrl;
     if (images != null) {
       data['images'] = images?.map((v) => v.toJson()).toList();
     }

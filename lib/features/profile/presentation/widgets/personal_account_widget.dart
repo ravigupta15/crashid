@@ -98,8 +98,11 @@ class PersonalAccountWidget extends StatelessWidget {
               title: 'Driving License',
             ),
             const SizedBox(height: 16),
-            const ProfileDocumentPair(
-              assetPath: "assets/images/License Back.png",
+             ProfileDocumentPair(
+             frontImage:  Image.asset(
+                "assets/images/License Back.png",
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(height: 32),
              ProfileSectionHeader(
@@ -107,8 +110,11 @@ class PersonalAccountWidget extends StatelessWidget {
               title: 'ID Document',
             ),
             const SizedBox(height: 12),
-            const ProfileDocumentPair(
-              assetPath: "assets/images/License Back.png",),
+             ProfileDocumentPair(
+              frontImage: Image.asset(
+                "assets/images/License Back.png",
+                fit: BoxFit.cover,
+              ),),
            
       ],
     );

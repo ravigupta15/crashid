@@ -17,7 +17,8 @@ class ProfileRepository {
   }
 
   Future<Response?> editProfile(ProfileSendModel? model) async {
-    FormData formData = await model!.toFormData();
+    FormData formData =  model?.accountType == "personal" ? await  model!.toFormData(): await  model!.toCompanyMap();
+    print(formData.fields);
     return _apiService.sendRequest(
       apiUrl: ApiUrls.profileUrl,
       method: ApiMethod.put,
