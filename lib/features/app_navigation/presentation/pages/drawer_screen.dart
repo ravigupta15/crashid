@@ -1,8 +1,8 @@
 import 'package:crashid/features/app_navigation/helpers/drawer_menu_helper.dart';
 import 'package:crashid/features/app_navigation/presentation/widgets/drawer_profile_banner_widget.dart';
 import 'package:crashid/features/app_navigation/presentation/widgets/drawer_vertical_menu_widget.dart';
-import 'package:crashid/features/case_history/presentation/pages/case_history_screen.dart';
-import 'package:crashid/features/emergency/presentation/pages/emergency_screen.dart';
+import 'package:crashid/features/case_history/case_history/presentation/pages/case_history_screen.dart';
+import 'package:crashid/features/emergency/emergency/presentation/pages/emergency_screen.dart';
 import 'package:crashid/features/language/presentation/language_screen.dart';
 import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
 import 'package:crashid/features/profile/provider/profile_notifier.dart';

@@ -426,6 +426,7 @@ ProfileSendModel? sendModel;
              const SizedBox(height: 12),
                 AppTextFormField(
                   hintText: "Business Address",
+                  initialValue: sendModel?.businessAddress,
                 textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
@@ -433,12 +434,13 @@ ProfileSendModel? sendModel;
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
-                      sendModel?.address = val;
+                      sendModel?.businessAddress = val;
                     }),
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
                   hintText: "Business Street",
+                  initialValue: sendModel?.businessStreet,
                   textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
@@ -446,12 +448,13 @@ ProfileSendModel? sendModel;
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
-                      sendModel?.street = val;
+                      sendModel?.businessStreet = val;
                     }),
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
                   hintText: "Business House Number",
+                  initialValue: sendModel?.businessHouseNumber,
                    textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
@@ -459,7 +462,7 @@ ProfileSendModel? sendModel;
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
-                      sendModel?.houseNumber = val;
+                      sendModel?.businessHouseNumber = val;
                     }),
                 
                 ),

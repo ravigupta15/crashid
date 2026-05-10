@@ -1,13 +1,18 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
-import 'package:crashid/features/emergency/presentation/widgets/trusted_friend_card_widget.dart';
+import 'package:crashid/features/emergency/add_emergency/presentation/pages/add_emergency_screen.dart';
+import 'package:crashid/features/emergency/emergency/presentation/widgets/trusted_friend_card_widget.dart';
+import 'package:crashid/features/emergency/emergency/provider/emergency_notifier.dart';
+import 'package:crashid/features/emergency/emergency/provider/emergency_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/no_data_found/no_data_found.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class EmergencyScreen extends StatefulWidget {
+class EmergencyScreen extends ConsumerStatefulWidget {
     static const kIsAppbarHide = "/kIsAppbarHide";
 
   final bool? isAppBarHide;
@@ -24,26 +29,21 @@ class EmergencyScreen extends StatefulWidget {
   const EmergencyScreen({super.key, this.isAppBarHide});
 
   @override
-  State<EmergencyScreen> createState() => _EmergencyScreenState();
+  ConsumerState<EmergencyScreen> createState() => _EmergencyScreenState();
 }
 
-class _EmergencyScreenState extends State<EmergencyScreen> {
-  static const List<_TrustedFriendData> _friends = [
-    _TrustedFriendData(
-      name: 'Alexander Mitchell',
-      email: 'alexander.mitchell@email.com',
-      plateNumber: 'ABC-1234',
-      badgeLabel: 'Active',
-      initial: 'A',
-    ),
-    _TrustedFriendData(
-      name: 'Sofia Williams',
-      email: 'sofia.williams@email.com',
-      plateNumber: 'XYZ-9876',
-      badgeLabel: 'Family',
-      initial: 'S',
-    ),
-  ];
+class _EmergencyScreenState extends ConsumerState<EmergencyScreen> {
+ 
+  
+final emergencyNotifier =
+    AsyncNotifierProvider<EmergencyNotifier, EmergencyState>(EmergencyNotifier.new);
+
+
+@override
+  void initState() {
+    _emergencyApi();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +60,8 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
   // -----------------------------------------------------------------------------
 
   Widget _screenContent() {
+  final refState = ref.watch(emergencyNotifier);
+  var model = refState.value?.emergencyResponseModel?.data;
     return ColoredBox(
       color: AppColors.screenBackground,
       child: Padding( padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
@@ -75,7 +77,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                            width: 120,
                            height: 48,
                            textColor: AppColors.whiteColor,
-                           onPressed: (){},),
+                           onPressed: _openAddEmergencyScreen,),
             ),
                           Text(
                 'Trusted Friends',
@@ -86,19 +88,21 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                     ),
               ),
             Expanded(
-              child: ListView.separated(
+              child: (model ?? []).isEmpty ?
+              NoDataFound() :
+                ListView.separated(
                 separatorBuilder: (context,sb) => const SizedBox(height: 24,),
-                itemCount: _friends.length,
+                itemCount: model?.length ?? 0,
                 padding: EdgeInsets.only(top: 20, bottom: 30),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  var f = _friends[index];
+                  var f = model?[index];
                 return TrustedFriendCardWidget(
-                  name: f.name,
-                  email: f.email,
-                  plateNumber: f.plateNumber,
-                  badgeLabel: f.badgeLabel,
-                  initial: f.initial,
+                  name: "${f?.firstName ?? ''} ${f?.lastName ?? ''}",
+                  email: f?.friendEmail,
+                  plateNumber: f?.plateNumber,
+                  badgeLabel: "Active",
+                  initial: firstLetter(f?.firstName ?? ''),
                   onDetails: () {},
                 );
               }),
@@ -108,6 +112,24 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       ),
     );
   }
+
+  
+  // -----------------------------------------------------------------------------
+  // Helper Methods
+  // -----------------------------------------------------------------------------
+
+void _openAddEmergencyScreen() {
+  AddEmergencyScreen.open(context);
+}
+
+  void _emergencyApi() async{
+     await ref.read(emergencyNotifier.notifier).emergencyApi();
+  }
+
+  String firstLetter(String item) {
+    return item.isEmpty ? '' : item.substring(0)[0];
+  }
+
 }
 
 class _TrustedFriendData {

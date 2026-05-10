@@ -10,9 +10,10 @@ import 'package:crashid/features/auth/registration/presentation/pages/company_re
 import 'package:crashid/features/auth/registration/presentation/pages/personal_registration_screen.dart';
 import 'package:crashid/features/auth/reset_password/presentation/pages/reset_password_screen.dart';
 import 'package:crashid/features/auth/signin/presentation/pages/signin_screen.dart';
-import 'package:crashid/features/case_history/presentation/pages/case_details_screen.dart';
-import 'package:crashid/features/case_history/presentation/pages/case_history_screen.dart';
-import 'package:crashid/features/emergency/presentation/pages/emergency_screen.dart';
+import 'package:crashid/features/case_history/case_details/presentation/pages/case_details_screen.dart';
+import 'package:crashid/features/case_history/case_history/presentation/pages/case_history_screen.dart';
+import 'package:crashid/features/emergency/add_emergency/presentation/pages/add_emergency_screen.dart';
+import 'package:crashid/features/emergency/emergency/presentation/pages/emergency_screen.dart';
 import 'package:crashid/features/app_navigation/presentation/pages/app_navigation_screen.dart';
 import 'package:crashid/features/home/presentation/pages/home_screen.dart';
 import 'package:crashid/features/language/presentation/language_screen.dart';
@@ -172,6 +173,14 @@ class AppRouter {
           var argument = state.extra as Map<String, dynamic>?;
           return  CaseDetailsScreen(
             id: argument?[CaseDetailsScreen.kId],
+          );
+        },
+      ),
+      
+       GoRoute(
+        path: AppRoutesPath.addEmergencyScreen,
+        builder: (context, state) {
+          return  AddEmergencyScreen(
           );
         },
       ),

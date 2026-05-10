@@ -63,5 +63,9 @@ class AppAssetPaths {
   static const sosBlackIcon = "assets/icons/sos_black_ic.png";
   static const userBlackIcon = "assets/icons/user_black_ic.png";
   static const homeGrayIcon = "assets/icons/home_gray_ic.png";
+
+  static const addPersonIcon = "assets/icons/add_person_ic.png";
+  static const searchIcon = "assets/icons/search_ic.png";
+  static const successIcon = "assets/icons/success_ic.png";
   
 }

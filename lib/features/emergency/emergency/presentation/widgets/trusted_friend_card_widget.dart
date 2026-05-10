@@ -1,6 +1,8 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
+import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
 import 'package:flutter/material.dart';
 
 class TrustedFriendCardWidget extends StatelessWidget {
@@ -10,6 +12,8 @@ class TrustedFriendCardWidget extends StatelessWidget {
   final String badgeLabel;
   final String initial;
   final VoidCallback? onDetails;
+  final bool isStatus;
+  final String? img;
 
   const TrustedFriendCardWidget({
     super.key,
@@ -19,6 +23,8 @@ class TrustedFriendCardWidget extends StatelessWidget {
     required this.badgeLabel,
     required this.initial,
     this.onDetails,
+    this.img,
+    this.isStatus = true
   });
 
   @override
@@ -44,6 +50,7 @@ class TrustedFriendCardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _Avatar(initial: initial),
+              isStatus ?
               Container(
                 height: 23,
                 width: 67,
@@ -52,15 +59,21 @@ class TrustedFriendCardWidget extends StatelessWidget {
                   color: AppColors.aliceBlueColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text(
-                  badgeLabel.toUpperCase(),
+                child: (img ?? '').isNotEmpty ?
+                AppCachedNetworkImage(imageUrl: img!, boxFit: BoxFit.cover,
+                borderRadius: 20,
+                ) :
+                 Text(
+                   badgeLabel.toUpperCase(),
                   style: context.labelSmall.copyWith(
                     fontSize: 10,
                     fontWeight: FontWeight.w500,
                     color: AppColors.primaryColor,
                   ),
                 ),
-              ),
+              ) : InkWell(
+                onTap: onDetails,
+                child: Image.asset(AppAssetPaths.addPersonIcon)),
             ],
           ),
           const SizedBox(height: 20),
@@ -124,18 +137,7 @@ class TrustedFriendCardWidget extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 30),
-          AppElevatedButton.withTitle(
-            title: 'Details',
-            onPressed: onDetails,
-            color: AppColors.aliceBlueColor,
-            textColor: Color(0xff434654),
-            fontWeight: FontWeight.w500,
-            fontSize: 14,
-            isBoxShadow: false,
-            width: double.infinity,
-          ),
-        ],
+         ],
       ),
     );
   }

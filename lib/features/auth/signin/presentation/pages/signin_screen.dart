@@ -8,6 +8,7 @@ import 'package:crashid/features/auth/signin/provider/signin_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_checkbox/app_checkbox_widget.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/extensions/extension_navigator.dart';
@@ -82,21 +83,16 @@ final signinNotifierProvider =
               Image.asset(AppAssetPaths.appLogoIcon, height: 100),
               const SizedBox(height: 70),
               AppTextFormField(
-                hintText: "Email Address",
-                prefixIcon: Image.asset(
-                  AppAssetPaths.mailIcon,
-                  height: 12,
-                  width: 16,
-                ),
+                hintText: AppLocalizations.of(context)!.emailAddress,
+                textInputType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
                 inputFormatters: [
                     FilteringTextInputFormatter.allow(Validator.regEmail),
                 ],
-                textInputType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                initialValue: sendModel?.email,
                 validator: validateEmail,
                 onSaved: _savedEmail,
               ),
+             
               const SizedBox(height: 29),
               AppTextFormField(
                 hintText: "Password",

@@ -44,6 +44,14 @@ class ProfileSendModel {
   String? websiteLink;
   String? contactEmail;
   String? contactPhone;
+
+ 
+  String? businessAddress;
+  String? businessStreet;
+  String? businessHouseNumber;
+  String? businessPostalCode;
+  String? businessCity;
+
   String? billingAddress;
   String? billingStreet;
   String? billingHouseNumber;
@@ -92,6 +100,13 @@ class ProfileSendModel {
     this.jobTitle,
     this.contactPhone,
     this.websiteLink,
+
+    this.businessAddress,
+    this.businessStreet,
+    this.businessHouseNumber,
+    this.businessPostalCode,
+    this.businessCity,
+
     this.billingAddress,
     this.billingStreet,
     this.billingHouseNumber,
@@ -121,6 +136,17 @@ class ProfileSendModel {
       'gender': gender,
       'industry': industryType,
       'language':GetIt.I<UserManager>().language,
+      'business_address': businessAddress,
+      'business_street': businessStreet,
+      'business_house_number': businessHouseNumber,
+      'business_postal_code': businessPostalCode,
+      'business_city': businessCity,
+
+      'billing_address': billingAddress,
+      'billing_street': billingStreet,
+      'billing_house_number': billingHouseNumber,
+      'billing_postal_code': billingPostalCode,
+      'billing_city': billingCity
     
     };
      // Handle Files - Only add if they are not null

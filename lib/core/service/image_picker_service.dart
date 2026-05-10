@@ -21,6 +21,24 @@ class ImagePickerService {
     }
   }
 
+  static Future<File?> videoPicker(
+    ImageSource source, {
+    Duration? maxDuration,
+  }) async {
+    try {
+      final ImagePicker picker = ImagePicker();
+      final XFile? video = await picker.pickVideo(
+        source: source,
+        maxDuration: maxDuration,
+      );
+      if (video == null) return null;
+      return File(video.path);
+    } catch (e) {
+      print('Error picking video: $e');
+      return null;
+    }
+  }
+
   static Future<List<File>> pickMultipleImagesFromGallery() async {
     try {
       final ImagePicker picker = ImagePicker();
