@@ -19,7 +19,7 @@ class AppColors {
   static const Color screenBackgroundCool = Color(0xFFF5F6F8);
 
   /// Muted blue-grey for insurance labels, policy ids, and secondary lines.
-  static const Color insuranceMutedText = Color(0xFF5A7C9A);
+  static const Color insuranceMutedText = Color(0xFF316FA4);
   
   static const Color documentIconBackground = Color(0x1A003FB1);
 

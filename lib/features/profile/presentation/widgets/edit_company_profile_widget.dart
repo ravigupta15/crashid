@@ -66,12 +66,23 @@ ProfileSendModel? sendModel;
       contactEmail: model?.contactEmail,
       contactPhone: model?.contactPhone,
       dob: model?.dateOfBirth,
-      gender: model?.gender,
+      gender: (model?.gender ?? '').toString().isEmpty ? 'male' : model?.gender,
       websiteLink: model?.websiteLink,
       drivingLicenseFrontUrl: model?.drivingLicenseFront,
       drivingLicenseBackUrl: model?.drivingLicenseBack,
       idDocumentFrontUrl: model?.idDocumentFront,
-      idDocumentBackUrl: model?.idDocumentBack
+      idDocumentBackUrl: model?.idDocumentBack,
+      businessAddress: model?.businessAddress,
+      businessStreet: model?.businessStreet,
+      businessHouseNumber: model?.businessHouseNumber,
+      businessPostalCode: model?.businessPostalCode,
+      businessCity: model?.businessCity,
+      billingAddress: model?.billingAddress,
+      billingStreet: model?.billingStreet,
+      billingHouseNumber: model?.billingHouseNumber,
+      billingPostalCode: model?.billingPostalCode,
+      billingCity: model?.billingCity,
+      jobTitle: model?.jobTitle
     );
 
     _dobController = TextEditingController(text: 
@@ -100,7 +111,7 @@ ProfileSendModel? sendModel;
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
              AppTextFormField(
-              initialValue: model?.legalCompanyName,
+              initialValue: sendModel?.legalCompanyName,
               hintText: 'Legal Company Name',
                 inputFormatters: [
                       Validator.emojiRestrict(),
@@ -114,7 +125,7 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24),
               AppTextFormField(
-                initialValue: model?.registeredCompanyName,
+                initialValue: sendModel?.registerCompanyName,
                 hintText: 'Registered Company Name (Optional)',
                 inputFormatters: [
                       Validator.emojiRestrict(),
@@ -127,7 +138,7 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24),
               AppTextFormField(
-                initialValue: model?.commercialRegistrationNumber,
+                initialValue: sendModel?.commercialRegNumber,
                 hintText: 'Commercial Registered Number',
                 inputFormatters: [
                       Validator.emojiRestrict(),
@@ -140,7 +151,7 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24),
               AppTextFormField(
-                initialValue: model?.generalEmail,
+                initialValue: sendModel?.email,
                 hintText: 'General Company Email',
                 inputFormatters: [
                       Validator.emojiRestrict(),
@@ -154,7 +165,7 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24),
               AppTextFormField(
-                initialValue: model?.companyPhone,
+                initialValue: sendModel?.mobileNumber,
                 hintText: 'Company Phone Number',
                 prefixWidth: 63,
               prefixIcon: CountryCodeWidget(
@@ -164,7 +175,7 @@ ProfileSendModel? sendModel;
               textInputType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(10)
+                  LengthLimitingTextInputFormatter(12)
                     ],
                     textInputAction: TextInputAction.next,
                     validator: validateEmpty,
@@ -174,7 +185,7 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24),
               AppTextFormField(
-                initialValue: model?.vatId,
+                initialValue: sendModel?.vitId,
                 hintText: 'VIT ID',
                 inputFormatters: [
                       Validator.emojiRestrict(),
@@ -189,8 +200,8 @@ ProfileSendModel? sendModel;
               CustomDropDownFormFiledWidget(
                 hintText: "Industry Type",
                 selectedValue: CustomDropDownItem(
-                  value: model?.industry,
-                  key: model?.industry,
+                  value: sendModel?.industryType ?? '',
+                  key: sendModel?.industryType ?? '',
                  ),
                 items: AppDropdownItemWidget.industryTypeList,
                 onSaved: (newValue) {
@@ -206,7 +217,8 @@ ProfileSendModel? sendModel;
                 },
               ),
               const SizedBox(height: 24),
-
+              (model?.legalFormPdf ?? '').toString().isNotEmpty ?
+              CompanyLegalPdfInfoWidget() :
               AppTextFormField(
                 isReadOnly: true,
                 hintText: "Legal Form PDF",
@@ -229,7 +241,7 @@ ProfileSendModel? sendModel;
               // CompanyLegalPdfInfoWidget(),
               const SizedBox(height: 24),
                 AppTextFormField(
-              initialValue: model?.contactFirstName,
+              initialValue:   sendModel?.contactFirstName,
               hintText: 'Primary First Name',
                 inputFormatters: [
                       Validator.emojiRestrict(),
@@ -244,7 +256,7 @@ ProfileSendModel? sendModel;
               
               const SizedBox(height: 24),
                 AppTextFormField(
-              initialValue: model?.contactLastName,
+              initialValue: sendModel?.contactLastName,
               hintText: 'Primary Last Name',
                 inputFormatters: [
                       Validator.emojiRestrict(),
@@ -259,7 +271,7 @@ ProfileSendModel? sendModel;
               
               const SizedBox(height: 24),
                 AppTextFormField(
-              initialValue: model?.jobTitle,
+              initialValue: sendModel?.jobTitle,
               hintText: 'Job Title',
                 inputFormatters: [
                       Validator.emojiRestrict(),
@@ -273,7 +285,7 @@ ProfileSendModel? sendModel;
               ),
                const SizedBox(height: 24),
               AppTextFormField(
-                initialValue: model?.contactEmail,
+                initialValue: sendModel?.contactEmail,
                 hintText: 'Contact Email',
                 inputFormatters: [
                       Validator.emojiRestrict(),
@@ -389,7 +401,7 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24,),
            AppTextFormField(
-                initialValue: model?.contactPhone,
+                initialValue: sendModel?.contactPhone,
                 hintText: 'Primary Phone Number',
                 prefixWidth: 63,
               prefixIcon: CountryCodeWidget(
@@ -399,7 +411,7 @@ ProfileSendModel? sendModel;
               textInputType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(10)
+                  LengthLimitingTextInputFormatter(12)
                     ],
                     textInputAction: TextInputAction.next,
                     validator: validateEmpty,
@@ -409,7 +421,7 @@ ProfileSendModel? sendModel;
               ),
               const SizedBox(height: 24),
                 AppTextFormField(
-              initialValue: widget.profileData?.websiteLink,
+              initialValue: sendModel?.websiteLink,
               hintText: 'Website link',
                 inputFormatters: [
                       Validator.emojiRestrict(),
@@ -430,7 +442,7 @@ ProfileSendModel? sendModel;
                 textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -444,7 +456,7 @@ ProfileSendModel? sendModel;
                   textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -458,7 +470,7 @@ ProfileSendModel? sendModel;
                    textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -469,28 +481,31 @@ ProfileSendModel? sendModel;
                 const SizedBox(height: 24),
                 AppTextFormField(
                   hintText: "Business Postal Code",
+                  initialValue: sendModel?.businessPostalCode,
                    textInputAction: TextInputAction.next,
                    textInputType: TextInputType.phone,
                    inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(6)
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
-                      sendModel?.postalCode = val;
+                      sendModel?.businessPostalCode = val;
                     }),
                 
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
                   hintText: "Business City",
+                  initialValue: sendModel?.businessCity,
                   textInputAction: TextInputAction.done,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
-                      sendModel?.city = val;
+                      sendModel?.businessCity = val;
                     }),
                 ),
              const SizedBox(height: 24),
@@ -498,10 +513,11 @@ ProfileSendModel? sendModel;
              const SizedBox(height: 12),
                 AppTextFormField(
                   hintText: "Billing Address",
+                  initialValue: sendModel?.billingAddress,
                 textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -511,10 +527,11 @@ ProfileSendModel? sendModel;
                 const SizedBox(height: 24),
                 AppTextFormField(
                   hintText: "Billing Street",
+                  initialValue: sendModel?.billingStreet,
                   textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -523,11 +540,10 @@ ProfileSendModel? sendModel;
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Billing House Number",
-                   textInputAction: TextInputAction.next,
+                  hintText: "Billing House Number",                  initialValue: sendModel?.billingHouseNumber,                   textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -537,11 +553,11 @@ ProfileSendModel? sendModel;
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Billing Postal Code",
-                   textInputAction: TextInputAction.next,
+                  hintText: "Billing Postal Code",                  initialValue: sendModel?.billingPostalCode,                   textInputAction: TextInputAction.next,
                    textInputType: TextInputType.phone,
                    inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(6)
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -552,10 +568,11 @@ ProfileSendModel? sendModel;
                 const SizedBox(height: 24),
                 AppTextFormField(
                   hintText: "Billing City",
+                  initialValue: sendModel?.billingCity,
                   textInputAction: TextInputAction.done,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -628,6 +645,7 @@ ProfileSendModel? sendModel;
 
    void _checkValidation() {
     FocusScope.of(context).unfocus();
+    print(sendModel?.gender);
     sendModel?.countryCode = country?.phoneCode;
     if (!_formKey.currentState!.validate()) return;
     if (!_isAllDocumentSelected()) {
@@ -636,7 +654,7 @@ ProfileSendModel? sendModel;
          'Please upload all required documents.',
       );
       return;
-    }  else if (sendModel?.selectedInsurancePdf == null) {
+    }  else if (!_isLegalPdfValid()) {
       showFeedbackMessage(  
         context: context,
          'Please upload legal form PDF.',
@@ -644,7 +662,6 @@ ProfileSendModel? sendModel;
       return;
     }
     _formKey.currentState!.save();
-sendModel?.gender = widget.profileData?.gender;
     _editProfileApi();
   }
 
@@ -693,18 +710,33 @@ Future<void> _pickDob() async {
     });
   }
 
-  bool _isAllDocumentSelected() {
-    return sendModel?.drivingLicenseFront != null &&
-        sendModel?.drivingLicenseBack != null &&
-        sendModel?.idDocumentFront != null &&
-        sendModel?.idDocumentBack != null;
-  }
-
-  // bool _isDocumentUrl() {
-  //   return sendModel
-  // }
+bool _isAllDocumentSelected() {
+  // Driving License Front: either has new file OR existing URL
+  final hasDrivingFront = sendModel?.drivingLicenseFront != null || 
+      (sendModel?.drivingLicenseFrontUrl?.isNotEmpty ?? false);
   
+  // Driving License Back: either has new file OR existing URL
+  final hasDrivingBack = sendModel?.drivingLicenseBack != null || 
+      (sendModel?.drivingLicenseBackUrl?.isNotEmpty ?? false);
+  
+  // ID Document Front: either has new file OR existing URL
+  final hasIdFront = sendModel?.idDocumentFront != null || 
+      (sendModel?.idDocumentFrontUrl?.isNotEmpty ?? false);
+  
+  // ID Document Back: either has new file OR existing URL
+  final hasIdBack = sendModel?.idDocumentBack != null || 
+      (sendModel?.idDocumentBackUrl?.isNotEmpty ?? false);
+  
+  return hasDrivingFront && hasDrivingBack && hasIdFront && hasIdBack;
+}
 
+bool _isLegalPdfValid() {
+  // Legal PDF: either has new file OR existing URL
+  final hasNewPdf = sendModel?.selectedInsurancePdf != null;
+  final hasExistingUrl = (widget.profileData?.legalFormPdf ?? '').isNotEmpty;
+  
+  return hasNewPdf || hasExistingUrl;
+}
   Future<void> _pickDocumentImage({
     required ValueChanged<File?> onPicked,
   }) async {

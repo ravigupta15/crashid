@@ -4,7 +4,9 @@ import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CompanyLegalPdfInfoWidget extends StatelessWidget {
-  const CompanyLegalPdfInfoWidget({super.key});
+  final String? date;
+  final VoidCallback? onClick;
+  const CompanyLegalPdfInfoWidget({super.key, this.date, this.onClick});
 
   @override
   Widget build(BuildContext context) {

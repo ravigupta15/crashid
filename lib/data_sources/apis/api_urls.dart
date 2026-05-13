@@ -25,10 +25,17 @@ abstract class ApiUrls {
   static const notificationUrl = "${baseUrl}notifications";
 
   // accident
+  static const pricingUrl = "${baseUrl}accidents/pricing";
   static const accidentsUrl = "${baseUrl}accidents";
 
   // search user by email and plate number
   static const searchUserUrl = "${baseUrl}user/auth/search";
   static const emergencyUrl = "${baseUrl}emergency/friends";
   static const sosUrl = "${baseUrl}emergency/sos";
+
+  static const contentUrl = "${baseUrl}content";
+
+  // insurance
+  static const insuranceUrl = "${baseUrl}user/vehicles/insurance";
+  
 }

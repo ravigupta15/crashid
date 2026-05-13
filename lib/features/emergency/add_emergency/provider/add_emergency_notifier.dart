@@ -5,6 +5,7 @@ import 'package:crashid/features/emergency/add_emergency/model/add_emergency_sen
 import 'package:crashid/features/emergency/add_emergency/model/search_user_response_model.dart';
 import 'package:crashid/features/emergency/add_emergency/provider/add_emergency_state.dart';
 import 'package:crashid/features/emergency/repository/emergency_repository.dart';
+import 'package:crashid/features/lookup/repository/lookup_repository.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
@@ -21,7 +22,7 @@ class AddEmergencyNotifier extends AsyncNotifier<AddEmergencyState> {
 
   Future<bool> searchApi({String? search}) async {
     try {
-      final repo = ref.read(emergencyRepositoryProvider);
+      final repo = ref.read(lookupRepositoryProvider);
       final response = await repo.searchApi(search);
       if (response?.statusCode == 200) {
         state = AsyncData(

@@ -79,7 +79,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
             AppTextFormField(hintText: 'Legal Company Name',
               inputFormatters: [
                     Validator.emojiRestrict(),
-                    Validator.removeWhiteSpace(),
+                    Validator.removeLeadingWhiteSpace(),
                   ],
                   textInputAction: TextInputAction.next,
                   validator: validateEmpty,
@@ -91,7 +91,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
             AppTextFormField(hintText: 'Registered Company Name (Optional)',
               inputFormatters: [
                     Validator.emojiRestrict(),
-                    Validator.removeWhiteSpace(),
+                    Validator.removeLeadingWhiteSpace(),
                   ],
                   textInputAction: TextInputAction.next,
                   onSaved: (val) => setState(() {
@@ -120,7 +120,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
             textInputType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(10)
+                LengthLimitingTextInputFormatter(12)
                   ],
                   textInputAction: TextInputAction.next,
                   validator: validateEmpty,
@@ -132,7 +132,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
             AppTextFormField(hintText: 'VIT ID',
               inputFormatters: [
                     Validator.emojiRestrict(),
-                    Validator.removeWhiteSpace(),
+                    Validator.removeLeadingWhiteSpace(),
                   ],
                   textInputAction: TextInputAction.next,
                   validator: validateEmpty,

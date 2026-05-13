@@ -2,14 +2,17 @@ import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/add_accident/presentation/widgets/accident_details_widget.dart';
 import 'package:crashid/features/add_accident/presentation/widgets/payment_method_widget.dart';
+import 'package:crashid/features/add_accident/provider/add_accident_notifier.dart';
+import 'package:crashid/features/add_accident/provider/add_accident_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class OtherAccidentScreen extends StatefulWidget {
+class OtherAccidentScreen extends ConsumerStatefulWidget {
  
   static void open(BuildContext context) {
     context.push(AppRoutesPath.otherAccidentScreen);
@@ -18,10 +21,22 @@ class OtherAccidentScreen extends StatefulWidget {
   const OtherAccidentScreen({super.key});
 
   @override
-  State<OtherAccidentScreen> createState() => _OtherAccidentScreenState();
+  ConsumerState<OtherAccidentScreen> createState() => _OtherAccidentScreenState();
 }
 
-class _OtherAccidentScreenState extends State<OtherAccidentScreen> {
+class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen> {
+
+
+final addAccidentNotifierProvider =
+    AsyncNotifierProvider<AddAccidentNotifier, AddAccidentState>(AddAccidentNotifier.new);
+ 
+
+@override
+  void initState() {
+    _pricingApi();
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,5 +102,8 @@ class _OtherAccidentScreenState extends State<OtherAccidentScreen> {
   );
  }
 
+void _pricingApi() async{
+    await ref.read(addAccidentNotifierProvider.notifier).pricing();
+}
 
 }

@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/features/add_accident/presentation/pages/add_accident_screen.dart';
 import 'package:crashid/features/add_accident/presentation/pages/other_accident_screen.dart';
+import 'package:crashid/features/add_accident/presentation/pages/search_screen.dart';
+import 'package:crashid/features/page_content/presentation/pages/page_content_screen.dart';
 import 'package:crashid/features/auth/forget_password/presentation/pages/forget_password_screen.dart';
 import 'package:crashid/features/auth/otp/presentation/pages/otp_screen.dart';
 import 'package:crashid/features/auth/registration/presentation/pages/choose_account_type_screen.dart';
@@ -184,17 +186,26 @@ class AppRouter {
           );
         },
       ),
+       GoRoute(
+        path: AppRoutesPath.pageContentScreen,
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return  PageContentScreen(
+            slug: argument?[PageContentScreen.kSlug],
+          );
+        },
+      ),
       
-      // GoRoute(
-      //   path: OtpVerifyScreen.routeName,
-      //   builder: (context, state) {
-      //     var argument = state.extra as Map<String, dynamic>?;
-
-      //     return OtpVerifyScreen(
-      //       username: argument?[OtpVerifyScreen.kUsername],
-      //     );
-      //   },
-      // ),
+       GoRoute(
+        path: AppRoutesPath.searchScreen,
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return  SearchScreen(
+            model: argument?[SearchScreen.kUserModel],
+          );
+        },
+      ),
+      
           ],
   );
 

@@ -100,7 +100,7 @@ Widget _screenContent() {
                 hintText: AppLocalizations.of(context)!.firstName,
                   inputFormatters: [
                     Validator.emojiRestrict(),
-                    Validator.removeWhiteSpace(),
+                    Validator.removeLeadingWhiteSpace(),
                   ],
                   textInputAction: TextInputAction.next,
                   validator: validateEmpty,
@@ -115,7 +115,7 @@ Widget _screenContent() {
                 textInputAction: TextInputAction.next,
                 inputFormatters: [
                     Validator.emojiRestrict(),
-                    Validator.removeWhiteSpace(),
+                    Validator.removeLeadingWhiteSpace(),
                   ],
                   validator: validateEmpty,
                   onSaved: (val) => setState(() {
@@ -201,7 +201,7 @@ Widget _screenContent() {
             ),
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
-              LengthLimitingTextInputFormatter(10)
+              LengthLimitingTextInputFormatter(12)
             ],
                 textInputType: TextInputType.phone,
                 textInputAction: TextInputAction.next,
@@ -256,7 +256,7 @@ Widget _screenContent() {
               textInputAction: TextInputAction.next,
                 inputFormatters: [
                     Validator.emojiRestrict(),
-                    Validator.removeWhiteSpace(),
+                    Validator.removeLeadingWhiteSpace(),
                   ],
                   validator: validateEmpty,
                   onSaved: (val) => setState(() {
@@ -268,7 +268,7 @@ Widget _screenContent() {
               textInputAction: TextInputAction.next,
                 inputFormatters: [
                     Validator.emojiRestrict(),
-                    Validator.removeWhiteSpace(),
+                    Validator.removeLeadingWhiteSpace(),
                   ],
                   validator: validateEmpty,
                   onSaved: (val) => setState(() {
@@ -281,7 +281,7 @@ Widget _screenContent() {
                  textInputAction: TextInputAction.next,
                 inputFormatters: [
                     Validator.emojiRestrict(),
-                    Validator.removeWhiteSpace(),
+                    Validator.removeLeadingWhiteSpace(),
                   ],
                   validator: validateEmpty,
                   onSaved: (val) => setState(() {
@@ -308,7 +308,7 @@ Widget _screenContent() {
                textInputAction: TextInputAction.done,
                 inputFormatters: [
                     Validator.emojiRestrict(),
-                    Validator.removeWhiteSpace(),
+                    Validator.removeLeadingWhiteSpace(),
                   ],
                   validator: validateEmpty,
                   onSaved: (val) => setState(() {

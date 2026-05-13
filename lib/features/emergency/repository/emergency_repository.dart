@@ -10,14 +10,6 @@ class EmergencyRepository {
 
   EmergencyRepository(this._apiService);
 
-  Future<Response?> searchApi(String? queryString) async{
-    return _apiService.sendRequest(
-      apiUrl: "${ApiUrls.searchUserUrl}?q=$queryString",
-      method: ApiMethod.get,
-    );
-  }
-
-
   Future<Response?> addEmergency(AddEmergencySendModel? sendModel) async{
     return _apiService.sendRequest(
       apiUrl: ApiUrls.emergencyUrl,

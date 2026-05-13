@@ -8,11 +8,11 @@ class ProfileResponseModel {
   ProfileResponseModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
-    data = json['data'] != null ?  ProfileModel.fromJson(json['data']) : null;
+    data = json['data'] != null ? ProfileModel.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['success'] = success;
     data['message'] = message;
     if (this.data != null) {
@@ -51,7 +51,15 @@ class ProfileModel {
   dynamic contactLastName;
   dynamic jobTitle;
   dynamic businessAddress;
+  dynamic businessStreet;
+  dynamic businessHouseNumber;
+  dynamic businessPostalCode;
+  dynamic businessCity;
   dynamic billingAddress;
+  dynamic billingStreet;
+  dynamic billingHouseNumber;
+  dynamic billingPostalCode;
+  dynamic billingCity;
   dynamic drivingLicenseFront;
   dynamic drivingLicenseBack;
   dynamic idDocumentFront;
@@ -65,48 +73,57 @@ class ProfileModel {
   dynamic contactPhone;
   dynamic contactEmail;
 
-  ProfileModel(
-      {this.id,
-      this.accountType,
-      this.email,
-      this.countryCode,
-      this.mobileNumber,
-      this.profileImage,
-      this.language,
-      this.status,
-      this.emailVerifiedAt,
-      this.createdAt,
-      this.firstName,
-      this.lastName,
-      this.dateOfBirth,
-      this.gender,
-      this.legalCompanyName,
-      this.registeredCompanyName,
-      this.legalFormPdf,
-      this.generalEmail,
-      this.companyPhone,
-      this.industry,
-      this.companySize,
-      this.commercialRegistrationNumber,
-      this.vatId,
-      this.websiteLink,
-      this.contactFirstName,
-      this.contactLastName,
-      this.jobTitle,
-      this.businessAddress,
-      this.billingAddress,
-      this.drivingLicenseFront,
-      this.drivingLicenseBack,
-      this.idDocumentFront,
-      this.idDocumentBack,
-      this.address,
-      this.street,
-      this.houseNumber,
-      this.postalCode,
-      this.city,
-      this.contactCountryCode,
-      this.contactPhone,
-      this.contactEmail});
+  ProfileModel({
+    this.id,
+    this.accountType,
+    this.email,
+    this.countryCode,
+    this.mobileNumber,
+    this.profileImage,
+    this.language,
+    this.status,
+    this.emailVerifiedAt,
+    this.createdAt,
+    this.firstName,
+    this.lastName,
+    this.dateOfBirth,
+    this.gender,
+    this.legalCompanyName,
+    this.registeredCompanyName,
+    this.legalFormPdf,
+    this.generalEmail,
+    this.companyPhone,
+    this.industry,
+    this.companySize,
+    this.commercialRegistrationNumber,
+    this.vatId,
+    this.websiteLink,
+    this.contactFirstName,
+    this.contactLastName,
+    this.jobTitle,
+    this.businessAddress,
+    this.businessStreet,
+    this.businessHouseNumber,
+    this.businessPostalCode,
+    this.businessCity,
+    this.billingAddress,
+    this.billingStreet,
+    this.billingHouseNumber,
+    this.billingPostalCode,
+    this.billingCity,
+    this.drivingLicenseFront,
+    this.drivingLicenseBack,
+    this.idDocumentFront,
+    this.idDocumentBack,
+    this.address,
+    this.street,
+    this.houseNumber,
+    this.postalCode,
+    this.city,
+    this.contactCountryCode,
+    this.contactPhone,
+    this.contactEmail,
+  });
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -137,7 +154,15 @@ class ProfileModel {
     contactLastName = json['contact_last_name'];
     jobTitle = json['job_title'];
     businessAddress = json['business_address'];
+    businessStreet = json['business_street'];
+    businessHouseNumber = json['business_house_number'];
+    businessPostalCode = json['business_postal_code'];
+    businessCity = json['business_city'];
     billingAddress = json['billing_address'];
+    billingStreet = json['billing_street'];
+    billingHouseNumber = json['billing_house_number'];
+    billingPostalCode = json['billing_postal_code'];
+    billingCity = json['billing_city'];
     drivingLicenseFront = json['driving_license_front_url'];
     drivingLicenseBack = json['driving_license_back_url'];
     idDocumentFront = json['id_document_front_url'];
@@ -153,7 +178,7 @@ class ProfileModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
     data['account_type'] = accountType;
     data['email'] = email;
@@ -181,9 +206,16 @@ class ProfileModel {
     data['contact_first_name'] = contactFirstName;
     data['contact_last_name'] = contactLastName;
     data['job_title'] = jobTitle;
-     data['business_address'] = businessAddress;
+    data['business_address'] = businessAddress;
+    data['business_street'] = businessStreet;
+    data['business_house_number'] = businessHouseNumber;
+    data['business_postal_code'] = businessPostalCode;
+    data['business_city'] = businessCity;
     data['billing_address'] = billingAddress;
-
+    data['billing_street'] = billingStreet;
+    data['billing_house_number'] = billingHouseNumber;
+    data['billing_postal_code'] = billingPostalCode;
+    data['billing_city'] = billingCity;
     data['driving_license_front_url'] = drivingLicenseFront;
     data['driving_license_back_url'] = drivingLicenseBack;
     data['id_document_front_url'] = idDocumentFront;

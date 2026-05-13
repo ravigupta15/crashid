@@ -1,4 +1,5 @@
 import 'package:crashid/features/app_navigation/helpers/drawer_menu_helper.dart';
+import 'package:crashid/features/page_content/presentation/pages/page_content_screen.dart';
 import 'package:crashid/features/app_navigation/presentation/widgets/drawer_profile_banner_widget.dart';
 import 'package:crashid/features/app_navigation/presentation/widgets/drawer_vertical_menu_widget.dart';
 import 'package:crashid/features/case_history/case_history/presentation/pages/case_history_screen.dart';
@@ -93,6 +94,18 @@ class _DrawerScreenState extends ConsumerState<DrawerScreen> {
     case 3:
       _openEmergencyScreen();
       break;
+    case 4: 
+      _openPageContentScreen("imprint");
+      break;
+    case 5: 
+      _openPageContentScreen("agb");
+      break;
+    case 6: 
+      _openPageContentScreen("data_security");
+      break;
+    case 7: 
+      _openPageContentScreen("privacy_policy");
+      break;  
     case 8:
     _logoutDialog();
       break;  
@@ -136,5 +149,9 @@ void _logoutDialog() {
     yesTap: () => AppLogoutHelper.logout(),
   );
   }
+ 
+ void _openPageContentScreen(String? slug) {
+  PageContentScreen.open(context,slug: slug);
+ }
 
 }

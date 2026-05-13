@@ -1,4 +1,5 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
+import 'package:crashid/data_sources/local_storage/secure_storage.dart';
 import 'package:crashid/features/profile/model/profile_response_model.dart';
 import 'package:crashid/features/profile/presentation/pages/edit_profile_screen.dart';
 import 'package:crashid/features/profile/presentation/widgets/company_account_widget.dart';
@@ -9,6 +10,7 @@ import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -38,7 +40,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     _callProfileApi();
     super.initState();
   }
-
 
 
   @override

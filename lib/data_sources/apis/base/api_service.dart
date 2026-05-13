@@ -70,6 +70,7 @@ class ApiService {
 
   Future<Map<String, String>> getAuthHeaders() async {
     final String? token = await GetIt.I<SecureStorage>().getUserToken();
+    print("token...$token");
     return {
       if (token.isNotNullOrNotEmpty) 'Authorization': "Bearer $token",
     };

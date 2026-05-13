@@ -105,7 +105,7 @@ class DioApiManager {
 
   Future<void> _setToken(RequestOptions request) async {
     final token = await GetIt.I<SecureStorage>().getUserToken();
-
+   print("token...$token");
     if (token.isNotNullOrNotEmpty) {
       if (request.headers[ApiKeys.authorization] == null) {
         request.headers[ApiKeys.authorization] = '${ApiKeys.keyBearer} $token';

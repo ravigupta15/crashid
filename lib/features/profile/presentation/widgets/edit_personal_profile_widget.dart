@@ -78,7 +78,7 @@ ProfileSendModel? sendModel;
                   hintText: AppLocalizations.of(context)!.firstName,
                     inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     textInputAction: TextInputAction.next,
                     validator: validateEmpty,
@@ -94,7 +94,7 @@ ProfileSendModel? sendModel;
                   textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -182,7 +182,7 @@ ProfileSendModel? sendModel;
               ),
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(10)
+                LengthLimitingTextInputFormatter(12)
               ],
                   textInputType: TextInputType.phone,
                   textInputAction: TextInputAction.next,
@@ -198,7 +198,7 @@ ProfileSendModel? sendModel;
                 textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -212,7 +212,7 @@ ProfileSendModel? sendModel;
                   textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -226,7 +226,7 @@ ProfileSendModel? sendModel;
                    textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
@@ -256,7 +256,7 @@ ProfileSendModel? sendModel;
                   textInputAction: TextInputAction.done,
                   inputFormatters: [
                       Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
+                      Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
                     onSaved: (val) => setState(() {
