@@ -15,70 +15,76 @@ class NotificationCardWidget extends StatelessWidget {
     this.model,
     this.onSecondaryTap,
     this.onPrimaryTap,
+    this.onTap
+
   });
   final Notifications? model;
   final VoidCallback? onPrimaryTap;
   final VoidCallback? onSecondaryTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      decoration: BoxDecoration(
-        color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.blackColor.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          _headerRow(context),
-
-          (model?.type.toLowerCase().contains('emergency')) ?
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: AppElevatedButton.withTitleAndIcon(
-              icon: Image.asset(AppAssetPaths.runIcon),
-              color: AppColors.crimsonRedColor,
-              textColor: AppColors.whiteColor,
-              width: double.infinity,
-              title: "I am Coming",
-              height: 48,
-              isBoxShadow: false,
-              onPressed: () {},
+    return GestureDetector(
+      onTap: isAccidentType() ? onTap : null,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        decoration: BoxDecoration(
+          color: AppColors.whiteColor,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.blackColor.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
             ),
-          ) :
-          model?.requestStatus == "pending" ?
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: Row(
-              children: [
-                Expanded(child: AppElevatedButton.withTitle(title: "Accept",
+          ],
+        ),
+        child: Column(
+          children: [
+            _headerRow(context),
+      
+            (model?.type.toLowerCase().contains('emergency')) ?
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: AppElevatedButton.withTitleAndIcon(
+                icon: Image.asset(AppAssetPaths.runIcon),
+                color: AppColors.crimsonRedColor,
                 textColor: AppColors.whiteColor,
-                isBoxShadow: false,
+                width: double.infinity,
+                title: "I am Coming",
                 height: 48,
-                 onPressed: onPrimaryTap,)),
-                 const SizedBox(width: 12,),
-                Expanded(child: AppElevatedButton.withTitle(title: "Reject",
-                color: AppColors.aliceBlueColor,
                 isBoxShadow: false,
-                height: 48,
-                textColor: AppColors.blackColor, onPressed: onSecondaryTap,)),
-              ],
-            ),
-          ) : EmptyWidget()
-        ],
+                onPressed: () {},
+              ),
+            ) :
+            model?.requestStatus == "pending" ?
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Row(
+                children: [
+                  Expanded(child: AppElevatedButton.withTitle(title: "Accept",
+                  textColor: AppColors.whiteColor,
+                  isBoxShadow: false,
+                  height: 48,
+                   onPressed: onPrimaryTap,)),
+                   const SizedBox(width: 12,),
+                  Expanded(child: AppElevatedButton.withTitle(title: "Reject",
+                  color: AppColors.aliceBlueColor,
+                  isBoxShadow: false,
+                  height: 48,
+                  textColor: AppColors.blackColor, onPressed: onSecondaryTap,)),
+                ],
+              ),
+            ) : EmptyWidget()
+          ],
+        ),
       ),
     );
   }
 
   Widget _headerRow(BuildContext context) {
-    var type = model?.type.toLowerCase() ?? '';
+     var type = model?.type.toLowerCase() ?? '';
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -183,18 +189,18 @@ class NotificationCardWidget extends StatelessWidget {
                         text: model?.body ?? '',
                         style: context.bodyMedium.copyWith(fontSize: 16),
                         children: [
-                          TextSpan(
-                            text: "(RJ45 2039 & RJ142948)",
-                            style: context.titleMedium.copyWith(fontSize: 16),
-                            children: [
-                              TextSpan(
-                                text: ". Accept if you saw it.",
-                                style: context.bodyMedium.copyWith(
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
+                          // TextSpan(
+                          //   text: "(RJ45 2039 & RJ142948)",
+                          //   style: context.titleMedium.copyWith(fontSize: 16),
+                          //   children: [
+                          //     TextSpan(
+                          //       text: ". Accept if you saw it.",
+                          //       style: context.bodyMedium.copyWith(
+                          //         fontSize: 16,
+                          //       ),
+                          //     ),
+                            // ],
+                          // ),
                         ],
                       ),
                     ),
@@ -266,5 +272,12 @@ class NotificationCardWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  bool isAccidentType() {
+     var type = model?.type.toLowerCase() ?? '';
+return
+    type.contains('accident') ||
+                  type.contains('witness') || type.contains('closed');
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:crashid/features/add_accident/model/add_accident_send_model.dart';
 import 'package:crashid/features/add_accident/repository/accident_repository.dart';
 import 'package:crashid/features/case_history/case_details/model/case_details_response_model.dart';
 import 'package:crashid/features/case_history/case_details/provider/case_details_state.dart';
@@ -50,6 +51,25 @@ class CaseDetailsNotifier extends AsyncNotifier<CaseDetailsState> {
       final response = await repo.userBReject(caseId: caseId);
       if (response?.statusCode == 201 || response?.statusCode == 200) {
         showFeedbackMessage(response?.data['message'] ?? '');
+        caseDetails(caseId);
+        return response;
+      }
+    } catch (_) {
+     } finally {
+      LoaderService().hideLoader();
+    }
+    return null;
+  }
+
+  
+  Future<Response?> userWitnessReject({AddAccidentSendModel? sendModel}) async {
+    LoaderService().showLoader();
+    try {
+      final repo = ref.read(accidentRepositoryProvider);
+      final response = await repo.witnessResponse(sendModel: sendModel);
+      if (response?.statusCode == 201 || response?.statusCode == 200) {
+        showFeedbackMessage(response?.data['message'] ?? '');
+        caseDetails(sendModel?.caseId);
         return response;
       }
     } catch (_) {

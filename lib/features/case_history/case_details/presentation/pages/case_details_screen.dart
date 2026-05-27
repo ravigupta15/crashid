@@ -1,5 +1,9 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/data_sources/local_storage/user_manager.dart';
+import 'package:crashid/di/service_locator.dart';
+import 'package:crashid/features/add_accident/model/add_accident_send_model.dart';
+import 'package:crashid/features/add_accident/presentation/pages/add_accident_screen.dart';
 import 'package:crashid/features/add_accident/presentation/pages/other_accident_screen.dart';
 import 'package:crashid/features/add_accident/presentation/widgets/accident_details_widget.dart';
 import 'package:crashid/features/case_history/case_details/model/case_details_response_model.dart';
@@ -33,23 +37,18 @@ class CaseDetailsScreen extends ConsumerStatefulWidget {
 }
 
 class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
-  // Example dynamic image list (replace with your data source)
-  final List<String> evidenceImagePaths = [
-    'assets/images/img1.png',
-    'assets/images/img1.png',
-    'assets/images/img1.png',
-    'assets/images/img1.png',
-    'assets/images/img1.png',
-  ];
 
 
 final casedetailsNotifierProvider =
     AsyncNotifierProvider<CaseDetailsNotifier, CaseDetailsState>(CaseDetailsNotifier.new);
 
+AddAccidentSendModel? sendModel;
 @override
   void initState() {
     super.initState();
     _caseDetailsApi();
+    sendModel = AddAccidentSendModel(
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -65,7 +64,7 @@ final casedetailsNotifierProvider =
   Widget _screenContent() {
     final refState = ref.watch(casedetailsNotifierProvider);
     var caseDetails = refState.value?.caseDetailsResponseModel?.data;
-
+    print(_shouldShowAcceptRejectButtons( caseDetails));
     return SingleChildScrollView(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30, top: 20),
       child: Column(
@@ -125,7 +124,55 @@ final casedetailsNotifierProvider =
           title:  "Retry Payment",
           onPressed: () =>  _openOtherAccidentScreen(caseDetails?.id.toString()),
         ),
-        if ((caseDetails?.status ?? '').toString().toLowerCase() != 'draft' && (caseDetails?.closeStatus?.showCloseButton ?? false) )
+        
+        // Check for participant B/C with pending submission status
+        if (_shouldShowAcceptRejectButtons(caseDetails))
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: AppElevatedButton.withTitle(
+                    title: "Accept",
+                    textColor: AppColors.whiteColor,
+                    isBoxShadow: false,
+                    height: 48,
+                    onPressed: () => _openAddAccidentScreen(caseDetails?.id.toString()),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: AppElevatedButton.withTitle(
+                    title: "Reject",
+                    color: AppColors.aliceBlueColor,
+                    isBoxShadow: false,
+                    height: 48,
+                    textColor: AppColors.blackColor,
+                    onPressed: () => _rejectParticipantRequest(caseDetails?.id.toString(), _userBAndUserC(caseDetails)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          if (_shouldShowRejectedStatus(caseDetails)) 
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Container(
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColors.redColor.withValues(alpha: .1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text("You have rejected this case", style: context.bodyMedium.copyWith(
+                  fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.redColor
+                ),),
+              ),
+            ),
+          ),
+        
+        if ((caseDetails?.status ?? '').toString().toLowerCase() != 'draft' && (caseDetails?.closeStatus?.showCloseButton ?? false) && !_shouldShowAcceptRejectButtons(caseDetails) && !_shouldShowRejectedStatus(caseDetails))
         AppElevatedButton.withTitleAndIcon(
           width: double.infinity,
           icon:  Icon(Icons.check, color: AppColors.accentColor),
@@ -242,6 +289,7 @@ Widget _evidenceWidget(List imagePaths) {
             child: AppCachedNetworkImage(
              imageUrl: imagePaths[index],
               boxFit: BoxFit.cover,
+              canOpenImage: true,
             ),
           );
         },
@@ -341,5 +389,105 @@ void _openOtherAccidentScreen(String? caseId) {
 
 void _caseClosedApi(String? caseId) {
   ref.read(casedetailsNotifierProvider.notifier).caseClosed(caseId);
+}
+
+
+void _openAddAccidentScreen(String? caseId) {
+  AddAccidentScreen.open(context, caseId: caseId, routeName: "accept").then((val) {
+      _caseDetailsApi();
+  });
+}
+
+void _userBRejectApi(String? caseId) {
+     ref.read(casedetailsNotifierProvider.notifier).userBReject(caseId);
+}
+
+
+void _userWitnessRejectApi(String? caseId) {
+  sendModel?.caseId = caseId;
+  sendModel?.witnessAction = "rejected";
+     ref.read(casedetailsNotifierProvider.notifier).userWitnessReject(sendModel: sendModel);
+}
+
+bool _shouldShowAcceptRejectButtons(CaseDetails? caseDetails) {
+  if (caseDetails?.participants == null) return false;
+  
+  String currentUserId = ServiceLocator.get<UserManager>().userId;
+  
+  for (var participant in caseDetails!.participants!) {
+    String submissionStatus = (participant.submissionStatus ?? '').toString().toLowerCase();
+    String participantRole = (participant.role ?? '').toString().toUpperCase();
+    
+    // Check if participant role is B or C
+    bool isParticipantBC = participantRole == 'USER_B' || participantRole == 'USER_C';
+
+    // Check if userId matches and submission status is pending
+    if (isParticipantBC && 
+        participant.id.toString() == currentUserId && 
+        submissionStatus == '') {
+      return true;
+    }
+  }
+  
+  return false;
+}
+bool _shouldShowRejectedStatus(CaseDetails? caseDetails) {
+  if (caseDetails?.participants == null) return false;
+  
+  String currentUserId = ServiceLocator.get<UserManager>().userId;
+  
+  for (var participant in caseDetails!.participants!) {
+    String submissionStatus = (participant.submissionStatus ?? '').toString().toLowerCase();
+    String participantRole = (participant.role ?? '').toString().toUpperCase();
+    
+    // Check if participant role is B or C
+    bool isParticipantBC = participantRole == 'USER_B' || participantRole == 'USER_C';
+    
+    // Check if userId matches and submission status is pending
+    if (isParticipantBC && 
+        participant.id.toString() == currentUserId && 
+        submissionStatus == 'rejected') {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+String _userBAndUserC(CaseDetails? caseDetails) {
+  if (caseDetails?.participants == null) return '';
+  
+  String currentUserId = ServiceLocator.get<UserManager>().userId;
+  
+  for (var participant in caseDetails!.participants!) {
+    String participantRole = (participant.role ?? '').toString().toUpperCase();
+    
+    bool isParticipantBC = participantRole == 'USER_B' || participantRole == 'USER_C';
+    
+    // Check if userId matches and submission status is pending
+    if (isParticipantBC && 
+        participant.id.toString() == currentUserId) {
+      return participantRole;
+    }
+  }
+  
+  return '';
+}
+
+
+void _rejectParticipantRequest(String? caseId, String? participantRole) {
+  AppDialogBox().openBox(
+    title: "Reject Request",
+    maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
+    subTitle: "Are you sure you want to reject this request?",
+    yesTap: () {
+      Navigator.of(context).pop();
+      if(participantRole == 'USER_B') {
+        _userBRejectApi(caseId);
+      } else {
+        _userWitnessRejectApi(caseId);
+      }
+    },
+  );
 }
 }

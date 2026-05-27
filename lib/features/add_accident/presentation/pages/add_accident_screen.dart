@@ -96,6 +96,7 @@ final addAccidentNotifierProvider =
   // -----------------------------------------------------------------------------
  
  Widget _screenContent() {
+  print(sendModel?.uploadedPhotos);
   return SingleChildScrollView(
     padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
     child: Form(
@@ -175,7 +176,8 @@ final addAccidentNotifierProvider =
           Align(
             alignment: Alignment.center,
             child: AppElevatedButton.withTitle(title: "Continue", 
-            onPressed: _checkValidation,))
+            onPressed: widget.routeName == 'accept' ? 
+            _acceptUserBApi : _checkValidation,))
         ],
       ),
     ),
@@ -312,6 +314,8 @@ void _acceptUserBApi() async{
   }
 
 
+
+
 void _checkValidation() {
   if (formKey.currentState!.validate()) {
     if ((sendModel?.uploadedPhotos ?? []).isEmpty) {
@@ -320,7 +324,6 @@ void _checkValidation() {
      return showFeedbackMessage("Please upload the video");
     }
     formKey.currentState!.save();
-    widget.routeName == 'accept' ? _acceptUserBApi() :
     _addAccidentApi();
   }
 }

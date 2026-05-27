@@ -32,6 +32,9 @@ class NotificationNotifier extends AsyncNotifier<NotificationState> {
   Future<void> getNotificationn(BuildContext context) async {
     try {
       LoaderService().showLoader();
+       state = AsyncData(state.value!.copyWith(
+          notificationResponseModel: NotificationResponseModel.fromJson({}),
+        ));
       final repo = ref.read(notificationRepositoryProvider);
       final response = await repo.notification();
       if (response?.statusCode == 200 ) {

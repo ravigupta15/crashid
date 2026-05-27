@@ -84,7 +84,5 @@ class AddAccidentSendModel {
 
     return FormData.fromMap(map);
        
-  }
-
- 
+  } 
 }

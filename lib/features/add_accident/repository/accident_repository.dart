@@ -88,7 +88,7 @@ class AccidentRepository {
     );
   }
   
-  Future<Response?> witnessResponse({AddAccidentSendModel? sendModel}) async{
+  Future<Response?> witnessResponse({AddAccidentSendModel? sendModel, }) async{
     FormData formData = await sendModel!.userCFormData();
     return _apiService.sendRequest(
       apiUrl: "${ApiUrls.accidentsUrl}/${sendModel.caseId}/witness-respond",
@@ -97,6 +97,7 @@ class AccidentRepository {
     );
   }
 }
+
 // Create a provider for the repository
 final accidentRepositoryProvider = Provider((ref) {
   return AccidentRepository(ApiService());

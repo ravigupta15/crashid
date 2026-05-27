@@ -1,6 +1,8 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/features/add_accident/model/add_accident_send_model.dart';
 import 'package:crashid/features/add_accident/presentation/pages/add_accident_screen.dart';
+import 'package:crashid/features/case_history/case_details/presentation/pages/case_details_screen.dart';
 import 'package:crashid/features/case_history/case_details/provider/case_details_notifier.dart';
 import 'package:crashid/features/case_history/case_details/provider/case_details_state.dart';
 import 'package:crashid/features/notification/presentation/widgets/notification_card_widget.dart';
@@ -30,10 +32,13 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
 final casedetailsNotifierProvider =
     AsyncNotifierProvider<CaseDetailsNotifier, CaseDetailsState>(CaseDetailsNotifier.new);
 
-  
+  AddAccidentSendModel? sendModel;
 @override
   void initState() {
-    _callNotificationApi();
+    sendModel = AddAccidentSendModel(
+    );
+    Future.microtask(() => 
+    _callNotificationApi());
     super.initState();
   }
 
@@ -45,6 +50,7 @@ final casedetailsNotifierProvider =
       backgroundColor: AppColors.screenBackground,
       appBar: CustomAppBar(
         title: 'Notifications',
+        isShowAction: false,
        
       ),
       body: _screenContent(),
@@ -68,44 +74,11 @@ final casedetailsNotifierProvider =
         return  NotificationCardWidget(
             model: model,
             onPrimaryTap: () => _openAccidentScreen((model?.caseId ?? '').toString()),
-            onSecondaryTap: () => _openDialogBox((model?.caseId ?? '').toString(), ),
+            onSecondaryTap: () => _openDialogBox((model?.caseId ?? '').toString(), (model?.type ?? '').toString()),
+            onTap: () => _openCaseDetailsScreen((model?.caseId ?? '').toString()),
           );
     });
-    
-    // SingleChildScrollView(
-    //   padding: const EdgeInsets.fromLTRB(16, 12, 16, 40),
-    //   child: Column(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [
-    //       // Text(
-    //       //   'TODAY',
-    //       //   style: context.titleMedium.copyWith(
-    //       //     fontSize: 14,
-    //       //     fontWeight: FontWeight.w700,
-    //       //     color: AppColors.blackColor,
-    //       //   ),
-    //       // ),
-    //       // const SizedBox(height: 15),
-    //       NotificationCardWidget(
-    //         title: 'Emergency Alert',
-    //         onPrimaryTap: () {},
-    //       ),
-    //       const SizedBox(height: 14),
-    //       NotificationCardWidget(
-    //         title: 'Witness Request',
-    //         onPrimaryTap: () {},
-    //         onSecondaryTap: () {},
-    //       ),
-    //       const SizedBox(height: 14),
-    //       NotificationCardWidget(
-    //         title: 'Accident Request',
-    //         onPrimaryTap: () {},
-    //         onSecondaryTap: () {},
-    //       ),
-    //     ],
-    //   ),
-    // );
-  }
+    }
 
   
 void _callNotificationApi() async{
@@ -121,14 +94,23 @@ void _callNotificationApi() async{
     });
   }
 
-  void _openDialogBox(String? caseId,) {
+void _openCaseDetailsScreen(String? caseId) {
+   CaseDetailsScreen.open(context, id: caseId).then((val) {
+      _callNotificationApi();
+    });
+  }
+  void _openDialogBox(String? caseId, String? type) {
     AppDialogBox().openBox(
       maxWidthMinWidth: MediaQuery.sizeOf(context).width * .8,
       title: "Reject Request",
       subTitle: "Are you sure you want to reject this request?",
       yesTap: () {
         Navigator.pop(context);
+        if (type == "witness_request") {
+           _callUserWitnessRejectApi(caseId!);
+        } else {
         _callUserBRejectApi(caseId!);
+      }
       }
     );
   }
@@ -142,4 +124,19 @@ void _callNotificationApi() async{
           }
         });
   }
+
+  
+  void _callUserWitnessRejectApi(String caseId) async{
+    sendModel?.caseId = caseId;
+    sendModel?.witnessAction = "rejected";
+    await ref
+        .read(casedetailsNotifierProvider.notifier)
+        .userWitnessReject(sendModel: sendModel).then((response) {
+          if(response?.statusCode == 201 || response?.statusCode == 200){
+            _callNotificationApi();
+          }
+        });
+  }
+
+
 }
