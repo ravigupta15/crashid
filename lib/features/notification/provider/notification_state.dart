@@ -1,28 +1,29 @@
-import 'package:crashid/features/profile/model/profile_response_model.dart';
+
+import 'package:crashid/features/notification/model/notification_response_model.dart';
 
 class NotificationState {
   final bool isLoading;
-  final ProfileResponseModel? profileResponseModel;
+  final NotificationResponseModel? notificationResponseModel;
 
   const NotificationState({
     required this.isLoading,
-    this.profileResponseModel,
+    this.notificationResponseModel,
   });
 
   factory NotificationState.initial() {
     return const NotificationState(
       isLoading: false,
-      profileResponseModel  : null,
+      notificationResponseModel  : null,
     );
   }
 
   NotificationState copyWith({
     bool? isLoading,
-    ProfileResponseModel? profileResponseModel,
+    NotificationResponseModel? notificationResponseModel,
   }) {
     return NotificationState(
       isLoading: isLoading ?? this.isLoading,
-      profileResponseModel: profileResponseModel ?? this.profileResponseModel,
+      notificationResponseModel: notificationResponseModel ?? this.notificationResponseModel,
     );
   }
 }

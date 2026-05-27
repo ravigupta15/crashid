@@ -34,10 +34,17 @@ class UserManager {
       _sharedPrefs.getString(SharePreferenceKeys.PASSWORD.name) ?? '';
   set setPassword(String value) =>
       _sharedPrefs.setString(SharePreferenceKeys.PASSWORD.name, value);
+
   String get fcmToken =>
       _sharedPrefs.getString(SharePreferenceKeys.FCM_TOKEN.name) ?? '';
   set setFcmToken(String value) =>
       _sharedPrefs.setString(SharePreferenceKeys.FCM_TOKEN.name, value);
+
+
+  String get userId =>
+      _sharedPrefs.getString(SharePreferenceKeys.USER_ID.name) ?? '';
+  set setUserId(String value) =>
+      _sharedPrefs.setString(SharePreferenceKeys.USER_ID.name, value);
 
   void clearValues() {
     _sharedPrefs.clear();

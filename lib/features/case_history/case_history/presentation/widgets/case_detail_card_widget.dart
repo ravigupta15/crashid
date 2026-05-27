@@ -1,6 +1,7 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
 import 'package:crashid/utils/empty/empty_widget.dart';
 import 'package:crashid/utils/extensions/extension_string.dart';
 import 'package:flutter/material.dart';
@@ -119,7 +120,7 @@ class CaseDetailCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      statusLabel.toUpperCase(),
+                      statusLabel.toString().replaceAll('_', ' ').toUpperCase(),
                       style: context.bodySmall.copyWith(
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
@@ -168,7 +169,7 @@ class CaseDetailCardWidget extends StatelessWidget {
   }
 Widget _thumbnailRow(BuildContext context) {
   return Row(
-    mainAxisAlignment: MainAxisAlignment.start, // Keeps images to the left
+    mainAxisAlignment: MainAxisAlignment.start,
     children: List.generate(thumbnailAssets.length.clamp(0, 3), (index) {
       return Padding(
         padding: const EdgeInsets.only(right: 8.0),
@@ -202,9 +203,9 @@ Widget _thumbnailSlot(int index, BuildContext context) {
 
   // Scenario 2: Normal Image slot
   return _thumbClip(
-    child: Image.asset(
-      thumbnailAssets[index],
-      fit: BoxFit.cover,
+    child: AppCachedNetworkImage(
+    imageUrl: thumbnailAssets[index],
+      boxFit: BoxFit.cover,
       height: _thumbSize,
     ),
   );

@@ -5,6 +5,7 @@ import 'package:crashid/features/profile/presentation/widgets/profile_section_he
 import 'package:crashid/features/profile/model/profile_response_model.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
 import 'package:crashid/utils/date_format/app_date_format.dart';
 import 'package:flutter/material.dart';
 
@@ -99,10 +100,9 @@ class PersonalAccountWidget extends StatelessWidget {
             ),
             const SizedBox(height: 16),
              ProfileDocumentPair(
-             frontImage:  Image.asset(
-                "assets/images/License Back.png",
-                fit: BoxFit.cover,
-              ),
+             frontImage:  AppCachedNetworkImage(imageUrl: profileData?.drivingLicenseFront, boxFit: BoxFit.cover,),
+              backImage: AppCachedNetworkImage(imageUrl: profileData?.drivingLicenseBack, boxFit: BoxFit.cover,),
+            
             ),
             const SizedBox(height: 32),
              ProfileSectionHeader(
@@ -111,10 +111,9 @@ class PersonalAccountWidget extends StatelessWidget {
             ),
             const SizedBox(height: 12),
              ProfileDocumentPair(
-              frontImage: Image.asset(
-                "assets/images/License Back.png",
-                fit: BoxFit.cover,
-              ),),
+              frontImage: AppCachedNetworkImage(imageUrl: profileData?.idDocumentFront, boxFit: BoxFit.cover,),
+              backImage: AppCachedNetworkImage(imageUrl: profileData?.idDocumentBack, boxFit: BoxFit.cover,),
+            ),
            
       ],
     );

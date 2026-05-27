@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:crashid/app_routes/app_routes.dart';
+import 'package:crashid/data_sources/local_storage/user_manager.dart';
 import 'package:crashid/features/profile/model/profile_response_model.dart';
 import 'package:crashid/features/profile/model/profile_send_model.dart';
 import 'package:crashid/features/profile/provider/profile_state.dart';
@@ -7,6 +8,8 @@ import 'package:crashid/features/profile/repostiory/profile_repository.dart';
 import 'package:crashid/utils/loader/loader_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
+
 
 class ProfileNotifier extends AsyncNotifier<ProfileState> {
   @override
@@ -24,6 +27,7 @@ class ProfileNotifier extends AsyncNotifier<ProfileState> {
         state = AsyncData(state.value!.copyWith(
           profileResponseModel: model,
         ));
+        GetIt.I<UserManager>().setUserId = model.data?.id?.toString() ?? '';
       }
     } catch (_) {
     }

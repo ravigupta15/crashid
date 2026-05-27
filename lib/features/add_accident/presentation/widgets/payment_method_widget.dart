@@ -1,35 +1,17 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/features/add_accident/model/pricing_response_model.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
-enum PaymentMethodKind { paypal, creditCard }
 
-class PaymentMethodWidget extends StatefulWidget {
+class PaymentMethodWidget extends StatelessWidget {
+  final PricingModel? model;
   const PaymentMethodWidget({
+    this.model,
     super.key,
-    this.serviceCharge = 15,
-    this.vat = 2,
-    this.onMethodChanged,
   });
 
-  final double serviceCharge;
-  final double vat;
-  final ValueChanged<PaymentMethodKind>? onMethodChanged;
-
-  @override
-  State<PaymentMethodWidget> createState() => _PaymentMethodWidgetState();
-}
-
-class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
-  PaymentMethodKind _selected = PaymentMethodKind.paypal;
-
-
-  void _select(PaymentMethodKind kind) {
-    if (_selected == kind) return;
-    setState(() => _selected = kind);
-    widget.onMethodChanged?.call(kind);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,29 +32,22 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
         _priceSummaryRow(
           context,
           label: 'Service Charge',
-          value: _euro(widget.serviceCharge),
+          value: "€ ${model?.serviceCharge}",
         ),
         const SizedBox(height: 12),
         _priceSummaryRow(
           context,
           label: 'VAT',
-          value: _euro(widget.vat),
+          value: "€ ${model?.vat}",
         ),
         const SizedBox(height: 12),
         _priceSummaryRow(
           context,
           label: 'Total Amount',
-          value: _euro(17),
+          value: '€ ${model?.total}',
         ),
       ],
     );
-  }
-
-  String _euro(double amount) {
-    final s = amount == amount.roundToDouble()
-        ? amount.toStringAsFixed(0)
-        : amount.toStringAsFixed(2);
-    return '€$s';
   }
 
   Widget _paymentSelector(BuildContext context) {
@@ -88,8 +63,8 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
             Expanded(
               child: _paymentChip(
                 context,
-                selected: _selected == PaymentMethodKind.paypal,
-                onTap: () => _select(PaymentMethodKind.paypal),
+                selected: true,
+                onTap: () => {},
                 child: Center(
                   child: Image.asset(
                     AppAssetPaths.paypalIcon,
@@ -103,8 +78,8 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
             Expanded(
               child: _paymentChip(
                 context,
-                selected: _selected == PaymentMethodKind.creditCard,
-                onTap: () => _select(PaymentMethodKind.creditCard),
+                selected: false,
+                onTap: () => {},
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

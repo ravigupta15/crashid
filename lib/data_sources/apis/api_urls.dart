@@ -22,6 +22,7 @@ abstract class ApiUrls {
   static const vehicleUrl = "${baseUrl}user/vehicles";
 
   // notification
+  static const fcmTokenUrl = "${baseUrl}user/auth/fcm-token";
   static const notificationUrl = "${baseUrl}notifications";
 
   // accident
@@ -37,5 +38,6 @@ abstract class ApiUrls {
 
   // insurance
   static const insuranceUrl = "${baseUrl}user/vehicles/insurance";
+
   
 }

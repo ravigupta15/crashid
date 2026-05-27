@@ -6,6 +6,9 @@ import 'package:crashid/features/emergency/repository/emergency_repository.dart'
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
+final emergencyNotifier =
+    AsyncNotifierProvider<EmergencyNotifier, EmergencyState>(EmergencyNotifier.new);
+
 class EmergencyNotifier extends AsyncNotifier<EmergencyState> {
   @override
   FutureOr<EmergencyState> build() {

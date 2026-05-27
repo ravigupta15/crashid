@@ -8,5 +8,6 @@ enum SharePreferenceKeys {
   PASSWORD,
   IS_REMEMBER_ME,
   FCM_TOKEN,
-  LANGUAGE
+  LANGUAGE,
+  USER_ID
 }

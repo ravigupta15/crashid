@@ -67,5 +67,8 @@ class AppAssetPaths {
   static const addPersonIcon = "assets/icons/add_person_ic.png";
   static const searchIcon = "assets/icons/search_ic.png";
   static const successIcon = "assets/icons/success_ic.png";
+
+  static const statusPendingIcon = "assets/icons/status_pending_ic.png";
+  static const retryPaymentIcon = "assets/icons/retry_payment_ic.png";
   
-}
+} 

@@ -1,19 +1,28 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
+import 'package:crashid/core/service/location_service.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/app_navigation/presentation/pages/drawer_screen.dart';
 import 'package:crashid/features/app_navigation/presentation/widgets/add_car_diloag_content.dart';
 import 'package:crashid/features/case_history/case_history/presentation/pages/case_history_screen.dart';
+import 'package:crashid/features/case_history/case_history/provider/case_history_notifier.dart';
 import 'package:crashid/features/emergency/emergency/presentation/pages/emergency_screen.dart';
+import 'package:crashid/features/emergency/emergency/provider/emergency_notifier.dart';
 import 'package:crashid/features/home/presentation/pages/home_screen.dart';
 import 'package:crashid/features/add_car/presentation/pages/add_car_screen.dart';
 import 'package:crashid/features/my_cars/provider/my_car_notifier.dart';
 import 'package:crashid/features/my_cars/provider/my_car_state.dart';
+import 'package:crashid/features/notification/provider/notification_notifier.dart';
+import 'package:crashid/features/notification/provider/notification_state.dart';
 import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
+import 'package:crashid/features/profile/provider/profile_notifier.dart';
+import 'package:crashid/features/profile/provider/profile_state.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
+import 'package:crashid/utils/empty/empty_widget.dart';
 import 'package:crashid/utils/extensions/extension_navigator.dart';
+import 'package:crashid/utils/extensions/extension_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -33,6 +42,8 @@ class AppNavigationScreen extends ConsumerStatefulWidget {
 class _AppNavigationScreenState extends ConsumerState<AppNavigationScreen> {
   int _selectedBarIndex = 0;
 
+  String? city;
+
 
   int get _stackIndex {
     switch (_selectedBarIndex) {
@@ -51,6 +62,23 @@ class _AppNavigationScreenState extends ConsumerState<AppNavigationScreen> {
 
   void _onBarTap(int barIndex) {
     setState(() => _selectedBarIndex = barIndex);
+    
+    Future.microtask(() {
+      // Trigger profile API when profile tab (1) is tapped
+      if (barIndex == 1) {
+        ref.read(profileNotifier.notifier).getProfile(context);
+      }
+      // Trigger case history API when case history tab (3) is tapped
+      else if (barIndex == 3) {
+        ref
+            .read(caseHistoryNotifierProvider.notifier)
+            .caseHistory(context, currentTab: 'current');
+      }
+      // Trigger emergency API when SOS tab (4) is tapped
+      else if (barIndex == 4) {
+        ref.read(emergencyNotifier.notifier).emergencyApi();
+      }
+    });
   }
 
   void _onCenterFabTap() {
@@ -71,7 +99,17 @@ final myCarNotifierProvider =
   }
 
   void callInitFunction() async{
-    Future.microtask(() async{
+    
+
+    Future.microtask(() async {
+      
+      final data = await LocationService.getCurrentLocationWithAddress();
+      city = data.city;
+      setState(() {
+        
+      });
+      print("Current city: $city");
+ // Call the myCar API and check if the user has any cars added. If not, open the add car dialog box.
       await ref
         .read(myCarNotifierProvider.notifier)
         .myCar(context).then((val) {
@@ -79,6 +117,9 @@ final myCarNotifierProvider =
             _openAddCarDialogBox();
           }
         });
+
+        // call fcm token API to register the device for push notifications
+        await ref.read(notificationProvider.notifier).fcmToken();
     });
   }
 
@@ -90,7 +131,7 @@ final myCarNotifierProvider =
         leadingWidget: InkWell(
           onTap: () =>_scaffoldKey.currentState?.openDrawer(),
           child: Image.asset(AppAssetPaths.drawerIcon)),
-        titleWidget: Row(
+        titleWidget: city.isNotNullOrNotEmpty ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
@@ -100,7 +141,7 @@ final myCarNotifierProvider =
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'Hanover',
+                    city ?? '',
                     style: context.titleMedium.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -108,7 +149,7 @@ final myCarNotifierProvider =
                     ),
                   ),
                 ],
-              ),
+              ) : EmptyWidget(),
       
       ),
       drawer: DrawerScreen(),

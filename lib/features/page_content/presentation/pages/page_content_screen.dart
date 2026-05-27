@@ -1,5 +1,6 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/lookup/language_provider.dart';
+import 'package:crashid/core/widget/html_text_widget.dart';
 import 'package:crashid/features/page_content/provider/page_content_notifier.dart';
 import 'package:crashid/features/page_content/provider/page_content_state.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
@@ -56,11 +57,14 @@ final pageContentNotifier =
       appBar: CustomAppBar(
         title: currentLng == 'en' ? model?.titleEn : model?.titleDe,
       ),
-      body: Padding(padding: EdgeInsetsGeometry.only(
+      body: SingleChildScrollView(
+        padding: EdgeInsetsGeometry.only(
         left: 20, right: 20, top: 20, bottom: 40
       ),
-      child: Text(currentLng == 'en' ? model?.contentEn ?? '' : model?.contentDe ?? '',),
-      ),
-    );
+        child: HtmlTextWidget(  
+          htmlContent: currentLng == 'en' ? model?.contentEn ?? '' : model?.contentDe ?? '',
+        ),
+      
+    ));
   }
 }

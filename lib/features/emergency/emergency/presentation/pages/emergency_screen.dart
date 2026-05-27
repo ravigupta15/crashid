@@ -3,7 +3,6 @@ import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/emergency/add_emergency/presentation/pages/add_emergency_screen.dart';
 import 'package:crashid/features/emergency/emergency/presentation/widgets/trusted_friend_card_widget.dart';
 import 'package:crashid/features/emergency/emergency/provider/emergency_notifier.dart';
-import 'package:crashid/features/emergency/emergency/provider/emergency_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_colors.dart';
@@ -35,9 +34,6 @@ class EmergencyScreen extends ConsumerStatefulWidget {
 class _EmergencyScreenState extends ConsumerState<EmergencyScreen> {
  
   
-final emergencyNotifier =
-    AsyncNotifierProvider<EmergencyNotifier, EmergencyState>(EmergencyNotifier.new);
-
 
 @override
   void initState() {
@@ -130,20 +126,4 @@ void _openAddEmergencyScreen() {
     return item.isEmpty ? '' : item.substring(0)[0];
   }
 
-}
-
-class _TrustedFriendData {
-  final String name;
-  final String email;
-  final String plateNumber;
-  final String badgeLabel;
-  final String initial;
-
-  const _TrustedFriendData({
-    required this.name,
-    required this.email,
-    required this.plateNumber,
-    required this.badgeLabel,
-    required this.initial,
-  });
 }

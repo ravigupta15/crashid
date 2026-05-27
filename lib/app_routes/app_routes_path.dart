@@ -27,4 +27,6 @@ class AppRoutesPath {
   static const addEmergencyScreen = "/addEmergencyScreen";
   static const pageContentScreen = "/pageContentScreen";
   static const searchScreen = "/searchScreen";
+  static const paymentWebViewScreen = "/paymentWebViewScreen";
+  static const googleMapScreen = "/googleMapScreen";
 }

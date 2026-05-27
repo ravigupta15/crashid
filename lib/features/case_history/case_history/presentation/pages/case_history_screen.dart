@@ -1,15 +1,16 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
-import 'package:crashid/features/add_car/provider/add_car_notifier.dart';
 import 'package:crashid/features/case_history/case_details/presentation/pages/case_details_screen.dart';
 import 'package:crashid/features/case_history/case_history/presentation/widgets/case_detail_card_widget.dart';
 import 'package:crashid/features/case_history/case_history/presentation/widgets/case_history_section_header.dart';
 import 'package:crashid/features/case_history/case_history/presentation/widgets/case_history_tab_toggle.dart';
 import 'package:crashid/features/case_history/case_history/provider/case_history_notifier.dart';
-import 'package:crashid/features/case_history/case_history/provider/case_history_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/date_format/app_date_format.dart';
+import 'package:crashid/utils/linkers/launch_url.dart';
+import 'package:crashid/utils/no_data_found/no_data_found.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -39,12 +40,11 @@ class _CaseHistoryScreenState extends ConsumerState<CaseHistoryScreen> {
 
 
 
-final caseHistoryotifierProvider =
-    AsyncNotifierProvider<CaseHistoryNotifier, CaseHistoryState>(CaseHistoryNotifier.new);
-
     @override
   void initState() {
-    _caseHistoryApi();
+    Future.microtask(() {
+      _caseHistoryApi("current");
+    });
     super.initState();
   }
 
@@ -62,7 +62,9 @@ final caseHistoryotifierProvider =
 
   Widget _screenContent() {
      final isCurrent = _tabIndex == 0;
-   
+     final refState = ref.watch(caseHistoryNotifierProvider);
+     var caseModel = refState.value!.caseHistoryResponseModel?.data;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
       child: Column(
@@ -74,35 +76,38 @@ final caseHistoryotifierProvider =
           ),
           CaseHistorySectionHeader(
             title: isCurrent ? 'Current Cases' : 'Past Cases',
-            badgeLabel: isCurrent ? '1 Active' : "1 Closed",
+            badgeLabel: isCurrent ? '${caseModel?.length ?? 0} Active' : "${caseModel?.length ?? 0} Closed",
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: 1,
+            child: (caseModel ?? []).isEmpty ?
+            NoDataFound() :
+             ListView.separated(
+              separatorBuilder: (context, sb) {
+                return const SizedBox(height: 30,);
+              },
+              itemCount: caseModel?.length ?? 0,
               shrinkWrap: true,
               itemBuilder: (context, index) {
+                var model = caseModel?[index];
                 return Column(
                   children: [
             CaseDetailCardWidget(
-              accidentMetaLine: 'Accident Date: Aug 29, 2023 • 18:45',
-              caseIdLine: 'KDL-4432',
-              address: 'Broad St & Market St, Philadelphia, PA 19107, USA',
-              thumbnailAssets: const [
-                "assets/images/img1.png",
-                "assets/images/img2.png",
-                "assets/images/img2.png",
-                "assets/images/img2.png",
-              ],
+              accidentMetaLine: 'Accident Date: ${AppDateFormat.formatMonthDateYear((model?.accidentDate ?? ''))} • ${model?.accidentTime}',
+              caseIdLine: model?.caseNumber ?? '',
+              address: model?.address ?? '',
+              thumbnailAssets: model?.previewImages ?? [],
               overflowCount: 2,
-              statusLabel: isCurrent ? 'In Review' : "CLOSURE DATE",
-              clouserDate: isCurrent ? null : "Sep 28, 2023",
-              onViewSummary: () => _openCaseDetailsScreen('id'),
+              statusLabel: isCurrent ? model?.status : "CLOSURE DATE",
+              clouserDate: isCurrent ? null : AppDateFormat.formatMonthDateYear((model?.closedAt ?? '')),
+              onViewSummary: () => _openCaseDetailsScreen((model?.id ?? '').toString()),
             ),
-            const SizedBox(height: 30,),
+            const SizedBox(height: 20,),
             AppElevatedButton.withTitleAndIcon(
               width: double.infinity,
               icon: Image.asset(AppAssetPaths.pdfIcon),
-             title: 'Download Case PDF', onPressed: (){},),
+             title: 'Download Case PDF', onPressed: (){
+              LaunchURLUtils().launchStringURL( model?.pdfUrl ?? '');
+             },),
               ],
                 );
             }),
@@ -113,16 +118,21 @@ final caseHistoryotifierProvider =
   }
 
   void _onChanged(int? val) async{
+    if (val != _tabIndex) {
+      _caseHistoryApi(val == 1 ? "past" : "current");
+    }
     setState(() {
       _tabIndex = val ?? 0;
     });
   }
 
 void _openCaseDetailsScreen(String? id) {
-    CaseDetailsScreen.open(context, id: id);
+    CaseDetailsScreen.open(context, id: id).then((val) {
+        _caseHistoryApi(_tabIndex == 0 ? "current" : "past");
+    });
 }
 
-void _caseHistoryApi() {
-  ref.read(caseHistoryotifierProvider.notifier).caseHistory(context,currentTab: _tabIndex == 1 ? "past" : "current");
+void _caseHistoryApi(String? currentTab) {
+  ref.read(caseHistoryNotifierProvider.notifier).caseHistory(context,currentTab: currentTab);
 }
 }

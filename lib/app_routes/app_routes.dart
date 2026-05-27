@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/features/add_accident/presentation/pages/add_accident_screen.dart';
 import 'package:crashid/features/add_accident/presentation/pages/other_accident_screen.dart';
+import 'package:crashid/features/add_accident/presentation/pages/payment_webview_screen.dart';
 import 'package:crashid/features/add_accident/presentation/pages/search_screen.dart';
 import 'package:crashid/features/page_content/presentation/pages/page_content_screen.dart';
 import 'package:crashid/features/auth/forget_password/presentation/pages/forget_password_screen.dart';
@@ -28,6 +29,7 @@ import 'package:crashid/features/onboarding/presentation/pages/onboarding_screen
 import 'package:crashid/features/profile/presentation/pages/edit_profile_screen.dart';
 import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
 import 'package:crashid/features/splash_screen/presentation/splash_screen.dart';
+import 'package:crashid/features/widgets/google_map/app_google_map.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 class AppRouter {
@@ -130,7 +132,13 @@ class AppRouter {
       
       GoRoute(
         path: AppRoutesPath.addAccidentScreen,
-        builder: (context, state) => const AddAccidentScreen(),
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return  AddAccidentScreen(
+            routeName: argument?[AddAccidentScreen.kRouteName],
+            caseId: argument?[AddAccidentScreen.kcaseId],
+          );
+        },
       ),
       GoRoute(
         path: AppRoutesPath.myInsuranceScreen,
@@ -154,7 +162,13 @@ class AppRouter {
       ),
       GoRoute(
         path: AppRoutesPath.otherAccidentScreen,
-        builder: (context, state) => const OtherAccidentScreen(),
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return OtherAccidentScreen(
+            caseId: argument?[OtherAccidentScreen.kCaseId],
+            route: argument?[OtherAccidentScreen.kRoute],
+          );
+        },
       ),
       GoRoute(
         path: AppRoutesPath.caseHistoryScreen,
@@ -202,6 +216,28 @@ class AppRouter {
           var argument = state.extra as Map<String, dynamic>?;
           return  SearchScreen(
             model: argument?[SearchScreen.kUserModel],
+          );
+        },
+      ),
+      
+       GoRoute(
+        path: AppRoutesPath.paymentWebViewScreen,
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return  PaymentWebviewScreen(
+            paymentUrl: argument?[PaymentWebviewScreen.kPaymentUrl],
+            onPaymentFailure: argument?[PaymentWebviewScreen.kOnPaymentFailure],
+          );
+        },
+      ),
+      
+       GoRoute(
+        path: AppRoutesPath.googleMapScreen,
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return  GoogleMapAddressScreen(
+            lat: argument?[GoogleMapAddressScreen.kLat],
+            lng: argument?[GoogleMapAddressScreen.kLng],
           );
         },
       ),

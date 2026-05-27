@@ -10,13 +10,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leadingWidget;
   final Widget? titleWidget;
   final bool? isShowAction;
+  final List<Widget>? actions;
   const CustomAppBar({
     super.key,
     this.title,
     this.onPressed,
     this.leadingWidget,
     this.titleWidget,
-    this.isShowAction = true
+    this.isShowAction = true,
+    this.actions
   });
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
@@ -48,7 +50,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 
             ),
           ),
-      actions: (isShowAction ?? false) ?  [
+      actions:  (isShowAction ?? false) ?  [
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: InkWell(
@@ -59,7 +61,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
-        ] : [],
+        ] : actions ?? [],
     );
   }
 }

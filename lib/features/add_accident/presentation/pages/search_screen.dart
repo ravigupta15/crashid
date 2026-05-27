@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:crashid/app_routes/app_routes_path.dart';
+import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/add_accident/provider/add_accident_notifier.dart';
 import 'package:crashid/features/add_accident/provider/add_accident_state.dart';
-import 'package:crashid/features/emergency/add_emergency/model/search_user_response_model.dart';
-import 'package:crashid/features/emergency/emergency/presentation/widgets/trusted_friend_card_widget.dart';
+import 'package:crashid/features/my_cars/model/my_car_response_model.dart';
 import 'package:crashid/features/widgets/app_textfield/app_searchbar_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_colors.dart';
@@ -15,11 +15,11 @@ import 'package:go_router/go_router.dart';
 class SearchScreen extends ConsumerStatefulWidget {
   static const kUserModel = "/kUserModel";
 
-  final UserModel? model;
+  final CarData? model;
   const SearchScreen({super.key, this.model});
 
 
-  static Future<UserModel?> open(BuildContext context, UserModel? model) {
+  static Future<CarData?> open(BuildContext context, CarData? model) {
    return context.push(AppRoutesPath.searchScreen,extra: {
     kUserModel: model
    });
@@ -67,7 +67,7 @@ Timer? _debounce;
 
   Widget _screenContent() {
     final refState = ref.watch(addAccidentNotifierProvider);
-    var model = refState.value?.searchUserResponseModel?.data;
+    var model = refState.value?.myCarResponseModel?.data;
     return ColoredBox(
         color: AppColors.screenBackground,
       child: Padding(  
@@ -80,23 +80,35 @@ Timer? _debounce;
              Expanded(
               child: ListView.separated(
                 separatorBuilder: (context, sb) {
-                  return const SizedBox(height: 15,);
+                  return const SizedBox(height: 20,);
                 },
               itemCount: model?.length ?? 0,
-              padding: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(top: 30),
               shrinkWrap: true,
               itemBuilder: (context, index){
                 var items = model?[index];
-                return TrustedFriendCardWidget(
-                name: items?.displayName ?? '', 
-              email: items?.email ?? '',
-               plateNumber: items?.plateNumber ?? '',
-                badgeLabel: '',
-                 initial: firstLetter(items?.displayName ?? ''),
-                isStatus: false,
-                img: items?.profileImageUrl ?? '',
-                onDetails: () => Navigator.pop(context, items),
-                ); 
+                return InkWell(
+                  onTap: () => Navigator.pop(context, items),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(items?.plateNumber ?? '', 
+                      style: context.titleMedium.copyWith(
+                      ),),
+                      Divider(color: AppColors.lightGrayColor,)
+                    ],
+                  ),
+                );
+              //   TrustedFriendCardWidget(
+              //   name: items?.displayName ?? '', 
+              // email: items?.email ?? '',
+              //  plateNumber: items?.plateNumber ?? '',
+              //   badgeLabel: '',
+              //    initial: firstLetter(items?.displayName ?? ''),
+              //   isStatus: false,
+              //   img: items?.profileImageUrl ?? '',
+              //   onDetails: () => Navigator.pop(context, items),
+              //   ); 
                }))
           ],
         ),

@@ -5,11 +5,13 @@ class AppLocationData {
   final String fullAddress;
   final double latitude;
   final double longitude;
+  final String? city;
 
   const AppLocationData({
     required this.fullAddress,
     required this.latitude,
     required this.longitude,
+    this.city,
   });
 }
 
@@ -51,6 +53,7 @@ class LocationService {
       fullAddress: fullAddress,
       latitude: position.latitude,
       longitude: position.longitude,
+      city: placemarks.isNotEmpty ? placemarks.first.locality : null,
     );
   }
 
@@ -78,6 +81,7 @@ class LocationService {
       fullAddress: fullAddress,
       latitude: first.latitude,
       longitude: first.longitude,
+      city: placemarks.isNotEmpty ? placemarks.first.locality : null,
     );
   }
 
@@ -86,10 +90,10 @@ class LocationService {
     final p = placemarks.first;
 
     final parts = <String?>[
-      p.name,
+      // p.name,
       p.street,
       p.locality,
-      p.subAdministrativeArea,
+      // p.subAdministrativeArea,
       p.administrativeArea,
       p.postalCode,
       p.country,

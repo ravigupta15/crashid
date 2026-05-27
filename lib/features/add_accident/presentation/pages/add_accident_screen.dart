@@ -1,19 +1,20 @@
 import 'dart:io';
 
 import 'package:crashid/app_routes/app_routes_path.dart';
+import 'package:crashid/core/service/location_service.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/core/service/image_picker_service.dart';
 import 'package:crashid/features/add_accident/model/add_accident_send_model.dart';
-import 'package:crashid/features/add_accident/presentation/pages/other_accident_screen.dart';
 import 'package:crashid/features/add_accident/presentation/pages/search_screen.dart';
+import 'package:crashid/features/add_accident/presentation/widgets/accident_details_widget.dart';
 import 'package:crashid/features/add_accident/provider/add_accident_notifier.dart';
 import 'package:crashid/features/add_accident/provider/add_accident_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
-import 'package:crashid/features/widgets/app_textfield/custom_dropdown_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/date_format/app_date_format.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/image_picker_bottom_sheet.dart';
 import 'package:crashid/features/widgets/app_video_player/app_video_player_widget.dart';
@@ -25,12 +26,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class AddAccidentScreen extends ConsumerStatefulWidget {
+   static const kRouteName = "/kRouteName";
+   static const kcaseId = "/kCaseId";
   
-   static void open(BuildContext context) {
-    context.push(AppRoutesPath.addAccidentScreen);
+
+  final String? routeName;
+  final String? caseId;
+   static Future<void> open(BuildContext context, {String? routeName, String? caseId})  {
+   return context.push(AppRoutesPath.addAccidentScreen, extra: {
+      kRouteName: routeName,
+      kcaseId: caseId
+    });
   }
 
-  const AddAccidentScreen({super.key});
+
+  const AddAccidentScreen({super.key, this.routeName, this.caseId});
 
   @override
   ConsumerState<AddAccidentScreen> createState() => _AddAccidentScreenState();
@@ -46,6 +56,9 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen> with AppV
 
   final formKey = GlobalKey<FormState>();
 
+  late DateTime _accidentRecordedAt;
+
+
 AddAccidentSendModel? sendModel;
 
 final addAccidentNotifierProvider =
@@ -55,8 +68,13 @@ final addAccidentNotifierProvider =
  @override
   void initState() {
     sendModel = AddAccidentSendModel(
-      uploadedPhotos: []
+      uploadedPhotos: [],
+      caseId: widget.caseId
     );
+    if (widget.routeName == 'accept' ) {   
+     _accidentRecordedAt = DateTime.now();
+     
+    }
     super.initState();
   }
 
@@ -85,6 +103,7 @@ final addAccidentNotifierProvider =
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if ((widget.routeName ?? '') != 'accept')...[
           Text("Select own plate number",
           style: context.titleMedium.copyWith(
             fontSize: 14, fontWeight: FontWeight.w700),
@@ -104,6 +123,7 @@ final addAccidentNotifierProvider =
             color: AppColors.blackColor.withValues(alpha: .2),  
           ),
           ),
+          ],
           Text("Text Description",  style: context.titleMedium.copyWith(
             fontSize: 14, fontWeight: FontWeight.w700),
           ),
@@ -140,6 +160,17 @@ final addAccidentNotifierProvider =
           ),
           ),
           _recordWidget(),
+          
+          if (widget.routeName == 'accept')...[
+          AccidentDetailsWidget(
+          dateValue:
+              AppDateFormat.formatAccidentCardDate(_accidentRecordedAt),
+          timeValue:
+              AppDateFormat.formatAccidentCardTime(_accidentRecordedAt),
+          locationValue: '',
+          shouldShowLocation: false,
+        )
+          ],
           const SizedBox(height: 35,),
           Align(
             alignment: Alignment.center,
@@ -237,17 +268,21 @@ final addAccidentNotifierProvider =
           ),
         ),
       ),
+      if (sendModel?.uploadedVideo != null)
+        Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: AppVideoPlayerWidget(
+            videoFile: sendModel?.uploadedVideo,
+            height: 220,
+          ),
+        ),
+        
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Divider(
           color: AppColors.blackColor.withValues(alpha: .2),
         ),
       ),
-      if (sendModel?.uploadedVideo != null)
-        AppVideoPlayerWidget(
-          videoFile: sendModel?.uploadedVideo,
-          height: 220,
-        ),
     ],
   );
  }
@@ -256,16 +291,17 @@ final addAccidentNotifierProvider =
   // Helper Methods
   // -----------------------------------------------------------------------------
  
- void _openOtherAccidentScreen() {
-  OtherAccidentScreen.open(context);
- }
 
 
 
 void _addAccidentApi() async{
     await ref.read(addAccidentNotifierProvider.notifier).addAccident(sendModel);
 }
- 
+
+void _acceptUserBApi() async{
+    await ref.read(addAccidentNotifierProvider.notifier).userBAccept(sendModel);
+}
+
   void _openSearchScreen() {
     SearchScreen.open(context,sendModel?.model).then((val) {
       sendModel?.model = val;
@@ -277,7 +313,6 @@ void _addAccidentApi() async{
 
 
 void _checkValidation() {
-  _openOtherAccidentScreen();
   if (formKey.currentState!.validate()) {
     if ((sendModel?.uploadedPhotos ?? []).isEmpty) {
      return showFeedbackMessage("Please upload photos");
@@ -285,6 +320,7 @@ void _checkValidation() {
      return showFeedbackMessage("Please upload the video");
     }
     formKey.currentState!.save();
+    widget.routeName == 'accept' ? _acceptUserBApi() :
     _addAccidentApi();
   }
 }

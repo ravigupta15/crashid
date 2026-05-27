@@ -1,18 +1,22 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/features/notification/model/notification_response_model.dart';
 import 'package:crashid/features/notification/presentation/widgets/notification_case_detail_row_widget.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/date_format/app_date_format.dart';
+import 'package:crashid/utils/empty/empty_widget.dart';
+import 'package:crashid/utils/extensions/extension_string.dart';
 import 'package:flutter/material.dart';
 
 class NotificationCardWidget extends StatelessWidget {
   const NotificationCardWidget({
     super.key,
-    required this.title,
+    this.model,
     this.onSecondaryTap,
     this.onPrimaryTap,
   });
-  final String title;
+  final Notifications? model;
   final VoidCallback? onPrimaryTap;
   final VoidCallback? onSecondaryTap;
 
@@ -34,39 +38,47 @@ class NotificationCardWidget extends StatelessWidget {
       child: Column(
         children: [
           _headerRow(context),
-          const SizedBox(height: 16),
-          (title.toLowerCase().contains('emergency')) ?
-          AppElevatedButton.withTitleAndIcon(
-            icon: Image.asset(AppAssetPaths.runIcon),
-            color: AppColors.crimsonRedColor,
-            textColor: AppColors.whiteColor,
-            width: double.infinity,
-            title: "I am Coming",
-            height: 48,
-            isBoxShadow: false,
-            onPressed: () {},
-          ) : 
-          Row(
-            children: [
-              Expanded(child: AppElevatedButton.withTitle(title: "Accept",
+
+          (model?.type.toLowerCase().contains('emergency')) ?
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: AppElevatedButton.withTitleAndIcon(
+              icon: Image.asset(AppAssetPaths.runIcon),
+              color: AppColors.crimsonRedColor,
               textColor: AppColors.whiteColor,
-              isBoxShadow: false,
+              width: double.infinity,
+              title: "I am Coming",
               height: 48,
-               onPressed: (){},)),
-               const SizedBox(width: 12,),
-              Expanded(child: AppElevatedButton.withTitle(title: "Reject",
-              color: AppColors.aliceBlueColor,
               isBoxShadow: false,
-              height: 48,
-              textColor: AppColors.blackColor, onPressed: (){},)),
-            ],
-          )
+              onPressed: () {},
+            ),
+          ) :
+          model?.requestStatus == "pending" ?
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Row(
+              children: [
+                Expanded(child: AppElevatedButton.withTitle(title: "Accept",
+                textColor: AppColors.whiteColor,
+                isBoxShadow: false,
+                height: 48,
+                 onPressed: onPrimaryTap,)),
+                 const SizedBox(width: 12,),
+                Expanded(child: AppElevatedButton.withTitle(title: "Reject",
+                color: AppColors.aliceBlueColor,
+                isBoxShadow: false,
+                height: 48,
+                textColor: AppColors.blackColor, onPressed: onSecondaryTap,)),
+              ],
+            ),
+          ) : EmptyWidget()
         ],
       ),
     );
   }
 
   Widget _headerRow(BuildContext context) {
+    var type = model?.type.toLowerCase() ?? '';
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -76,14 +88,14 @@ class NotificationCardWidget extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: title.toLowerCase().contains("emergency")
+            color: type.contains("emergency")
                 ? Color(0xffFFDAD6).withValues(alpha: .2)
                 : AppColors.iceColor,
           ),
           child: Image.asset(
-            title.toLowerCase().contains('emergency')
+            type.contains('emergency')
                 ? AppAssetPaths.emergencyRequestIcon
-                : title.toLowerCase().contains('witness')
+                : type.contains('witness')
                 ? AppAssetPaths.witnessRequestIcon
                 : AppAssetPaths.accidentRequestIcon,
             width: 22,
@@ -97,44 +109,45 @@ class NotificationCardWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      title,
+                      (model?.type ?? '').toString().replaceAll('_', ' ').capitalize,
                       style: context.titleMedium.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: title.toLowerCase().contains('emergency')
+                        color: type.contains('emergency')
                             ? AppColors.crimsonRedColor
                             : AppColors.darkGrayColor,
                       ),
                     ),
                   ),
-                  if (title.toLowerCase().contains('accident'))
+                  if (type.contains('accident') ||
+                  type.contains('witness') || type.contains('closed') )
                     Text(
-                      '1h ago',
+                      AppDateFormat.timeAgo(model?.createdAt ?? ''),
                       style: context.bodySmall.copyWith(
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
                         color: Color(0xff434654).withValues(alpha: .6),
                       ),
                     ),
-                  if (title.toLowerCase().contains('witness'))
-                    Container(
-                      height: 19,
-                      width: 40,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: AppColors.aliceBlueColor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        "NEW",
-                        style: context.bodySmall.copyWith(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                    ),
-                  if (title.toLowerCase().contains('emergency'))
+                  // if (model?.type.toLowerCase().contains('witness'))
+                  //   Container(
+                  //     height: 19,
+                  //     width: 40,
+                  //     alignment: Alignment.center,
+                  //     decoration: BoxDecoration(
+                  //       color: AppColors.aliceBlueColor,
+                  //       borderRadius: BorderRadius.circular(20),
+                  //     ),
+                  //     child: Text(
+                  //       "NEW",
+                  //       style: context.bodySmall.copyWith(
+                  //         fontSize: 10,
+                  //         fontWeight: FontWeight.w500,
+                  //         color: AppColors.primaryColor,
+                  //       ),
+                  //     ),
+                  //   ),
+                  if (type.contains('emergency'))
                     Padding(
                       padding: const EdgeInsets.only(left: 8, top: 2),
                       child: Icon(
@@ -148,7 +161,7 @@ class NotificationCardWidget extends StatelessWidget {
               const SizedBox(height: 5),
               Column(
                 children: [
-                  if (title.toLowerCase().contains('emergency')) ...[
+                  if (type.contains('emergency')) ...[
                     Text.rich(
                       TextSpan(
                         text: "Rahul Sharma",
@@ -164,10 +177,10 @@ class NotificationCardWidget extends StatelessWidget {
                     const SizedBox(height: 8),
                     _locationRow(context),
                   ],
-                  if (title.toLowerCase().contains('witness')) ...[
+                  if (type.contains('witness')) ...[
                     Text.rich(
                       TextSpan(
-                        text: " You were added as a witness foran accident ",
+                        text: model?.body ?? '',
                         style: context.bodyMedium.copyWith(fontSize: 16),
                         children: [
                           TextSpan(
@@ -186,9 +199,9 @@ class NotificationCardWidget extends StatelessWidget {
                       ),
                     ),
                   ],
-                  if (title.toLowerCase().contains('accident')) ...[
+                  if (type.contains('accident') || type.contains('closed')) ...[
                     Text(
-                      "A request to file a report for your recent accident has been initiated.",
+                      model?.body ?? '',
                       style: context.bodyMedium.copyWith(
                         fontSize: 14,
                         color: Color(0xff434654),
@@ -218,7 +231,7 @@ class NotificationCardWidget extends StatelessWidget {
         const SizedBox(width: 4),
         Expanded(
           child: Text(
-            'MG Road, Sector 14, Gurgaon',
+            model?.location ?? '',
             style: context.bodySmall.copyWith(
               fontSize: 13,
               color: AppColors.darkGrayColor.withValues(alpha: 0.65),
@@ -239,16 +252,16 @@ class NotificationCardWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          NotificationCaseDetailRowWidget(label: 'Case ID', value: '#GS-99210'),
+          NotificationCaseDetailRowWidget(label: 'Case ID', value: '#${model?.caseNumber ?? ''}',),
           const SizedBox(height: 6),
           NotificationCaseDetailRowWidget(
             label: 'Date/Time',
-            value: 'Oct 24, 02:45 PM',
+            value: '${AppDateFormat.formatMonthDay(model?.accidentDate)}, ${AppDateFormat.formatTime(model?.accidentTime)}',
           ),
           const SizedBox(height: 6),
           NotificationCaseDetailRowWidget(
             label: 'Location',
-            value: 'Cyber Hub, Gurgaon',
+            value: model?.location ?? '',
           ),
         ],
       ),

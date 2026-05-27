@@ -1,9 +1,11 @@
 import 'package:crashid/app_routes/app_routes.dart';
 import 'package:crashid/core/lookup/language_provider.dart';
+import 'package:crashid/core/service/notification_service.dart';
 import 'package:crashid/core/theme/app_theme.dart';
 import 'package:crashid/data_sources/local_storage/user_manager.dart';
 import 'package:crashid/di/service_locator.dart';
 import 'package:crashid/l10n/app_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
@@ -13,12 +15,13 @@ import 'package:provider/provider.dart';
 
 void main() async{
    WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  await ServiceLocator.init();
-  
+  await ServiceLocator.init();  
+ await AppNotificationService.instance.initialize();
   runApp(
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => LanguageProvider())],

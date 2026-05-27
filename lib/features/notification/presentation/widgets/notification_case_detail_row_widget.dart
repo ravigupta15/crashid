@@ -24,13 +24,18 @@ class NotificationCaseDetailRowWidget extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 12),
-        Text(
-          value,
-          style: context.bodyMedium.copyWith(
-            fontSize: 12,
-            color: Color(0xff121C28),
-            fontWeight: FontWeight.w500,
+        // const SizedBox(width: 12),
+        Flexible(
+          child: Text(
+            value,
+            maxLines: 2,
+            textAlign: TextAlign.end,
+            overflow: TextOverflow.ellipsis,
+            style: context.bodyMedium.copyWith(
+              fontSize: 12,
+              color: Color(0xff121C28),
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],
