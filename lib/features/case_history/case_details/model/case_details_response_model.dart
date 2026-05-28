@@ -29,6 +29,7 @@ class CaseDetails {
   dynamic paymentStatus;
   dynamic closedAt;
   dynamic createdAt;
+  dynamic requestStatus;
   dynamic myRole;
   CloseStatus? closeStatus;
   Payment? payment;
@@ -41,6 +42,7 @@ class CaseDetails {
       this.paymentStatus,
       this.closedAt,
       this.createdAt,
+      this.requestStatus,
       this.myRole,
       this.closeStatus,
       this.payment,
@@ -54,6 +56,7 @@ class CaseDetails {
     closedAt = json['closed_at'];
     createdAt = json['created_at'];
     myRole = json['my_role'];
+    requestStatus = json['request_status'];
     payment =
         json['payment'] != null ?  Payment.fromJson(json['payment']) : null;
         closeStatus = json['close_status'] != null
@@ -73,6 +76,7 @@ class CaseDetails {
     data['case_number'] = caseNumber;
     data['status'] = status;
     data['payment_status'] = paymentStatus;
+    data['request_status'] = requestStatus;
     data['closed_at'] = closedAt;
     data['created_at'] = createdAt;
     data['my_role'] = myRole;

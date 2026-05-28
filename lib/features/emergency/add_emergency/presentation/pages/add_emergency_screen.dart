@@ -20,8 +20,8 @@ import 'package:go_router/go_router.dart';
 
 class AddEmergencyScreen extends ConsumerStatefulWidget {
 
-  static void open(BuildContext context) {
-    context.push(AppRoutesPath.addEmergencyScreen,);
+  static Future<void> open(BuildContext context) {
+   return context.push(AppRoutesPath.addEmergencyScreen,);
   }
 
   const AddEmergencyScreen({super.key});
@@ -88,7 +88,7 @@ Widget _screenContent() {
             var items = model?[index];
             return TrustedFriendCardWidget(
               name: items?.displayName ?? '', 
-            email: items?.email,
+            email: items?.email ?? '',
              plateNumber: items?.plateNumber ?? '',
               badgeLabel: '',
                initial: firstLetter(items?.displayName ?? ''),

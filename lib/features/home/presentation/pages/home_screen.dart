@@ -40,6 +40,7 @@ final emergencyNotifier =
 @override
   void initState() {
     sendModel = SosSendModel();
+    _callInitFunction(); 
     super.initState();
   }
 
@@ -151,10 +152,6 @@ Widget _actionGridWidget() {
      });
   }
 
-  void _sosEmergencyApi() async {
- await ref.read(emergencyNotifier.notifier).sosEmergencyApi(sendModel);
-  }
-
 void _openAddAccidentScreen() {
   AddAccidentScreen.open(context);
 }
@@ -196,6 +193,7 @@ AppDialogBox().openBox(
 
 void _onClickSend(String? msg) {
   sendModel?.msg = msg;
+  Navigator.pop(context);
   ref.read(emergencyNotifier.notifier).sosEmergencyApi(sendModel);
 }
 

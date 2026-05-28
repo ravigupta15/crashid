@@ -30,9 +30,11 @@ class AddAccidentSendModel {
     };
     
     if ((uploadedPhotos ?? []).isNotEmpty) {
-      for (int i = 0; i < uploadedPhotos!.length; i++) {
-        map["images"] = await MultipartFile.fromFile(uploadedPhotos![i].path);
+      final photos = <MultipartFile>[];
+      for (final photo in uploadedPhotos!) {
+        photos.add(await MultipartFile.fromFile(photo.path));
       }
+      map['images'] = photos;
     }
 
     if (uploadedVideo != null) {
@@ -51,9 +53,11 @@ class AddAccidentSendModel {
     };
     
     if ((uploadedPhotos ?? []).isNotEmpty) {
-      for (int i = 0; i < uploadedPhotos!.length; i++) {
-        map["images"] = await MultipartFile.fromFile(uploadedPhotos![i].path);
+      final photos = <MultipartFile>[];
+      for (final photo in uploadedPhotos!) {
+        photos.add(await MultipartFile.fromFile(photo.path));
       }
+      map['images'] = photos;
     }
 
     if (uploadedVideo != null) {
@@ -73,9 +77,11 @@ class AddAccidentSendModel {
     };
     
     if ((uploadedPhotos ?? []).isNotEmpty) {
-      for (int i = 0; i < uploadedPhotos!.length; i++) {
-        map["images"] = await MultipartFile.fromFile(uploadedPhotos![i].path);
+      final photos = <MultipartFile>[];
+      for (final photo in uploadedPhotos!) {
+        photos.add(await MultipartFile.fromFile(photo.path));
       }
+      map['images'] = photos;
     }
 
     if (uploadedVideo != null) {

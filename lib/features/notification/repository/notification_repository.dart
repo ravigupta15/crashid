@@ -31,6 +31,17 @@ class NotificationRepository {
       method: ApiMethod.get
     );
   }
+
+  
+  Future<Response?> sosRespond({String? sosId, String? action}) {
+    return _apiService.sendRequest(
+      apiUrl: "${ApiUrls.sosUrl}/$sosId/respond",
+      method: ApiMethod.post,
+      data: {
+        "action": action
+      }
+    );
+  }
 }
 
 // Create a provider for the repository

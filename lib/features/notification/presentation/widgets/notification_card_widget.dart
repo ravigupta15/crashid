@@ -15,13 +15,15 @@ class NotificationCardWidget extends StatelessWidget {
     this.model,
     this.onSecondaryTap,
     this.onPrimaryTap,
-    this.onTap
+    this.onTap,
+    this.comingTap
 
   });
   final Notifications? model;
   final VoidCallback? onPrimaryTap;
   final VoidCallback? onSecondaryTap;
   final VoidCallback? onTap;
+  final VoidCallback? comingTap;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class NotificationCardWidget extends StatelessWidget {
           children: [
             _headerRow(context),
       
-            (model?.type.toLowerCase().contains('emergency')) ?
+            (model?.type.toLowerCase().contains('emergency') && (model?.sos?.myAction).isNullOrEmpty) ?
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: AppElevatedButton.withTitleAndIcon(
@@ -55,7 +57,7 @@ class NotificationCardWidget extends StatelessWidget {
                 title: "I am Coming",
                 height: 48,
                 isBoxShadow: false,
-                onPressed: () {},
+                onPressed: comingTap,
               ),
             ) :
             model?.requestStatus == "pending" ?
@@ -112,6 +114,7 @@ class NotificationCardWidget extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: Text(
@@ -125,8 +128,7 @@ class NotificationCardWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (type.contains('accident') ||
-                  type.contains('witness') || type.contains('closed') )
+                  if (isAccidentType() )
                     Text(
                       AppDateFormat.timeAgo(model?.createdAt ?? ''),
                       style: context.bodySmall.copyWith(
@@ -170,7 +172,7 @@ class NotificationCardWidget extends StatelessWidget {
                   if (type.contains('emergency')) ...[
                     Text.rich(
                       TextSpan(
-                        text: "Rahul Sharma",
+                        text: (model?.sos?.senderName ?? '').capitalize,
                         style: context.titleMedium.copyWith(fontSize: 16),
                         children: [
                           TextSpan(
@@ -181,7 +183,7 @@ class NotificationCardWidget extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    _locationRow(context),
+                    _locationRow(context, model?.sos?.location),
                   ],
                   if (type.contains('witness')) ...[
                     Text.rich(
@@ -205,7 +207,7 @@ class NotificationCardWidget extends StatelessWidget {
                       ),
                     ),
                   ],
-                  if (type.contains('accident') || type.contains('closed')) ...[
+                  if (isAccidentType()) ...[
                     Text(
                       model?.body ?? '',
                       style: context.bodyMedium.copyWith(
@@ -226,7 +228,7 @@ class NotificationCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _locationRow(BuildContext context) {
+  Widget _locationRow(BuildContext context, String? location) {
     return Row(
       children: [
         Icon(
@@ -237,7 +239,7 @@ class NotificationCardWidget extends StatelessWidget {
         const SizedBox(width: 4),
         Expanded(
           child: Text(
-            model?.location ?? '',
+            location ?? '',
             style: context.bodySmall.copyWith(
               fontSize: 13,
               color: AppColors.darkGrayColor.withValues(alpha: 0.65),
@@ -278,6 +280,6 @@ class NotificationCardWidget extends StatelessWidget {
      var type = model?.type.toLowerCase() ?? '';
 return
     type.contains('accident') ||
-                  type.contains('witness') || type.contains('closed');
+                  type.contains('witness') || type.contains('closed') || type.contains('case');
   }
 }

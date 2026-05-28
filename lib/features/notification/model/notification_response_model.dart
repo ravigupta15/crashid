@@ -53,6 +53,7 @@ class Notifications {
   dynamic id;
   dynamic type;
   dynamic caseId;
+  dynamic sosId;
   dynamic title;
   dynamic body;
   dynamic isRead;
@@ -64,11 +65,13 @@ class Notifications {
   dynamic accidentTime;
   dynamic location;
   dynamic requestStatus;
+  Sos? sos;
 
   Notifications(
       {this.id,
       this.type,
       this.caseId,
+      this.sosId,
       this.title,
       this.body,
       this.isRead,
@@ -79,12 +82,14 @@ class Notifications {
       this.accidentDate,
       this.accidentTime,
       this.location,
-      this.requestStatus});
+      this.requestStatus,
+      this.sos});
 
   Notifications.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     caseId = json['case_id'];
+    sosId = json['sos_id'];
     title = json['title'];
     body = json['body'];
     isRead = json['is_read'];
@@ -96,6 +101,7 @@ class Notifications {
     accidentTime = json['accident_time'];
     location = json['location'];
     requestStatus = json['request_status'];
+    sos = json['sos'] != null ? Sos.fromJson(json['sos']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -103,6 +109,7 @@ class Notifications {
     data['id'] = id;
     data['type'] = type;
     data['case_id'] = caseId;
+    data['sos_id'] = sosId;
     data['title'] = title;
     data['body'] = body;
     data['is_read'] = isRead;
@@ -114,6 +121,36 @@ class Notifications {
     data['accident_time'] = accidentTime;
     data['location'] = location;
     data['request_status'] = requestStatus;
+    if (sos != null) {
+      data['sos'] = sos!.toJson();
+    }
+    return data;
+  }
+}
+class Sos {
+  String? senderName;
+  String? latitude;
+  String? longitude;
+  String? location;
+  String? myAction;
+
+  Sos({this.senderName, this.latitude, this.longitude, this.location, this.myAction});
+
+  Sos.fromJson(Map<String, dynamic> json) {
+    senderName = json['sender_name'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
+    location = json['location'];
+    myAction = json['my_action'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data =  Map<String, dynamic>();
+    data['sender_name'] = senderName;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['location'] = location;
+    data['my_action'] = myAction;
     return data;
   }
 }

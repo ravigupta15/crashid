@@ -76,6 +76,7 @@ final casedetailsNotifierProvider =
             onPrimaryTap: () => _openAccidentScreen((model?.caseId ?? '').toString()),
             onSecondaryTap: () => _openDialogBox((model?.caseId ?? '').toString(), (model?.type ?? '').toString()),
             onTap: () => _openCaseDetailsScreen((model?.caseId ?? '').toString()),
+            comingTap: () => _openComingDialogBox((model?.sosId ?? '').toString())
           );
     });
     }
@@ -84,7 +85,7 @@ final casedetailsNotifierProvider =
 void _callNotificationApi() async{
     await ref
         .read(notificationProvider.notifier)
-        .getNotificationn(context);
+        .getNotificationn();
   }
 
 
@@ -138,5 +139,21 @@ void _openCaseDetailsScreen(String? caseId) {
         });
   }
 
+ void _openComingDialogBox(String? sosId) {
+    AppDialogBox().openBox(
+      maxWidthMinWidth: MediaQuery.sizeOf(context).width * .8,
+      title: "Accept Request",
+      subTitle: "Are you sure you want to accept this request?",
+      yesTap: () {
+        Navigator.pop(context);
+        _sosRespond(sosId);
+       
+      }
+    );
+  }
+
+  void _sosRespond(String? sosId) async{
+    await ref.read(notificationProvider.notifier).sosRespond(sosId: sosId, action: "coming");
+  }
 
 }

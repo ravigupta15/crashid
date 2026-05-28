@@ -414,8 +414,10 @@ bool _shouldShowAcceptRejectButtons(CaseDetails? caseDetails) {
   
   String currentUserId = ServiceLocator.get<UserManager>().userId;
   
+    String submissionStatus = (caseDetails?.requestStatus ?? '').toString().toLowerCase();
+  
   for (var participant in caseDetails!.participants!) {
-    String submissionStatus = (participant.submissionStatus ?? '').toString().toLowerCase();
+    // String submissionStatus = (participant.submissionStatus ?? '').toString().toLowerCase();
     String participantRole = (participant.role ?? '').toString().toUpperCase();
     
     // Check if participant role is B or C
@@ -436,8 +438,9 @@ bool _shouldShowRejectedStatus(CaseDetails? caseDetails) {
   
   String currentUserId = ServiceLocator.get<UserManager>().userId;
   
+    String submissionStatus = (caseDetails?.requestStatus ?? '').toString().toLowerCase();
+    
   for (var participant in caseDetails!.participants!) {
-    String submissionStatus = (participant.submissionStatus ?? '').toString().toLowerCase();
     String participantRole = (participant.role ?? '').toString().toUpperCase();
     
     // Check if participant role is B or C

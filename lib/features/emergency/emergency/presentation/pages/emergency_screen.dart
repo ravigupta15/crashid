@@ -115,7 +115,7 @@ class _EmergencyScreenState extends ConsumerState<EmergencyScreen> {
   // -----------------------------------------------------------------------------
 
 void _openAddEmergencyScreen() {
-  AddEmergencyScreen.open(context);
+  AddEmergencyScreen.open(context).then((value) => _emergencyApi());
 }
 
   void _emergencyApi() async{

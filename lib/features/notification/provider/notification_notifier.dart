@@ -29,7 +29,7 @@ class NotificationNotifier extends AsyncNotifier<NotificationState> {
      finally {
     }
   }
-  Future<void> getNotificationn(BuildContext context) async {
+  Future<void> getNotificationn() async {
     try {
       LoaderService().showLoader();
        state = AsyncData(state.value!.copyWith(
@@ -41,6 +41,21 @@ class NotificationNotifier extends AsyncNotifier<NotificationState> {
         state = AsyncData(state.value!.copyWith(
           notificationResponseModel: NotificationResponseModel.fromJson(response?.data),
         ));
+      }
+    } catch (_) {
+    }
+     finally {
+      LoaderService().hideLoader();
+    }
+  }
+
+  Future<void> sosRespond({String? sosId, String? action}) async {
+    try {
+      LoaderService().showLoader();
+      final repo = ref.read(notificationRepositoryProvider);
+      final response = await repo.sosRespond(sosId: sosId, action: action);
+      if (response?.statusCode == 200 ) {
+        getNotificationn();
       }
     } catch (_) {
     }

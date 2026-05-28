@@ -12,10 +12,8 @@ import 'package:crashid/features/add_car/presentation/pages/add_car_screen.dart'
 import 'package:crashid/features/my_cars/provider/my_car_notifier.dart';
 import 'package:crashid/features/my_cars/provider/my_car_state.dart';
 import 'package:crashid/features/notification/provider/notification_notifier.dart';
-import 'package:crashid/features/notification/provider/notification_state.dart';
 import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
 import 'package:crashid/features/profile/provider/profile_notifier.dart';
-import 'package:crashid/features/profile/provider/profile_state.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
@@ -61,7 +59,8 @@ class _AppNavigationScreenState extends ConsumerState<AppNavigationScreen> {
   }
 
   void _onBarTap(int barIndex) {
-    setState(() => _selectedBarIndex = barIndex);
+    setState(() => 
+    _selectedBarIndex = barIndex);
     
     Future.microtask(() {
       // Trigger profile API when profile tab (1) is tapped
