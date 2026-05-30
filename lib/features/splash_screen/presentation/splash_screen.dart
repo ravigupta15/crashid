@@ -1,3 +1,4 @@
+import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/data_sources/local_storage/secure_storage.dart';
 import 'package:crashid/data_sources/local_storage/user_manager.dart';
@@ -9,9 +10,9 @@ import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
-  
   const SplashScreen({super.key});
 
   @override
@@ -19,72 +20,71 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-
-@override
+  @override
   void initState() {
     _navigateToNextScreen();
     super.initState();
   }
 
-  void _navigateToNextScreen() async{
+  void _navigateToNextScreen() async {
     final getValue = GetIt.I<UserManager>();
-    final token =  await  GetIt.I<SecureStorage>().getUserToken();
+    final token = await GetIt.I<SecureStorage>().getUserToken();
     Future.delayed(const Duration(seconds: 3), () {
       if (!getValue.isFirstTime) {
-      _openLanguageScreen();
+        _openLanguageScreen();
       } else if ((token ?? '').toString().isNotEmpty) {
         _openAppNavigationScreen();
-      }  else {
+      } else {
         _openSignInScreen();
       }
     });
-    
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _screenContent(),
-    );
+    return Scaffold(body: _screenContent());
   }
 
-   // -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
   // Widget Methods
   // -----------------------------------------------------------------------------
 
- Widget _screenContent() {
-  return Align(
-    alignment: Alignment.center,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(AppAssetPaths.splashIcon, height: 102,width: 260,),
-        Text("Aufzeichnung, Sicherung. Weiterfahren",
-         style: context.titleMedium.copyWith(
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.w500,
-          fontSize: 8
-         ))
-      ],
-    ),
-  );
- }
+  Widget _screenContent() {
+    return Align(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(AppAssetPaths.splashIcon, height: 102, width: 260),
+          Text(
+            "Aufzeichnung, Sicherung. Weiterfahren",
+            style: context.titleMedium.copyWith(
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.w500,
+              fontSize: 8,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
- // -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
   // Helper Methods
   // -----------------------------------------------------------------------------
 
-void _openLanguageScreen() {
-  LanguageScreen.open(context); 
-}
+  void _openLanguageScreen() {
+    // LanguageScreen.open(context);
+    context.go(AppRoutesPath.languageScreen);
+  }
 
-void _openAppNavigationScreen() {
-  AppNavigationScreen.open(context);
-}
+  void _openAppNavigationScreen() {
+    // AppNavigationScreen.open(context);
+    context.go(AppRoutesPath.appNavigationScreen);
+  }
 
-void _openSignInScreen() {
-  SigninScreen.open(context);
-}
-
+  void _openSignInScreen() {
+    // SigninScreen.open(context);
+    context.go(AppRoutesPath.signinScreen);
+  }
 }

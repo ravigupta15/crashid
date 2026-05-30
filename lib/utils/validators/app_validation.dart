@@ -1,6 +1,6 @@
-
 import 'package:crashid/utils/extensions/extension_string.dart';
 import 'package:crashid/utils/validators/validator.dart';
+import 'package:flutter/services.dart';
 
 mixin AppValidation {
   String? validatePhoneNumber(String? val) {
@@ -17,6 +17,15 @@ mixin AppValidation {
       return 'Required';
     } else if (!Validator.isEmail(val!)) {
       return "Invalid Email";
+    }
+    return null;
+  }
+
+  String? validateNumberPlate(String? val) {
+    if (val.isNullOrEmpty) {
+      return 'Required';
+    } else if (!Validator.vehicleRegExp.hasMatch(val!)) {
+      return "Invalid Number Plate";
     }
     return null;
   }
@@ -55,5 +64,25 @@ mixin AppValidation {
       return "Password does not match";
     }
     return null;
+  }
+}
+
+/// A formatter that auto-capitalizes and strips out illegal special characters as the user types
+class GermanPlateInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    // Force uppercase and strip out anything that isn't a letter, number, or space
+    String text = newValue.text.toUpperCase().replaceAll(
+      RegExp(r'[^A-Z0-9\s]'),
+      '',
+    );
+
+    return newValue.copyWith(
+      text: text,
+      selection: TextSelection.collapsed(offset: text.length),
+    );
   }
 }

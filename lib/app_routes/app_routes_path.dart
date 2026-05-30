@@ -29,4 +29,5 @@ class AppRoutesPath {
   static const searchScreen = "/searchScreen";
   static const paymentWebViewScreen = "/paymentWebViewScreen";
   static const googleMapScreen = "/googleMapScreen";
+  static const viewImageScreen = "/viewImageScreen";
 }

@@ -9,12 +9,9 @@ import 'package:flutter/material.dart';
 class MyCarCardWidget extends StatelessWidget {
   final CarData? model;
   final VoidCallback? onTap;
+  final VoidCallback? onDeleteTap;
 
-  const MyCarCardWidget({
-    super.key,
-     this.model,
-      this.onTap,
-  });
+  const MyCarCardWidget({super.key, this.model, this.onTap, this.onDeleteTap});
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +39,12 @@ class MyCarCardWidget extends StatelessWidget {
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),
-              child: AppCachedNetworkImage(imageUrl: model?.primaryImageUrl ?? '',
-              height: 180,
-              boxFit: BoxFit.cover,
-              width: double.infinity,
-               ),
+              child: AppCachedNetworkImage(
+                imageUrl: model?.primaryImageUrl ?? '',
+                height: 180,
+                boxFit: BoxFit.cover,
+                width: double.infinity,
+              ),
             ),
             const SizedBox(height: 19),
             Padding(
@@ -65,7 +63,14 @@ class MyCarCardWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  Icon(Icons.more_horiz, color: AppColors.darkGrayColor),
+                  InkWell(
+                    onTap: onDeleteTap,
+                    child: Image.asset(
+                      AppAssetPaths.deleteIcon,
+                      height: 24,
+                      width: 24,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -135,7 +140,10 @@ class MyCarCardWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Image.asset(AppAssetPaths.horizontalLineImg),
             ),
-            CarDetailInfoRow(label: 'Insurance Number', value: model?.insuranceNumber ?? ''),
+            CarDetailInfoRow(
+              label: 'Insurance Number',
+              value: model?.insuranceNumber ?? '',
+            ),
           ],
         ),
       ),

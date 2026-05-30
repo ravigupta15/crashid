@@ -8,18 +8,24 @@ class MyCarRepository {
 
   MyCarRepository(this._apiService);
 
-  Future<Response?> myCar() async{
+  Future<Response?> myCar() async {
     return _apiService.sendRequest(
       apiUrl: ApiUrls.vehicleUrl,
       method: ApiMethod.get,
     );
   }
 
-  
-  Future<Response?> myCarDetails(String carId) async{
+  Future<Response?> myCarDetails(String carId) async {
     return _apiService.sendRequest(
       apiUrl: "${ApiUrls.vehicleUrl}/$carId",
       method: ApiMethod.get,
+    );
+  }
+
+  Future<Response?> deleteVehicle(String carId) async {
+    return _apiService.sendRequest(
+      apiUrl: "${ApiUrls.vehicleUrl}/$carId",
+      method: ApiMethod.delete,
     );
   }
 }

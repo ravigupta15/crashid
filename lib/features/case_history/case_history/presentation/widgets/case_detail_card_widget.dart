@@ -26,14 +26,13 @@ class CaseDetailCardWidget extends StatelessWidget {
     this.overflowCount = 0,
     required this.statusLabel,
     this.onViewSummary,
-    this.clouserDate
+    this.clouserDate,
   });
-
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(10),
@@ -59,7 +58,7 @@ class CaseDetailCardWidget extends StatelessWidget {
                   size: 22,
                 ),
               ),
-              const SizedBox(width:8),
+              const SizedBox(width: 8),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +93,11 @@ class CaseDetailCardWidget extends StatelessWidget {
             children: [
               SizedBox(
                 width: 34,
-                child: Icon(Icons.location_on_outlined, color: Color(0xff434654).withValues(alpha: .8),)),
+                child: Icon(
+                  Icons.location_on_outlined,
+                  color: Color(0xff434654).withValues(alpha: .8),
+                ),
+              ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -127,12 +130,15 @@ class CaseDetailCardWidget extends StatelessWidget {
                         color: Color(0xff434654),
                       ),
                     ),
-                    clouserDate.isNotNullOrNotEmpty ?
-                    Text(clouserDate.toString(),
-                    style: context.bodyMedium.copyWith(
-                      fontSize: 14, color: AppColors.blackColor
-                    ),
-                    ) : EmptyWidget()
+                    clouserDate.isNotNullOrNotEmpty
+                        ? Text(
+                            clouserDate.toString(),
+                            style: context.bodyMedium.copyWith(
+                              fontSize: 14,
+                              color: AppColors.blackColor,
+                            ),
+                          )
+                        : EmptyWidget(),
                   ],
                 ),
               ),
@@ -140,7 +146,10 @@ class CaseDetailCardWidget extends StatelessWidget {
                 onTap: onViewSummary,
                 borderRadius: BorderRadius.circular(6),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4,
+                    horizontal: 4,
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -167,57 +176,54 @@ class CaseDetailCardWidget extends StatelessWidget {
       ),
     );
   }
-Widget _thumbnailRow(BuildContext context) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: List.generate(thumbnailAssets.length.clamp(0, 3), (index) {
-      return Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: SizedBox(
-          width: 80, 
-          child: _thumbnailSlot(index, context),
-        ),
-      );
-    }),
-  );
-}
 
-Widget _thumbnailSlot(int index, BuildContext context) {
-  if (index == 2 && thumbnailAssets.length > 3) {
-    int overflowCount = thumbnailAssets.length - 2; // e.g., if 5 total, shows +3
-    return _thumbClip(
-      child: Container(
-        color: AppColors.aliceBlueColor, // That #DFE9FA color we named!
-        alignment: Alignment.center,
-        child: Text(
-          '+$overflowCount',
-          style: context.titleMedium.copyWith(
-            fontSize: 12,
-            fontWeight: FontWeight.w800,
-            color: const Color(0xff434654),
+  Widget _thumbnailRow(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: List.generate(thumbnailAssets.length.clamp(0, 3), (index) {
+        return Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: SizedBox(width: 80, child: _thumbnailSlot(index, context)),
+        );
+      }),
+    );
+  }
+
+  Widget _thumbnailSlot(int index, BuildContext context) {
+    if (index == 2 && thumbnailAssets.length > 3) {
+      int overflowCount =
+          thumbnailAssets.length - 2; // e.g., if 5 total, shows +3
+      return _thumbClip(
+        child: Container(
+          color: AppColors.aliceBlueColor, // That #DFE9FA color we named!
+          alignment: Alignment.center,
+          child: Text(
+            '+$overflowCount',
+            style: context.titleMedium.copyWith(
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+              color: const Color(0xff434654),
+            ),
           ),
         ),
+      );
+    }
+
+    // Scenario 2: Normal Image slot
+    return _thumbClip(
+      child: AppCachedNetworkImage(
+        imageUrl: thumbnailAssets[index],
+        boxFit: BoxFit.cover,
+        height: _thumbSize,
+        canOpenImage: true,
       ),
     );
   }
 
-  // Scenario 2: Normal Image slot
-  return _thumbClip(
-    child: AppCachedNetworkImage(
-    imageUrl: thumbnailAssets[index],
-      boxFit: BoxFit.cover,
-      height: _thumbSize,
-    ),
-  );
-}
-
   Widget _thumbClip({required Widget child}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
-      child: SizedBox(
-        height: _thumbSize,
-        child: child,
-      ),
+      child: SizedBox(height: _thumbSize, child: child),
     );
   }
 }

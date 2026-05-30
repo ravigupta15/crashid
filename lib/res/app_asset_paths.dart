@@ -33,7 +33,7 @@ class AppAssetPaths {
 
   static const drawerIcon = "assets/icons/drawer_ic.png";
   static const logoCarImg = "assets/images/logo_car_img.png";
-  static const homeIcon  = "assets/icons/home_ic.png";
+  static const homeIcon = "assets/icons/home_ic.png";
   static const caseFileIcon = "assets/icons/case_file_ic.png";
   static const userIcon = "assets/icons/user_ic.png";
   static const graySosIcon = "assets/icons/gray_sos_ic.png";
@@ -70,5 +70,6 @@ class AppAssetPaths {
 
   static const statusPendingIcon = "assets/icons/status_pending_ic.png";
   static const retryPaymentIcon = "assets/icons/retry_payment_ic.png";
-  
-} 
+
+  static const deleteIcon = "assets/icons/delete_ic.png";
+}

@@ -30,8 +30,10 @@ import 'package:crashid/features/profile/presentation/pages/edit_profile_screen.
 import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
 import 'package:crashid/features/splash_screen/presentation/splash_screen.dart';
 import 'package:crashid/features/widgets/google_map/app_google_map.dart';
+import 'package:crashid/features/widgets/view_image_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 class AppRouter {
   /// main Navigation Router
   static final GlobalKey<NavigatorState> mainNavigatorKey =
@@ -42,8 +44,7 @@ class AppRouter {
     navigatorKey: mainNavigatorKey,
     redirect: _redirect,
     initialLocation: AppRoutesPath.splashScreen,
-    observers: [
-    ],
+    observers: [],
     routes: <RouteBase>[
       GoRoute(
         path: AppRoutesPath.splashScreen,
@@ -58,34 +59,34 @@ class AppRouter {
           );
         },
       ),
-      
+
       GoRoute(
         path: AppRoutesPath.onboardingScreen,
         builder: (context, state) => const OnboardingScreen(),
       ),
-      
+
       GoRoute(
         path: AppRoutesPath.signinScreen,
         builder: (context, state) => const SigninScreen(),
       ),
-      
+
       GoRoute(
         path: AppRoutesPath.forgetPassword,
         builder: (context, state) => const ForgetPasswordScreen(),
       ),
-      
+
       GoRoute(
         path: AppRoutesPath.otpScreen,
         builder: (context, state) {
           var argument = state.extra as Map<String, dynamic>?;
           return OtpScreen(
-          id: argument?[OtpScreen.kId],
-          type: argument?[OtpScreen.kType],
-          email: argument?[OtpScreen.kEmail],
+            id: argument?[OtpScreen.kId],
+            type: argument?[OtpScreen.kType],
+            email: argument?[OtpScreen.kEmail],
           );
-        }
+        },
       ),
-      
+
       GoRoute(
         path: AppRoutesPath.resetPasswordScreen,
         builder: (context, state) {
@@ -95,7 +96,7 @@ class AppRouter {
           );
         },
       ),
-      
+
       GoRoute(
         path: AppRoutesPath.chooseAccountTypeScreen,
         builder: (context, state) => const ChooseAccountTypeScreen(),
@@ -104,12 +105,12 @@ class AppRouter {
         path: AppRoutesPath.personalRegisterScreen,
         builder: (context, state) => const PersonalRegistrationScreen(),
       ),
-      
+
       GoRoute(
         path: AppRoutesPath.companyRegistrationScreen,
         builder: (context, state) => const CompanyRegistrationScreen(),
       ),
-      
+
       GoRoute(
         path: AppRoutesPath.homeScreen,
         builder: (context, state) => const HomeScreen(),
@@ -129,12 +130,12 @@ class AppRouter {
           return CarDetailsScreen(id: argument?[CarDetailsScreen.kId]);
         },
       ),
-      
+
       GoRoute(
         path: AppRoutesPath.addAccidentScreen,
         builder: (context, state) {
           var argument = state.extra as Map<String, dynamic>?;
-          return  AddAccidentScreen(
+          return AddAccidentScreen(
             routeName: argument?[AddAccidentScreen.kRouteName],
             caseId: argument?[AddAccidentScreen.kcaseId],
           );
@@ -154,7 +155,13 @@ class AppRouter {
       ),
       GoRoute(
         path: AppRoutesPath.appNavigationScreen,
-        builder: (context, state) => const AppNavigationScreen(),
+        builder: (context, state) {
+          final arg = state.extra as Map<String, dynamic>?;
+          final int initialIndex = arg != null
+              ? (arg[AppNavigationScreen.kInitialIndex] as int? ?? 0)
+              : 0;
+          return AppNavigationScreen(initialIndex: initialIndex);
+        },
       ),
       GoRoute(
         path: AppRoutesPath.notificationScreen,
@@ -178,71 +185,71 @@ class AppRouter {
         path: AppRoutesPath.editProfileScreen,
         builder: (context, state) {
           var argument = state.extra as Map<String, dynamic>?;
-          return  EditProfileScreen(
-            model: argument?[EditProfileScreen.kModel],
-          );
+          return EditProfileScreen(model: argument?[EditProfileScreen.kModel]);
         },
       ),
-       GoRoute(
+      GoRoute(
         path: AppRoutesPath.caseDetailsScreen,
         builder: (context, state) {
           var argument = state.extra as Map<String, dynamic>?;
-          return  CaseDetailsScreen(
-            id: argument?[CaseDetailsScreen.kId],
-          );
+          return CaseDetailsScreen(id: argument?[CaseDetailsScreen.kId]);
         },
       ),
-      
-       GoRoute(
+
+      GoRoute(
         path: AppRoutesPath.addEmergencyScreen,
         builder: (context, state) {
-          return  AddEmergencyScreen(
-          );
+          return AddEmergencyScreen();
         },
       ),
-       GoRoute(
+      GoRoute(
         path: AppRoutesPath.pageContentScreen,
         builder: (context, state) {
           var argument = state.extra as Map<String, dynamic>?;
-          return  PageContentScreen(
-            slug: argument?[PageContentScreen.kSlug],
-          );
+          return PageContentScreen(slug: argument?[PageContentScreen.kSlug]);
         },
       ),
-      
-       GoRoute(
+
+      GoRoute(
         path: AppRoutesPath.searchScreen,
         builder: (context, state) {
           var argument = state.extra as Map<String, dynamic>?;
-          return  SearchScreen(
-            model: argument?[SearchScreen.kUserModel],
-          );
+          return SearchScreen(model: argument?[SearchScreen.kUserModel]);
         },
       ),
-      
-       GoRoute(
+
+      GoRoute(
         path: AppRoutesPath.paymentWebViewScreen,
         builder: (context, state) {
           var argument = state.extra as Map<String, dynamic>?;
-          return  PaymentWebviewScreen(
+          return PaymentWebviewScreen(
             paymentUrl: argument?[PaymentWebviewScreen.kPaymentUrl],
             onPaymentFailure: argument?[PaymentWebviewScreen.kOnPaymentFailure],
           );
         },
       ),
-      
-       GoRoute(
+
+      GoRoute(
         path: AppRoutesPath.googleMapScreen,
         builder: (context, state) {
           var argument = state.extra as Map<String, dynamic>?;
-          return  GoogleMapAddressScreen(
+          return GoogleMapAddressScreen(
             lat: argument?[GoogleMapAddressScreen.kLat],
             lng: argument?[GoogleMapAddressScreen.kLng],
           );
         },
       ),
-      
-          ],
+
+      GoRoute(
+        path: AppRoutesPath.viewImageScreen,
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return ViewImageScreen(
+            imageUrl: argument?[ViewImageScreen.kImageUrl],
+          );
+        },
+      ),
+    ],
   );
 
   static FutureOr<String?> _redirect(

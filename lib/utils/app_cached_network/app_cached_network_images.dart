@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:crashid/features/widgets/view_image_screen.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/utils/validators/validator.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,7 @@ class _AppCachedNetworkImageState extends State<AppCachedNetworkImage> {
         : GestureDetector(
             onTap: widget.canOpenImage
                 ? () {
+                    ViewImageScreen.open(context, imageUrl: imageUrl);
                     // FilePreviewScreen.open(context, imageUrl);
                   }
                 : null,
@@ -92,9 +94,9 @@ class _AppCachedNetworkImageState extends State<AppCachedNetworkImage> {
                       // placeholder: (context, url) => Image.asset(AppAssetPaths.placeholderIcon),
                       progressIndicatorBuilder:
                           (context, url, downloadProgress) {
-                        return widget.loadingPlaceholder ??
-                            const _ImageProgressIndicatorBuilder();
-                      },
+                            return widget.loadingPlaceholder ??
+                                const _ImageProgressIndicatorBuilder();
+                          },
                       errorWidget: (context, url, error) =>
                           widget.errorPlaceholder ?? const _ImageErrorWidget(),
                     ),
@@ -104,16 +106,16 @@ class _AppCachedNetworkImageState extends State<AppCachedNetworkImage> {
 
   String get imageUrl {
     if (
-        // AppConfigUtils.onDevelopment &&
-        widget.imageUrl.contains("assets/camera.svg")) {
+    // AppConfigUtils.onDevelopment &&
+    widget.imageUrl.contains("assets/camera.svg")) {
       return "";
     }
     return widget.imageUrl;
   }
 
-///////////////////////////////////////////////////////////
-//////////////////// Helper methods ///////////////////////
-///////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////
+  //////////////////// Helper methods ///////////////////////
+  ///////////////////////////////////////////////////////////
 
   Future _deleteImageFromCache() async {
     if (!widget.enableCache) {
@@ -145,23 +147,17 @@ class AppCachedNetworkImageProvider extends CachedNetworkImageProvider {
     required this.imageUrl,
     int? maxHeight,
     int? maxWidth,
-  }) : super(
-          imageUrl,
-          maxHeight: maxHeight,
-          maxWidth: maxWidth,
-        );
+  }) : super(imageUrl, maxHeight: maxHeight, maxWidth: maxWidth);
 }
 
 class _ImageProgressIndicatorBuilder extends StatelessWidget {
   const _ImageProgressIndicatorBuilder()
-      : super(key: const ValueKey("_ImageProgressIndicatorBuilder"));
+    : super(key: const ValueKey("_ImageProgressIndicatorBuilder"));
 
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: RepaintBoundary(
-        child: CircularProgressIndicator(),
-      ),
+      child: RepaintBoundary(child: CircularProgressIndicator()),
     );
   }
 }
@@ -171,9 +167,11 @@ class _ImageErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  FittedBox(
+    return FittedBox(
       child: Center(
-        child: Padding(padding: EdgeInsets.all(20.0), child: Image.asset(AppAssetPaths.appLogoIcon)
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Image.asset(AppAssetPaths.appLogoIcon),
         ),
       ),
     );

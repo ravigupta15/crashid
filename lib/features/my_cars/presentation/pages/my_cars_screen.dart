@@ -8,6 +8,7 @@ import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/extensions/extension_navigator.dart';
 import 'package:crashid/utils/no_data_found/no_data_found.dart';
 import 'package:flutter/material.dart';
@@ -15,15 +16,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class MyCarsScreen extends ConsumerStatefulWidget {
-
-   static void open(BuildContext context) {
-    context.push(AppRoutesPath.myCarsScreen);
+  static Future<void> open(BuildContext context) {
+    return context.push(AppRoutesPath.myCarsScreen);
   }
 
-  
-   static void openRemoveUntil(BuildContext context) {
+  static void openRemoveUntil(BuildContext context) {
     context.pushNamedAndRemoveUntil(AppRoutesPath.myCarsScreen);
   }
+
   const MyCarsScreen({super.key});
 
   @override
@@ -31,91 +31,114 @@ class MyCarsScreen extends ConsumerStatefulWidget {
 }
 
 class _MyCarsScreenState extends ConsumerState<MyCarsScreen> {
- 
- 
-final myCarNotifierProvider =
-    AsyncNotifierProvider<MyCarNotifier, MyCarState>(MyCarNotifier.new);
+  final myCarNotifierProvider =
+      AsyncNotifierProvider<MyCarNotifier, MyCarState>(MyCarNotifier.new);
 
-   
-   @override
+  @override
   void initState() {
     _callMyCarApi();
     super.initState();
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: AppLocalizations.of(context)!.myCarsTitle,
-        
-      ),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.myCarsTitle),
       body: _screenContent(),
     );
   }
 
-   // -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
   // Widget Methods
   // -----------------------------------------------------------------------------
- 
- Widget _screenContent() {
-  final refState = ref.watch(myCarNotifierProvider);
-  return Padding(
-    padding: EdgeInsets.only(left: 20, right: 20),
-    child: Column(
-      children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: AppElevatedButton.withTitleAndIcon(
-            icon: Icon(Icons.add, color: AppColors.accentColor,),
-             title: AppLocalizations.of(context)!.addCarTitle, 
-             width: 120,
-             height: 48,
-             borderRadius: 12,
-             isBoxShadow: false,
-             onPressed: _openAddCarScreen,), ),
-             const SizedBox(height: 2,),
-        Expanded(
-          child: (refState.value?.myCarResponseModel?.data ?? []).isEmpty ?
-          NoDataFound() :
-           ListView.separated(
-            padding: const EdgeInsets.only(top: 30, bottom: 30),
-            itemCount: refState.value?.myCarResponseModel?.data?.length ?? 0,
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
-            itemBuilder: (context, index) {
-              var model = refState.value?.myCarResponseModel?.data?[index];
-              return  MyCarCardWidget(
-                model: model,
-                onTap: () => _openCarDetailsScreen((model?.id ?? '')?.toString()),
-              );
-            },
-            separatorBuilder: (context, index) => const SizedBox(height: 20),
+
+  Widget _screenContent() {
+    final refState = ref.watch(myCarNotifierProvider);
+    return Padding(
+      padding: EdgeInsets.only(left: 20, right: 20),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: AppElevatedButton.withTitleAndIcon(
+              icon: Icon(Icons.add, color: AppColors.accentColor),
+              title: AppLocalizations.of(context)!.addCarTitle,
+              width: 120,
+              height: 48,
+              borderRadius: 12,
+              isBoxShadow: false,
+              onPressed: _openAddCarScreen,
+            ),
           ),
-        ),
-      ],
-    ),
-  );
- }
-
- 
-   // -----------------------------------------------------------------------------
-  // Helper Methods
-  // -----------------------------------------------------------------------------
- 
- void _openAddCarScreen() {
-  AddCarScreen.open(context);
- }
-
- void _openCarDetailsScreen(String? id) {
-  CarDetailsScreen.open(context, id);
- }
-
- 
-void _callMyCarApi() async{
-    await ref
-        .read(myCarNotifierProvider.notifier)
-        .myCar(context);
+          const SizedBox(height: 2),
+          Expanded(
+            child: (refState.value?.myCarResponseModel?.data ?? []).isEmpty
+                ? NoDataFound()
+                : ListView.separated(
+                    padding: const EdgeInsets.only(top: 30, bottom: 30),
+                    itemCount:
+                        refState.value?.myCarResponseModel?.data?.length ?? 0,
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      var model =
+                          refState.value?.myCarResponseModel?.data?[index];
+                      return MyCarCardWidget(
+                        model: model,
+                        onTap: () => _openCarDetailsScreen(
+                          (model?.id ?? '')?.toString(),
+                        ),
+                        onDeleteTap: () =>
+                            _openDialogBox((model?.id ?? '')?.toString()),
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 20),
+                  ),
+          ),
+        ],
+      ),
+    );
   }
 
+  // -----------------------------------------------------------------------------
+  // Helper Methods
+  // -----------------------------------------------------------------------------
+
+  void _openAddCarScreen() {
+    AddCarScreen.open(context).then((val) {
+      _callMyCarApi();
+    });
+  }
+
+  void _openCarDetailsScreen(String? id) {
+    CarDetailsScreen.open(context, id).then((val) {
+      _callMyCarApi();
+    });
+  }
+
+  void _callMyCarApi() async {
+    await ref.read(myCarNotifierProvider.notifier).myCar();
+  }
+
+  void _openDialogBox(String? carId) {
+    AppDialogBox().openBox(
+      title: 'Delete Car',
+      subTitle: 'Are you sure you want to delete this car?',
+      yesTap: () {
+        Navigator.pop(context);
+        _deleteMyVehicle(carId ?? '');
+      },
+    );
+  }
+
+  void _deleteMyVehicle(String carId) async {
+    await ref.read(myCarNotifierProvider.notifier).deleteMyVehicle(carId).then((
+      response,
+    ) {
+      if (response?.statusCode == 200 || response?.statusCode == 201) {
+        _callMyCarApi();
+      }
+    });
+  }
 }

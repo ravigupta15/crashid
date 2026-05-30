@@ -18,13 +18,14 @@ import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
 import 'package:crashid/utils/validators/validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show FilteringTextInputFormatter;
+import 'package:flutter/services.dart'
+    show FilteringTextInputFormatter, LengthLimitingTextInputFormatter;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class AddCarScreen extends ConsumerStatefulWidget {
-  static void open(BuildContext context) {
-    context.push(AppRoutesPath.addCarScreen);
+  static Future<void> open(BuildContext context) {
+    return context.push(AppRoutesPath.addCarScreen);
   }
 
   const AddCarScreen({super.key});
@@ -44,16 +45,13 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
   @override
   void initState() {
     super.initState();
-    sendModel = AddCarSendModel(
-      selectedCarImages: [],
-    );
+    sendModel = AddCarSendModel(selectedCarImages: []);
     _callInitFunction();
   }
 
-
   void _callInitFunction() {
-      ref.read(addCarNotifierProvider.notifier).carBrands(context);
-      ref.read(addCarNotifierProvider.notifier).carColors();
+    ref.read(addCarNotifierProvider.notifier).carBrands(context);
+    ref.read(addCarNotifierProvider.notifier).carColors();
   }
 
   @override
@@ -80,26 +78,20 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
     final addCarState = ref.watch(addCarNotifierProvider);
     final brands = (addCarState.value?.brandsModel?.data ?? [])
         .map(
-          (brand) => CustomDropDownItem(
-            key: '${brand.id}',
-            value: '${brand.name}',
-          ),
+          (brand) =>
+              CustomDropDownItem(key: '${brand.id}', value: '${brand.name}'),
         )
         .toList();
     final models = (addCarState.value?.mdModel?.data ?? [])
         .map(
-          (model) => CustomDropDownItem(
-            key: '${model.id}',
-            value: '${model.name}',
-          ),
+          (model) =>
+              CustomDropDownItem(key: '${model.id}', value: '${model.name}'),
         )
         .toList();
     final colors = (addCarState.value?.colorsModel?.data ?? [])
         .map(
-          (color) => CustomDropDownItem(
-            key: '${color.id}',
-            value: '${color.name}',
-          ),
+          (color) =>
+              CustomDropDownItem(key: '${color.id}', value: '${color.name}'),
         )
         .toList();
 
@@ -117,8 +109,10 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               inputFormatters: [
                 Validator.emojiRestrict(),
                 Validator.removeLeadingWhiteSpace(),
+                LengthLimitingTextInputFormatter(11),
+                GermanPlateInputFormatter(),
               ],
-              validator: validateEmpty,
+              validator: validateNumberPlate,
               onSaved: (value) => sendModel?.plateNumber = value?.trim(),
             ),
             const SizedBox(height: 20),
@@ -161,7 +155,10 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             CustomDropDownFormFiledWidget(
               hintText: "Fuel Type",
               items: AppDropdownItemWidget.fuelTypes,
-              initialValue: _selectedItem(AppDropdownItemWidget.fuelTypes, sendModel?.fuelType),
+              initialValue: _selectedItem(
+                AppDropdownItemWidget.fuelTypes,
+                sendModel?.fuelType,
+              ),
               validator: _validateDropdown,
               onChanged: (value) => sendModel?.fuelType = value?.value,
             ),
@@ -213,25 +210,25 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               validator: validateEmpty,
               onSaved: (value) => sendModel?.insuranceCompany = value?.trim(),
             ),
-            
+
             const SizedBox(height: 20),
-             AppTextFormField(
-                hintText: "Insurance Email Address",
-                prefixIcon: Image.asset(
-                  AppAssetPaths.mailIcon,
-                  height: 12,
-                  width: 16,
-                ),
-                inputFormatters: [
-                    FilteringTextInputFormatter.allow(Validator.regEmail),
-                ],
-                textInputType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                initialValue: sendModel?.insuranceEmail,
-                 validator: validateEmail,
-                onSaved: (value) => sendModel?.insuranceEmail = value?.trim(),
+            AppTextFormField(
+              hintText: "Insurance Email Address",
+              prefixIcon: Image.asset(
+                AppAssetPaths.mailIcon,
+                height: 12,
+                width: 16,
               ),
-             
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(Validator.regEmail),
+              ],
+              textInputType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              initialValue: sendModel?.insuranceEmail,
+              validator: validateEmail,
+              onSaved: (value) => sendModel?.insuranceEmail = value?.trim(),
+            ),
+
             const SizedBox(height: 20),
             AppTextFormField(
               hintText: 'Insurance Number',
@@ -484,9 +481,12 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
     );
     if (pickedDate == null) return;
     setState(() {
-      _insuranceStartDateController.text =
-          DatePickerService.formatForDisplay(pickedDate);
-      final currentEndDate = _parseCurrentText(_insuranceEndDateController.text);
+      _insuranceStartDateController.text = DatePickerService.formatForDisplay(
+        pickedDate,
+      );
+      final currentEndDate = _parseCurrentText(
+        _insuranceEndDateController.text,
+      );
       if (currentEndDate != null && currentEndDate.isBefore(pickedDate)) {
         _insuranceEndDateController.clear();
       }
@@ -508,17 +508,18 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
         : _parseCurrentText(_insuranceEndDateController.text) ?? startDate;
 
     print(startDate);
-   final pickedDate = await DatePickerService.pickDob(
+    final pickedDate = await DatePickerService.pickDob(
       context,
       firstDate: startDate,
       lastDate: DateTime(2100),
-      initialDate: initialDate.isBefore(startDate) ? startDate : initialDate
+      initialDate: initialDate.isBefore(startDate) ? startDate : initialDate,
     );
-   
+
     if (pickedDate == null) return;
     setState(() {
-      _insuranceEndDateController.text =
-          DatePickerService.formatForDisplay(pickedDate);
+      _insuranceEndDateController.text = DatePickerService.formatForDisplay(
+        pickedDate,
+      );
     });
   }
 

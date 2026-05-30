@@ -26,19 +26,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class AddAccidentScreen extends ConsumerStatefulWidget {
-   static const kRouteName = "/kRouteName";
-   static const kcaseId = "/kCaseId";
-  
+  static const kRouteName = "/kRouteName";
+  static const kcaseId = "/kCaseId";
 
   final String? routeName;
   final String? caseId;
-   static Future<void> open(BuildContext context, {String? routeName, String? caseId})  {
-   return context.push(AppRoutesPath.addAccidentScreen, extra: {
-      kRouteName: routeName,
-      kcaseId: caseId
-    });
+  static Future<void> open(
+    BuildContext context, {
+    String? routeName,
+    String? caseId,
+  }) {
+    return context.push(
+      AppRoutesPath.addAccidentScreen,
+      extra: {kRouteName: routeName, kcaseId: caseId},
+    );
   }
-
 
   const AddAccidentScreen({super.key, this.routeName, this.caseId});
 
@@ -46,10 +48,9 @@ class AddAccidentScreen extends ConsumerStatefulWidget {
   ConsumerState<AddAccidentScreen> createState() => _AddAccidentScreenState();
 }
 
-class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen> with AppValidation {
- 
+class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
+    with AppValidation {
   // Locally stored files (for later upload).
-  
 
   // Maximum allowed photos
   final int maxPhotos = 5;
@@ -58,136 +59,142 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen> with AppV
 
   late DateTime _accidentRecordedAt;
 
+  AddAccidentSendModel? sendModel;
 
-AddAccidentSendModel? sendModel;
+  final addAccidentNotifierProvider =
+      AsyncNotifierProvider<AddAccidentNotifier, AddAccidentState>(
+        AddAccidentNotifier.new,
+      );
 
-final addAccidentNotifierProvider =
-    AsyncNotifierProvider<AddAccidentNotifier, AddAccidentState>(AddAccidentNotifier.new);
- 
-
- @override
+  @override
   void initState() {
-    sendModel = AddAccidentSendModel(
-      uploadedPhotos: [],
-      caseId: widget.caseId
-    );
-    if (widget.routeName == 'accept' ) {   
-     _accidentRecordedAt = DateTime.now();
-     
+    sendModel = AddAccidentSendModel(uploadedPhotos: [], caseId: widget.caseId);
+    if (widget.routeName == 'accept') {
+      _accidentRecordedAt = DateTime.now();
     }
     super.initState();
   }
 
-   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: CustomAppBar(
-        title: "Add Accident",
-    
-      ),
+      appBar: CustomAppBar(title: "Add Accident"),
       body: _screenContent(),
     );
   }
 
-  
   // -----------------------------------------------------------------------------
   // Widget Methods
   // -----------------------------------------------------------------------------
- 
- Widget _screenContent() {
-  print(sendModel?.uploadedPhotos);
-  return SingleChildScrollView(
-    padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
-    child: Form(
-      key: formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if ((widget.routeName ?? '') != 'accept')...[
-          Text("Select own plate number",
-          style: context.titleMedium.copyWith(
-            fontSize: 14, fontWeight: FontWeight.w700),
-          ),
-          const SizedBox(height: 5,),
-          AppTextFormField( 
-            borderRadius: 10,
-            isReadOnly: true,
-            onTap: _openSearchScreen,
-            controller: TextEditingController(text: sendModel?.model?.plateNumber),
-            enableBorderColor: AppColors.blackColor,
-            suffixIcon: Icon(Icons.keyboard_arrow_down),
-            validator: validateEmpty,
-          ),
-          Padding(padding: EdgeInsets.symmetric(vertical: 13),
-          child: Divider(
-            color: AppColors.blackColor.withValues(alpha: .2),  
-          ),
-          ),
-          ],
-          Text("Text Description",  style: context.titleMedium.copyWith(
-            fontSize: 14, fontWeight: FontWeight.w700),
-          ),
-          const SizedBox(height: 5,),
-          AppTextFormField(
-            borderRadius: 10,
-            hintText: "Describe what happened...",
-            maxLines: 3,
-            inputFormatters: [
-              Validator.removeLeadingWhiteSpace()
+
+  Widget _screenContent() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
+      child: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if ((widget.routeName ?? '') != 'accept') ...[
+              Text(
+                "Select own plate number",
+                style: context.titleMedium.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 5),
+              AppTextFormField(
+                borderRadius: 10,
+                isReadOnly: true,
+                onTap: _openSearchScreen,
+                controller: TextEditingController(
+                  text: sendModel?.model?.plateNumber,
+                ),
+                enableBorderColor: AppColors.blackColor,
+                suffixIcon: Icon(Icons.keyboard_arrow_down),
+                validator: validateEmpty,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 13),
+                child: Divider(
+                  color: AppColors.blackColor.withValues(alpha: .2),
+                ),
+              ),
             ],
-            onSaved: _saveDes,
-            validator: validateEmpty,
-          ),
-            Padding(padding: EdgeInsets.symmetric(vertical: 13),
-          child: Divider(
-            color: AppColors.blackColor.withValues(alpha: .2),  
-          ),
-          ),
-        Text("Upload up to 5 Images", style: context.titleMedium.copyWith(
-          fontSize: 14, fontWeight: FontWeight.w700
-        ),),
-        const SizedBox(height: 7,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: List.generate(
-            maxPhotos,
-            (index) => _uploadPhotoWidget(index: index),
-          ),
-        ),
-           Padding(padding: EdgeInsets.symmetric(vertical: 13),
-          child: Divider(
-            color: AppColors.blackColor.withValues(alpha: .2),  
-          ),
-          ),
-          _recordWidget(),
-          
-          if (widget.routeName == 'accept')...[
-          AccidentDetailsWidget(
-          dateValue:
-              AppDateFormat.formatAccidentCardDate(_accidentRecordedAt),
-          timeValue:
-              AppDateFormat.formatAccidentCardTime(_accidentRecordedAt),
-          locationValue: '',
-          shouldShowLocation: false,
-        )
+            Text(
+              "Text Description",
+              style: context.titleMedium.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 5),
+            AppTextFormField(
+              borderRadius: 10,
+              hintText: "Describe what happened...",
+              maxLines: 3,
+              inputFormatters: [Validator.removeLeadingWhiteSpace()],
+              onSaved: _saveDes,
+              validator: validateEmpty,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 13),
+              child: Divider(color: AppColors.blackColor.withValues(alpha: .2)),
+            ),
+            Text(
+              "Upload up to 5 Images",
+              style: context.titleMedium.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 7),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(
+                maxPhotos,
+                (index) => _uploadPhotoWidget(index: index),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 13),
+              child: Divider(color: AppColors.blackColor.withValues(alpha: .2)),
+            ),
+            _recordWidget(),
+
+            if (widget.routeName == 'accept') ...[
+              AccidentDetailsWidget(
+                dateValue: AppDateFormat.formatAccidentCardDate(
+                  _accidentRecordedAt,
+                ),
+                timeValue: AppDateFormat.formatAccidentCardTime(
+                  _accidentRecordedAt,
+                ),
+                locationValue: '',
+                shouldShowLocation: false,
+              ),
+            ],
+            const SizedBox(height: 35),
+            Align(
+              alignment: Alignment.center,
+              child: AppElevatedButton.withTitle(
+                title: "Continue",
+                onPressed: widget.routeName == 'accept'
+                    ? _acceptUserBApi
+                    : _checkValidation,
+              ),
+            ),
           ],
-          const SizedBox(height: 35,),
-          Align(
-            alignment: Alignment.center,
-            child: AppElevatedButton.withTitle(title: "Continue", 
-            onPressed: widget.routeName == 'accept' ? 
-            _acceptUserBApi : _checkValidation,))
-        ],
+        ),
       ),
-    ),
-  );
- }
+    );
+  }
 
   Widget _uploadPhotoWidget({required int index}) {
     final bool hasData = index < (sendModel?.uploadedPhotos ?? []).length;
     return SizedBox(
-      width:55,
+      width: 55,
       height: 55,
       child: InkWell(
         onTap: () => _pickAccidentPhoto(index: index),
@@ -237,106 +244,96 @@ final addAccidentNotifierProvider =
     );
   }
 
-  
- Widget _recordWidget() {
-  return Column(
-    children: [
-      InkWell(
-        onTap: _pickAccidentVideo,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.lightGrayColor),
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: Row(
-            children: [
-              Image.asset(AppAssetPaths.videoCameraIcon),
-              const SizedBox(width: 15),
-              Expanded(
-                child: Text(
-                  sendModel?.uploadedVideo == null
-                      ? "Click Here to Record Accident"
-                      : "Video Selected: ${_fileName(sendModel?.uploadedVideo)}",
-                  style: context.titleMedium.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
+  Widget _recordWidget() {
+    return Column(
+      children: [
+        InkWell(
+          onTap: _pickAccidentVideo,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.lightGrayColor),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: Row(
+              children: [
+                Image.asset(AppAssetPaths.videoCameraIcon),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    sendModel?.uploadedVideo == null
+                        ? "Click Here to Record Accident"
+                        : "Video Selected: ${_fileName(sendModel?.uploadedVideo)}",
+                    style: context.titleMedium.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-      if (sendModel?.uploadedVideo != null)
+        if (sendModel?.uploadedVideo != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: AppVideoPlayerWidget(
+              videoFile: sendModel?.uploadedVideo,
+              height: 220,
+            ),
+          ),
+
         Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: AppVideoPlayerWidget(
-            videoFile: sendModel?.uploadedVideo,
-            height: 220,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Divider(color: AppColors.blackColor.withValues(alpha: .2)),
         ),
-        
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Divider(
-          color: AppColors.blackColor.withValues(alpha: .2),
-        ),
-      ),
-    ],
-  );
- }
+      ],
+    );
+  }
 
   // -----------------------------------------------------------------------------
   // Helper Methods
   // -----------------------------------------------------------------------------
- 
 
-
-
-void _addAccidentApi() async{
+  void _addAccidentApi() async {
     await ref.read(addAccidentNotifierProvider.notifier).addAccident(sendModel);
-}
+  }
 
-void _acceptUserBApi() async{
+  void _acceptUserBApi() async {
     await ref.read(addAccidentNotifierProvider.notifier).userBAccept(sendModel);
-}
+  }
 
   void _openSearchScreen() {
-    SearchScreen.open(context,sendModel?.model).then((val) {
+    SearchScreen.open(context, sendModel?.model).then((val) {
       sendModel?.model = val;
-      setState(() {
-        
-      });
+      setState(() {});
     });
   }
 
-
-
-
-void _checkValidation() {
-  if (formKey.currentState!.validate()) {
-    if ((sendModel?.uploadedPhotos ?? []).isEmpty) {
-     return showFeedbackMessage("Please upload photos");
-    } else if (sendModel?.uploadedVideo == null) {
-     return showFeedbackMessage("Please upload the video");
+  void _checkValidation() {
+    if (formKey.currentState!.validate()) {
+      if ((sendModel?.uploadedPhotos ?? []).isEmpty) {
+        return showFeedbackMessage("Please upload photos");
+      } else if (sendModel?.uploadedVideo == null) {
+        return showFeedbackMessage("Please upload the video");
+      }
+      formKey.currentState!.save();
+      _addAccidentApi();
     }
-    formKey.currentState!.save();
-    _addAccidentApi();
   }
-}
 
-void _saveDes(String? val) {
-  sendModel?.des = val;
-}
-  
+  void _saveDes(String? val) {
+    sendModel?.des = val;
+  }
 
   Future<void> _pickAccidentPhoto({required int index}) async {
     // Prevent adding more than maxPhotos.
-    final bool canAddMore = (sendModel?.uploadedPhotos ?? []).length < maxPhotos;
-    if (!canAddMore && index >= (sendModel?.uploadedPhotos ?? []).length) return;
+    final bool canAddMore =
+        (sendModel?.uploadedPhotos ?? []).length < maxPhotos;
+    if (!canAddMore && index >= (sendModel?.uploadedPhotos ?? []).length)
+      return;
 
     final source = await showImageSourcePicker();
     if (source == null) return;
@@ -355,7 +352,8 @@ void _saveDes(String? val) {
 
   String _fileName(File? file) {
     return file!.path.split(RegExp(r'[\\/]')).last;
- }
+  }
+
   Future<void> _pickAccidentVideo() async {
     final source = await showImageSourcePicker();
     if (source == null) return;
@@ -364,9 +362,7 @@ void _saveDes(String? val) {
     if (file == null) return;
 
     setState(() {
-     sendModel?.uploadedVideo = file;
+      sendModel?.uploadedVideo = file;
     });
   }
-
-
 }

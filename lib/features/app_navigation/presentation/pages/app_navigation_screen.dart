@@ -1,6 +1,7 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/service/location_service.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/data_sources/local_storage/user_manager.dart';
 import 'package:crashid/features/app_navigation/presentation/pages/drawer_screen.dart';
 import 'package:crashid/features/app_navigation/presentation/widgets/add_car_diloag_content.dart';
 import 'package:crashid/features/case_history/case_history/presentation/pages/case_history_screen.dart';
@@ -23,25 +24,31 @@ import 'package:crashid/utils/extensions/extension_navigator.dart';
 import 'package:crashid/utils/extensions/extension_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 class AppNavigationScreen extends ConsumerStatefulWidget {
- 
- static void open(BuildContext context) {
-    context.pushNamedAndRemoveUntil(AppRoutesPath.appNavigationScreen);
+  static const kInitialIndex = '/kInitialIndex';
+
+  final int? initialIndex;
+  static void open(BuildContext context, {int? initialIndex}) {
+    context.pushNamedAndRemoveUntil(
+      AppRoutesPath.appNavigationScreen,
+      extra: {kInitialIndex: initialIndex},
+    );
   }
 
-  const AppNavigationScreen({super.key});
+  const AppNavigationScreen({super.key, this.initialIndex});
 
   @override
-  ConsumerState<AppNavigationScreen> createState() => _AppNavigationScreenState();
+  ConsumerState<AppNavigationScreen> createState() =>
+      _AppNavigationScreenState();
 }
 
 class _AppNavigationScreenState extends ConsumerState<AppNavigationScreen> {
   int _selectedBarIndex = 0;
 
   String? city;
-
 
   int get _stackIndex {
     switch (_selectedBarIndex) {
@@ -59,9 +66,8 @@ class _AppNavigationScreenState extends ConsumerState<AppNavigationScreen> {
   }
 
   void _onBarTap(int barIndex) {
-    setState(() => 
-    _selectedBarIndex = barIndex);
-    
+    setState(() => _selectedBarIndex = barIndex);
+
     Future.microtask(() {
       // Trigger profile API when profile tab (1) is tapped
       if (barIndex == 1) {
@@ -81,45 +87,55 @@ class _AppNavigationScreenState extends ConsumerState<AppNavigationScreen> {
   }
 
   void _onCenterFabTap() {
-    context.push(AppRoutesPath.addAccidentScreen);
+    (GetIt.I.get<UserManager>().carAdded)
+        ? context.push(AppRoutesPath.addAccidentScreen)
+        : _openAddCarDialogBox();
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final myCarNotifierProvider =
+      AsyncNotifierProvider<MyCarNotifier, MyCarState>(MyCarNotifier.new);
 
-final myCarNotifierProvider =
-    AsyncNotifierProvider<MyCarNotifier, MyCarState>(MyCarNotifier.new);
-
-   
- @override
+  @override
   void initState() {
+    _selectedBarIndex = widget.initialIndex ?? 0;
     callInitFunction();
     super.initState();
   }
 
-  void callInitFunction() async{
-    
-
+  void callInitFunction() async {
     Future.microtask(() async {
-      
       final data = await LocationService.getCurrentLocationWithAddress();
       city = data.city;
-      setState(() {
-        
-      });
+      setState(() {});
       print("Current city: $city");
- // Call the myCar API and check if the user has any cars added. If not, open the add car dialog box.
-      await ref
-        .read(myCarNotifierProvider.notifier)
-        .myCar(context).then((val) {
-          if (val == false) {
-            _openAddCarDialogBox();
-          }
-        });
+      // Call the myCar API and check if the user has any cars added. If not, open the add car dialog box.
+      await ref.read(myCarNotifierProvider.notifier).myCar().then((val) {
+        if (val == false) {
+          _openAddCarDialogBox();
+        }
+      });
 
-        // call fcm token API to register the device for push notifications
-        await ref.read(notificationProvider.notifier).fcmToken();
+      // call fcm token API to register the device for push notifications
+      await ref.read(notificationProvider.notifier).fcmToken();
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant AppNavigationScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    final targetIndex = widget.initialIndex;
+
+    // Compare the incoming request directly against the current runtime state index
+    if (targetIndex != null && targetIndex != _selectedBarIndex) {
+      setState(() {
+        _selectedBarIndex = targetIndex;
+      });
+      // Fire the API calls linked to that tab
+      Future.microtask(() => _onBarTap(_selectedBarIndex));
+    }
   }
 
   @override
@@ -128,9 +144,11 @@ final myCarNotifierProvider =
       key: _scaffoldKey,
       appBar: CustomAppBar(
         leadingWidget: InkWell(
-          onTap: () =>_scaffoldKey.currentState?.openDrawer(),
-          child: Image.asset(AppAssetPaths.drawerIcon)),
-        titleWidget: city.isNotNullOrNotEmpty ? Row(
+          onTap: () => _scaffoldKey.currentState?.openDrawer(),
+          child: Image.asset(AppAssetPaths.drawerIcon),
+        ),
+        titleWidget: city.isNotNullOrNotEmpty
+            ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
@@ -148,8 +166,8 @@ final myCarNotifierProvider =
                     ),
                   ),
                 ],
-              ) : EmptyWidget(),
-      
+              )
+            : EmptyWidget(),
       ),
       drawer: DrawerScreen(),
       body: _screenContent(),
@@ -157,23 +175,21 @@ final myCarNotifierProvider =
     );
   }
 
-// -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
   // Widget Methods
   // -----------------------------------------------------------------------------
 
-Widget _screenContent() {
-  return IndexedStack(
-        index: _stackIndex,
-        children: const [
-          HomeScreen(),
-          ProfileScreen(isAppBarHide: true,),
-          CaseHistoryScreen(isAppBarHide: true,),
-          EmergencyScreen(isAppBarHide: true,),
-        ],
-      );
-   
-     
-}
+  Widget _screenContent() {
+    return IndexedStack(
+      index: _stackIndex,
+      children: [
+        HomeScreen(),
+        ProfileScreen(isAppBarHide: true),
+        CaseHistoryScreen(isAppBarHide: true),
+        EmergencyScreen(isAppBarHide: true),
+      ],
+    );
+  }
 
   Widget _buildBottomBar(BuildContext context) {
     final bottomInset = MediaQuery.paddingOf(context).bottom;
@@ -185,7 +201,7 @@ Widget _screenContent() {
         Container(
           margin: const EdgeInsets.only(top: 28),
           padding: EdgeInsets.only(top: 14, bottom: 10 + bottomInset),
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
             color: AppColors.iceColor,
             boxShadow: [
               BoxShadow(
@@ -199,55 +215,59 @@ Widget _screenContent() {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _BarIconButton(
-                asset:  _selectedBarIndex == 0 ? AppAssetPaths.homeIcon : AppAssetPaths.homeGrayIcon,
+                asset: _selectedBarIndex == 0
+                    ? AppAssetPaths.homeIcon
+                    : AppAssetPaths.homeGrayIcon,
                 selected: _selectedBarIndex == 0,
                 onTap: () => _onBarTap(0),
               ),
               _BarIconButton(
-                asset:_selectedBarIndex == 1 ? AppAssetPaths.userBlackIcon : AppAssetPaths.userIcon,
+                asset: _selectedBarIndex == 1
+                    ? AppAssetPaths.userBlackIcon
+                    : AppAssetPaths.userIcon,
                 selected: _selectedBarIndex == 1,
                 onTap: () => _onBarTap(1),
               ),
               const SizedBox(width: 56),
               _BarIconButton(
-                asset:_selectedBarIndex == 3 ? AppAssetPaths.caseFileBlackIcon : AppAssetPaths.caseFileIcon,
+                asset: _selectedBarIndex == 3
+                    ? AppAssetPaths.caseFileBlackIcon
+                    : AppAssetPaths.caseFileIcon,
                 selected: _selectedBarIndex == 3,
                 onTap: () => _onBarTap(3),
               ),
               _BarIconButton(
-                asset: _selectedBarIndex == 4 ? AppAssetPaths.sosBlackIcon : AppAssetPaths.graySosIcon,
+                asset: _selectedBarIndex == 4
+                    ? AppAssetPaths.sosBlackIcon
+                    : AppAssetPaths.graySosIcon,
                 selected: _selectedBarIndex == 4,
                 onTap: () => _onBarTap(4),
               ),
             ],
           ),
         ),
-        Positioned(
-          top: 0,
-          child: _CenterAddFab(onTap: _onCenterFabTap),
-        ),
+        Positioned(top: 0, child: _CenterAddFab(onTap: _onCenterFabTap)),
       ],
     );
   }
 
-   // -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
   // Helper Methods
   // -----------------------------------------------------------------------------
 
+  void _openAddCarDialogBox() {
+    AppDialogBox().openBox(
+      maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
+      screenContent: AddCarDiloagContent(onClickAddCar: _openAddCarScreen),
+    );
+  }
 
-void _openAddCarDialogBox() {
-  AppDialogBox().openBox(
-    maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
-    screenContent: AddCarDiloagContent(
-      onClickAddCar: _openAddCarScreen,
-    )
-  );
-}
-
-void _openAddCarScreen() {
-  Navigator.pop(context);
-  AddCarScreen.open(context);
-}
+  void _openAddCarScreen() {
+    Navigator.pop(context);
+    AddCarScreen.open(context).then((val) async {
+      await ref.read(myCarNotifierProvider.notifier).myCar();
+    });
+  }
 }
 
 class _CenterAddFab extends StatelessWidget {
@@ -273,11 +293,7 @@ class _CenterAddFab extends StatelessWidget {
             color: AppColors.primaryColor,
             border: Border.all(color: AppColors.whiteColor, width: 4),
           ),
-          child: const Icon(
-            Icons.add,
-            color: AppColors.whiteColor,
-            size: 32,
-          ),
+          child: const Icon(Icons.add, color: AppColors.whiteColor, size: 32),
         ),
       ),
     );

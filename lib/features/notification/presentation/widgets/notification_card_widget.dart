@@ -16,8 +16,7 @@ class NotificationCardWidget extends StatelessWidget {
     this.onSecondaryTap,
     this.onPrimaryTap,
     this.onTap,
-    this.comingTap
-
+    this.comingTap,
   });
   final Notifications? model;
   final VoidCallback? onPrimaryTap;
@@ -45,40 +44,51 @@ class NotificationCardWidget extends StatelessWidget {
         child: Column(
           children: [
             _headerRow(context),
-      
-            (model?.type.toLowerCase().contains('emergency') && (model?.sos?.myAction).isNullOrEmpty) ?
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: AppElevatedButton.withTitleAndIcon(
-                icon: Image.asset(AppAssetPaths.runIcon),
-                color: AppColors.crimsonRedColor,
-                textColor: AppColors.whiteColor,
-                width: double.infinity,
-                title: "I am Coming",
-                height: 48,
-                isBoxShadow: false,
-                onPressed: comingTap,
-              ),
-            ) :
-            model?.requestStatus == "pending" ?
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Row(
-                children: [
-                  Expanded(child: AppElevatedButton.withTitle(title: "Accept",
-                  textColor: AppColors.whiteColor,
-                  isBoxShadow: false,
-                  height: 48,
-                   onPressed: onPrimaryTap,)),
-                   const SizedBox(width: 12,),
-                  Expanded(child: AppElevatedButton.withTitle(title: "Reject",
-                  color: AppColors.aliceBlueColor,
-                  isBoxShadow: false,
-                  height: 48,
-                  textColor: AppColors.blackColor, onPressed: onSecondaryTap,)),
-                ],
-              ),
-            ) : EmptyWidget()
+
+            (model?.type.toLowerCase().contains('emergency') &&
+                    (model?.sos?.myAction).isNullOrEmpty)
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: AppElevatedButton.withTitleAndIcon(
+                      icon: Image.asset(AppAssetPaths.runIcon),
+                      color: AppColors.crimsonRedColor,
+                      textColor: AppColors.whiteColor,
+                      width: double.infinity,
+                      title: "I am Coming",
+                      height: 48,
+                      isBoxShadow: false,
+                      onPressed: comingTap,
+                    ),
+                  )
+                : model?.requestStatus == "pending"
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: AppElevatedButton.withTitle(
+                            title: "Accept",
+                            textColor: AppColors.whiteColor,
+                            isBoxShadow: false,
+                            height: 48,
+                            onPressed: onPrimaryTap,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: AppElevatedButton.withTitle(
+                            title: "Reject",
+                            color: AppColors.aliceBlueColor,
+                            isBoxShadow: false,
+                            height: 48,
+                            textColor: AppColors.blackColor,
+                            onPressed: onSecondaryTap,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : EmptyWidget(),
           ],
         ),
       ),
@@ -86,7 +96,7 @@ class NotificationCardWidget extends StatelessWidget {
   }
 
   Widget _headerRow(BuildContext context) {
-     var type = model?.type.toLowerCase() ?? '';
+    var type = model?.type.toLowerCase() ?? '';
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,12 +106,12 @@ class NotificationCardWidget extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: type.contains("emergency")
+            color: type.contains("emergency") || type.contains("sos_response")
                 ? Color(0xffFFDAD6).withValues(alpha: .2)
                 : AppColors.iceColor,
           ),
           child: Image.asset(
-            type.contains('emergency')
+            type.contains('emergency') || type.contains("sos_response")
                 ? AppAssetPaths.emergencyRequestIcon
                 : type.contains('witness')
                 ? AppAssetPaths.witnessRequestIcon
@@ -118,17 +128,22 @@ class NotificationCardWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      (model?.type ?? '').toString().replaceAll('_', ' ').capitalize,
+                      (model?.type ?? '')
+                          .toString()
+                          .replaceAll('_', ' ')
+                          .capitalize,
                       style: context.titleMedium.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: type.contains('emergency')
+                        color:
+                            type.contains('emergency') ||
+                                type.contains("sos_response")
                             ? AppColors.crimsonRedColor
                             : AppColors.darkGrayColor,
                       ),
                     ),
                   ),
-                  if (isAccidentType() )
+                  if (isAccidentType())
                     Text(
                       AppDateFormat.timeAgo(model?.createdAt ?? ''),
                       style: context.bodySmall.copyWith(
@@ -155,7 +170,8 @@ class NotificationCardWidget extends StatelessWidget {
                   //       ),
                   //     ),
                   //   ),
-                  if (type.contains('emergency'))
+                  if (type.contains('emergency') ||
+                      type.contains("sos_response"))
                     Padding(
                       padding: const EdgeInsets.only(left: 8, top: 2),
                       child: Icon(
@@ -168,22 +184,29 @@ class NotificationCardWidget extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (type.contains('emergency')) ...[
+                  if (type.contains('emergency') ||
+                      type.contains("sos_response")) ...[
                     Text.rich(
                       TextSpan(
-                        text: (model?.sos?.senderName ?? '').capitalize,
+                        text: (model?.body ?? ''),
                         style: context.titleMedium.copyWith(fontSize: 16),
                         children: [
-                          TextSpan(
-                            text: " is in an emergency",
-                            style: context.bodyMedium.copyWith(fontSize: 16),
-                          ),
+                          // TextSpan(
+                          //   text: " is in an emergency",
+                          //   style: context.bodyMedium.copyWith(fontSize: 16),
+                          // ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    _locationRow(context, model?.sos?.location),
+
+                    type.contains("sos_response")
+                        ? EmptyWidget()
+                        : Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: _locationRow(context, model?.sos?.location),
+                          ),
                   ],
                   if (type.contains('witness')) ...[
                     Text.rich(
@@ -201,7 +224,7 @@ class NotificationCardWidget extends StatelessWidget {
                           //         fontSize: 16,
                           //       ),
                           //     ),
-                            // ],
+                          // ],
                           // ),
                         ],
                       ),
@@ -260,11 +283,15 @@ class NotificationCardWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          NotificationCaseDetailRowWidget(label: 'Case ID', value: '#${model?.caseNumber ?? ''}',),
+          NotificationCaseDetailRowWidget(
+            label: 'Case ID',
+            value: '#${model?.caseNumber ?? ''}',
+          ),
           const SizedBox(height: 6),
           NotificationCaseDetailRowWidget(
             label: 'Date/Time',
-            value: '${AppDateFormat.formatMonthDay(model?.accidentDate)}, ${AppDateFormat.formatTime(model?.accidentTime)}',
+            value:
+                '${AppDateFormat.formatMonthDay(model?.accidentDate)}, ${AppDateFormat.formatTime(model?.accidentTime)}',
           ),
           const SizedBox(height: 6),
           NotificationCaseDetailRowWidget(
@@ -277,9 +304,10 @@ class NotificationCardWidget extends StatelessWidget {
   }
 
   bool isAccidentType() {
-     var type = model?.type.toLowerCase() ?? '';
-return
-    type.contains('accident') ||
-                  type.contains('witness') || type.contains('closed') || type.contains('case');
+    var type = model?.type.toLowerCase() ?? '';
+    return type.contains('accident') ||
+        type.contains('witness') ||
+        type.contains('closed') ||
+        type.contains('case');
   }
 }

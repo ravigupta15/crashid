@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:crashid/data_sources/local_storage/share_preference_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +26,6 @@ class UserManager {
   set setLanguage(String value) =>
       _sharedPrefs.setString(SharePreferenceKeys.LANGUAGE.name, value);
 
-
   String get email =>
       _sharedPrefs.getString(SharePreferenceKeys.EMAIL.name) ?? '';
   set setEmail(String value) =>
@@ -40,11 +41,15 @@ class UserManager {
   set setFcmToken(String value) =>
       _sharedPrefs.setString(SharePreferenceKeys.FCM_TOKEN.name, value);
 
-
   String get userId =>
       _sharedPrefs.getString(SharePreferenceKeys.USER_ID.name) ?? '';
   set setUserId(String value) =>
       _sharedPrefs.setString(SharePreferenceKeys.USER_ID.name, value);
+
+  bool get carAdded =>
+      _sharedPrefs.getBool(SharePreferenceKeys.Is_CAR_ADDED.name) ?? false;
+  set setCarAdded(bool value) =>
+      _sharedPrefs.setBool(SharePreferenceKeys.Is_CAR_ADDED.name, value);
 
   void clearValues() {
     _sharedPrefs.clear();

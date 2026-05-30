@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final caseHistoryNotifierProvider =
-    AsyncNotifierProvider<CaseHistoryNotifier, CaseHistoryState>(CaseHistoryNotifier.new);
+    AsyncNotifierProvider<CaseHistoryNotifier, CaseHistoryState>(
+      CaseHistoryNotifier.new,
+    );
 
 class CaseHistoryNotifier extends AsyncNotifier<CaseHistoryState> {
   @override
@@ -19,16 +21,24 @@ class CaseHistoryNotifier extends AsyncNotifier<CaseHistoryState> {
     LoaderService().showLoader();
     try {
       final repo = ref.read(accidentRepositoryProvider);
-      state = AsyncData(state.value!.copyWith(caseHistoryResponseModel: CaseHistoryResponseModel.fromJson({})));
+      state = AsyncData(
+        state.value!.copyWith(
+          caseHistoryResponseModel: CaseHistoryResponseModel.fromJson({}),
+        ),
+      );
       final response = await repo.caseHistory(currentTab: currentTab);
       if (response?.statusCode == 201 || response?.statusCode == 200) {
-      state = AsyncData(state.value!.copyWith(caseHistoryResponseModel: CaseHistoryResponseModel.fromJson(response?.data)));
+        state = AsyncData(
+          state.value!.copyWith(
+            caseHistoryResponseModel: CaseHistoryResponseModel.fromJson(
+              response?.data,
+            ),
+          ),
+        );
       }
     } catch (_) {
-     } finally {
+    } finally {
       LoaderService().hideLoader();
     }
   }
-
- 
 }

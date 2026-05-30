@@ -9,5 +9,6 @@ enum SharePreferenceKeys {
   IS_REMEMBER_ME,
   FCM_TOKEN,
   LANGUAGE,
-  USER_ID
+  USER_ID,
+  Is_CAR_ADDED,
 }

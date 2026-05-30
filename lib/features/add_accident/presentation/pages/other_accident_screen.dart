@@ -16,35 +16,39 @@ import 'package:crashid/utils/date_format/app_date_format.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
 import 'package:crashid/utils/validators/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-
 class OtherAccidentScreen extends ConsumerStatefulWidget {
- static const kCaseId = "/kCaseId";
- static const kRoute = "/kRoute";
+  static const kCaseId = "/kCaseId";
+  static const kRoute = "/kRoute";
 
- final String? caseId;
- final String? route;
+  final String? caseId;
+  final String? route;
 
-  static Future<void> open(BuildContext context, {String? caseId, String? route}) {
-   return context.push(AppRoutesPath.otherAccidentScreen, extra: {
-      kCaseId: caseId,
-      kRoute: route
-    });
+  static Future<void> open(
+    BuildContext context, {
+    String? caseId,
+    String? route,
+  }) {
+    return context.push(
+      AppRoutesPath.otherAccidentScreen,
+      extra: {kCaseId: caseId, kRoute: route},
+    );
   }
 
   const OtherAccidentScreen({super.key, this.caseId, this.route});
 
   @override
-  ConsumerState<OtherAccidentScreen> createState() => _OtherAccidentScreenState();
+  ConsumerState<OtherAccidentScreen> createState() =>
+      _OtherAccidentScreenState();
 }
 
 class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
-
     with AppValidation {
   final _formKey = GlobalKey<FormState>();
-  
+
   OtherAccidentSendModel? sendModel;
 
   late DateTime _accidentRecordedAt;
@@ -52,22 +56,18 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
   bool _locationLoading = true;
   String? _locationFailureMessage;
 
-
-final otherAccidentNotifierProvider =
-    AsyncNotifierProvider<OtherAccidentNotifier, OtherAccidentState>(
-        OtherAccidentNotifier.new);
+  final otherAccidentNotifierProvider =
+      AsyncNotifierProvider<OtherAccidentNotifier, OtherAccidentState>(
+        OtherAccidentNotifier.new,
+      );
 
   @override
   void initState() {
     super.initState();
-    sendModel = OtherAccidentSendModel(
-      caseId: widget.caseId
-    );
+    sendModel = OtherAccidentSendModel(caseId: widget.caseId);
     _accidentRecordedAt = DateTime.now();
-    sendModel?.date =
-        AppDateFormat.formatAccidentCardDate(_accidentRecordedAt);
-    sendModel?.time =
-        AppDateFormat.formatAccidentCardTime(_accidentRecordedAt);
+    sendModel?.date = AppDateFormat.formatAccidentCardDate(_accidentRecordedAt);
+    sendModel?.time = AppDateFormat.formatAccidentCardTime(_accidentRecordedAt);
     _pricingApi();
     _loadAccidentLocation();
   }
@@ -76,104 +76,119 @@ final otherAccidentNotifierProvider =
   void dispose() {
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "Add Accident",
-   
-      ),
+      appBar: CustomAppBar(title: "Add Accident"),
       body: _screenContent(),
     );
   }
   // -----------------------------------------------------------------------------
   // Widget Methods
   // -----------------------------------------------------------------------------
- 
- Widget _screenContent() {
-  final refState = ref.watch(otherAccidentNotifierProvider);
-   var model = refState.value?.pricingResponseModel?.data;
 
-  return SingleChildScrollView(
-     padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
-    child: Form(
-      key: _formKey,
-      child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
- Text("Other Driver",
-        style: context.titleMedium.copyWith(
-          fontSize: 14, fontWeight: FontWeight.w700),
-        ),
-        
-        const SizedBox(height: 5,),
-        AppTextFormField(
-          hintText: "Vehicle plate number",
-          textCapitalization: TextCapitalization.characters,
-          textInputType: TextInputType.text,
-          textInputAction: TextInputAction.next,
-          inputFormatters: [
-            Validator.emojiRestrict(),
-            Validator.removeLeadingWhiteSpace(),
+  Widget _screenContent() {
+    final refState = ref.watch(otherAccidentNotifierProvider);
+    var model = refState.value?.pricingResponseModel?.data;
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 40),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Other Driver",
+              style: context.titleMedium.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+
+            const SizedBox(height: 5),
+            AppTextFormField(
+              hintText: "Vehicle plate number",
+              textCapitalization: TextCapitalization.characters,
+              textInputType: TextInputType.text,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                Validator.emojiRestrict(),
+                Validator.removeLeadingWhiteSpace(),
+                LengthLimitingTextInputFormatter(11),
+                GermanPlateInputFormatter(),
+              ],
+              onSaved: (val) => sendModel?.otherDriver = val,
+              validator: (val) {
+                if (val == null || val.trim().isEmpty) return null;
+                return validateNumberPlate(val);
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 13),
+              child: Divider(color: AppColors.blackColor.withValues(alpha: .2)),
+            ),
+            Text(
+              "Witness",
+              style: context.titleMedium.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+
+            const SizedBox(height: 5),
+            AppTextFormField(
+              hintText: "Vehicle plate number",
+              textCapitalization: TextCapitalization.characters,
+              textInputType: TextInputType.text,
+              textInputAction: TextInputAction.done,
+              inputFormatters: [
+                Validator.emojiRestrict(),
+                Validator.removeLeadingWhiteSpace(),
+                LengthLimitingTextInputFormatter(11),
+                GermanPlateInputFormatter(),
+              ],
+              onSaved: (val) => sendModel?.witness = val,
+              validator: (val) {
+                if (val == null || val.trim().isEmpty) return null;
+                return validateNumberPlate(val);
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 13),
+              child: Divider(color: AppColors.blackColor.withValues(alpha: .2)),
+            ),
+            AccidentDetailsWidget(
+              dateValue: AppDateFormat.formatAccidentCardDate(
+                _accidentRecordedAt,
+              ),
+              timeValue: AppDateFormat.formatAccidentCardTime(
+                _accidentRecordedAt,
+              ),
+              locationValue: _locationCardText,
+              onDateTap: _pickDate,
+              onTimeTap: _pickTime,
+              onLocationTap: _openGoogleMapScreen,
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 13),
+              child: Divider(color: AppColors.blackColor.withValues(alpha: .2)),
+            ),
+            PaymentMethodWidget(model: model),
+            const SizedBox(height: 33),
+            Center(
+              child: AppElevatedButton.withTitle(
+                title: "Add Accident",
+                onPressed: _onSubmit,
+              ),
+            ),
           ],
-          onSaved: (val) => sendModel?.otherDriver = val, 
-          validator: validateEmpty,
         ),
-        Padding(padding: EdgeInsets.symmetric(vertical: 13),
-        child: Divider(
-          color: AppColors.blackColor.withValues(alpha: .2),  
-        ),
-        ),
- Text("Witness",
-        style: context.titleMedium.copyWith(
-          fontSize: 14, fontWeight: FontWeight.w700),
-        ),
-        
-        const SizedBox(height: 5,),
-        AppTextFormField(
-          hintText: "Vehicle plate number",
-          textCapitalization: TextCapitalization.characters,
-          textInputType: TextInputType.text,
-          textInputAction: TextInputAction.done,
-          inputFormatters: [
-            Validator.emojiRestrict(),
-            Validator.removeLeadingWhiteSpace(),
-          ],
-          onSaved: (val) => sendModel?.witness = val,
-          validator: validateEmpty,
-        ),
-        Padding(padding: EdgeInsets.symmetric(vertical: 13),
-        child: Divider(
-          color: AppColors.blackColor.withValues(alpha: .2),  
-        ),
-        ),
-        AccidentDetailsWidget(
-          dateValue:
-              AppDateFormat.formatAccidentCardDate(_accidentRecordedAt),
-          timeValue:
-              AppDateFormat.formatAccidentCardTime(_accidentRecordedAt),
-          locationValue: _locationCardText,
-          onDateTap: _pickDate,
-          onTimeTap: _pickTime,
-          onLocationTap: _openGoogleMapScreen,
-        ),
-        
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 13),
-          child: Divider(
-            color: AppColors.blackColor.withValues(alpha: .2),
-          ),
-        ),
-        PaymentMethodWidget(model: model,),
-        const SizedBox(height: 33,),
-        Center(child:
-         AppElevatedButton.withTitle(title: "Add Accident", onPressed: _onSubmit,))
-      ],
-    ),
-    ),
-  );
- }
+      ),
+    );
+  }
 
   void _onSubmit() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
@@ -181,17 +196,15 @@ final otherAccidentNotifierProvider =
     _completeApi();
   }
 
-
-
   void _pricingApi() async {
     await ref.read(otherAccidentNotifierProvider.notifier).pricing();
   }
 
-  
   void _completeApi() async {
-    await ref.read(otherAccidentNotifierProvider.notifier).complete(sendModel, route: widget.route);
+    await ref
+        .read(otherAccidentNotifierProvider.notifier)
+        .complete(sendModel, route: widget.route);
   }
-
 
   String get _locationCardText {
     if (_locationLoading) return 'Getting location…';
@@ -234,7 +247,6 @@ final otherAccidentNotifierProvider =
     return 'Unable to load location.';
   }
 
-
   Future<void> _pickDate() async {
     final pickedDate = await DatePickerService.pickDob(
       context,
@@ -251,11 +263,12 @@ final otherAccidentNotifierProvider =
           _accidentRecordedAt.hour,
           _accidentRecordedAt.minute,
         );
-        sendModel?.date = AppDateFormat.formatAccidentCardDate(_accidentRecordedAt);
+        sendModel?.date = AppDateFormat.formatAccidentCardDate(
+          _accidentRecordedAt,
+        );
       });
     }
   }
-
 
   Future<void> _pickTime() async {
     final pickedTime = await showTimePicker(
@@ -263,12 +276,12 @@ final otherAccidentNotifierProvider =
       initialTime: TimeOfDay.fromDateTime(_accidentRecordedAt),
       builder: (context, child) {
         return MediaQuery(
-        data: MediaQuery.of(context).copyWith(
-          alwaysUse24HourFormat: false, // Forces 12-hour UI
-        ),
-        child: child!,
-      );
-      }
+          data: MediaQuery.of(context).copyWith(
+            alwaysUse24HourFormat: false, // Forces 12-hour UI
+          ),
+          child: child!,
+        );
+      },
     );
     if (pickedTime != null) {
       setState(() {
@@ -279,12 +292,18 @@ final otherAccidentNotifierProvider =
           pickedTime.hour,
           pickedTime.minute,
         );
-        sendModel?.time = AppDateFormat.formatAccidentCardTime(_accidentRecordedAt);
+        sendModel?.time = AppDateFormat.formatAccidentCardTime(
+          _accidentRecordedAt,
+        );
       });
     }
   }
 
   void _openGoogleMapScreen() {
-    GoogleMapAddressScreen.open(context, lat: sendModel?.lat, lng: sendModel?.lng);
+    GoogleMapAddressScreen.open(
+      context,
+      lat: sendModel?.lat,
+      lng: sendModel?.lng,
+    );
   }
 }

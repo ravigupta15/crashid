@@ -2,9 +2,12 @@ import 'package:crashid/utils/extensions/extension_string.dart';
 import 'package:flutter/services.dart';
 
 class Validator {
-  
   static final regEmail = RegExp(r'[\x20-\x7E]');
-  
+
+  static final RegExp vehicleRegExp = RegExp(
+    r'^([A-Z]{1,3})\s*([A-Z]{1,2})\s*([1-9][0-9]{0,3})[EH]?$',
+  );
+
   static bool isEmail(String email) {
     const String pattern = r'^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
 
@@ -37,9 +40,7 @@ class Validator {
   }
 
   static removeLeadingWhiteSpace() {
-    return FilteringTextInputFormatter.deny(
-      RegExp(r'^\s+'),
-    );
+    return FilteringTextInputFormatter.deny(RegExp(r'^\s+'));
   }
 
   static emojiRestrict() {
@@ -130,9 +131,7 @@ class Validator {
     return null;
   }
 
-  static String? validatePassword(
-    String? val,
-  ) {
+  static String? validatePassword(String? val) {
     if (val.isNullOrEmpty) {
       return 'Required';
     } else if (!isPassword(val!)) {
@@ -142,7 +141,9 @@ class Validator {
   }
 
   static String? validateConfirmPassword(
-      String? val, String? previousPassword) {
+    String? val,
+    String? previousPassword,
+  ) {
     if (val.isNullOrEmpty) {
       return 'Required';
     } else if (!isPassword(val!)) {
