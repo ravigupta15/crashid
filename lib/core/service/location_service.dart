@@ -6,12 +6,18 @@ class AppLocationData {
   final double latitude;
   final double longitude;
   final String? city;
+  final String? street;
+  final String? houseNumber;
+  final String? postalCode;
 
   const AppLocationData({
     required this.fullAddress,
     required this.latitude,
     required this.longitude,
     this.city,
+    this.street,
+    this.houseNumber,
+    this.postalCode,
   });
 }
 
@@ -19,8 +25,51 @@ class AppLocationData {
 ///
 /// No UI is created here; call it from any screen/widget.
 class LocationService {
+  LocationService._();
+
+  static final LocationService instance = LocationService._();
+
+  static LocationService get shared => instance;
+
+  AppLocationData? _cachedLocation;
+  Future<AppLocationData>? _currentLocationFuture;
+
+  AppLocationData? get cachedLocation => _cachedLocation;
+
   /// Returns the current GPS position + reverse-geocoded full address.
-  static Future<AppLocationData> getCurrentLocationWithAddress() async {
+  ///
+  /// The first call fetches the value from the device. Subsequent calls
+  /// return the cached location so the address is only resolved once.
+  Future<AppLocationData> _getCurrentLocationWithAddress() async {
+    if (_cachedLocation != null) {
+      return _cachedLocation!;
+    }
+
+    if (_currentLocationFuture != null) {
+      return _currentLocationFuture!;
+    }
+
+    _currentLocationFuture = _loadCurrentLocation();
+    try {
+      return await _currentLocationFuture!;
+    } finally {
+      _currentLocationFuture = null;
+    }
+  }
+
+  static Future<AppLocationData> getCurrentLocationWithAddress() {
+    return instance._getCurrentLocationWithAddress();
+  }
+
+  static AppLocationData? getCurrentCachedLocation() {
+    return instance.cachedLocation;
+  }
+
+  static void clearCurrentLocationCache() {
+    instance._cachedLocation = null;
+  }
+
+  Future<AppLocationData> _loadCurrentLocation() async {
     final serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       throw Exception('Location services are disabled.');
@@ -47,14 +96,31 @@ class LocationService {
       position.longitude,
     );
 
-    final fullAddress = _formatPlacemark(placemarks);
 
-    return AppLocationData(
+    final fullAddress = _formatPlacemark(placemarks);
+    final placemark = placemarks.isNotEmpty ? placemarks.first : null;
+
+    final location = AppLocationData(
       fullAddress: fullAddress,
       latitude: position.latitude,
       longitude: position.longitude,
-      city: placemarks.isNotEmpty ? placemarks.first.locality : null,
+      city: placemark?.locality,
+      street: placemark?.thoroughfare ?? placemark?.street,
+      houseNumber: placemark?.subThoroughfare,
+      postalCode: placemark?.postalCode,
     );
+
+    print('LocationService: loaded location -> '
+      'fullAddress=${location.fullAddress}, '
+      'latitude=${location.latitude}, '
+      'longitude=${location.longitude}, '
+      'city=${location.city}, '
+      'street=${location.street}, '
+      'houseNumber=${location.houseNumber}, '
+      'postalCode=${location.postalCode}');
+
+    _cachedLocation = location;
+    return location;
   }
 
   /// Converts a full address text to lat/lng and also returns a cleaned address.
@@ -76,12 +142,16 @@ class LocationService {
       first.longitude,
     );
     final fullAddress = _formatPlacemark(placemarks);
+    final placemark = placemarks.isNotEmpty ? placemarks.first : null;
 
     return AppLocationData(
       fullAddress: fullAddress,
       latitude: first.latitude,
       longitude: first.longitude,
-      city: placemarks.isNotEmpty ? placemarks.first.locality : null,
+      city: placemark?.locality,
+      street: placemark?.thoroughfare ?? placemark?.street,
+      houseNumber: placemark?.subThoroughfare,
+      postalCode: placemark?.postalCode,
     );
   }
 

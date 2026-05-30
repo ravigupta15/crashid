@@ -45,6 +45,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> with AppValidation 
   void initState() {
     super.initState();
     sendModel = SignInSendModel();
+    
   }
   
 final signinNotifierProvider =
