@@ -161,6 +161,8 @@ class _GoogleMapAddressScreenState extends State<GoogleMapAddressScreen> {
                 Expanded(
                   child: TextFormField(
                     controller: _searchController,
+                    // cursorHeight: 30,
+                    style: TextStyle(fontSize: 16),
                     decoration: InputDecoration(
                       isDense: true,
                       hintText: "Enter Address",

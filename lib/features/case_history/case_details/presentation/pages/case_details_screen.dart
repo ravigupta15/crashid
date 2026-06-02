@@ -355,6 +355,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
           AppVideoPlayerWidget(
             videoUrl: videos.isNotEmpty ? videos[0] : null,
             height: 220,
+            showFullScreenButton: true,
           ),
         ],
       ),

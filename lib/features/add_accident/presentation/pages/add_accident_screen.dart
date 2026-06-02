@@ -282,6 +282,7 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
             child: AppVideoPlayerWidget(
               videoFile: sendModel?.uploadedVideo,
               height: 220,
+              showFullScreenButton: true,
             ),
           ),
 

@@ -13,6 +13,7 @@ class AppVideoPlayerWidget extends StatefulWidget {
     this.height = 220,
     this.borderRadius = 12,
     this.showScrubber = true,
+    this.showFullScreenButton = false,
   }) : assert(
           videoFile != null || videoUrl != null,
           'Provide either `videoFile` or `videoUrl`.',
@@ -27,6 +28,7 @@ class AppVideoPlayerWidget extends StatefulWidget {
   final double height;
   final double borderRadius;
   final bool showScrubber;
+  final bool showFullScreenButton;
 
   @override
   State<AppVideoPlayerWidget> createState() => _AppVideoPlayerWidgetState();
@@ -35,7 +37,16 @@ class AppVideoPlayerWidget extends StatefulWidget {
 class _AppVideoPlayerWidgetState extends State<AppVideoPlayerWidget> {
   VideoPlayerController? _controller;
   Future<void>? _initFuture;
-  bool _isPlaying = false;
+
+  BorderRadius _topRoundedBottomSquareBorderRadius() {
+    // Requirement: keep only top corners rounded, bottom corners square.
+    return BorderRadius.only(
+      topLeft: Radius.circular(widget.borderRadius),
+      topRight: Radius.circular(widget.borderRadius),
+      bottomLeft: Radius.zero,
+      bottomRight: Radius.zero,
+    );
+  }
 
   @override
   void initState() {
@@ -54,17 +65,9 @@ class _AppVideoPlayerWidgetState extends State<AppVideoPlayerWidget> {
 
     final initFuture = controller.initialize();
 
-    controller.addListener(() {
-      final playing = controller.value.isPlaying;
-      if (_isPlaying != playing && mounted) {
-        setState(() => _isPlaying = playing);
-      }
-    });
-
     setState(() {
       _controller = controller;
       _initFuture = initFuture;
-      _isPlaying = controller.value.isPlaying;
     });
 
     await initFuture;
@@ -133,82 +136,228 @@ class _AppVideoPlayerWidgetState extends State<AppVideoPlayerWidget> {
           );
         }
 
-        final aspectRatio =
-            controller.value.aspectRatio == 0 ? 16 / 9 : controller.value.aspectRatio;
+        final videoSize = controller.value.size;
+        // Prefer `size` over `aspectRatio` to better handle some videos with
+        // rotation metadata where `aspectRatio` can be misleading.
+        final aspectRatio = (videoSize.width > 0 && videoSize.height > 0)
+            ? (videoSize.width / videoSize.height)
+            : (controller.value.aspectRatio > 0
+                ? controller.value.aspectRatio
+                : 16 / 9);
 
         return ClipRRect(
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              SizedBox(
-                height: widget.height,
-                width: double.infinity,
-                child: AspectRatio(
-                  aspectRatio: aspectRatio,
-                  child: VideoPlayer(controller),
-                ),
-              ),
+          borderRadius: _topRoundedBottomSquareBorderRadius(),
+          child: AnimatedBuilder(
+            animation: controller,
+            builder: (context, _) {
+              final isPlaying = controller.value.isPlaying;
 
-              // Tap anywhere on the video to play/pause.
-              Positioned.fill(
-                child: GestureDetector(
-                  onTap: () {
-                    if (controller.value.isPlaying) {
-                      controller.pause();
-                    } else {
-                      controller.play();
-                    }
-                  },
-                  child: AnimatedOpacity(
-                    opacity: controller.value.isPlaying ? 0.0 : 1.0,
-                    duration: const Duration(milliseconds: 150),
-                    child: Container(
-                      color: Colors.black26,
-                      alignment: Alignment.center,
-                      child: Icon(
-                        controller.value.isPlaying
-                            ? Icons.pause_circle_filled
-                            : Icons.play_circle_filled,
-                        size: 64,
-                        color: Colors.white,
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  SizedBox(
+                    height: widget.height,
+                    width: double.infinity,
+                    child: AspectRatio(
+                      aspectRatio: aspectRatio,
+                      child: VideoPlayer(controller),
+                    ),
+                  ),
+
+                  // Tap anywhere on the video to play/pause.
+                  Positioned.fill(
+                    child: GestureDetector(
+                      onTap: () {
+                        if (controller.value.isPlaying) {
+                          controller.pause();
+                        } else {
+                          controller.play();
+                        }
+                      },
+                      child: AnimatedOpacity(
+                        opacity: isPlaying ? 0.0 : 1.0,
+                        duration: const Duration(milliseconds: 150),
+                        child: Container(
+                          color: Colors.black26,
+                          alignment: Alignment.center,
+                          child: Icon(
+                            isPlaying
+                                ? Icons.pause_circle_filled
+                                : Icons.play_circle_filled,
+                            size: 64,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
 
-              if (widget.showScrubber)
-                Positioned(
-                  left: 12,
-                  right: 12,
-                  bottom: 10,
-                  child: VideoProgressIndicator(
-                    controller,
-                    allowScrubbing: true,
-                  ),
-                ),
+                  if (widget.showScrubber)
+                    Positioned(
+                      left: 12,
+                      right: 12,
+                      bottom: 10,
+                      child: VideoProgressIndicator(
+                        controller,
+                        allowScrubbing: true,
+                      ),
+                    ),
 
-              Positioned(
-                right: 10,
-                top: 10,
-                child: IconButton(
-                  icon: Icon(
-                    controller.value.isPlaying
-                        ? Icons.pause_circle
-                        : Icons.play_circle,
-                    color: Colors.white,
+                  // Fullscreen option (optional).
+                  if (widget.showFullScreenButton)
+                    Positioned(
+                      left: 10,
+                      top: 10,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.fullscreen,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          _openFullScreen(
+                            context: context,
+                            controller: controller,
+                            aspectRatio: aspectRatio,
+                          );
+                        },
+                      ),
+                    ),
+
+                  Positioned(
+                    right: 10,
+                    top: 10,
+                    child: IconButton(
+                      icon: Icon(
+                        isPlaying ? Icons.pause_circle : Icons.play_circle,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        if (controller.value.isPlaying) {
+                          controller.pause();
+                        } else {
+                          controller.play();
+                        }
+                      },
+                    ),
                   ),
-                  onPressed: () {
-                    if (controller.value.isPlaying) {
-                      controller.pause();
-                    } else {
-                      controller.play();
-                    }
-                  },
-                ),
+                ],
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _openFullScreen({
+    required BuildContext context,
+    required VideoPlayerController controller,
+    required double aspectRatio,
+  }) async {
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      barrierColor: Colors.black54,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.zero,
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: _topRoundedBottomSquareBorderRadius(),
+          ),
+          child: SizedBox.expand(
+            child: ClipRRect(
+              borderRadius: _topRoundedBottomSquareBorderRadius(),
+              child: AnimatedBuilder(
+                animation: controller,
+                builder: (context, _) {
+                  final isPlaying = controller.value.isPlaying;
+                  return Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Center(
+                        child: AspectRatio(
+                          aspectRatio: aspectRatio,
+                          child: VideoPlayer(controller),
+                        ),
+                      ),
+
+                      // Tap anywhere to play/pause.
+                      Positioned.fill(
+                        child: GestureDetector(
+                          onTap: () {
+                            if (controller.value.isPlaying) {
+                              controller.pause();
+                            } else {
+                              controller.play();
+                            }
+                          },
+                          child: AnimatedOpacity(
+                            opacity: isPlaying ? 0.0 : 1.0,
+                            duration:
+                                const Duration(milliseconds: 150),
+                            child: Container(
+                              color: Colors.black26,
+                              alignment: Alignment.center,
+                              child: Icon(
+                                isPlaying
+                                    ? Icons.pause_circle_filled
+                                    : Icons.play_circle_filled,
+                                size: 74,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      if (widget.showScrubber)
+                        Positioned(
+                          left: 16,
+                          right: 16,
+                          bottom: 18,
+                          child: VideoProgressIndicator(
+                            controller,
+                            allowScrubbing: true,
+                          ),
+                        ),
+
+                      Positioned(
+                        left: 10,
+                        top: 10,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.fullscreen_exit,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                      ),
+
+                      Positioned(
+                        right: 10,
+                        top: 10,
+                        child: IconButton(
+                          icon: Icon(
+                            isPlaying
+                                ? Icons.pause_circle
+                                : Icons.play_circle,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            if (controller.value.isPlaying) {
+                              controller.pause();
+                            } else {
+                              controller.play();
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
-            ],
+            ),
           ),
         );
       },

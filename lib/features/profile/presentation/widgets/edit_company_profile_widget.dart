@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:crashid/core/service/date_picker_service.dart';
 import 'package:crashid/core/service/image_picker_service.dart';
+import 'package:crashid/core/service/location_service.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/core/widget/app_dropdown_item_widget.dart';
 import 'package:crashid/features/auth/registration/presentation/widgets/upload_card_widget.dart';
@@ -41,7 +42,17 @@ class _EditCompanyProfileWidgetState extends ConsumerState<EditCompanyProfileWid
   int selectedGenderIndex = 0;
 
   final _formKey = GlobalKey<FormState>();
-   TextEditingController _dobController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _businessAddressController = TextEditingController();
+  final TextEditingController _businessStreetController = TextEditingController();
+  final TextEditingController _businessHouseNumberController = TextEditingController();
+  final TextEditingController _businessPostalCodeController = TextEditingController();
+  final TextEditingController _businessCityController = TextEditingController();
+  final TextEditingController _billingAddressController = TextEditingController();
+  final TextEditingController _billingStreetController = TextEditingController();
+  final TextEditingController _billingHouseNumberController = TextEditingController();
+  final TextEditingController _billingPostalCodeController = TextEditingController();
+  final TextEditingController _billingCityController = TextEditingController();
   DateTime? _selectedDob;
 
 
@@ -85,12 +96,88 @@ ProfileSendModel? sendModel;
       jobTitle: model?.jobTitle
     );
 
-    _dobController = TextEditingController(text: 
-    (widget.profileData?.dateOfBirth ?? '').isNotEmpty
-     ? DatePickerService.formatForDisplay(DateTime.parse(widget.profileData?.dateOfBirth))
-     : '');
+    _dobController.text = (widget.profileData?.dateOfBirth ?? '').isNotEmpty
+        ? DatePickerService.formatForDisplay(DateTime.parse(widget.profileData?.dateOfBirth!))
+        : '';
     selectedGenderIndex = _initalGenderChanged(widget.profileData?.gender);
-     Future.microtask(() {
+
+    _businessAddressController.text = model?.businessAddress ?? '';
+    _businessStreetController.text = model?.businessStreet ?? '';
+    _businessHouseNumberController.text = model?.businessHouseNumber ?? '';
+    _businessPostalCodeController.text = model?.businessPostalCode ?? '';
+    _businessCityController.text = model?.businessCity ?? '';
+
+    _billingAddressController.text = model?.billingAddress ?? '';
+    _billingStreetController.text = model?.billingStreet ?? '';
+    _billingHouseNumberController.text = model?.billingHouseNumber ?? '';
+    _billingPostalCodeController.text = model?.billingPostalCode ?? '';
+    _billingCityController.text = model?.billingCity ?? '';
+
+    final shouldFetchLocation = [
+      model?.businessAddress,
+      model?.businessStreet,
+      model?.businessHouseNumber,
+      model?.businessPostalCode,
+      model?.businessCity,
+      model?.billingAddress,
+      model?.billingStreet,
+      model?.billingHouseNumber,
+      model?.billingPostalCode,
+      model?.billingCity,
+    ].any((value) => value == null || value.toString().isEmpty);
+
+    if (shouldFetchLocation) {
+      LocationService.getCurrentLocationWithAddress().then((location) {
+        if (!mounted) return;
+        setState(() {
+          if ((sendModel?.businessAddress ?? '').isEmpty) {
+            sendModel?.businessAddress = location.fullAddress;
+            _businessAddressController.text = location.fullAddress;
+          }
+          if ((sendModel?.businessStreet ?? '').isEmpty) {
+            sendModel?.businessStreet = location.street;
+            _businessStreetController.text = location.street ?? '';
+          }
+          if ((sendModel?.businessHouseNumber ?? '').isEmpty) {
+            sendModel?.businessHouseNumber = location.houseNumber;
+            _businessHouseNumberController.text = location.houseNumber ?? '';
+          }
+          if ((sendModel?.businessPostalCode ?? '').isEmpty) {
+            sendModel?.businessPostalCode = location.postalCode;
+            _businessPostalCodeController.text = location.postalCode ?? '';
+          }
+          if ((sendModel?.businessCity ?? '').isEmpty) {
+            sendModel?.businessCity = location.city;
+            _businessCityController.text = location.city ?? '';
+          }
+
+          if ((sendModel?.billingAddress ?? '').isEmpty) {
+            sendModel?.billingAddress = location.fullAddress;
+            _billingAddressController.text = location.fullAddress;
+          }
+          if ((sendModel?.billingStreet ?? '').isEmpty) {
+            sendModel?.billingStreet = location.street;
+            _billingStreetController.text = location.street ?? '';
+          }
+          if ((sendModel?.billingHouseNumber ?? '').isEmpty) {
+            sendModel?.billingHouseNumber = location.houseNumber;
+            _billingHouseNumberController.text = location.houseNumber ?? '';
+          }
+          if ((sendModel?.billingPostalCode ?? '').isEmpty) {
+            sendModel?.billingPostalCode = location.postalCode;
+            _billingPostalCodeController.text = location.postalCode ?? '';
+          }
+          if ((sendModel?.billingCity ?? '').isEmpty) {
+            sendModel?.billingCity = location.city;
+            _billingCityController.text = location.city ?? '';
+          }
+        });
+      }).catchError((error) {
+        print('EditCompanyProfileWidget: location fetch failed: $error');
+      });
+    }
+
+    Future.microtask(() {
       initCountry(
      phoneCode: (widget.profileData?.countryCode ?? '49').replaceAll('+', '')
    );
@@ -438,50 +525,47 @@ ProfileSendModel? sendModel;
              const SizedBox(height: 12),
                 AppTextFormField(
                   hintText: "Business Address",
-                  initialValue: sendModel?.businessAddress,
-                textInputAction: TextInputAction.next,
-                  inputFormatters: [
-                      Validator.emojiRestrict(),
-                      Validator.removeLeadingWhiteSpace(),
-                    ],
-                    validator: validateEmpty,
-                    onSaved: (val) => setState(() {
-                      sendModel?.businessAddress = val;
-                    }),
-                ),
-                const SizedBox(height: 24),
-                AppTextFormField(
-                  hintText: "Business Street",
-                  initialValue: sendModel?.businessStreet,
+                  controller: _businessAddressController,
                   textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
-                    onSaved: (val) => setState(() {
-                      sendModel?.businessStreet = val;
-                    }),
+                    onChanged: (val) => sendModel?.businessAddress = val,
+                    onSaved: (val) => sendModel?.businessAddress = val,
+                ),
+                const SizedBox(height: 24),
+                AppTextFormField(
+                  hintText: "Business Street",
+                  controller: _businessStreetController,
+                  textInputAction: TextInputAction.next,
+                  inputFormatters: [
+                      Validator.emojiRestrict(),
+                      Validator.removeLeadingWhiteSpace(),
+                    ],
+                    validator: validateEmpty,
+                    onChanged: (val) => sendModel?.businessStreet = val,
+                    onSaved: (val) => sendModel?.businessStreet = val,
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
                   hintText: "Business House Number",
-                  initialValue: sendModel?.businessHouseNumber,
+                  controller: _businessHouseNumberController,
                    textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
-                    onSaved: (val) => setState(() {
-                      sendModel?.businessHouseNumber = val;
-                    }),
+                    onChanged: (val) => sendModel?.businessHouseNumber = val,
+                    onSaved: (val) => sendModel?.businessHouseNumber = val,
                 
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
                   hintText: "Business Postal Code",
-                  initialValue: sendModel?.businessPostalCode,
+                  controller: _businessPostalCodeController,
                    textInputAction: TextInputAction.next,
                    textInputType: TextInputType.phone,
                    inputFormatters: [
@@ -489,95 +573,88 @@ ProfileSendModel? sendModel;
                       LengthLimitingTextInputFormatter(6)
                     ],
                     validator: validateEmpty,
-                    onSaved: (val) => setState(() {
-                      sendModel?.businessPostalCode = val;
-                    }),
+                    onChanged: (val) => sendModel?.businessPostalCode = val,
+                    onSaved: (val) => sendModel?.businessPostalCode = val,
                 
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
                   hintText: "Business City",
-                  initialValue: sendModel?.businessCity,
+                  controller: _businessCityController,
                   textInputAction: TextInputAction.done,
                   inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
-                    onSaved: (val) => setState(() {
-                      sendModel?.businessCity = val;
-                    }),
+                    onChanged: (val) => sendModel?.businessCity = val,
+                    onSaved: (val) => sendModel?.businessCity = val,
                 ),
              const SizedBox(height: 24),
              Text("Billing Address", style: Theme.of(context).textTheme.titleMedium,),
              const SizedBox(height: 12),
                 AppTextFormField(
                   hintText: "Billing Address",
-                  initialValue: sendModel?.billingAddress,
+                  controller: _billingAddressController,
                 textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
-                    onSaved: (val) => setState(() {
-                      sendModel?.billingAddress = val;
-                    }),
+                    onChanged: (val) => sendModel?.billingAddress = val,
+                    onSaved: (val) => sendModel?.billingAddress = val,
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
                   hintText: "Billing Street",
-                  initialValue: sendModel?.billingStreet,
+                  controller: _billingStreetController,
                   textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
-                    onSaved: (val) => setState(() {
-                      sendModel?.billingStreet = val;
-                    }),
+                    onChanged: (val) => sendModel?.billingStreet = val,
+                    onSaved: (val) => sendModel?.billingStreet = val,
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Billing House Number",                  initialValue: sendModel?.billingHouseNumber,                   textInputAction: TextInputAction.next,
+                  hintText: "Billing House Number",                  controller: _billingHouseNumberController,                   textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
-                    onSaved: (val) => setState(() {
-                      sendModel?.billingHouseNumber = val;
-                    }),
+                    onChanged: (val) => sendModel?.billingHouseNumber = val,
+                    onSaved: (val) => sendModel?.billingHouseNumber = val,
                 
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Billing Postal Code",                  initialValue: sendModel?.billingPostalCode,                   textInputAction: TextInputAction.next,
+                  hintText: "Billing Postal Code",                  controller: _billingPostalCodeController,                   textInputAction: TextInputAction.next,
                    textInputType: TextInputType.phone,
                    inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                       LengthLimitingTextInputFormatter(6)
                     ],
                     validator: validateEmpty,
-                    onSaved: (val) => setState(() {
-                      sendModel?.billingPostalCode = val;
-                    }),
+                    onChanged: (val) => sendModel?.billingPostalCode = val,
+                    onSaved: (val) => sendModel?.billingPostalCode = val,
                 
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
                   hintText: "Billing City",
-                  initialValue: sendModel?.billingCity,
+                  controller: _billingCityController,
                   textInputAction: TextInputAction.done,
                   inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
                     ],
                     validator: validateEmpty,
-                    onSaved: (val) => setState(() {
-                      sendModel?.billingCity = val;
-                    }),
+                    onChanged: (val) => sendModel?.billingCity = val,
+                    onSaved: (val) => sendModel?.billingCity = val,
                 ),
                const SizedBox(height: 50,),
                
