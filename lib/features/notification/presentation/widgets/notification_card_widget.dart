@@ -122,6 +122,7 @@ class NotificationCardWidget extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,20 +189,10 @@ class NotificationCardWidget extends StatelessWidget {
                 children: [
                   if (type.contains('emergency') ||
                       type.contains("sos_response")) ...[
-                    Text.rich(
-                      TextSpan(
-                        text: (model?.body ?? ''),
-                        style: context.titleMedium.copyWith(fontSize: 16),
-                        children: [
-                          // TextSpan(
-                          //   text: " is in an emergency",
-                          //   style: context.bodyMedium.copyWith(fontSize: 16),
-                          // ),
-                        ],
-                      ),
-                    ),
-
-                    type.contains("sos_response")
+                        Text(model?.body ?? '', 
+                        style: context.titleMedium.copyWith(fontSize: 16,),),
+                   
+                    type.contains("sos_response") || (model?.sos?.location ?? '').isEmpty
                         ? EmptyWidget()
                         : Padding(
                             padding: const EdgeInsets.only(top: 8),

@@ -75,41 +75,54 @@ Timer? _debounce;
         child: Column(
           children: [
             AppSearchWidget(searchClackedCallBack: _onSearchbar,
-             controller: searchController),
+             controller: searchController,
+             hintText: "Search my car",
+             ),
              const SizedBox(height: 10,),
              Expanded(
-              child: ListView.separated(
-                separatorBuilder: (context, sb) {
-                  return const SizedBox(height: 20,);
-                },
-              itemCount: model?.length ?? 0,
-              padding: EdgeInsets.only(top: 30),
-              shrinkWrap: true,
-              itemBuilder: (context, index){
-                var items = model?[index];
-                return InkWell(
-                  onTap: () => Navigator.pop(context, items),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(items?.plateNumber ?? '', 
-                      style: context.titleMedium.copyWith(
-                      ),),
-                      Divider(color: AppColors.lightGrayColor,)
-                    ],
-                  ),
-                );
-              //   TrustedFriendCardWidget(
-              //   name: items?.displayName ?? '', 
-              // email: items?.email ?? '',
-              //  plateNumber: items?.plateNumber ?? '',
-              //   badgeLabel: '',
-              //    initial: firstLetter(items?.displayName ?? ''),
-              //   isStatus: false,
-              //   img: items?.profileImageUrl ?? '',
-              //   onDetails: () => Navigator.pop(context, items),
-              //   ); 
-               }))
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Choose your car", style: context.labelMedium.copyWith(
+                      fontSize: 16,
+                    ),),
+                    ListView.separated(
+                      separatorBuilder: (context, sb) {
+                        return const SizedBox(height: 20,);
+                      },
+                    itemCount: model?.length ?? 0,
+                    padding: EdgeInsets.only(top: 30),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index){
+                      var items = model?[index];
+                      return InkWell(
+                        onTap: () => Navigator.pop(context, items),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(items?.plateNumber ?? '', 
+                            style: context.titleMedium.copyWith(
+                            ),),
+                            Divider(color: AppColors.lightGrayColor,)
+                          ],
+                        ),
+                      );
+                    //   TrustedFriendCardWidget(
+                    //   name: items?.displayName ?? '', 
+                    // email: items?.email ?? '',
+                    //  plateNumber: items?.plateNumber ?? '',
+                    //   badgeLabel: '',
+                    //    initial: firstLetter(items?.displayName ?? ''),
+                    //   isStatus: false,
+                    //   img: items?.profileImageUrl ?? '',
+                    //   onDetails: () => Navigator.pop(context, items),
+                    //   ); 
+                     }),
+                  ],
+                ),
+              ))
           ],
         ),
       ),

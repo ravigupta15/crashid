@@ -92,7 +92,7 @@ class _CaseHistoryScreenState extends ConsumerState<CaseHistoryScreen> {
                 return Column(
                   children: [
             CaseDetailCardWidget(
-              accidentMetaLine: 'Accident Date: ${AppDateFormat.formatMonthDateYear((model?.accidentDate ?? ''))} • ${model?.accidentTime}',
+              accidentMetaLine: 'Accident Date: ${AppDateFormat.formatMonthDateYear((model?.accidentDate ?? ''))} ${(model?.accidentTime ?? '').isNotEmpty ? "• ${model?.accidentTime ?? ''}" : ""}',
               caseIdLine: model?.caseNumber ?? '',
               address: model?.address ?? '',
               thumbnailAssets: model?.previewImages ?? [],

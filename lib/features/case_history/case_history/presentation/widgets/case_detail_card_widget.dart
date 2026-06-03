@@ -87,30 +87,32 @@ class CaseDetailCardWidget extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 34,
-                child: Icon(
-                  Icons.location_on_outlined,
-                  color: Color(0xff434654).withValues(alpha: .8),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  address,
-                  style: context.bodySmall.copyWith(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
+          if ((address).isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 34,
+                  child: Icon(
+                    Icons.location_on_outlined,
                     color: Color(0xff434654).withValues(alpha: .8),
                   ),
                 ),
-              ),
-            ],
-          ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    address,
+                    style: context.bodySmall.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff434654).withValues(alpha: .8),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
           const SizedBox(height: 9),
           _thumbnailRow(context),
           const SizedBox(height: 14),

@@ -63,6 +63,7 @@ final pageContentNotifier =
       ),
         child: HtmlTextWidget(  
           htmlContent: currentLng == 'en' ? model?.contentEn ?? '' : model?.contentDe ?? '',
+          normalizeWhitespace: true,
         ),
       
     ));
