@@ -7,6 +7,7 @@ import 'package:crashid/features/add_accident/provider/add_accident_state.dart';
 import 'package:crashid/features/my_cars/model/my_car_response_model.dart';
 import 'package:crashid/features/widgets/app_textfield/app_searchbar_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,6 +44,9 @@ Timer? _debounce;
 
 @override
   void initState() {
+    Future.microtask(() {
+      _callSearchApi('');
+    });
     super.initState();
   }
 
@@ -102,23 +106,18 @@ Timer? _debounce;
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(items?.plateNumber ?? '', 
-                            style: context.titleMedium.copyWith(
-                            ),),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                _plateNumberWidget(items?.plateNumber),
+                                _arrowWidget()
+                              ],
+                            ),
+                            index == (model?.length ?? 0) - 1 ? const SizedBox() :
                             Divider(color: AppColors.lightGrayColor,)
                           ],
                         ),
                       );
-                    //   TrustedFriendCardWidget(
-                    //   name: items?.displayName ?? '', 
-                    // email: items?.email ?? '',
-                    //  plateNumber: items?.plateNumber ?? '',
-                    //   badgeLabel: '',
-                    //    initial: firstLetter(items?.displayName ?? ''),
-                    //   isStatus: false,
-                    //   img: items?.profileImageUrl ?? '',
-                    //   onDetails: () => Navigator.pop(context, items),
-                    //   ); 
                      }),
                   ],
                 ),
@@ -126,6 +125,70 @@ Timer? _debounce;
           ],
         ),
       ),
+    );
+  }
+
+
+  Widget _plateNumberWidget(String? plateNumber) {
+    return Container(
+      height: 45,
+      padding: EdgeInsets.only(right: 10),
+      decoration: BoxDecoration(
+        color: AppColors.whiteColor,
+        border: Border.all(color: AppColors.blackColor),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 40,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8),
+                bottomLeft: Radius.circular(8),
+              ),
+            ),
+            padding: EdgeInsets.symmetric(vertical: 3),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(AppAssetPaths.roundStrokeIcon),
+                const SizedBox(height: 5),
+                Text(
+                  "D",
+                  style: context.bodyMedium.copyWith(
+                    fontSize: 10,
+                    color: AppColors.whiteColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+          Text(
+            plateNumber ?? '',
+            style: context.titleMedium.copyWith(
+              fontSize: 16,
+              fontWeight: FontWeight.w900,
+              color: AppColors.blackColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _arrowWidget() {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: AppColors.primaryColor.withValues(alpha: .6),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Icon(Icons.arrow_forward_ios, size: 20, color: AppColors.whiteColor,),
     );
   }
 

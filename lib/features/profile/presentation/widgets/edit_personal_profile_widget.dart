@@ -158,20 +158,20 @@ ProfileSendModel? sendModel;
                   ],
                 ),
                 const SizedBox(height: 24),
-                AppTextFormField(
-                  hintText: AppLocalizations.of(context)!.emailAddress,
-                  initialValue: widget.profileData?.email,
-                  textInputType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  inputFormatters: [
-                      FilteringTextInputFormatter.allow(Validator.regEmail),
-                  ],
-                  validator: validateEmail,
-                  onSaved: (val) => setState(() {
-                      sendModel?.email = val;
-                    }),
-                ),
-                const SizedBox(height: 24),
+                // AppTextFormField(
+                //   hintText: AppLocalizations.of(context)!.emailAddress,
+                //   initialValue: widget.profileData?.email,
+                //   textInputType: TextInputType.emailAddress,
+                //   textInputAction: TextInputAction.next,
+                //   inputFormatters: [
+                //       FilteringTextInputFormatter.allow(Validator.regEmail),
+                //   ],
+                //   validator: validateEmail,
+                //   onSaved: (val) => setState(() {
+                //       sendModel?.email = val;
+                //     }),
+                // ),
+                // const SizedBox(height: 24),
                 AppTextFormField(
                   initialValue: widget.profileData?.mobileNumber,
                   hintText: AppLocalizations.of(context)!.mobileNumber,

@@ -5,9 +5,11 @@ import 'package:crashid/features/page_content/provider/page_content_notifier.dar
 import 'package:crashid/features/page_content/provider/page_content_state.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'hide Provider;
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PageContentScreen extends ConsumerStatefulWidget {
 static const kSlug = "/kSlug";
@@ -53,6 +55,7 @@ final pageContentNotifier =
   Widget build(BuildContext context) {
     final refState = ref.watch(pageContentNotifier);
     var model = refState.value?.pageContentResponseModel?.data;
+    final cleanHtml = (model?.contentEn ?? '').replaceAll('&nbsp;', ' ');
     return Scaffold(
       appBar: CustomAppBar(
         title: currentLng == 'en' ? model?.titleEn : model?.titleDe,
@@ -61,10 +64,48 @@ final pageContentNotifier =
         padding: EdgeInsetsGeometry.only(
         left: 20, right: 20, top: 20, bottom: 40
       ),
-        child: HtmlTextWidget(  
-          htmlContent: currentLng == 'en' ? model?.contentEn ?? '' : model?.contentDe ?? '',
-          normalizeWhitespace: true,
+      child: Html(
+          data: cleanHtml,
+          style: {
+            "h1": Style(
+              fontSize: FontSize(24),
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            "h2": Style(
+              fontSize: FontSize(18),
+              fontWeight: FontWeight.w600,
+              margin: Margins.only(top: 12, bottom: 8),
+            ),
+            "p": Style(
+              fontSize: FontSize(14),
+              lineHeight: LineHeight.em(1.2),
+            ),
+          },
+          onLinkTap: (url, attributes, element) async {
+            if (url != null) {
+              final Uri uri = Uri.parse(url);
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri, mode: LaunchMode.externalApplication);
+              } else {
+                debugPrint('Could not launch $url');
+              }
+            }
+          },
+          onAnchorTap: (url, attributes, element) async {
+            if (url != null) {
+              final Uri uri = Uri.parse(url);
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri, mode: LaunchMode.externalApplication);
+              } else {
+                debugPrint('Could not launch $url');
+              }
+            }
+          },
         ),
+      // ),
+        // child: 
+        // ),
       
     ));
   }

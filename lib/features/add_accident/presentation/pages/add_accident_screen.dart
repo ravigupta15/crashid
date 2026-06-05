@@ -317,9 +317,10 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
     if (formKey.currentState!.validate()) {
       if ((sendModel?.uploadedPhotos ?? []).isEmpty) {
         return showFeedbackMessage("Please upload photos");
-      } else if (sendModel?.uploadedVideo == null) {
-        return showFeedbackMessage("Please upload the video");
-      }
+      } 
+      // else if (sendModel?.uploadedVideo == null) {
+      //   return showFeedbackMessage("Please upload the video");
+      // }
       formKey.currentState!.save();
       _addAccidentApi();
     }

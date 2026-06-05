@@ -96,22 +96,22 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
             children: [
               ProfileLabeledBlock(
                 label: 'Full name',
-                value: "${model?.contactFirstName} ${model?.contactLastName}",
+                value: "${model?.contactFirstName ?? 'NA'} ${model?.contactLastName ?? ''}",
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'Job title',
-                value: model?.jobTitle,
+                value: model?.jobTitle ?? 'NA',
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'Email address',
-                value: model?.contactEmail,
+                value: model?.contactEmail ?? 'NA',
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
                 label: 'Mobile number',
-                value: "${model?.contactCountryCode} ${model?.contactPhone}",
+                value: "${model?.contactCountryCode ?? 'NA'} ${model?.contactPhone ?? ''}",
               ),
               const SizedBox(height: 20),
               Row(
@@ -120,7 +120,7 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
                   Expanded(
                     child: ProfileLabeledBlock(
                       label: 'Date of birth',
-                      value: AppDateFormat.formatDob( model?.dateOfBirth ?? ''),
+                      value: model?.dateOfBirth != null ? AppDateFormat.formatDob(model?.dateOfBirth ?? '') : 'NA',
                     ),
                   ),
                   const SizedBox(width: 16),

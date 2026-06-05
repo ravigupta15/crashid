@@ -8,10 +8,11 @@ class MyCarRepository {
 
   MyCarRepository(this._apiService);
 
-  Future<Response?> myCar() async {
+  Future<Response?> myCar({String? searchQuery}) async {
     return _apiService.sendRequest(
       apiUrl: ApiUrls.vehicleUrl,
       method: ApiMethod.get,
+      queryParameters: searchQuery != null ? {'search': searchQuery} : null,
     );
   }
 

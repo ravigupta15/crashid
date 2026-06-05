@@ -134,7 +134,9 @@ class CustomDropDownFormFiledWidget extends StatelessWidget {
                   color: AppColors.darkGrayColor.withValues(alpha: .6),
                ),
                 ),
-          buttonStyleData: ButtonStyleData(padding: EdgeInsets.zero),
+          buttonStyleData: ButtonStyleData(padding: EdgeInsets.zero,
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
+          ),
           dropdownStyleData: DropdownStyleData(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),

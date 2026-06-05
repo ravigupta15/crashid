@@ -24,7 +24,7 @@ Future searchPlateNumber(String? queryString) async {
     LoaderService().showLoader();
     try {
       final repo = ref.read(myCarRepositoryProvider);
-      final response = await repo.myCar();
+      final response = await repo.myCar(searchQuery: queryString);
       if (response?.statusCode == 201 || response?.statusCode == 200) {
            state = AsyncData(
           state.value!.copyWith(myCarResponseModel: MyCarResponseModel.fromJson(response?.data)));

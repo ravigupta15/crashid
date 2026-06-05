@@ -237,20 +237,20 @@ ProfileSendModel? sendModel;
                     }),
               ),
               const SizedBox(height: 24),
-              AppTextFormField(
-                initialValue: sendModel?.email,
-                hintText: 'General Company Email',
-                inputFormatters: [
-                      Validator.emojiRestrict(),
-                      Validator.removeWhiteSpace(),
-                    ],
-                    textInputAction: TextInputAction.next,
-                    validator: validateEmail,
-                    onSaved: (val) => setState(() {
-                      sendModel?.email = val;
-                    }),
-              ),
-              const SizedBox(height: 24),
+                // AppTextFormField(
+                //   initialValue: sendModel?.email,
+                //   hintText: 'General Company Email',
+                //   inputFormatters: [
+                //         Validator.emojiRestrict(),
+                //         Validator.removeWhiteSpace(),
+                //       ],
+                //       textInputAction: TextInputAction.next,
+                //       validator: validateEmail,
+                //       onSaved: (val) => setState(() {
+                //         sendModel?.email = val;
+                //       }),
+                // ),
+                // const SizedBox(height: 24),
               AppTextFormField(
                 initialValue: sendModel?.mobileNumber,
                 hintText: 'Company Phone Number',
