@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/service/location_service.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
@@ -103,7 +104,7 @@ class _GoogleMapAddressScreenState extends State<GoogleMapAddressScreen> {
 
   Future<void> _onSearch(String address) async {
     if (address.trim().isEmpty) return;
-
+   print("Searching for address: $address");
     FocusScope.of(context).unfocus();
     String apiKey = AppConstant.googleMapKey;
     final uri = Uri.https(
@@ -113,7 +114,7 @@ class _GoogleMapAddressScreenState extends State<GoogleMapAddressScreen> {
     );
 
     final response = await http.get(uri);
-
+    log("Geocoding API response: ${response.statusCode} - ${response.body}");
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       if (data['status'] == 'OK' && (data['results'] as List).isNotEmpty) {

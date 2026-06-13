@@ -87,6 +87,14 @@ final signinNotifierProvider =
                 hintText: AppLocalizations.of(context)!.emailAddress,
                 textInputType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
+                suffixIcon: Container(
+                  width: 20,
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    AppAssetPaths.mailIcon,
+                    height: 20,width: 20,
+                  ),
+                ),
                 inputFormatters: [
                     FilteringTextInputFormatter.allow(Validator.regEmail),
                 ],
@@ -102,11 +110,11 @@ final signinNotifierProvider =
                     Validator.emojiRestrict(),
                     Validator.removeWhiteSpace(),
                   ],
-                prefixIcon: Image.asset(
-                  AppAssetPaths.lockIcon,
-                  height: 20,
-                  width: 16,
-                ),
+                // prefixIcon: Image.asset(
+                //   AppAssetPaths.lockIcon,
+                //   height: 20,
+                //   width: 16,
+                // ),
                 textInputAction: TextInputAction.done,
                 initialValue: sendModel?.password,
                 validator: validatePassword,
@@ -150,11 +158,17 @@ final signinNotifierProvider =
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _socialWidget(img: AppAssetPaths.googleIcon),
+                  _socialWidget(
+                    img: AppAssetPaths.googleIcon,
+                    onTap: _signInWithGoogle,
+                  ),
                   const SizedBox(width: 18),
                   _socialWidget(img: AppAssetPaths.appleIcon),
                   const SizedBox(width: 18),
-                  _socialWidget(img: AppAssetPaths.facebookIcon),
+                  _socialWidget(
+                    img: AppAssetPaths.facebookIcon,
+                    onTap: _signInWithFacebook,
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
@@ -271,6 +285,14 @@ final signinNotifierProvider =
 
   void _callSignApi() async{
     await ref.read(signinNotifierProvider.notifier).login(context, sendModel);
+  }
+
+  Future<void> _signInWithGoogle() async {
+    await ref.read(signinNotifierProvider.notifier).signInWithGoogle(context);
+  }
+
+  Future<void> _signInWithFacebook() async {
+    await ref.read(signinNotifierProvider.notifier).signInWithFacebook(context);
   }
 
 }

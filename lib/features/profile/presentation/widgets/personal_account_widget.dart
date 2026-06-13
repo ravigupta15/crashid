@@ -100,8 +100,8 @@ class PersonalAccountWidget extends StatelessWidget {
             ),
             const SizedBox(height: 16),
              ProfileDocumentPair(
-             frontImage:  AppCachedNetworkImage(imageUrl: profileData?.drivingLicenseFront, boxFit: BoxFit.cover,canOpenImage: true,),
-              backImage: AppCachedNetworkImage(imageUrl: profileData?.drivingLicenseBack, boxFit: BoxFit.cover,canOpenImage: true,),
+             frontImage:  AppCachedNetworkImage(imageUrl: profileData?.drivingLicenseFront ?? '', boxFit: BoxFit.cover,canOpenImage: true,),
+              backImage: AppCachedNetworkImage(imageUrl: profileData?.drivingLicenseBack ?? '', boxFit: BoxFit.cover,canOpenImage: true,),
             
             ),
             const SizedBox(height: 32),
@@ -111,8 +111,8 @@ class PersonalAccountWidget extends StatelessWidget {
             ),
             const SizedBox(height: 12),
              ProfileDocumentPair(
-              frontImage: AppCachedNetworkImage(imageUrl: profileData?.idDocumentFront, boxFit: BoxFit.cover,canOpenImage: true,),
-              backImage: AppCachedNetworkImage(imageUrl: profileData?.idDocumentBack, boxFit: BoxFit.cover,canOpenImage: true,),
+              frontImage: AppCachedNetworkImage(imageUrl: profileData?.idDocumentFront ?? '', boxFit: BoxFit.cover,canOpenImage: true,),
+              backImage: AppCachedNetworkImage(imageUrl: profileData?.idDocumentBack ?? '', boxFit: BoxFit.cover,canOpenImage: true,),
             ),
            
       ],

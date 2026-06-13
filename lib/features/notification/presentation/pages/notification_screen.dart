@@ -10,6 +10,7 @@ import 'package:crashid/features/notification/provider/notification_notifier.dar
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
+import 'package:crashid/utils/no_data_found/no_data_found.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -64,7 +65,8 @@ final casedetailsNotifierProvider =
   Widget _screenContent() {
     final refState = ref.watch(notificationProvider);
     var notificationModel = refState.value?.notificationResponseModel?.data;
-    return  ListView.separated(
+    return (notificationModel?.notifications ?? []).isNotEmpty ?
+    ListView.separated(
       separatorBuilder: (context, index) => const SizedBox(height: 15),
       itemCount: notificationModel?.notifications?.length ?? 0,
       shrinkWrap: true,
@@ -78,7 +80,7 @@ final casedetailsNotifierProvider =
             onTap: () => _openCaseDetailsScreen((model?.caseId ?? '').toString()),
             comingTap: () => _openComingDialogBox((model?.sosId ?? '').toString())
           );
-    });
+    }) : NoDataFound();
     }
 
   

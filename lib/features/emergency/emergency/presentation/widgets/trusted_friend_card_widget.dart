@@ -85,6 +85,7 @@ class TrustedFriendCardWidget extends StatelessWidget {
               color: Color(0xff121C28),
             ),
           ),
+          if (email.isNotEmpty) ...[
           const SizedBox(height: 3),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,6 +107,7 @@ class TrustedFriendCardWidget extends StatelessWidget {
               ),
             ],
           ),
+          ],
 
           const SizedBox(height: 25),
           Container(

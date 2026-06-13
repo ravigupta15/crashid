@@ -38,6 +38,7 @@ class UploadCardWidget extends StatelessWidget {
             onTap: onTap,
             child: Container(
               height: 92,
+              alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: AppColors.whiteColor,
                 borderRadius: BorderRadius.circular(40),
@@ -54,7 +55,9 @@ class UploadCardWidget extends StatelessWidget {
                       child: Image.file(hasFile!, height: 92, width: double.infinity,
                        fit: BoxFit.cover))
                     : imgUrl != null ?
-                    AppCachedNetworkImage(imageUrl: imgUrl ?? '', boxFit: BoxFit.cover,) :
+                    AppCachedNetworkImage(imageUrl: imgUrl ?? '', boxFit: BoxFit.cover,
+                    borderRadius: 30,width: double.infinity, height: 92,)
+                    :
                      Image.asset(
                         AppAssetPaths.uploadIcon,
                         height: 38,

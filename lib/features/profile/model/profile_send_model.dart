@@ -186,7 +186,26 @@ class ProfileSendModel {
       "postal_code": postalCode,
       "city": city,
       "language" : GetIt.I<UserManager>().language,
+      
     };
+     // Handle Files - Only add if they are not null
+    if (drivingLicenseFront != null) {
+      map["driving_license_front"] = await MultipartFile.fromFile(drivingLicenseFront!.path);
+    }
+    if (drivingLicenseBack != null) {
+      map["driving_license_back"] = await MultipartFile.fromFile(drivingLicenseBack!.path);
+    }
+    if (idDocumentFront != null) {
+      map["id_document_front"] = await MultipartFile.fromFile(idDocumentFront!.path);
+    }
+    if (idDocumentBack != null) {
+      map["id_document_back"] = await MultipartFile.fromFile(idDocumentBack!.path);
+    }
+
+    if (selectedInsurancePdf != null) {
+      map['legal_form_pdf'] = await MultipartFile.fromFile(selectedInsurancePdf!.path);
+    }
+
     return FormData.fromMap(map);
   }
 }

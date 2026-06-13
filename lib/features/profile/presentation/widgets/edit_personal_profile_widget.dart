@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:crashid/core/service/date_picker_service.dart';
+import 'package:crashid/core/service/image_picker_service.dart';
+import 'package:crashid/features/auth/registration/presentation/widgets/upload_card_widget.dart';
 import 'package:crashid/features/profile/model/profile_response_model.dart';
 import 'package:crashid/features/profile/model/profile_send_model.dart';
 import 'package:crashid/features/profile/provider/profile_notifier.dart';
@@ -8,11 +12,13 @@ import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widge
 import 'package:crashid/features/widgets/country_code_widget.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/utils/country_code_selector.dart';
+import 'package:crashid/utils/image_picker_bottom_sheet.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
 import 'package:crashid/utils/validators/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditPersonalProfileWidget extends ConsumerStatefulWidget {
   final ProfileModel? profileData;
@@ -263,6 +269,52 @@ ProfileSendModel? sendModel;
                       sendModel?.city = val;
                     }),
                 ),
+                const SizedBox(height: 24),
+                Row(
+                children: [
+                  UploadCardWidget(
+                    title:
+                    AppLocalizations.of(context)!.drivingLicenseFront,
+                    hasFile: sendModel?.drivingLicenseFront,
+                    imgUrl: widget.profileData?.drivingLicenseFront,
+                    onTap: () => _pickDocumentImage(
+                      onPicked: (file) => sendModel?.drivingLicenseFront = file,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  UploadCardWidget(
+                    title: AppLocalizations.of(context)!.drivingLicenseBack,
+                    hasFile: sendModel?.drivingLicenseBack,
+                    imgUrl: widget.profileData?.drivingLicenseBack,
+                    onTap: () => _pickDocumentImage(
+                      onPicked: (file) => sendModel?.drivingLicenseBack = file,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  UploadCardWidget(
+                    title: AppLocalizations.of(context)!.idDocumentFront,
+                    hasFile: sendModel?.idDocumentFront,
+                    imgUrl: widget.profileData?.idDocumentFront,
+                    onTap: () => _pickDocumentImage(
+                      onPicked: (file) => sendModel?.idDocumentFront = file,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  UploadCardWidget(
+                    title: AppLocalizations.of(context)!.idDocumentBack,
+                    hasFile: sendModel?.idDocumentBack,
+                    imgUrl: widget.profileData?.idDocumentBack,
+                    onTap: () => _pickDocumentImage(
+                      onPicked: (file) => sendModel?.idDocumentBack = file,
+                    ),
+                  ),
+                ],
+              ),
+              
                
         const SizedBox(height: 50,),
         AppElevatedButton.withTitle(title: "Save Changes", onPressed: _checkValidation,)
@@ -307,6 +359,21 @@ ProfileSendModel? sendModel;
     }
     return index;
   }
+
+  
+  Future<void> _pickDocumentImage({
+    required ValueChanged<File?> onPicked,
+  }) async {
+    final ImageSource? source = await showImageSourcePicker();
+    if (source == null) return;
+    final File? file = await ImagePickerService.imagePicker(source);
+    if (file == null) return;
+    setState(() {
+      onPicked(file);
+    });
+  }
+
+
 
 Future<void> _pickDob() async {
     final DateTime? pickedDate = await DatePickerService.pickDob(

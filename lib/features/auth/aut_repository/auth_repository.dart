@@ -5,6 +5,7 @@ import 'package:crashid/features/auth/otp/model/otp_send_model.dart';
 import 'package:crashid/features/auth/registration/model/registration_send_model.dart';
 import 'package:crashid/features/auth/reset_password/model/reset_password_send_model.dart';
 import 'package:crashid/features/auth/signin/model/sign_in_model.dart';
+import 'package:crashid/features/auth/signin/model/social_sign_in_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,6 +21,15 @@ class AuthRepository {
       data: model?.toMap(),
     );
   }
+
+  Future<Response?> socialLogin({SocialSignInSendModel? model}) {
+    return _apiService.sendRequest(
+      apiUrl: _resolveUrl(ApiUrls.socialLoginUrl),
+      method: ApiMethod.post,
+      data: model?.toMap(),
+    );
+  }
+
 
   Future<Response?> forgotPassword({ForgetPasswordSendModel? model}) {
     return _apiService.sendRequest(

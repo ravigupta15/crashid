@@ -814,6 +814,7 @@ bool _isLegalPdfValid() {
   
   return hasNewPdf || hasExistingUrl;
 }
+
   Future<void> _pickDocumentImage({
     required ValueChanged<File?> onPicked,
   }) async {

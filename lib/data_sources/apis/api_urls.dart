@@ -11,6 +11,7 @@ abstract class ApiUrls {
   static const personalRegistrationUrl = "${baseUrl}user/auth/register/personal";
   static const companyRegistrationUrl = "${baseUrl}user/auth/register/company";
   static const refreshTokenUrl = "${baseUrl}user/auth/refresh-token";
+  static const socialLoginUrl = "${baseUrl}user/auth/social-login";
 
   // 
   static const profileUrl = "${baseUrl}user/auth/profile";

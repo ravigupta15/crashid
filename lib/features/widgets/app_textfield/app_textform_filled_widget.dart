@@ -183,8 +183,8 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                       margin: const EdgeInsets.only(right: 20),
                       alignment: Alignment.centerRight,
                       child: Icon(
-                        obscure ? Icons.visibility_off : Icons.visibility,
-                        color: AppColors.primaryColor,
+                        obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                        color: AppColors.darkGrayColor.withValues(alpha: .6),
                       ),
                     ),
                   )
