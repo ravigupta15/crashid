@@ -2,27 +2,42 @@ import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/auth/registration/presentation/pages/company_registration_screen.dart';
 import 'package:crashid/features/auth/registration/presentation/pages/personal_registration_screen.dart';
+import 'package:crashid/features/auth/registration/provider/choose_account_notifier.dart';
+import 'package:crashid/features/auth/registration/provider/choose_account_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_radio_button/app_radio_button_with_checkIcon.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class ChooseAccountTypeScreen extends StatefulWidget {
-  static void open(BuildContext context) {
-    context.push(AppRoutesPath.chooseAccountTypeScreen);
+class ChooseAccountTypeScreen extends ConsumerStatefulWidget {
+  static const kShouldCallApi = "/kShouldCallApi";
+
+  final bool? shouldCallApi;
+  static void open(BuildContext context, {bool? shouldCallApi}) {
+    context.push(AppRoutesPath.chooseAccountTypeScreen,
+    extra: {
+      kShouldCallApi: shouldCallApi
+    }
+    );
   }
 
-  const ChooseAccountTypeScreen({super.key});
+  const ChooseAccountTypeScreen({super.key, this.shouldCallApi});
 
   @override
-  State<ChooseAccountTypeScreen> createState() => _ChooseAccountTypeScreenState();
+  ConsumerState<ChooseAccountTypeScreen> createState() => _ChooseAccountTypeScreenState();
 }
 
-class _ChooseAccountTypeScreenState extends State<ChooseAccountTypeScreen> {
+class _ChooseAccountTypeScreenState extends ConsumerState<ChooseAccountTypeScreen> {
   int selectedIndex = 0;
+
+final chooseProvider =
+      AsyncNotifierProvider<ChooseAccountNotifier, ChooseAccountState>(
+        ChooseAccountNotifier.new,
+      );
 
   void _onAccountTypeChanged(int index) {
     setState(() {
@@ -88,7 +103,8 @@ class _ChooseAccountTypeScreenState extends State<ChooseAccountTypeScreen> {
             const SizedBox(height: 100,),
             AppElevatedButton.withTitle(
               title: AppLocalizations.of(context)!.continueTitle,
-              onPressed: selectedIndex == 0 ? _openPersonalAccountScreen : _openCompanyAccountScreen,
+              onPressed: widget.shouldCallApi == true ? _callCompleteProfile :
+               selectedIndex == 0 ? _openPersonalAccountScreen : _openCompanyAccountScreen,
             ),
           ],
         ),
@@ -191,4 +207,11 @@ class _ChooseAccountTypeScreenState extends State<ChooseAccountTypeScreen> {
   void _openCompanyAccountScreen() {
     CompanyRegistrationScreen.open(context);
   }
+
+  void _callCompleteProfile() async {
+    await ref
+        .read(chooseProvider.notifier)
+        .completeProfile(context, accountType: selectedIndex == 0 ? "personal" : "company");
+  }
 }
+

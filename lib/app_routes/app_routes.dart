@@ -99,7 +99,12 @@ class AppRouter {
 
       GoRoute(
         path: AppRoutesPath.chooseAccountTypeScreen,
-        builder: (context, state) => const ChooseAccountTypeScreen(),
+        builder: (context, state) {
+          var argument = state.extra as Map<String, dynamic>?;
+          return ChooseAccountTypeScreen(
+            shouldCallApi: argument?[ChooseAccountTypeScreen.kShouldCallApi],
+          );
+        },
       ),
       GoRoute(
         path: AppRoutesPath.personalRegisterScreen,

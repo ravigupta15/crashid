@@ -1,14 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
-
 import 'package:crashid/app_routes/app_routes.dart';
 import 'package:crashid/data_sources/local_storage/secure_storage.dart';
+import 'package:crashid/data_sources/local_storage/user_manager.dart';
 import 'package:crashid/features/app_navigation/presentation/pages/app_navigation_screen.dart';
 import 'package:crashid/core/service/auth/facebook_auth_service.dart';
 import 'package:crashid/core/service/auth/google_auth_service.dart';
 import 'package:crashid/core/service/auth/social_auth_result.dart';
 import 'package:crashid/features/auth/aut_repository/auth_repository.dart';
+import 'package:crashid/features/auth/registration/presentation/pages/choose_account_type_screen.dart';
 import 'package:crashid/features/auth/signin/model/sign_in_model.dart';
 import 'package:crashid/features/auth/signin/model/signin_response_model.dart';
 import 'package:crashid/features/auth/signin/model/social_sign_in_model.dart';
@@ -32,11 +33,10 @@ class SigninNotifier extends AsyncNotifier<SigninState> {
       final repo = ref.read(authRepositoryProvider);
       final response = await repo.login(model: model);
 
-       if (response?.statusCode == 200) {
-          _saveTokensAndNavigate(response?.data);
-       }
-    } 
-     catch (_) {
+      if (response?.statusCode == 200) {
+        _saveTokensAndNavigate(response?.data, context, false);
+      }
+    } catch (_) {
       showFeedbackMessage(
         'Something went wrong. Please try again.',
         context: context,
@@ -77,7 +77,7 @@ class SigninNotifier extends AsyncNotifier<SigninState> {
 
       final response = await apiCall(SocialSignInSendModel.fromResult(result));
       if (response?.statusCode == 200) {
-        _saveTokensAndNavigate(response?.data);
+        _saveTokensAndNavigate(response?.data, context, true);
       }
     } catch (error) {
       print("Error occurred during social sign-in: $error");
@@ -92,14 +92,28 @@ class SigninNotifier extends AsyncNotifier<SigninState> {
     }
   }
 
-  void _saveTokensAndNavigate(dynamic data) {
+  void _saveTokensAndNavigate(dynamic data, BuildContext context, bool? social) {
     final model = SignInResponseModel.fromJson(data);
     GetIt.I<SecureStorage>().setUserToken(model.data?.accessToken ?? '');
     GetIt.I<SecureStorage>().setRefreshToken(model.data?.refreshToken ?? '');
-    _openAppNavigationScreen();
+    GetIt.I<UserManager>().setProfileComplete = model.data?.profileComplete == true;
+   if (social == true) {
+  if (model.data?.profileComplete == true) {
+      _openAppNavigationScreen();
+    } else {
+      _openChooseAccountTypeScreen(context);
+    }
+   } else {
+      _openAppNavigationScreen();
+   }
+  
   }
 
   void _openAppNavigationScreen() {
     AppNavigationScreen.open(AppRouter.mainNavigatorKey.currentContext!);
+  }
+
+  void _openChooseAccountTypeScreen(BuildContext context) {
+    ChooseAccountTypeScreen.open(context, shouldCallApi: true);
   }
 }

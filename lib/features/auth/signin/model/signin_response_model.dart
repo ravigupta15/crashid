@@ -25,18 +25,21 @@ class SignInResponseModel {
 class Data {
   String? accessToken;
   String? refreshToken;
+  bool? profileComplete;
 
-  Data({this.accessToken, this.refreshToken,});
+  Data({this.accessToken, this.refreshToken, this.profileComplete});
 
   Data.fromJson(Map<String, dynamic> json) {
     accessToken = json['access_token'];
     refreshToken = json['refresh_token'];
+    profileComplete = json['profile_complete'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data =  Map<String, dynamic>();
     data['access_token'] = accessToken;
     data['refresh_token'] = refreshToken;
+    data['profile_complete'] = profileComplete;
     return data;
   }
 }

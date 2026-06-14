@@ -4,6 +4,7 @@ enum SharePreferenceKeys {
   IS_FIRST_TIME,
   TOKEN,
   REFRESH_TOKEN,
+  PROFILE_COMPLETE,
   EMAIL,
   PASSWORD,
   IS_REMEMBER_ME,

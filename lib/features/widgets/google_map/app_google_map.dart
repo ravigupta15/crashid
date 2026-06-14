@@ -20,12 +20,13 @@ class GoogleMapAddressScreen extends StatefulWidget {
   final String? lng;
 
   
-  static Future<void> open(BuildContext context, {String? lat, String? lng}) {
-   return context.push(AppRoutesPath.googleMapScreen, extra: {
+  static Future<AppLocationData?> open(BuildContext context, {String? lat, String? lng}) {
+    return context.push(AppRoutesPath.googleMapScreen, extra: {
       kLat: lat,
-      kLng: lng
+      kLng: lng,
     });
   }
+
   const GoogleMapAddressScreen({super.key, this.lat, this.lng});
 
   @override
@@ -122,7 +123,26 @@ class _GoogleMapAddressScreenState extends State<GoogleMapAddressScreen> {
         final lat = result['geometry']['location']['lat'];
         final lng = result['geometry']['location']['lng'];
 
-        final latLng = LatLng(lat, lng);
+        final latLng = LatLng(lat.toDouble(), lng.toDouble());
+
+        // Use the Geocoding API formatted address as an immediate fallback
+        final formatted = result['formatted_address'] as String? ?? '';
+        setState(() {
+          _marker = Marker(
+            markerId: const MarkerId("draggable_marker"),
+            position: latLng,
+            draggable: true,
+            onDragEnd: _onMarkerDragged,
+            infoWindow: InfoWindow(title: formatted),
+          );
+          selectedAddressModel = AppLocationData(
+            fullAddress: formatted,
+            latitude: lat.toDouble(),
+            longitude: lng.toDouble(),
+          );
+        });
+
+        // Try to refine the address using reverse geocoding
         await _updateMarkerAndAddress(latLng);
         _mapController?.animateCamera(CameraUpdate.newLatLngZoom(latLng, 15));
       }
@@ -135,9 +155,11 @@ class _GoogleMapAddressScreenState extends State<GoogleMapAddressScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(selectedAddressModel?.fullAddress);
     return Scaffold(
       appBar: CustomAppBar(
         title: "Map",
+        isShowAction: false,
          actions: [
           if (_marker != null)
             Padding(

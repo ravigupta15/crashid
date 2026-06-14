@@ -4,6 +4,7 @@ import 'package:crashid/data_sources/local_storage/secure_storage.dart';
 import 'package:crashid/data_sources/local_storage/user_manager.dart';
 import 'package:crashid/di/service_locator.dart';
 import 'package:crashid/features/app_navigation/presentation/pages/app_navigation_screen.dart';
+import 'package:crashid/features/auth/registration/presentation/pages/choose_account_type_screen.dart';
 import 'package:crashid/features/auth/signin/presentation/pages/signin_screen.dart';
 import 'package:crashid/features/language/presentation/language_screen.dart';
 import 'package:crashid/res/app_asset_paths.dart';
@@ -33,7 +34,11 @@ class _SplashScreenState extends State<SplashScreen> {
       if (!getValue.isFirstTime) {
         _openLanguageScreen();
       } else if ((token ?? '').toString().isNotEmpty) {
-        _openAppNavigationScreen();
+        if (getValue.profileComplete) {
+          _openAppNavigationScreen();
+        } else {
+          _openChooseAccountTypeScreen();
+        }
       } else {
         _openSignInScreen();
       }
@@ -81,6 +86,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void _openAppNavigationScreen() {
     // AppNavigationScreen.open(context);
     context.go(AppRoutesPath.appNavigationScreen);
+  }
+
+  
+  void _openChooseAccountTypeScreen() {
+    context.go(AppRoutesPath.chooseAccountTypeScreen, extra: {
+      ChooseAccountTypeScreen.kShouldCallApi: true
+    });
   }
 
   void _openSignInScreen() {

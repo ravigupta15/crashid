@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 class RegistrationSendModel {
+  String? accountType;
   String? firstName;
   String? lastName;
   String? dob;
@@ -29,6 +30,7 @@ class RegistrationSendModel {
   String? confirmPassword;
 
   RegistrationSendModel({
+    this.accountType,
     this.firstName,
     this.lastName,
     this.dob,

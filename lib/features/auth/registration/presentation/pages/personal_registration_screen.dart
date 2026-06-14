@@ -5,7 +5,6 @@ import 'package:crashid/core/service/date_picker_service.dart';
 import 'package:crashid/core/service/image_picker_service.dart';
 import 'package:crashid/core/service/location_service.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
-import 'package:crashid/data_sources/apis/api_urls.dart';
 import 'package:crashid/features/auth/registration/model/registration_send_model.dart';
 import 'package:crashid/features/auth/registration/presentation/widgets/upload_card_widget.dart';
 import 'package:crashid/features/auth/registration/provider/registration_notifier.dart';

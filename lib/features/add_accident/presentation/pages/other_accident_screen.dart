@@ -299,11 +299,22 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
     }
   }
 
-  void _openGoogleMapScreen() {
+  Future<void> _openGoogleMapScreen() async {
     GoogleMapAddressScreen.open(
       context,
       lat: sendModel?.lat,
       lng: sendModel?.lng,
-    );
+    ).then((val) {
+        if (val == null) return;
+    setState(() {
+      _locationLoading = false;
+      _locationFailureMessage = null;
+      sendModel?.currentAddress = val.fullAddress;
+      sendModel?.lat = val.latitude.toString();
+      sendModel?.lng = val.longitude.toString();
+    });
+  
+    });
+   
   }
 }

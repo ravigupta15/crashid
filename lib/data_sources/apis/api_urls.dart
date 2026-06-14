@@ -13,6 +13,8 @@ abstract class ApiUrls {
   static const refreshTokenUrl = "${baseUrl}user/auth/refresh-token";
   static const socialLoginUrl = "${baseUrl}user/auth/social-login";
 
+  static const completeProfileUrl = "${baseUrl}user/auth/complete-profile";
+
   // 
   static const profileUrl = "${baseUrl}user/auth/profile";
   static const profileImageUrl = "${baseUrl}user/auth/profile/image";

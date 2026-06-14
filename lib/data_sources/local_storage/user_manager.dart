@@ -46,6 +46,11 @@ class UserManager {
   set setUserId(String value) =>
       _sharedPrefs.setString(SharePreferenceKeys.USER_ID.name, value);
 
+  bool get profileComplete =>
+      _sharedPrefs.getBool(SharePreferenceKeys.PROFILE_COMPLETE.name) ?? false;
+  set setProfileComplete(bool value) =>
+      _sharedPrefs.setBool(SharePreferenceKeys.PROFILE_COMPLETE.name, value);
+
   bool get carAdded =>
       _sharedPrefs.getBool(SharePreferenceKeys.Is_CAR_ADDED.name) ?? false;
   set setCarAdded(bool value) =>

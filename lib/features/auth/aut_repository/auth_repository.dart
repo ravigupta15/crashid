@@ -63,6 +63,17 @@ class AuthRepository {
     );
   }
   
+  Future<Response?> completeProfile({String? accountType}) async {
+    final response = await ApiService().sendRequest(
+      apiUrl: ApiUrls.completeProfileUrl,
+      method: ApiMethod.post,
+      data: FormData.fromMap({
+        'account_type':accountType
+      }),
+    );
+    return response;
+  }
+  
   Future<Response?> personalRegistration1({RegistrationSendModel? model}) async {
     if (model == null) throw Exception("Model is null");
     FormData formData = await model.toFormData();

@@ -11,7 +11,6 @@ import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/loader/loader_service.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
