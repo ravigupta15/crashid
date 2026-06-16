@@ -23,6 +23,7 @@ class AuthRepository {
   }
 
   Future<Response?> socialLogin({SocialSignInSendModel? model}) {
+    print("Social login model: ${model?.toMap()}");
     return _apiService.sendRequest(
       apiUrl: _resolveUrl(ApiUrls.socialLoginUrl),
       method: ApiMethod.post,

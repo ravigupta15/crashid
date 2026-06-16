@@ -38,7 +38,7 @@ class PersonalAccountWidget extends StatelessWidget {
                 children: [
                   ProfileLabeledBlock(
                     label: 'Full name',
-                    value: "${profileData?.firstName} ${profileData?.lastName}",
+                    value: "${profileData?.firstName ?? ''} ${profileData?.lastName ?? ''}",
                   ),
                   const SizedBox(height: 20),
                   Row(

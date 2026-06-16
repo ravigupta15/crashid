@@ -69,15 +69,21 @@ class SigninNotifier extends AsyncNotifier<SigninState> {
     required Future<SocialAuthResult?> Function() signIn,
     required Future<dynamic> Function(SocialSignInSendModel model) apiCall,
   }) async {
-    LoaderService().showLoader();
     try {
+      // Keep the loader hidden while the external OAuth UI is open so the
+      // redirect back into the app is not blocked.
       final result = await signIn();
       print("Social sign-in result: ${result?.provider}, ${result?.email}, ${result?.displayName}");
       if (result == null) return;
 
-      final response = await apiCall(SocialSignInSendModel.fromResult(result));
-      if (response?.statusCode == 200) {
-        _saveTokensAndNavigate(response?.data, context, true);
+      LoaderService().showLoader();
+      try {
+        final response = await apiCall(SocialSignInSendModel.fromResult(result));
+        if (response?.statusCode == 200) {
+          _saveTokensAndNavigate(response?.data, context, true);
+        }
+      } finally {
+        LoaderService().hideLoader();
       }
     } catch (error) {
       print("Error occurred during social sign-in: $error");
@@ -87,8 +93,6 @@ class SigninNotifier extends AsyncNotifier<SigninState> {
         feedbackStyle: FeedbackStyle.snackBar,
         snackBarBgColor: AppColors.redColor,
       );
-    } finally {
-      LoaderService().hideLoader();
     }
   }
 
@@ -104,6 +108,7 @@ class SigninNotifier extends AsyncNotifier<SigninState> {
       _openChooseAccountTypeScreen(context);
     }
    } else {
+    GetIt.I<UserManager>().setProfileComplete = true;
       _openAppNavigationScreen();
    }
   

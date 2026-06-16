@@ -4,6 +4,7 @@ import 'package:crashid/core/service/location_service.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/add_accident/model/other_accident_send_model.dart';
 import 'package:crashid/features/add_accident/presentation/widgets/accident_details_widget.dart';
+import 'package:crashid/features/add_accident/presentation/widgets/address_confirmation_widget.dart';
 import 'package:crashid/features/add_accident/presentation/widgets/payment_method_widget.dart';
 import 'package:crashid/features/add_accident/provider/other_accident_notifier.dart';
 import 'package:crashid/features/add_accident/provider/other_accident_state.dart';
@@ -12,6 +13,7 @@ import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widge
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/features/widgets/google_map/app_google_map.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/date_format/app_date_format.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
 import 'package:crashid/utils/validators/validator.dart';
@@ -52,6 +54,8 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
   OtherAccidentSendModel? sendModel;
 
   late DateTime _accidentRecordedAt;
+
+  bool _isAddressChanged = false;
 
   bool _locationLoading = true;
   String? _locationFailureMessage;
@@ -193,7 +197,11 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
   void _onSubmit() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     _formKey.currentState!.save();
+    if (!_isAddressChanged) {
+      _confirmationAddressDialogBox();
+    } else {
     _completeApi();
+    }
   }
 
   void _pricingApi() async {
@@ -307,6 +315,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
     ).then((val) {
         if (val == null) return;
     setState(() {
+      _isAddressChanged = true;
       _locationLoading = false;
       _locationFailureMessage = null;
       sendModel?.currentAddress = val.fullAddress;
@@ -316,5 +325,23 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
   
     });
    
+  }
+
+  void _confirmationAddressDialogBox() {
+    AppDialogBox().openBox(
+        maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
+      screenContent: AddressConfirmationWidget(
+        onClickCorrect: () {
+          _isAddressChanged = true;
+          Navigator.of(context).pop();
+          _completeApi();
+        },
+        onClickEdit: () {
+          Navigator.of(context).pop();
+          _openGoogleMapScreen();
+        },
+      ),
+    
+    );
   }
 }

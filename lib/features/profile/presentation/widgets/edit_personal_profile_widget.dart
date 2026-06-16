@@ -345,7 +345,7 @@ ProfileSendModel? sendModel;
     });
   }
 
-    int _initalGenderChanged(String gender) {
+    int _initalGenderChanged(String? gender) {
     int index;
     switch (gender) {
       case 'male':
