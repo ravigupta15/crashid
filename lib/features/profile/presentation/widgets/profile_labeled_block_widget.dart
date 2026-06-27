@@ -1,4 +1,5 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class ProfileLabeledBlock extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          value ?? 'NA',
+          value ?? AppLocalizations.of(context)!.notAvailable,
           style: context.bodyLarge.copyWith(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,

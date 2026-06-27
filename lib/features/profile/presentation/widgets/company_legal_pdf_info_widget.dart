@@ -1,4 +1,5 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class CompanyLegalPdfInfoWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Legal Form PDF',
+                  AppLocalizations.of(context)!.legalFormPdf,
                   style: context.bodyLarge.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -45,7 +46,7 @@ class CompanyLegalPdfInfoWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Last updated: Oct 2023',
+                  AppLocalizations.of(context)!.lastUpdated(date ?? ''),
                   style: context.bodySmall.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
@@ -64,7 +65,4 @@ class CompanyLegalPdfInfoWidget extends StatelessWidget {
       ),
          );
   }
-
-  
-
 }

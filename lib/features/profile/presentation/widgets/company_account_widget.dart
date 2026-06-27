@@ -6,12 +6,12 @@ import 'package:crashid/features/profile/presentation/widgets/profile_document_p
 import 'package:crashid/features/profile/presentation/widgets/profile_info_card_widget.dart';
 import 'package:crashid/features/profile/presentation/widgets/profile_labeled_block_widget.dart';
 import 'package:crashid/features/profile/presentation/widgets/profile_section_header_widget.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
 import 'package:crashid/utils/date_format/app_date_format.dart';
 import 'package:crashid/utils/empty/empty_widget.dart';
-import 'package:crashid/utils/linkers/launch_url.dart';
 import 'package:flutter/material.dart';
 
 class CompanyAccountWidget extends StatefulWidget {
@@ -26,16 +26,18 @@ class CompanyAccountWidget extends StatefulWidget {
 class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
   @override
   Widget build(BuildContext context) {
-    return _screenContent();
+    return _screenContent(context);
   }
 
-  Widget _screenContent() {
+  Widget _screenContent(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final na = l10n.notAvailable;
     var model = widget.profileData;
     return Column(
       children: [
         ProfileSectionHeader(
           icon: Image.asset(AppAssetPaths.sericeGridIcon),
-          title: 'Company Information',
+          title: l10n.profileCompanyInformation,
         ),
         const SizedBox(height: 12),
         ProfileInfoCard(
@@ -43,36 +45,36 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ProfileLabeledBlock(
-                label: 'Legal company name',
+                label: l10n.profileLegalCompanyName,
                 value: model?.legalCompanyName,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
-                label: 'Registered name',
+                label: l10n.profileRegisteredName,
                 value: model?.registeredCompanyName,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
-                label: 'VAT ID',
+                label: l10n.profileVatId,
                 value: model?.vatId,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
-                label: 'Comm. reg. number',
+                label: l10n.profileCommercialRegNumber,
                 value: model?.commercialRegistrationNumber,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
-                label: 'Company email',
+                label: l10n.profileCompanyEmail,
                 value: model?.generalEmail,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
-                label: 'Company phone number',
+                label: l10n.companyPhoneNumber,
                 value: "${model?.countryCode ?? ''} ${model?.companyPhone ?? ''}",
               ),
               const SizedBox(height: 20),
-              ProfileLabeledBlock(label: 'Industry', value: model?.industry),
+              ProfileLabeledBlock(label: l10n.profileIndustry, value: model?.industry),
               if (model?.legalFormPdf != null)...[ 
               const SizedBox(height: 20),
               CompanyLegalPdfInfoWidget(
@@ -87,7 +89,7 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
         const SizedBox(height: 32),
         ProfileSectionHeader(
           icon: Image.asset(AppAssetPaths.userDetailsIcon),
-          title: 'Primary Contact Person',
+          title: l10n.profilePrimaryContactPerson,
         ),
         const SizedBox(height: 12),
         ProfileInfoCard(
@@ -95,23 +97,23 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ProfileLabeledBlock(
-                label: 'Full name',
-                value: "${model?.contactFirstName ?? 'NA'} ${model?.contactLastName ?? ''}",
+                label: l10n.profileFullName,
+                value: "${model?.contactFirstName ?? na} ${model?.contactLastName ?? ''}",
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
-                label: 'Job title',
-                value: model?.jobTitle ?? 'NA',
+                label: l10n.profileJobTitle,
+                value: model?.jobTitle ?? na,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
-                label: 'Email address',
-                value: model?.contactEmail ?? 'NA',
+                label: l10n.emailAddress,
+                value: model?.contactEmail ?? na,
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
-                label: 'Mobile number',
-                value: "${model?.contactCountryCode ?? 'NA'} ${model?.contactPhone ?? ''}",
+                label: l10n.mobileNumber,
+                value: "${model?.contactCountryCode ?? na} ${model?.contactPhone ?? ''}",
               ),
               const SizedBox(height: 20),
               Row(
@@ -119,19 +121,19 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
                 children: [
                   Expanded(
                     child: ProfileLabeledBlock(
-                      label: 'Date of birth',
-                      value: model?.dateOfBirth != null ? AppDateFormat.formatDob(model?.dateOfBirth ?? '') : 'NA',
+                      label: l10n.dateOfBirth,
+                      value: model?.dateOfBirth != null ? AppDateFormat.formatDob(model?.dateOfBirth ?? '') : na,
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: ProfileLabeledBlock(label: 'Gender', value: model?.gender),
+                    child: ProfileLabeledBlock(label: l10n.profileGender, value: model?.gender),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
               ProfileLabeledBlock(
-                label: 'Website',
+                label: l10n.profileWebsite,
                 value: model?.websiteLink,
               ),
             ],
@@ -141,7 +143,7 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
           const SizedBox(height: 32),
              ProfileSectionHeader(
               icon: Image.asset(AppAssetPaths.divingLicenseIcon),
-              title: 'Driving License',
+              title: l10n.profileDrivingLicense,
             ),
             const SizedBox(height: 16),
              ProfileDocumentPair(
@@ -154,7 +156,7 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
             const SizedBox(height: 32),
              ProfileSectionHeader(
               icon: Image.asset(AppAssetPaths.divingLicenseIcon),
-              title: 'ID Document',
+              title: l10n.profileIdDocument,
             ),
             const SizedBox(height: 12),
              ProfileDocumentPair(
@@ -166,13 +168,13 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
             ProfileInfoCard(
               child: Column(
                 children: [
-                    const ProfileSectionHeader(
+                    ProfileSectionHeader(
               icon: Icon(
             Icons.location_on_outlined,
             size: 22,
             color: AppColors.primaryColor,
           ) ,
-              title: 'Business Address',
+              title: l10n.profileBusinessAddress,
             ),
           const SizedBox(height: 24,),
            model?.businessAddress != null ?
@@ -193,13 +195,13 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
             ProfileInfoCard(
               child: Column(
                 children: [
-                  const ProfileSectionHeader(
+                  ProfileSectionHeader(
               icon: Icon(
             Icons.account_balance_wallet_outlined,
             size: 22,
             color: AppColors.primaryColor,
           ) ,
-              title: 'Billing Address',
+              title: l10n.profileBillingAddress,
             ),
             const SizedBox(height: 24),
               model?.billingAddress != null ?
@@ -224,8 +226,6 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
 
   Widget _companyAddressTile(
     BuildContext context, {
-    // required String country,
-    // String? address,
     String? fullAddress
   }) {
     return Container(
@@ -241,26 +241,9 @@ class _CompanyAccountWidgetState extends State<CompanyAccountWidget> {
           Text(fullAddress ?? '', style: context.titleMedium.copyWith(
             fontSize: 14, fontWeight: FontWeight.w700
           ),),
-          // Text(fullAddress ?? '',
-          // style: context.labelMedium.copyWith(
-          //   color: Color(0xff7F7F7F),
-          //   fontSize: 14
-          // ),
-          // ),
           const SizedBox(height: 6),
-          // Text(
-          //   country,
-          //   style: context.bodyLarge.copyWith(
-          //     fontSize: 15,
-          //     fontWeight: FontWeight.w700,
-          //     color: AppColors.primaryColor,
-          //   ),
-          // ),
         ],
       ),
     );
   }
-
-
-
 }

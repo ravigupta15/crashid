@@ -1,3 +1,4 @@
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/empty/empty_widget.dart';
 import 'package:flutter/material.dart';
@@ -19,14 +20,14 @@ class ProfileDocumentPair extends StatelessWidget {
       children: [
         Expanded(
           child: _DocumentThumb(
-            label: 'FRONT',
+            label: AppLocalizations.of(context)!.documentFront.toUpperCase(),
             image: frontImage,
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: _DocumentThumb(
-            label: 'BACK',
+            label: AppLocalizations.of(context)!.documentBack.toUpperCase(),
             image: backImage,
           ),
         ),
@@ -52,13 +53,7 @@ class _DocumentThumb extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            // BoxShadow(
-            //   color: AppColors.blackColor.withValues(alpha: 0.12),
-            //   blurRadius: 6,
-            //   offset: const Offset(0, 4),
-            // ),
-          ],
+          boxShadow: const [],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),

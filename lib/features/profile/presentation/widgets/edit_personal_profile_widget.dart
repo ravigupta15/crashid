@@ -154,7 +154,7 @@ ProfileSendModel? sendModel;
                           AppRadioBtnWithOptionalTitle(
                             selectedIndex: selectedGenderIndex,
                             index: 2,
-                            title: "Divers",
+                            title: AppLocalizations.of(context)!.divers,
                             onChanged: _onGenderChanged,
                             isTitleFirst: true,
                           ),
@@ -317,7 +317,7 @@ ProfileSendModel? sendModel;
               
                
         const SizedBox(height: 50,),
-        AppElevatedButton.withTitle(title: "Save Changes", onPressed: _checkValidation,)
+        AppElevatedButton.withTitle(title: AppLocalizations.of(context)!.saveChanges, onPressed: _checkValidation,)
         ],
       ),
     );

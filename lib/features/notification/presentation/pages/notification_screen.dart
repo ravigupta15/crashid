@@ -8,6 +8,7 @@ import 'package:crashid/features/case_history/case_details/provider/case_details
 import 'package:crashid/features/notification/presentation/widgets/notification_card_widget.dart';
 import 'package:crashid/features/notification/provider/notification_notifier.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/no_data_found/no_data_found.dart';
@@ -50,7 +51,7 @@ final casedetailsNotifierProvider =
     return Scaffold(
       backgroundColor: AppColors.screenBackground,
       appBar: CustomAppBar(
-        title: 'Notifications',
+        title: AppLocalizations.of(context)!.notificationsTitle,
         isShowAction: false,
        
       ),
@@ -105,8 +106,8 @@ void _openCaseDetailsScreen(String? caseId) {
   void _openDialogBox(String? caseId, String? type) {
     AppDialogBox().openBox(
       maxWidthMinWidth: MediaQuery.sizeOf(context).width * .8,
-      title: "Reject Request",
-      subTitle: "Are you sure you want to reject this request?",
+      title: AppLocalizations.of(context)!.caseDetailsRejectRequestTitle,
+      subTitle: AppLocalizations.of(context)!.caseDetailsRejectRequestConfirmation,
       yesTap: () {
         Navigator.pop(context);
         if (type == "witness_request") {
@@ -144,8 +145,8 @@ void _openCaseDetailsScreen(String? caseId) {
  void _openComingDialogBox(String? sosId) {
     AppDialogBox().openBox(
       maxWidthMinWidth: MediaQuery.sizeOf(context).width * .8,
-      title: "Accept Request",
-      subTitle: "Are you sure you want to accept this request?",
+      title: AppLocalizations.of(context)!.acceptRequestTitle,
+      subTitle: AppLocalizations.of(context)!.acceptRequestConfirmation,
       yesTap: () {
         Navigator.pop(context);
         _sosRespond(sosId);

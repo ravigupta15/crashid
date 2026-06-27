@@ -7,6 +7,7 @@ import 'package:crashid/features/profile/presentation/widgets/personal_account_w
 import 'package:crashid/features/profile/presentation/widgets/profile_header_widget.dart';
 import 'package:crashid/features/profile/provider/profile_notifier.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,8 +46,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: (widget.isAppBarHide ?? false) ? null : const CustomAppBar(title:
-       "My Profile"),
+      appBar: (widget.isAppBarHide ?? false) ? null : CustomAppBar(title:
+       AppLocalizations.of(context)!.drawerMyProfile),
       body: _screenContent(),
     );
   }

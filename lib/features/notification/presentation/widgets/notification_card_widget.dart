@@ -1,6 +1,7 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/notification/model/notification_response_model.dart';
 import 'package:crashid/features/notification/presentation/widgets/notification_case_detail_row_widget.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
@@ -54,7 +55,7 @@ class NotificationCardWidget extends StatelessWidget {
                       color: AppColors.crimsonRedColor,
                       textColor: AppColors.whiteColor,
                       width: double.infinity,
-                      title: "I am Coming",
+                      title: AppLocalizations.of(context)!.sosIAmComing,
                       height: 48,
                       isBoxShadow: false,
                       onPressed: comingTap,
@@ -67,7 +68,7 @@ class NotificationCardWidget extends StatelessWidget {
                       children: [
                         Expanded(
                           child: AppElevatedButton.withTitle(
-                            title: "Accept",
+                            title: AppLocalizations.of(context)!.accept,
                             textColor: AppColors.whiteColor,
                             isBoxShadow: false,
                             height: 48,
@@ -77,7 +78,7 @@ class NotificationCardWidget extends StatelessWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: AppElevatedButton.withTitle(
-                            title: "Reject",
+                            title: AppLocalizations.of(context)!.reject,
                             color: AppColors.aliceBlueColor,
                             isBoxShadow: false,
                             height: 48,
@@ -230,7 +231,7 @@ class NotificationCardWidget extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    _caseInfoContainer(),
+                    _caseInfoContainer(context),
                     const SizedBox(height: 16),
                   ],
                 ],
@@ -265,7 +266,7 @@ class NotificationCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _caseInfoContainer() {
+  Widget _caseInfoContainer(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
       decoration: BoxDecoration(
@@ -275,18 +276,18 @@ class NotificationCardWidget extends StatelessWidget {
       child: Column(
         children: [
           NotificationCaseDetailRowWidget(
-            label: 'Case ID',
+            label: AppLocalizations.of(context)!.caseIdLabel,
             value: '#${model?.caseNumber ?? ''}',
           ),
           const SizedBox(height: 6),
           NotificationCaseDetailRowWidget(
-            label: 'Date/Time',
+            label: AppLocalizations.of(context)!.dateTime,
             value:
                 '${AppDateFormat.formatMonthDay(model?.accidentDate)}, ${AppDateFormat.formatTime(model?.accidentTime)}',
           ),
           const SizedBox(height: 6),
           NotificationCaseDetailRowWidget(
-            label: 'Location',
+            label: AppLocalizations.of(context)!.location,
             value: model?.location ?? '',
           ),
         ],

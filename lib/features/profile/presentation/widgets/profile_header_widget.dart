@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:crashid/core/service/image_picker_service.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/image_picker_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
               color: AppColors.primaryColor,
             ),
             label: Text(
-              'Edit',
+              AppLocalizations.of(context)!.edit,
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                     color: AppColors.primaryColor,
                     fontWeight: FontWeight.w600,

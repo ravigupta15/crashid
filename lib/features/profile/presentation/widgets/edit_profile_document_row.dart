@@ -1,6 +1,7 @@
 
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class EditProfileDocumentRow extends StatelessWidget {
               Expanded(
                 child: _thumbWithLabel(
                   context,
-                  label: 'Front',
+                  label: AppLocalizations.of(context)!.documentFront,
                   assetPath: frontAsset,
                 ),
               ),
@@ -37,7 +38,7 @@ class EditProfileDocumentRow extends StatelessWidget {
               Expanded(
                 child: _thumbWithLabel(
                   context,
-                  label: 'Back',
+                  label: AppLocalizations.of(context)!.documentBack,
                   assetPath: backAsset,
                 ),
               ),
@@ -47,7 +48,7 @@ class EditProfileDocumentRow extends StatelessWidget {
         const SizedBox(width: 12),
         AppElevatedButton.withTitle(
           onPressed: onUpdateDocs,
-          title: 'Update Docs',
+          title: AppLocalizations.of(context)!.profileUpdateDocs,
           height: 40,
           width: 104,
           isBoxShadow: false,

@@ -199,7 +199,7 @@ ProfileSendModel? sendModel;
         children: [
              AppTextFormField(
               initialValue: sendModel?.legalCompanyName,
-              hintText: 'Legal Company Name',
+              hintText: AppLocalizations.of(context)!.legalCompanyName,
                 inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
@@ -213,7 +213,7 @@ ProfileSendModel? sendModel;
               const SizedBox(height: 24),
               AppTextFormField(
                 initialValue: sendModel?.registerCompanyName,
-                hintText: 'Registered Company Name (Optional)',
+                hintText: AppLocalizations.of(context)!.registeredCompanyName,
                 inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
@@ -226,7 +226,7 @@ ProfileSendModel? sendModel;
               const SizedBox(height: 24),
               AppTextFormField(
                 initialValue: sendModel?.commercialRegNumber,
-                hintText: 'Commercial Registered Number',
+                hintText: AppLocalizations.of(context)!.commercialRegisteredNumber,
                 inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
@@ -253,7 +253,7 @@ ProfileSendModel? sendModel;
                 // const SizedBox(height: 24),
               AppTextFormField(
                 initialValue: sendModel?.mobileNumber,
-                hintText: 'Company Phone Number',
+                hintText: AppLocalizations.of(context)!.companyPhoneNumber,
                 prefixWidth: 63,
               prefixIcon: CountryCodeWidget(
                 onTap: countryPicker,
@@ -273,7 +273,7 @@ ProfileSendModel? sendModel;
               const SizedBox(height: 24),
               AppTextFormField(
                 initialValue: sendModel?.vitId,
-                hintText: 'VIT ID',
+                hintText: AppLocalizations.of(context)!.vitId,
                 inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
@@ -285,7 +285,7 @@ ProfileSendModel? sendModel;
                     }),),
               const SizedBox(height: 24),
               CustomDropDownFormFiledWidget(
-                hintText: "Industry Type",
+                hintText: AppLocalizations.of(context)!.industryType,
                 selectedValue: CustomDropDownItem(
                   value: sendModel?.industryType ?? '',
                   key: sendModel?.industryType ?? '',
@@ -298,7 +298,7 @@ ProfileSendModel? sendModel;
                 },
                 validator: (val) {
                   if (val == null ) {
-                    return 'Required';
+                    return AppLocalizations.of(context)!.required;
                   }
                   return null;
                 },
@@ -308,7 +308,7 @@ ProfileSendModel? sendModel;
               CompanyLegalPdfInfoWidget() :
               AppTextFormField(
                 isReadOnly: true,
-                hintText: "Legal Form PDF",
+                hintText: AppLocalizations.of(context)!.legalFormPdf,
                 suffixIcon: Padding(
                   padding: const EdgeInsets.only(right: 14),
                   child: Image.asset(
@@ -329,7 +329,7 @@ ProfileSendModel? sendModel;
               const SizedBox(height: 24),
                 AppTextFormField(
               initialValue:   sendModel?.contactFirstName,
-              hintText: 'Primary First Name',
+              hintText: AppLocalizations.of(context)!.primaryFirstName,
                 inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
@@ -344,7 +344,7 @@ ProfileSendModel? sendModel;
               const SizedBox(height: 24),
                 AppTextFormField(
               initialValue: sendModel?.contactLastName,
-              hintText: 'Primary Last Name',
+              hintText: AppLocalizations.of(context)!.primaryLastName,
                 inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
@@ -359,7 +359,7 @@ ProfileSendModel? sendModel;
               const SizedBox(height: 24),
                 AppTextFormField(
               initialValue: sendModel?.jobTitle,
-              hintText: 'Job Title',
+              hintText: AppLocalizations.of(context)!.profileJobTitle,
                 inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
@@ -373,7 +373,7 @@ ProfileSendModel? sendModel;
                const SizedBox(height: 24),
               AppTextFormField(
                 initialValue: sendModel?.contactEmail,
-                hintText: 'Contact Email',
+                hintText: AppLocalizations.of(context)!.profileContactEmail,
                 inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeWhiteSpace(),
@@ -477,7 +477,7 @@ ProfileSendModel? sendModel;
                         AppRadioBtnWithOptionalTitle(
                           selectedIndex: selectedGenderIndex,
                           index: 2,
-                          title: "Divers",
+                          title: AppLocalizations.of(context)!.divers,
                           onChanged: _onGenderChanged,
                           isTitleFirst: true,
                         ),
@@ -489,7 +489,7 @@ ProfileSendModel? sendModel;
               const SizedBox(height: 24,),
            AppTextFormField(
                 initialValue: sendModel?.contactPhone,
-                hintText: 'Primary Phone Number',
+                hintText: AppLocalizations.of(context)!.primaryPhoneNumber,
                 prefixWidth: 63,
               prefixIcon: CountryCodeWidget(
                 onTap: countryPicker,
@@ -509,7 +509,7 @@ ProfileSendModel? sendModel;
               const SizedBox(height: 24),
                 AppTextFormField(
               initialValue: sendModel?.websiteLink,
-              hintText: 'Website link',
+              hintText: AppLocalizations.of(context)!.profileWebsiteLink,
                 inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeWhiteSpace(),
@@ -521,10 +521,10 @@ ProfileSendModel? sendModel;
                     }),
               ),
              const SizedBox(height: 24),
-             Text("Business Address", style: Theme.of(context).textTheme.titleMedium,),
+             Text(AppLocalizations.of(context)!.profileBusinessAddress, style: Theme.of(context).textTheme.titleMedium,),
              const SizedBox(height: 12),
                 AppTextFormField(
-                  hintText: "Business Address",
+                  hintText: AppLocalizations.of(context)!.profileBusinessAddress,
                   controller: _businessAddressController,
                   textInputAction: TextInputAction.next,
                   inputFormatters: [
@@ -537,7 +537,7 @@ ProfileSendModel? sendModel;
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Business Street",
+                  hintText: AppLocalizations.of(context)!.profileBusinessStreet,
                   controller: _businessStreetController,
                   textInputAction: TextInputAction.next,
                   inputFormatters: [
@@ -550,7 +550,7 @@ ProfileSendModel? sendModel;
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Business House Number",
+                  hintText: AppLocalizations.of(context)!.profileBusinessHouseNumber,
                   controller: _businessHouseNumberController,
                    textInputAction: TextInputAction.next,
                   inputFormatters: [
@@ -564,7 +564,7 @@ ProfileSendModel? sendModel;
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Business Postal Code",
+                  hintText: AppLocalizations.of(context)!.profileBusinessPostalCode,
                   controller: _businessPostalCodeController,
                    textInputAction: TextInputAction.next,
                    textInputType: TextInputType.phone,
@@ -579,7 +579,7 @@ ProfileSendModel? sendModel;
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Business City",
+                  hintText: AppLocalizations.of(context)!.profileBusinessCity,
                   controller: _businessCityController,
                   textInputAction: TextInputAction.done,
                   inputFormatters: [
@@ -591,10 +591,10 @@ ProfileSendModel? sendModel;
                     onSaved: (val) => sendModel?.businessCity = val,
                 ),
              const SizedBox(height: 24),
-             Text("Billing Address", style: Theme.of(context).textTheme.titleMedium,),
+             Text(AppLocalizations.of(context)!.profileBillingAddress, style: Theme.of(context).textTheme.titleMedium,),
              const SizedBox(height: 12),
                 AppTextFormField(
-                  hintText: "Billing Address",
+                  hintText: AppLocalizations.of(context)!.profileBillingAddress,
                   controller: _billingAddressController,
                 textInputAction: TextInputAction.next,
                   inputFormatters: [
@@ -607,7 +607,7 @@ ProfileSendModel? sendModel;
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Billing Street",
+                  hintText: AppLocalizations.of(context)!.profileBillingStreet,
                   controller: _billingStreetController,
                   textInputAction: TextInputAction.next,
                   inputFormatters: [
@@ -620,7 +620,7 @@ ProfileSendModel? sendModel;
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Billing House Number",                  controller: _billingHouseNumberController,                   textInputAction: TextInputAction.next,
+                  hintText: AppLocalizations.of(context)!.profileBillingHouseNumber,                  controller: _billingHouseNumberController,                   textInputAction: TextInputAction.next,
                   inputFormatters: [
                       Validator.emojiRestrict(),
                       Validator.removeLeadingWhiteSpace(),
@@ -632,7 +632,7 @@ ProfileSendModel? sendModel;
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Billing Postal Code",                  controller: _billingPostalCodeController,                   textInputAction: TextInputAction.next,
+                  hintText: AppLocalizations.of(context)!.profileBillingPostalCode,                  controller: _billingPostalCodeController,                   textInputAction: TextInputAction.next,
                    textInputType: TextInputType.phone,
                    inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -645,7 +645,7 @@ ProfileSendModel? sendModel;
                 ),
                 const SizedBox(height: 24),
                 AppTextFormField(
-                  hintText: "Billing City",
+                  hintText: AppLocalizations.of(context)!.profileBillingCity,
                   controller: _billingCityController,
                   textInputAction: TextInputAction.done,
                   inputFormatters: [
@@ -660,7 +660,7 @@ ProfileSendModel? sendModel;
                
         Align(
           alignment: Alignment.center,
-          child: AppElevatedButton.withTitle(title: "Save Changes", onPressed: _checkValidation,))
+          child: AppElevatedButton.withTitle(title: AppLocalizations.of(context)!.saveChanges, onPressed: _checkValidation,))
         ],
       ),
     );
@@ -728,13 +728,13 @@ ProfileSendModel? sendModel;
     if (!_isAllDocumentSelected()) {
       showFeedbackMessage(  
         context: context,
-         'Please upload all required documents.',
+         AppLocalizations.of(context)!.pleaseUploadAllRequiredDocuments,
       );
       return;
     }  else if (!_isLegalPdfValid()) {
       showFeedbackMessage(  
         context: context,
-         'Please upload legal form PDF.',
+         AppLocalizations.of(context)!.pleaseUploadLegalFormPdf,
       );
       return;
     }
