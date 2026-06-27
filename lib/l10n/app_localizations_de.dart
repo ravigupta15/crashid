@@ -377,4 +377,226 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get unableToLoadLocation => 'Unable to load location.';
+
+  @override
+  String get searchMyCar => 'Search my car';
+
+  @override
+  String get chooseYourCar => 'Choose your car';
+
+  @override
+  String get paymentSuccessful => 'Payment successful!';
+
+  @override
+  String get paymentFailedTryAgain => 'Payment failed. Please try again.';
+
+  @override
+  String get payment => 'Payment';
+
+  @override
+  String get paymentWebViewError => 'Error';
+
+  @override
+  String get paymentHttpError => 'HTTP Error';
+
+  @override
+  String get isAddressCorrect => 'Is this address correct?';
+
+  @override
+  String get yesCorrect => 'Yes, Correct';
+
+  @override
+  String get editAddress => 'Edit Address';
+
+  @override
+  String get paymentMethod => 'Payment Method';
+
+  @override
+  String get serviceCharge => 'Service Charge';
+
+  @override
+  String get vat => 'VAT';
+
+  @override
+  String get totalAmount => 'Total Amount';
+
+  @override
+  String get creditCard => 'Credit Card';
+
+  @override
+  String get accidentDetails => 'Accident Details';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get time => 'Time';
+
+  @override
+  String get currentLocation => 'Current Location';
+
+  @override
+  String get pleaseUploadAtLeastOneCarImage =>
+      'Please upload at least one car image.';
+
+  @override
+  String get pleaseUploadInsurancePdf => 'Please upload insurance PDF.';
+
+  @override
+  String get pleaseSelectValidFromDateFirst =>
+      'Please select Valid From date first.';
+
+  @override
+  String get carImagesUploadLimitReached =>
+      'You can upload up to 5 car images.';
+
+  @override
+  String get carImagesExtraIgnored =>
+      'Only 5 images are allowed. Extra images were ignored.';
+
+  @override
+  String get dateRangeSeparator => '—';
+
+  @override
+  String get drawerMyProfile => 'My Profile';
+
+  @override
+  String get caseHistoryTitle => 'Case History';
+
+  @override
+  String get drawerEmergencySettings => 'Emergency Settings';
+
+  @override
+  String get drawerImprint => 'Imprint';
+
+  @override
+  String get drawerAgb => 'AGB';
+
+  @override
+  String get drawerDataSecurity => 'Data Security';
+
+  @override
+  String get drawerPrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get drawerLogOut => 'Log Out';
+
+  @override
+  String get logoutTitle => 'Logout';
+
+  @override
+  String get logoutConfirmationMessage => 'Are you sure you want to logout?';
+
+  @override
+  String get drawerWelcomeBack => 'Welcome Back';
+
+  @override
+  String get addCarToContinueTitle => 'Add Car to Continue';
+
+  @override
+  String get addCarToContinueDescription =>
+      ' It looks like you haven\'t added your car yet.\nPlease add your car details to continue\nreporting an accident.';
+
+  @override
+  String get caseHistoryCurrentCases => 'Current Cases';
+
+  @override
+  String get caseHistoryPastCases => 'Past Cases';
+
+  @override
+  String get active => 'Active';
+
+  @override
+  String get closed => 'Closed';
+
+  @override
+  String get caseHistoryClosureDateLabel => 'CLOSURE DATE';
+
+  @override
+  String get caseHistoryDownloadPdf => 'Download Case PDF';
+
+  @override
+  String get caseHistoryViewSummary => 'View Summary';
+
+  @override
+  String get caseDetailsSummaryTitle => 'Case Summary';
+
+  @override
+  String get accidentDate => 'Accident Date';
+
+  @override
+  String get caseId => 'Case Id';
+
+  @override
+  String get caseDetailsRetryPayment => 'Retry Payment';
+
+  @override
+  String get accept => 'Accept';
+
+  @override
+  String get reject => 'Reject';
+
+  @override
+  String get caseDetailsRejectedMessage => 'You have rejected this case';
+
+  @override
+  String get caseDetailsCloseAccidentCase => 'Close Accident Case';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
+  String get caseDetailsEvidenceImages => 'Evidence Images';
+
+  @override
+  String get caseDetailsEvidenceVideos => 'Evidence Videos';
+
+  @override
+  String get caseDetailsDescriptionTitle => 'Case Description';
+
+  @override
+  String get caseDetailsNoDescription => 'No description available.';
+
+  @override
+  String get caseDetailsPaymentStatus => 'PAYMENT STATUS';
+
+  @override
+  String get caseDetailsCloseCaseTitle => 'Close Case';
+
+  @override
+  String get caseDetailsCloseCaseConfirmation =>
+      'Are you sure you want to close this case?';
+
+  @override
+  String get caseDetailsRejectRequestTitle => 'Reject Request';
+
+  @override
+  String get caseDetailsRejectRequestConfirmation =>
+      'Are you sure you want to reject this request?';
+
+  @override
+  String get emergencyTitle => 'Emergency';
+
+  @override
+  String get emergencyAddNew => 'Add New';
+
+  @override
+  String get emergencyTrustedFriends => 'Trusted Friends';
+
+  @override
+  String get emergencyActiveBadge => 'Active';
+
+  @override
+  String get emergencySearchHint => 'alex@example.com';
+
+  @override
+  String get confirmTitle => 'Are you sure';
+
+  @override
+  String get emergencyAddConfirmationMessage =>
+      'Are you sure, you want to add?';
+
+  @override
+  String get emergencyContactAddedSuccess =>
+      'Emergency contact added\nsuccessfully';
 }

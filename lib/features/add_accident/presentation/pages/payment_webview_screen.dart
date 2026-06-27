@@ -1,4 +1,5 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -71,8 +72,8 @@ class _PaymentWebviewScreenState extends State<PaymentWebviewScreen> {
     final orderId = _extractOrderIdFromUri(uri);
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Payment successful!'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.paymentSuccessful),
           backgroundColor: Colors.green,
         ),
       );
@@ -89,8 +90,8 @@ class _PaymentWebviewScreenState extends State<PaymentWebviewScreen> {
     widget.onPaymentFailure?.call();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Payment failed. Please try again.'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.paymentFailedTryAgain),
           backgroundColor: Colors.red,
         ),
       );
@@ -110,7 +111,7 @@ class _PaymentWebviewScreenState extends State<PaymentWebviewScreen> {
       child: Scaffold(
             backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
-          title: const Text('Payment'),
+          title: Text(AppLocalizations.of(context)!.payment),
           centerTitle: true,
           elevation: 0,
           leading: IconButton(
@@ -199,7 +200,7 @@ class _PaymentWebviewScreenState extends State<PaymentWebviewScreen> {
                   _hideLoadingIndicator();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Error: ${error.description}'),
+                      content: Text("${AppLocalizations.of(context)!.paymentWebViewError}: ${error.description}"),
                       backgroundColor: Colors.red,
                     ),
                   );
@@ -210,7 +211,7 @@ class _PaymentWebviewScreenState extends State<PaymentWebviewScreen> {
                   _hideLoadingIndicator();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('HTTP Error: ${errorResponse.statusCode}'),
+                      content: Text("${AppLocalizations.of(context)!.paymentHttpError}: ${errorResponse.statusCode ?? 0}"),
                       backgroundColor: Colors.red,
                     ),
                   );

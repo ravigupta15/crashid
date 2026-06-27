@@ -84,9 +84,8 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: CustomAppBar(title: l10n.addAccident),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.addAccident),
       body: _screenContent(),
     );
   }
@@ -95,7 +94,6 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
   // -----------------------------------------------------------------------------
 
   Widget _screenContent() {
-    final l10n = AppLocalizations.of(context)!;
     final refState = ref.watch(otherAccidentNotifierProvider);
     var model = refState.value?.pricingResponseModel?.data;
 
@@ -107,7 +105,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n.otherDriver,
+              AppLocalizations.of(context)!.otherDriver,
               style: context.titleMedium.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
@@ -116,7 +114,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
 
             const SizedBox(height: 5),
             AppTextFormField(
-              hintText: l10n.vehiclePlateNumber,
+              hintText: AppLocalizations.of(context)!.vehiclePlateNumber,
               textCapitalization: TextCapitalization.characters,
               textInputType: TextInputType.text,
               textInputAction: TextInputAction.next,
@@ -137,7 +135,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
               child: Divider(color: AppColors.blackColor.withValues(alpha: .2)),
             ),
             Text(
-              l10n.witness,
+              AppLocalizations.of(context)!.witness,
               style: context.titleMedium.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
@@ -146,7 +144,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
 
             const SizedBox(height: 5),
             AppTextFormField(
-              hintText: l10n.vehiclePlateNumber,
+              hintText: AppLocalizations.of(context)!.vehiclePlateNumber,
               textCapitalization: TextCapitalization.characters,
               textInputType: TextInputType.text,
               textInputAction: TextInputAction.done,
@@ -187,7 +185,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
             const SizedBox(height: 33),
             Center(
               child: AppElevatedButton.withTitle(
-                title: l10n.addAccident,
+                title: AppLocalizations.of(context)!.addAccident,
                 onPressed: _onSubmit,
               ),
             ),
@@ -218,12 +216,11 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
   }
 
   String get _locationCardText {
-    final l10n = AppLocalizations.of(context)!;
-    if (_locationLoading) return l10n.gettingLocation;
+    if (_locationLoading) return AppLocalizations.of(context)!.gettingLocation;
     if (_locationFailureMessage != null) return _locationFailureMessage!;
     final addr = sendModel?.currentAddress?.trim();
     if (addr != null && addr.isNotEmpty) return addr;
-    return l10n.locationUnavailable;
+    return AppLocalizations.of(context)!.locationUnavailable;
   }
 
   Future<void> _loadAccidentLocation() async {
@@ -249,15 +246,14 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
   }
 
   String _messageForLocationFailure(BuildContext context, Object e) {
-    final l10n = AppLocalizations.of(context)!;
     final msg = e.toString().replaceFirst(RegExp(r'^Exception:\s*'), '');
     if (msg.contains('disabled')) {
-      return l10n.turnOnLocationServices;
+      return AppLocalizations.of(context)!.turnOnLocationServices;
     }
     if (msg.contains('denied')) {
-      return l10n.locationPermissionRequired;
+      return AppLocalizations.of(context)!.locationPermissionRequired;
     }
-    return l10n.unableToLoadLocation;
+    return AppLocalizations.of(context)!.unableToLoadLocation;
   }
 
   Future<void> _pickDate() async {

@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 
 class DrawerMenuConfig {
   const DrawerMenuConfig({
-    required this.title,
     required this.icon,
     this.routePath,
   });
 
-  final String title;
   final IconData icon;
   final String? routePath;
 }
@@ -17,25 +15,21 @@ class DrawerMenuHelper {
 
   static const List<DrawerMenuConfig> menuConfigs = [
     DrawerMenuConfig(
-      title: 'My Profile',
       icon: Icons.person,
     ),
     DrawerMenuConfig(
-      title: 'Case History',
       icon: Icons.description_outlined,
     ),
     DrawerMenuConfig(
-      title: 'Change Language',
       icon: Icons.translate_rounded,
     ),
     DrawerMenuConfig(
-      title: 'Emergency Settings',
       icon: Icons.add_alert_outlined,
     ),
-    DrawerMenuConfig(title: 'Imprint', icon: Icons.receipt_long_rounded,),
-    DrawerMenuConfig(title: 'AGB', icon: Icons.article_outlined),
-    DrawerMenuConfig(title: 'Data Security', icon: Icons.privacy_tip_outlined),
-    DrawerMenuConfig(title: 'Privacy Policy', icon: Icons.shield_outlined),
-    DrawerMenuConfig(title: 'Log Out', icon: Icons.logout_rounded),
+    DrawerMenuConfig(icon: Icons.receipt_long_rounded),
+    DrawerMenuConfig(icon: Icons.article_outlined),
+    DrawerMenuConfig(icon: Icons.privacy_tip_outlined),
+    DrawerMenuConfig(icon: Icons.shield_outlined),
+    DrawerMenuConfig(icon: Icons.logout_rounded),
   ];
 }

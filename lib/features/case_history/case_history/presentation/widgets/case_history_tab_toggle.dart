@@ -1,4 +1,5 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -13,10 +14,12 @@ class CaseHistoryTabToggle extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onChanged;
 
-  static const _labels = ['Current Cases', 'Past Cases'];
-
   @override
   Widget build(BuildContext context) {
+    final labels = [
+      AppLocalizations.of(context)!.caseHistoryCurrentCases,
+      AppLocalizations.of(context)!.caseHistoryPastCases,
+    ];
     return Container(
       height: 54,
       decoration: BoxDecoration(
@@ -25,7 +28,7 @@ class CaseHistoryTabToggle extends StatelessWidget {
         border: Border.all(color: AppColors.lightGrayColor),
       ),
       child: Row(
-        children: List.generate(_labels.length, (i) {
+        children: List.generate(labels.length, (i) {
           final selected = selectedIndex == i;
           return Expanded(
             child: InkWell(
@@ -40,7 +43,7 @@ class CaseHistoryTabToggle extends StatelessWidget {
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  _labels[i],
+                  labels[i],
                   textAlign: TextAlign.center,
                   style: context.titleSmall.copyWith(
                     fontSize: 14,

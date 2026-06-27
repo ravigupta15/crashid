@@ -1,4 +1,5 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
@@ -120,7 +121,7 @@ class TrustedFriendCardWidget extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  'PLATE NUMBER',
+                  AppLocalizations.of(context)!.plateNumber.toUpperCase(),
                   style: context.bodyMedium.copyWith(
                     fontSize: 12,
                     // fontWeight: FontWeight.w500,

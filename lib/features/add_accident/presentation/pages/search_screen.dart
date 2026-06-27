@@ -7,6 +7,7 @@ import 'package:crashid/features/add_accident/provider/add_accident_state.dart';
 import 'package:crashid/features/my_cars/model/my_car_response_model.dart';
 import 'package:crashid/features/widgets/app_textfield/app_searchbar_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +81,7 @@ Timer? _debounce;
           children: [
             AppSearchWidget(searchClackedCallBack: _onSearchbar,
              controller: searchController,
-             hintText: "Search my car",
+             hintText: AppLocalizations.of(context)!.searchMyCar,
              ),
              const SizedBox(height: 10,),
              Expanded(
@@ -89,7 +90,7 @@ Timer? _debounce;
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Choose your car", style: context.labelMedium.copyWith(
+                    Text(AppLocalizations.of(context)!.chooseYourCar, style: context.labelMedium.copyWith(
                       fontSize: 16,
                     ),),
                     ListView.separated(

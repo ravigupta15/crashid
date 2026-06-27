@@ -5,6 +5,7 @@ import 'package:crashid/features/emergency/emergency/presentation/widgets/truste
 import 'package:crashid/features/emergency/emergency/provider/emergency_notifier.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/no_data_found/no_data_found.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class _EmergencyScreenState extends ConsumerState<EmergencyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: (widget.isAppBarHide ?? false)? null : CustomAppBar(
-        title: 'Emergency',
+        title: AppLocalizations.of(context)!.emergencyTitle,
       ),
       body: _screenContent(),
     );
@@ -69,14 +70,14 @@ class _EmergencyScreenState extends ConsumerState<EmergencyScreen> {
               alignment: Alignment.centerRight,
               child: AppElevatedButton.withTitleAndIcon(
                           icon: Icon(Icons.add, color: AppColors.whiteColor,),
-                           title: "Add New", 
+                           title: AppLocalizations.of(context)!.emergencyAddNew, 
                            width: 120,
                            height: 48,
                            textColor: AppColors.whiteColor,
                            onPressed: _openAddEmergencyScreen,),
             ),
                           Text(
-                'Trusted Friends',
+                AppLocalizations.of(context)!.emergencyTrustedFriends,
                 style: context.titleMedium.copyWith(
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
@@ -97,7 +98,7 @@ class _EmergencyScreenState extends ConsumerState<EmergencyScreen> {
                   name: "${f?.firstName ?? ''} ${f?.lastName ?? ''}",
                   email: f?.friendEmail,
                   plateNumber: f?.plateNumber,
-                  badgeLabel: "Active",
+                  badgeLabel: AppLocalizations.of(context)!.emergencyActiveBadge,
                   initial: firstLetter(f?.firstName ?? ''),
                   onDetails: () {},
                 );

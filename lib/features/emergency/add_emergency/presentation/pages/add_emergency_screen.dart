@@ -9,6 +9,7 @@ import 'package:crashid/features/emergency/add_emergency/provider/add_emergency_
 import 'package:crashid/features/emergency/emergency/presentation/widgets/trusted_friend_card_widget.dart';
 import 'package:crashid/features/widgets/app_textfield/app_searchbar_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
@@ -55,7 +56,7 @@ bool isInitial = true;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Emergency",
+        title: AppLocalizations.of(context)!.emergencyTitle,
       ),
       body: _screenContent(),
     );
@@ -74,7 +75,7 @@ Widget _screenContent() {
     child: Column(
       children: [
         AppSearchWidget(
-          hintText: "alex@example.com",
+          hintText: AppLocalizations.of(context)!.emergencySearchHint,
           searchClackedCallBack: _onSearchbar, controller: searchController),
         Expanded(
           child: isInitial ? EmptyWidget() :
@@ -121,8 +122,8 @@ Widget _screenContent() {
   void _openDialogBox(UserModel? model) {
     AppDialogBox().openBox(
       maxWidthMinWidth: MediaQuery.of(context).size.width - 100,
-      title: "Are you sure",
-      subTitle: "Are you sure, you want to add?",
+      title: AppLocalizations.of(context)!.confirmTitle,
+      subTitle: AppLocalizations.of(context)!.emergencyAddConfirmationMessage,
       yesTap: () => _addEmergencyApi(model)
     );
   }

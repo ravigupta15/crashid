@@ -1,4 +1,5 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class AccidentDetailsWidget extends StatelessWidget {
       children: [
         if (isAccidentTitle ?? false) ...[
           Text(
-            "Accident Details",
+            AppLocalizations.of(context)!.accidentDetails,
             style: context.titleMedium.copyWith(
               fontSize: 14,
               fontWeight: FontWeight.w700,
@@ -51,7 +52,7 @@ class AccidentDetailsWidget extends StatelessWidget {
                 child: _accidentInfoCard(
                   context: context,
                   icon: AppAssetPaths.dateIcon,
-                  label: "Date",
+                  label: AppLocalizations.of(context)!.date,
                   value: dateValue,
                 ),
               ),
@@ -63,7 +64,7 @@ class AccidentDetailsWidget extends StatelessWidget {
                 child: _accidentInfoCard(
                   context: context,
                   icon: AppAssetPaths.clockIcon,
-                  label: "Time",
+                  label: AppLocalizations.of(context)!.time,
                   value: timeValue,
                 ),
               ),
@@ -75,7 +76,7 @@ class AccidentDetailsWidget extends StatelessWidget {
         _accidentInfoCard(
           context: context,
           icon: AppAssetPaths.locationIcon,
-          label: "Current Location",
+          label: AppLocalizations.of(context)!.currentLocation,
           value: locationValue,
           onTap: onLocationTap,
         ),

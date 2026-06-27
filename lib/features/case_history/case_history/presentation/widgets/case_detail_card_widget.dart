@@ -1,4 +1,5 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
@@ -156,7 +157,7 @@ class CaseDetailCardWidget extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'View Summary',
+                        AppLocalizations.of(context)!.caseHistoryViewSummary,
                         style: context.bodySmall.copyWith(
                           fontSize: 14,
                           color: AppColors.primaryColor,

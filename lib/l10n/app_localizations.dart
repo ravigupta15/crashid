@@ -793,6 +793,432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unable to load location.'**
   String get unableToLoadLocation;
+
+  /// No description provided for @searchMyCar.
+  ///
+  /// In en, this message translates to:
+  /// **'Search my car'**
+  String get searchMyCar;
+
+  /// No description provided for @chooseYourCar.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your car'**
+  String get chooseYourCar;
+
+  /// No description provided for @paymentSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment successful!'**
+  String get paymentSuccessful;
+
+  /// No description provided for @paymentFailedTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment failed. Please try again.'**
+  String get paymentFailedTryAgain;
+
+  /// No description provided for @payment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get payment;
+
+  /// No description provided for @paymentWebViewError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get paymentWebViewError;
+
+  /// No description provided for @paymentHttpError.
+  ///
+  /// In en, this message translates to:
+  /// **'HTTP Error'**
+  String get paymentHttpError;
+
+  /// No description provided for @isAddressCorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Is this address correct?'**
+  String get isAddressCorrect;
+
+  /// No description provided for @yesCorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, Correct'**
+  String get yesCorrect;
+
+  /// No description provided for @editAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Address'**
+  String get editAddress;
+
+  /// No description provided for @paymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get paymentMethod;
+
+  /// No description provided for @serviceCharge.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Charge'**
+  String get serviceCharge;
+
+  /// No description provided for @vat.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get vat;
+
+  /// No description provided for @totalAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Amount'**
+  String get totalAmount;
+
+  /// No description provided for @creditCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit Card'**
+  String get creditCard;
+
+  /// No description provided for @accidentDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Accident Details'**
+  String get accidentDetails;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @time.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get time;
+
+  /// No description provided for @currentLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Location'**
+  String get currentLocation;
+
+  /// No description provided for @pleaseUploadAtLeastOneCarImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload at least one car image.'**
+  String get pleaseUploadAtLeastOneCarImage;
+
+  /// No description provided for @pleaseUploadInsurancePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload insurance PDF.'**
+  String get pleaseUploadInsurancePdf;
+
+  /// No description provided for @pleaseSelectValidFromDateFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select Valid From date first.'**
+  String get pleaseSelectValidFromDateFirst;
+
+  /// No description provided for @carImagesUploadLimitReached.
+  ///
+  /// In en, this message translates to:
+  /// **'You can upload up to 5 car images.'**
+  String get carImagesUploadLimitReached;
+
+  /// No description provided for @carImagesExtraIgnored.
+  ///
+  /// In en, this message translates to:
+  /// **'Only 5 images are allowed. Extra images were ignored.'**
+  String get carImagesExtraIgnored;
+
+  /// No description provided for @dateRangeSeparator.
+  ///
+  /// In en, this message translates to:
+  /// **'—'**
+  String get dateRangeSeparator;
+
+  /// No description provided for @drawerMyProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get drawerMyProfile;
+
+  /// No description provided for @caseHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Case History'**
+  String get caseHistoryTitle;
+
+  /// No description provided for @drawerEmergencySettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Settings'**
+  String get drawerEmergencySettings;
+
+  /// No description provided for @drawerImprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Imprint'**
+  String get drawerImprint;
+
+  /// No description provided for @drawerAgb.
+  ///
+  /// In en, this message translates to:
+  /// **'AGB'**
+  String get drawerAgb;
+
+  /// No description provided for @drawerDataSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Security'**
+  String get drawerDataSecurity;
+
+  /// No description provided for @drawerPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get drawerPrivacyPolicy;
+
+  /// No description provided for @drawerLogOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get drawerLogOut;
+
+  /// No description provided for @logoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logoutTitle;
+
+  /// No description provided for @logoutConfirmationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to logout?'**
+  String get logoutConfirmationMessage;
+
+  /// No description provided for @drawerWelcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back'**
+  String get drawerWelcomeBack;
+
+  /// No description provided for @addCarToContinueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Car to Continue'**
+  String get addCarToContinueTitle;
+
+  /// No description provided for @addCarToContinueDescription.
+  ///
+  /// In en, this message translates to:
+  /// **' It looks like you haven\'t added your car yet.\nPlease add your car details to continue\nreporting an accident.'**
+  String get addCarToContinueDescription;
+
+  /// No description provided for @caseHistoryCurrentCases.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Cases'**
+  String get caseHistoryCurrentCases;
+
+  /// No description provided for @caseHistoryPastCases.
+  ///
+  /// In en, this message translates to:
+  /// **'Past Cases'**
+  String get caseHistoryPastCases;
+
+  /// No description provided for @active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get active;
+
+  /// No description provided for @closed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get closed;
+
+  /// No description provided for @caseHistoryClosureDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'CLOSURE DATE'**
+  String get caseHistoryClosureDateLabel;
+
+  /// No description provided for @caseHistoryDownloadPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Case PDF'**
+  String get caseHistoryDownloadPdf;
+
+  /// No description provided for @caseHistoryViewSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'View Summary'**
+  String get caseHistoryViewSummary;
+
+  /// No description provided for @caseDetailsSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Case Summary'**
+  String get caseDetailsSummaryTitle;
+
+  /// No description provided for @accidentDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Accident Date'**
+  String get accidentDate;
+
+  /// No description provided for @caseId.
+  ///
+  /// In en, this message translates to:
+  /// **'Case Id'**
+  String get caseId;
+
+  /// No description provided for @caseDetailsRetryPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry Payment'**
+  String get caseDetailsRetryPayment;
+
+  /// No description provided for @accept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get accept;
+
+  /// No description provided for @reject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get reject;
+
+  /// No description provided for @caseDetailsRejectedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You have rejected this case'**
+  String get caseDetailsRejectedMessage;
+
+  /// No description provided for @caseDetailsCloseAccidentCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Close Accident Case'**
+  String get caseDetailsCloseAccidentCase;
+
+  /// No description provided for @unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknown;
+
+  /// No description provided for @caseDetailsEvidenceImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Evidence Images'**
+  String get caseDetailsEvidenceImages;
+
+  /// No description provided for @caseDetailsEvidenceVideos.
+  ///
+  /// In en, this message translates to:
+  /// **'Evidence Videos'**
+  String get caseDetailsEvidenceVideos;
+
+  /// No description provided for @caseDetailsDescriptionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Case Description'**
+  String get caseDetailsDescriptionTitle;
+
+  /// No description provided for @caseDetailsNoDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'No description available.'**
+  String get caseDetailsNoDescription;
+
+  /// No description provided for @caseDetailsPaymentStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'PAYMENT STATUS'**
+  String get caseDetailsPaymentStatus;
+
+  /// No description provided for @caseDetailsCloseCaseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Close Case'**
+  String get caseDetailsCloseCaseTitle;
+
+  /// No description provided for @caseDetailsCloseCaseConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to close this case?'**
+  String get caseDetailsCloseCaseConfirmation;
+
+  /// No description provided for @caseDetailsRejectRequestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject Request'**
+  String get caseDetailsRejectRequestTitle;
+
+  /// No description provided for @caseDetailsRejectRequestConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to reject this request?'**
+  String get caseDetailsRejectRequestConfirmation;
+
+  /// No description provided for @emergencyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency'**
+  String get emergencyTitle;
+
+  /// No description provided for @emergencyAddNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New'**
+  String get emergencyAddNew;
+
+  /// No description provided for @emergencyTrustedFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'Trusted Friends'**
+  String get emergencyTrustedFriends;
+
+  /// No description provided for @emergencyActiveBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get emergencyActiveBadge;
+
+  /// No description provided for @emergencySearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'alex@example.com'**
+  String get emergencySearchHint;
+
+  /// No description provided for @confirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure'**
+  String get confirmTitle;
+
+  /// No description provided for @emergencyAddConfirmationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure, you want to add?'**
+  String get emergencyAddConfirmationMessage;
+
+  /// No description provided for @emergencyContactAddedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency contact added\nsuccessfully'**
+  String get emergencyContactAddedSuccess;
 }
 
 class _AppLocalizationsDelegate

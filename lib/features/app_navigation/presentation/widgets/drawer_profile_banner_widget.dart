@@ -1,4 +1,5 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class DrawerProfileBannerWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Welcome Back',
+                  AppLocalizations.of(context)!.drawerWelcomeBack,
                   style: context.titleMedium.copyWith(
                     color: AppColors.whiteColor,
                     fontWeight: FontWeight.w700,

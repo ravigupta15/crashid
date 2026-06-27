@@ -6,6 +6,7 @@ import 'package:crashid/features/case_history/case_history/presentation/widgets/
 import 'package:crashid/features/case_history/case_history/provider/case_history_notifier.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/date_format/app_date_format.dart';
@@ -53,7 +54,7 @@ class _CaseHistoryScreenState extends ConsumerState<CaseHistoryScreen> {
     return Scaffold(
       backgroundColor: AppColors.screenBackgroundCool,
       appBar:(widget.isAppBarHide ?? false)? null : CustomAppBar(
-        title: "Case History",
+        title: AppLocalizations.of(context)!.caseHistoryTitle,
        
       ),
       body:_screenContent(),
@@ -74,9 +75,10 @@ class _CaseHistoryScreenState extends ConsumerState<CaseHistoryScreen> {
             selectedIndex: _tabIndex,
             onChanged: _onChanged,
           ),
+          
           CaseHistorySectionHeader(
-            title: isCurrent ? 'Current Cases' : 'Past Cases',
-            badgeLabel: isCurrent ? '${caseModel?.length ?? 0} Active' : "${caseModel?.length ?? 0} Closed",
+            title: isCurrent ? AppLocalizations.of(context)!.caseHistoryCurrentCases : AppLocalizations.of(context)!.caseHistoryPastCases,
+            badgeLabel: isCurrent ? '${caseModel?.length ?? 0} ${AppLocalizations.of(context)!.active}' : "${caseModel?.length ?? 0} ${AppLocalizations.of(context)!.closed}",
           ),
           Expanded(
             child: (caseModel ?? []).isEmpty ?
@@ -91,13 +93,14 @@ class _CaseHistoryScreenState extends ConsumerState<CaseHistoryScreen> {
                 var model = caseModel?[index];
                 return Column(
                   children: [
+                    
             CaseDetailCardWidget(
-              accidentMetaLine: 'Accident Date: ${AppDateFormat.formatMonthDateYear((model?.accidentDate ?? ''))} ${(model?.accidentTime ?? '').isNotEmpty ? "• ${model?.accidentTime ?? ''}" : ""}',
+                   accidentMetaLine: '${AppLocalizations.of(context)!.accidentDate}: ${AppDateFormat.formatMonthDateYear((model?.accidentDate ?? ''))} ${(model?.accidentTime ?? '').isNotEmpty ? "• ${model?.accidentTime ?? ''}" : ""}',
               caseIdLine: model?.caseNumber ?? '',
               address: model?.address ?? '',
               thumbnailAssets: model?.previewImages ?? [],
               overflowCount: 2,
-              statusLabel: isCurrent ? model?.status : "CLOSURE DATE",
+              statusLabel: isCurrent ? model?.status : AppLocalizations.of(context)!.caseHistoryClosureDateLabel,
               clouserDate: isCurrent ? null : AppDateFormat.formatMonthDateYear((model?.closedAt ?? '')),
               onViewSummary: () => _openCaseDetailsScreen((model?.id ?? '').toString()),
             ),
@@ -105,7 +108,7 @@ class _CaseHistoryScreenState extends ConsumerState<CaseHistoryScreen> {
             AppElevatedButton.withTitleAndIcon(
               width: double.infinity,
               icon: Image.asset(AppAssetPaths.pdfIcon),
-             title: 'Download Case PDF', onPressed: (){
+             title: AppLocalizations.of(context)!.caseHistoryDownloadPdf, onPressed: (){
               LaunchURLUtils().launchStringURL( model?.pdfUrl ?? '');
              },),
               ],

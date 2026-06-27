@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
-import 'package:crashid/res/app_asset_paths.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 
 class AddressConfirmationWidget extends StatelessWidget {
@@ -35,7 +35,7 @@ Widget _screenContent(BuildContext context) {
           ],
         ),
           const SizedBox(height: 15,),
-          Text("Is this address correct?",
+          Text(AppLocalizations.of(context)!.isAddressCorrect,
           textAlign: TextAlign.center,
           style: context.labelMedium.copyWith(
             fontSize: 13, fontWeight: FontWeight.w700,
@@ -45,9 +45,9 @@ Widget _screenContent(BuildContext context) {
            const SizedBox(height: 41,),
            Row(
             children: [
-           Expanded(child: AppElevatedButton.withTitle(title: "Yes, Correct", onPressed: onClickCorrect,)),
+           Expanded(child: AppElevatedButton.withTitle(title: AppLocalizations.of(context)!.yesCorrect, onPressed: onClickCorrect,)),
            const SizedBox(width: 10,),
-           Expanded(child: AppElevatedButton.withTitle(title: "Edit Address", onPressed: onClickEdit,))
+           Expanded(child: AppElevatedButton.withTitle(title: AppLocalizations.of(context)!.editAddress, onPressed: onClickEdit,))
             ],
            )
       ],

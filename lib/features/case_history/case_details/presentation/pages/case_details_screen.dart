@@ -12,6 +12,7 @@ import 'package:crashid/features/case_history/case_details/provider/case_details
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_video_player/app_video_player_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
@@ -53,7 +54,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Case Summary"),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.caseDetailsSummaryTitle),
       body: _screenContent(),
     );
   }
@@ -70,7 +71,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Case Id: ${caseDetails?.caseNumber}',
+             '${AppLocalizations.of(context)!.caseId}: ${caseDetails?.caseNumber}',
             style: context.bodyMedium.copyWith(
               color: AppColors.blackColor,
               fontSize: 15,
@@ -137,7 +138,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
                 width: 20,
                 height: 20,
               ),
-              title: "Retry Payment",
+              title: AppLocalizations.of(context)!.caseDetailsRetryPayment,
               onPressed: () =>
                   _openOtherAccidentScreen(caseDetails?.id.toString()),
             ),
@@ -150,7 +151,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
                 children: [
                   Expanded(
                     child: AppElevatedButton.withTitle(
-                      title: "Accept",
+                      title: AppLocalizations.of(context)!.accept,
                       textColor: AppColors.whiteColor,
                       isBoxShadow: false,
                       height: 48,
@@ -161,7 +162,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: AppElevatedButton.withTitle(
-                      title: "Reject",
+                      title: AppLocalizations.of(context)!.reject,
                       color: AppColors.aliceBlueColor,
                       isBoxShadow: false,
                       height: 48,
@@ -187,7 +188,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    "You have rejected this case",
+                    AppLocalizations.of(context)!.caseDetailsRejectedMessage,
                     style: context.bodyMedium.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -205,7 +206,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
             AppElevatedButton.withTitleAndIcon(
               width: double.infinity,
               icon: Icon(Icons.check, color: AppColors.accentColor),
-              title: "Close Accident Case",
+              title: AppLocalizations.of(context)!.caseDetailsCloseAccidentCase,
               onPressed: () => _cofirmationDialog(caseDetails?.id.toString()),
             ),
         ],
@@ -225,7 +226,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
           Image.asset(AppAssetPaths.circlePersonIcon, width: 24, height: 24),
           const Spacer(),
           Text(
-            name ?? "Unknown",
+            name ?? AppLocalizations.of(context)!.unknown,
             style: context.bodyMedium.copyWith(
               fontSize: 14,
               fontWeight: FontWeight.w700,
@@ -303,7 +304,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Evidence Images",
+            AppLocalizations.of(context)!.caseDetailsEvidenceImages,
             style: context.bodyMedium.copyWith(
               fontSize: 15,
               fontWeight: FontWeight.w700,
@@ -344,7 +345,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Evidence Videos",
+            AppLocalizations.of(context)!.caseDetailsEvidenceVideos,
             style: context.bodyMedium.copyWith(
               fontSize: 15,
               fontWeight: FontWeight.w700,
@@ -374,7 +375,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Case Description',
+            AppLocalizations.of(context)!.caseDetailsDescriptionTitle,
             style: context.bodyMedium.copyWith(
               fontSize: 18,
               fontWeight: FontWeight.w700,
@@ -383,7 +384,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            description ?? "No description available.",
+            description ?? AppLocalizations.of(context)!.caseDetailsNoDescription,
             style: context.bodyMedium.copyWith(
               fontSize: 16,
               fontWeight: FontWeight.w400,
@@ -413,7 +414,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
           ),
           const SizedBox(width: 6),
           Text(
-            "PAYMENT STATUS: ${paymentStatus.toUpperCase()}",
+             "${AppLocalizations.of(context)!.caseDetailsPaymentStatus}: ${paymentStatus.toUpperCase()}",
             style: context.bodyMedium.copyWith(
               fontSize: 12,
               fontWeight: FontWeight.w700,
@@ -429,9 +430,9 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
 
   void _cofirmationDialog(String? caseId) {
     AppDialogBox().openBox(
-      title: "Close Case",
+      title: AppLocalizations.of(context)!.caseDetailsCloseCaseTitle,
       maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
-      subTitle: "Are you sure you want to close this case?",
+      subTitle: AppLocalizations.of(context)!.caseDetailsCloseCaseConfirmation,
       yesTap: () {
         Navigator.of(context).pop();
         _caseClosedApi(caseId);
@@ -560,9 +561,9 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
 
   void _rejectParticipantRequest(String? caseId, String? participantRole) {
     AppDialogBox().openBox(
-      title: "Reject Request",
+      title: AppLocalizations.of(context)!.caseDetailsRejectRequestTitle,
       maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
-      subTitle: "Are you sure you want to reject this request?",
+      subTitle: AppLocalizations.of(context)!.caseDetailsRejectRequestConfirmation,
       yesTap: () {
         Navigator.of(context).pop();
         if (participantRole == 'USER_B') {

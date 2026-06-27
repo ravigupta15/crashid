@@ -302,7 +302,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  '—',
+                  AppLocalizations.of(context)!.dateRangeSeparator,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -486,7 +486,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
   }
 
   String? _validateDropdown(CustomDropDownItem? value) {
-    if (value == null) return 'Required';
+    if (value == null) return AppLocalizations.of(context)!.required;
     return null;
   }
 
@@ -495,13 +495,13 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
     if (!_formKey.currentState!.validate()) return;
     if (sendModel?.selectedCarImages.isEmpty == true) {
       showFeedbackMessage(
-        'Please upload at least one car image.',
+        AppLocalizations.of(context)!.pleaseUploadAtLeastOneCarImage,
         context: context,
       );
       return;
     }
     if (sendModel?.selectedInsurancePdf == null) {
-      showFeedbackMessage('Please upload insurance PDF.', context: context);
+      showFeedbackMessage(AppLocalizations.of(context)!.pleaseUploadInsurancePdf, context: context);
       return;
     }
     _formKey.currentState!.save();
@@ -556,7 +556,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
     final startDate = _parseCurrentText(_insuranceStartDateController.text);
     if (startDate == null) {
       showFeedbackMessage(
-        'Please select Valid From date first.',
+        AppLocalizations.of(context)!.pleaseSelectValidFromDateFirst,
         context: context,
       );
       return;
@@ -585,7 +585,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
   Future<void> _pickCarImages() async {
     if ((sendModel?.selectedCarImages ?? []).length >= 5) {
       showFeedbackMessage(
-        'You can upload up to 5 car images.',
+        AppLocalizations.of(context)!.carImagesUploadLimitReached,
         context: context,
       );
       return;
@@ -600,7 +600,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
     });
     if (files.length > availableSlots && context.mounted) {
       showFeedbackMessage(
-        'Only 5 images are allowed. Extra images were ignored.',
+        AppLocalizations.of(context)!.carImagesExtraIgnored,
         context: context,
       );
     }

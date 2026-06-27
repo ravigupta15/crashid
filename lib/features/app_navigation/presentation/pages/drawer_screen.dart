@@ -8,6 +8,7 @@ import 'package:crashid/features/language/presentation/language_screen.dart';
 import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
 import 'package:crashid/features/profile/provider/profile_notifier.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/logout/app_logout.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +25,21 @@ class _DrawerScreenState extends ConsumerState<DrawerScreen> {
   int _selectedIndex = -1;
 
   List<DrawerMenuItemData> get _menuItems {
+    final titles = [
+      AppLocalizations.of(context)!.drawerMyProfile,
+      AppLocalizations.of(context)!.caseHistoryTitle,
+      AppLocalizations.of(context)!.changeLanguage,
+      AppLocalizations.of(context)!.drawerEmergencySettings,
+      AppLocalizations.of(context)!.drawerImprint,
+      AppLocalizations.of(context)!.drawerAgb,
+      AppLocalizations.of(context)!.drawerDataSecurity,
+      AppLocalizations.of(context)!.drawerPrivacyPolicy,
+      AppLocalizations.of(context)!.drawerLogOut,
+    ];
     return List.generate(DrawerMenuHelper.menuConfigs.length, (index) {
       final config = DrawerMenuHelper.menuConfigs[index];
       return DrawerMenuItemData(
-        title: config.title,
+        title: titles[index],
         icon: config.icon,
         isActive: _selectedIndex == index,
       );
@@ -143,8 +155,8 @@ String _buildInitials(String fullName) {
 void _logoutDialog() {
   AppDialogBox().openBox(
     maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
-    title: 'Logout',
-    subTitle: "Are you sure you want to logout?",
+    title: AppLocalizations.of(context)!.logoutTitle,
+    subTitle: AppLocalizations.of(context)!.logoutConfirmationMessage,
     
     yesTap: () => AppLogoutHelper.logout(),
   );

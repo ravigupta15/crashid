@@ -8,6 +8,7 @@ import 'package:crashid/features/emergency/repository/emergency_repository.dart'
 import 'package:crashid/features/lookup/repository/lookup_repository.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/loader/loader_service.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,7 @@ class AddEmergencyNotifier extends AsyncNotifier<AddEmergencyState> {
               const SizedBox(height: 20,),
               Image.asset(AppAssetPaths.successIcon),
               const SizedBox(height: 10,),
-              Text("Emergency contact added\nsuccessfully",
+              Text(AppLocalizations.of(context)!.emergencyContactAddedSuccess,
               textAlign: TextAlign.center,
               style: context.titleMedium.copyWith(
                 fontSize: 14, color: AppColors.darkGrayColor,

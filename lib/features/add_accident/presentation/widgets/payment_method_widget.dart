@@ -1,5 +1,6 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/add_accident/model/pricing_response_model.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class PaymentMethodWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Payment Method',
+          AppLocalizations.of(context)!.paymentMethod,
           style: context.titleMedium.copyWith(
             fontSize: 14,
             fontWeight: FontWeight.w700,
@@ -31,19 +32,19 @@ class PaymentMethodWidget extends StatelessWidget {
         const SizedBox(height: 20),
         _priceSummaryRow(
           context,
-          label: 'Service Charge',
+          label: AppLocalizations.of(context)!.serviceCharge,
           value: "€ ${model?.serviceCharge}",
         ),
         const SizedBox(height: 12),
         _priceSummaryRow(
           context,
-          label: 'VAT',
+          label: AppLocalizations.of(context)!.vat,
           value: "€ ${model?.vat}",
         ),
         const SizedBox(height: 12),
         _priceSummaryRow(
           context,
-          label: 'Total Amount',
+          label: AppLocalizations.of(context)!.totalAmount,
           value: '€ ${model?.total}',
         ),
       ],
@@ -90,7 +91,7 @@ class PaymentMethodWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Credit Card',
+                      AppLocalizations.of(context)!.creditCard,
                       textAlign: TextAlign.center,
                       style: context.titleMedium.copyWith(
                         fontSize: 12,
