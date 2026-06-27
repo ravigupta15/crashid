@@ -7,6 +7,7 @@ import 'package:crashid/features/add_car/model/md_model.dart';
 import 'package:crashid/features/add_car/provider/add_car_state.dart';
 import 'package:crashid/features/add_car/repository/add_car_repository.dart';
 import 'package:crashid/features/my_insurance/model/insurance_response_model.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/loader/loader_service.dart';
@@ -83,7 +84,7 @@ class AddCarNotifier extends AsyncNotifier<AddCarState> {
       final response = await repo.addCar(model: model);
       if (response?.statusCode == 201 || response?.statusCode == 200) {
         showFeedbackMessage(
-          response?.data['message'] ?? 'Car added successfully.',
+          response?.data['message'] ?? AppLocalizations.of(context)!.carAddedSuccessfully,
         );
         _openMyCarsScreen(context);
         return true;
@@ -92,7 +93,7 @@ class AddCarNotifier extends AsyncNotifier<AddCarState> {
     } catch (_) {
       if (context.mounted) {
         showFeedbackMessage(
-          'Something went wrong. Please try again.',
+          AppLocalizations.of(context)!.somethingWentWrong,
           context: context,
           feedbackStyle: FeedbackStyle.snackBar,
           snackBarBgColor: AppColors.redColor,

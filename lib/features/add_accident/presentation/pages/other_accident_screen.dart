@@ -12,6 +12,7 @@ import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/features/widgets/google_map/app_google_map.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/date_format/app_date_format.dart';
@@ -83,8 +84,9 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: CustomAppBar(title: "Add Accident"),
+      appBar: CustomAppBar(title: l10n.addAccident),
       body: _screenContent(),
     );
   }
@@ -93,6 +95,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
   // -----------------------------------------------------------------------------
 
   Widget _screenContent() {
+    final l10n = AppLocalizations.of(context)!;
     final refState = ref.watch(otherAccidentNotifierProvider);
     var model = refState.value?.pricingResponseModel?.data;
 
@@ -104,7 +107,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Other Driver",
+              l10n.otherDriver,
               style: context.titleMedium.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
@@ -113,7 +116,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
 
             const SizedBox(height: 5),
             AppTextFormField(
-              hintText: "Vehicle plate number",
+              hintText: l10n.vehiclePlateNumber,
               textCapitalization: TextCapitalization.characters,
               textInputType: TextInputType.text,
               textInputAction: TextInputAction.next,
@@ -134,7 +137,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
               child: Divider(color: AppColors.blackColor.withValues(alpha: .2)),
             ),
             Text(
-              "Witness",
+              l10n.witness,
               style: context.titleMedium.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
@@ -143,7 +146,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
 
             const SizedBox(height: 5),
             AppTextFormField(
-              hintText: "Vehicle plate number",
+              hintText: l10n.vehiclePlateNumber,
               textCapitalization: TextCapitalization.characters,
               textInputType: TextInputType.text,
               textInputAction: TextInputAction.done,
@@ -184,7 +187,7 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
             const SizedBox(height: 33),
             Center(
               child: AppElevatedButton.withTitle(
-                title: "Add Accident",
+                title: l10n.addAccident,
                 onPressed: _onSubmit,
               ),
             ),
@@ -215,11 +218,12 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
   }
 
   String get _locationCardText {
-    if (_locationLoading) return 'Getting location…';
+    final l10n = AppLocalizations.of(context)!;
+    if (_locationLoading) return l10n.gettingLocation;
     if (_locationFailureMessage != null) return _locationFailureMessage!;
     final addr = sendModel?.currentAddress?.trim();
     if (addr != null && addr.isNotEmpty) return addr;
-    return 'Location unavailable';
+    return l10n.locationUnavailable;
   }
 
   Future<void> _loadAccidentLocation() async {
@@ -239,20 +243,21 @@ class _OtherAccidentScreenState extends ConsumerState<OtherAccidentScreen>
       if (!mounted) return;
       setState(() {
         _locationLoading = false;
-        _locationFailureMessage = _messageForLocationFailure(e);
+        _locationFailureMessage = _messageForLocationFailure(context, e);
       });
     }
   }
 
-  static String _messageForLocationFailure(Object e) {
+  String _messageForLocationFailure(BuildContext context, Object e) {
+    final l10n = AppLocalizations.of(context)!;
     final msg = e.toString().replaceFirst(RegExp(r'^Exception:\s*'), '');
     if (msg.contains('disabled')) {
-      return 'Turn on location services to see your address.';
+      return l10n.turnOnLocationServices;
     }
     if (msg.contains('denied')) {
-      return 'Location permission is required to show your address.';
+      return l10n.locationPermissionRequired;
     }
-    return 'Unable to load location.';
+    return l10n.unableToLoadLocation;
   }
 
   Future<void> _pickDate() async {

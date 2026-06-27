@@ -109,7 +109,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
         child: Column(
           children: [
             AppTextFormField(
-              hintText: "Plate Number",
+              hintText: AppLocalizations.of(context)!.plateNumber,
               initialValue: sendModel?.plateNumber,
               textCapitalization: TextCapitalization.characters,
               textInputAction: TextInputAction.next,
@@ -124,7 +124,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             ),
             const SizedBox(height: 20),
             CustomDropDownFormFiledWidget(
-              hintText: "Brand",
+              hintText: AppLocalizations.of(context)!.brand,
               items: brands,
               initialValue: _selectedItem(brands, sendModel?.brand),
               validator: _validateDropdown,
@@ -141,7 +141,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             ),
             const SizedBox(height: 20),
             CustomDropDownFormFiledWidget(
-              hintText: "Model",
+              hintText: AppLocalizations.of(context)!.model,
               items: models,
               initialValue: _selectedItem(models, sendModel?.model),
               validator: _validateDropdown,
@@ -160,7 +160,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             // ),
             const SizedBox(height: 20),
             CustomDropDownFormFiledWidget(
-              hintText: "Fuel Type",
+              hintText: AppLocalizations.of(context)!.fuelType,
               items: AppDropdownItemWidget.fuelTypes,
               initialValue: _selectedItem(
                 AppDropdownItemWidget.fuelTypes,
@@ -171,7 +171,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             ),
             const SizedBox(height: 20),
             AppTextFormField(
-              hintText: "Registration date from",
+              hintText: AppLocalizations.of(context)!.registrationDateFrom,
               controller: _registrationDateController,
               textColor: AppColors.darkGrayColor,
               isReadOnly: true,
@@ -181,7 +181,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             ),
             const SizedBox(height: 20),
             AppTextFormField(
-              hintText: "HP/PS",
+              hintText: AppLocalizations.of(context)!.hpPs,
               initialValue: sendModel?.hpPs,
               textInputAction: TextInputAction.next,
               textInputType: TextInputType.number,
@@ -194,7 +194,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             ),
             const SizedBox(height: 20),
             AppTextFormField(
-              hintText: "Mileage",
+              hintText: AppLocalizations.of(context)!.mileage,
               initialValue: sendModel?.mileage,
               textInputType: TextInputType.number,
               textInputAction: TextInputAction.next,
@@ -207,7 +207,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             ),
             const SizedBox(height: 20),
             AppTextFormField(
-              hintText: "TÜV Date",
+              hintText: AppLocalizations.of(context)!.tuvDate,
               controller: _tuevDateController,
               textColor: AppColors.darkGrayColor,
               isReadOnly: true,
@@ -217,7 +217,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             ),
             const SizedBox(height: 20),
             CustomDropDownFormFiledWidget(
-              hintText: "Color",
+              hintText: AppLocalizations.of(context)!.color,
               items: colors,
               initialValue: _selectedItem(colors, sendModel?.color),
               validator: _validateDropdown,
@@ -225,7 +225,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             ),
             const SizedBox(height: 20),
             AppTextFormField(
-              hintText: 'FIN/VIN',
+              hintText: AppLocalizations.of(context)!.finVin,
               initialValue: sendModel?.vinNumber,
               textInputAction: TextInputAction.next,
               inputFormatters: [
@@ -236,7 +236,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               onSaved: (value) => sendModel?.vinNumber = value?.trim(),
             ),
             const SizedBox(height: 20),
-            _buildUploadField(title: 'Car Image', onTap: _pickCarImages),
+            _buildUploadField(title: AppLocalizations.of(context)!.carImage, onTap: _pickCarImages),
             if (sendModel?.selectedCarImages.isNotEmpty == true) ...[
               const SizedBox(height: 12),
               _selectedCarImagesWidget(),
@@ -244,7 +244,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             const SizedBox(height: 20),
             CustomDropDownFormFiledWidget(
               items: insuranceCompanies,
-              hintText: 'Insurance Company',
+              hintText: AppLocalizations.of(context)!.insuranceCompany,
               validator: _validateDropdown,
               initialValue: _selectedItem(
                 insuranceCompanies,
@@ -259,7 +259,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
 
             const SizedBox(height: 20),
             AppTextFormField(
-              hintText: "Insurance Email Address",
+              hintText: AppLocalizations.of(context)!.insuranceEmailAddress,
               prefixIcon: Image.asset(
                 AppAssetPaths.mailIcon,
                 height: 12,
@@ -277,7 +277,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
 
             const SizedBox(height: 20),
             AppTextFormField(
-              hintText: 'Insurance Number',
+              hintText: AppLocalizations.of(context)!.insuranceNumber,
               initialValue: sendModel?.insuranceNumber,
               textInputAction: TextInputAction.next,
               inputFormatters: [
@@ -292,7 +292,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               children: [
                 Expanded(
                   child: AppTextFormField(
-                    hintText: 'Valid From',
+                    hintText: AppLocalizations.of(context)!.validFrom,
                     controller: _insuranceStartDateController,
                     textColor: AppColors.darkGrayColor,
                     isReadOnly: true,
@@ -312,7 +312,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
                 const SizedBox(width: 12),
                 Expanded(
                   child: AppTextFormField(
-                    hintText: 'Valid To',
+                    hintText: AppLocalizations.of(context)!.validTo,
                     controller: _insuranceEndDateController,
                     textColor: AppColors.darkGrayColor,
                     isReadOnly: true,
@@ -325,7 +325,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             const SizedBox(height: 20),
             _buildUploadField(
               title: sendModel?.selectedInsurancePdf == null
-                  ? 'Insurance PDF'
+                  ? AppLocalizations.of(context)!.insurancePdf
                   : _fileNameFromPath(sendModel!.selectedInsurancePdf!.path),
               onTap: _pickInsurancePdf,
             ),
@@ -336,7 +336,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             const SizedBox(height: 20),
             _buildUploadField(
               title: sendModel?.selectedTuevReportPdf == null
-                  ? 'TÜV Report (Optional)'
+                  ? AppLocalizations.of(context)!.tuvReportOptional
                   : _fileNameFromPath(sendModel!.selectedTuevReportPdf!.path),
               onTap: _pickTuevReport,
             ),

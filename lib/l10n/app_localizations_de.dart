@@ -266,4 +266,115 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get divers => 'Divers';
+
+  @override
+  String get addAccident => 'Unfall Hinzufügen';
+
+  @override
+  String get selectOwnPlateNumber => 'Eigenes Nummernschild auswählen';
+
+  @override
+  String get textDescription => 'Textbeschreibung';
+
+  @override
+  String get describeWhatHappened => 'Beschreiben Sie, was passiert ist...';
+
+  @override
+  String get uploadUpTo5Images => 'Bis zu 5 Bilder hochladen';
+
+  @override
+  String get addPhoto => 'Foto Hinzufügen';
+
+  @override
+  String get clickHereToRecordAccident =>
+      'Klicken Sie hier, um den Unfall aufzuzeichnen';
+
+  @override
+  String get videoSelected => 'Video Ausgewählt:';
+
+  @override
+  String get pleaseUploadPhotos => 'Bitte laden Sie Fotos hoch';
+
+  @override
+  String get plateNumber => 'Nummernschild';
+
+  @override
+  String get brand => 'Marke';
+
+  @override
+  String get model => 'Modell';
+
+  @override
+  String get fuelType => 'Kraftstofftyp';
+
+  @override
+  String get registrationDateFrom => 'Registrierungsdatum ab';
+
+  @override
+  String get hpPs => 'PS';
+
+  @override
+  String get mileage => 'Laufleistung';
+
+  @override
+  String get tuvDate => 'TÜV Datum';
+
+  @override
+  String get color => 'Farbe';
+
+  @override
+  String get finVin => 'FIN/VIN';
+
+  @override
+  String get carImage => 'Autobild';
+
+  @override
+  String get insuranceCompany => 'Versicherungsgesellschaft';
+
+  @override
+  String get insuranceEmailAddress => 'Versicherungs-E-Mail-Adresse';
+
+  @override
+  String get insuranceNumber => 'Versicherungsnummer';
+
+  @override
+  String get validFrom => 'Gültig von';
+
+  @override
+  String get validTo => 'Gültig bis';
+
+  @override
+  String get insurancePdf => 'Versicherungs-PDF';
+
+  @override
+  String get tuvReportOptional => 'TÜV-Bericht (Optional)';
+
+  @override
+  String get carAddedSuccessfully => 'Auto erfolgreich hinzugefügt.';
+
+  @override
+  String get otherDriver => 'Other Driver';
+
+  @override
+  String get vehiclePlateNumber => 'Vehicle plate number';
+
+  @override
+  String get witness => 'Witness';
+
+  @override
+  String get gettingLocation => 'Getting location…';
+
+  @override
+  String get locationUnavailable => 'Location unavailable';
+
+  @override
+  String get turnOnLocationServices =>
+      'Turn on location services to see your address.';
+
+  @override
+  String get locationPermissionRequired =>
+      'Location permission is required to show your address.';
+
+  @override
+  String get unableToLoadLocation => 'Unable to load location.';
 }

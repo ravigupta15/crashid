@@ -12,6 +12,7 @@ import 'package:crashid/features/add_accident/provider/add_accident_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/date_format/app_date_format.dart';
@@ -78,7 +79,7 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Add Accident"),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.addAccident),
       body: _screenContent(),
     );
   }
@@ -97,7 +98,7 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
           children: [
             if ((widget.routeName ?? '') != 'accept') ...[
               Text(
-                "Select own plate number",
+                AppLocalizations.of(context)!.selectOwnPlateNumber,
                 style: context.titleMedium.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
@@ -123,7 +124,7 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
               ),
             ],
             Text(
-              "Text Description",
+              AppLocalizations.of(context)!.textDescription,
               style: context.titleMedium.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
@@ -132,7 +133,7 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
             const SizedBox(height: 5),
             AppTextFormField(
               borderRadius: 10,
-              hintText: "Describe what happened...",
+              hintText: AppLocalizations.of(context)!.describeWhatHappened,
               maxLines: 3,
               inputFormatters: [Validator.removeLeadingWhiteSpace()],
               onSaved: _saveDes,
@@ -143,7 +144,7 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
               child: Divider(color: AppColors.blackColor.withValues(alpha: .2)),
             ),
             Text(
-              "Upload up to 5 Images",
+              AppLocalizations.of(context)!.uploadUpTo5Images,
               style: context.titleMedium.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
@@ -179,7 +180,7 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
             Align(
               alignment: Alignment.center,
               child: AppElevatedButton.withTitle(
-                title: "Continue",
+                title: AppLocalizations.of(context)!.continueTitle,
                 onPressed: widget.routeName == 'accept'
                     ? _acceptUserBApi
                     : _checkValidation,
@@ -230,7 +231,7 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
                     children: [
                       const Icon(Icons.camera_alt_outlined, size: 22),
                       Text(
-                        "Add Photo",
+                          AppLocalizations.of(context)!.addPhoto,
                         style: context.bodyMedium.copyWith(
                           fontSize: 8,
                           fontWeight: FontWeight.w800,
@@ -262,8 +263,8 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
                 Expanded(
                   child: Text(
                     sendModel?.uploadedVideo == null
-                        ? "Click Here to Record Accident"
-                        : "Video Selected: ${_fileName(sendModel?.uploadedVideo)}",
+                        ? AppLocalizations.of(context)!.clickHereToRecordAccident
+                        : "${AppLocalizations.of(context)!.videoSelected} ${_fileName(sendModel?.uploadedVideo)}",
                     style: context.titleMedium.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -316,7 +317,7 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
   void _checkValidation() {
     if (formKey.currentState!.validate()) {
       if ((sendModel?.uploadedPhotos ?? []).isEmpty) {
-        return showFeedbackMessage("Please upload photos");
+        return showFeedbackMessage(AppLocalizations.of(context)!.pleaseUploadPhotos);
       } 
       // else if (sendModel?.uploadedVideo == null) {
       //   return showFeedbackMessage("Please upload the video");

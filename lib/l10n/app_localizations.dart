@@ -577,6 +577,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Divers'**
   String get divers;
+
+  /// No description provided for @addAccident.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Accident'**
+  String get addAccident;
+
+  /// No description provided for @selectOwnPlateNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Select own plate number'**
+  String get selectOwnPlateNumber;
+
+  /// No description provided for @textDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Text Description'**
+  String get textDescription;
+
+  /// No description provided for @describeWhatHappened.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe what happened...'**
+  String get describeWhatHappened;
+
+  /// No description provided for @uploadUpTo5Images.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload up to 5 Images'**
+  String get uploadUpTo5Images;
+
+  /// No description provided for @addPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Photo'**
+  String get addPhoto;
+
+  /// No description provided for @clickHereToRecordAccident.
+  ///
+  /// In en, this message translates to:
+  /// **'Click Here to Record Accident'**
+  String get clickHereToRecordAccident;
+
+  /// No description provided for @videoSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Video Selected:'**
+  String get videoSelected;
+
+  /// No description provided for @pleaseUploadPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload photos'**
+  String get pleaseUploadPhotos;
+
+  /// No description provided for @plateNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Plate Number'**
+  String get plateNumber;
+
+  /// No description provided for @brand.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand'**
+  String get brand;
+
+  /// No description provided for @model.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get model;
+
+  /// No description provided for @fuelType.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel Type'**
+  String get fuelType;
+
+  /// No description provided for @registrationDateFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration date from'**
+  String get registrationDateFrom;
+
+  /// No description provided for @hpPs.
+  ///
+  /// In en, this message translates to:
+  /// **'HP/PS'**
+  String get hpPs;
+
+  /// No description provided for @mileage.
+  ///
+  /// In en, this message translates to:
+  /// **'Mileage'**
+  String get mileage;
+
+  /// No description provided for @tuvDate.
+  ///
+  /// In en, this message translates to:
+  /// **'TÜV Date'**
+  String get tuvDate;
+
+  /// No description provided for @color.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get color;
+
+  /// No description provided for @finVin.
+  ///
+  /// In en, this message translates to:
+  /// **'FIN/VIN'**
+  String get finVin;
+
+  /// No description provided for @carImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Car Image'**
+  String get carImage;
+
+  /// No description provided for @insuranceCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance Company'**
+  String get insuranceCompany;
+
+  /// No description provided for @insuranceEmailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance Email Address'**
+  String get insuranceEmailAddress;
+
+  /// No description provided for @insuranceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance Number'**
+  String get insuranceNumber;
+
+  /// No description provided for @validFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid From'**
+  String get validFrom;
+
+  /// No description provided for @validTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid To'**
+  String get validTo;
+
+  /// No description provided for @insurancePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance PDF'**
+  String get insurancePdf;
+
+  /// No description provided for @tuvReportOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'TÜV Report (Optional)'**
+  String get tuvReportOptional;
+
+  /// No description provided for @carAddedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Car added successfully.'**
+  String get carAddedSuccessfully;
+
+  /// No description provided for @otherDriver.
+  ///
+  /// In en, this message translates to:
+  /// **'Other Driver'**
+  String get otherDriver;
+
+  /// No description provided for @vehiclePlateNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle plate number'**
+  String get vehiclePlateNumber;
+
+  /// No description provided for @witness.
+  ///
+  /// In en, this message translates to:
+  /// **'Witness'**
+  String get witness;
+
+  /// No description provided for @gettingLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting location…'**
+  String get gettingLocation;
+
+  /// No description provided for @locationUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Location unavailable'**
+  String get locationUnavailable;
+
+  /// No description provided for @turnOnLocationServices.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on location services to see your address.'**
+  String get turnOnLocationServices;
+
+  /// No description provided for @locationPermissionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission is required to show your address.'**
+  String get locationPermissionRequired;
+
+  /// No description provided for @unableToLoadLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load location.'**
+  String get unableToLoadLocation;
 }
 
 class _AppLocalizationsDelegate

@@ -260,4 +260,114 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get divers => 'Divers';
+
+  @override
+  String get addAccident => 'Add Accident';
+
+  @override
+  String get selectOwnPlateNumber => 'Select own plate number';
+
+  @override
+  String get textDescription => 'Text Description';
+
+  @override
+  String get describeWhatHappened => 'Describe what happened...';
+
+  @override
+  String get uploadUpTo5Images => 'Upload up to 5 Images';
+
+  @override
+  String get addPhoto => 'Add Photo';
+
+  @override
+  String get clickHereToRecordAccident => 'Click Here to Record Accident';
+
+  @override
+  String get videoSelected => 'Video Selected:';
+
+  @override
+  String get pleaseUploadPhotos => 'Please upload photos';
+
+  @override
+  String get plateNumber => 'Plate Number';
+
+  @override
+  String get brand => 'Brand';
+
+  @override
+  String get model => 'Model';
+
+  @override
+  String get fuelType => 'Fuel Type';
+
+  @override
+  String get registrationDateFrom => 'Registration date from';
+
+  @override
+  String get hpPs => 'HP/PS';
+
+  @override
+  String get mileage => 'Mileage';
+
+  @override
+  String get tuvDate => 'TÜV Date';
+
+  @override
+  String get color => 'Color';
+
+  @override
+  String get finVin => 'FIN/VIN';
+
+  @override
+  String get carImage => 'Car Image';
+
+  @override
+  String get insuranceCompany => 'Insurance Company';
+
+  @override
+  String get insuranceEmailAddress => 'Insurance Email Address';
+
+  @override
+  String get insuranceNumber => 'Insurance Number';
+
+  @override
+  String get validFrom => 'Valid From';
+
+  @override
+  String get validTo => 'Valid To';
+
+  @override
+  String get insurancePdf => 'Insurance PDF';
+
+  @override
+  String get tuvReportOptional => 'TÜV Report (Optional)';
+
+  @override
+  String get carAddedSuccessfully => 'Car added successfully.';
+
+  @override
+  String get otherDriver => 'Other Driver';
+
+  @override
+  String get vehiclePlateNumber => 'Vehicle plate number';
+
+  @override
+  String get witness => 'Witness';
+
+  @override
+  String get gettingLocation => 'Getting location…';
+
+  @override
+  String get locationUnavailable => 'Location unavailable';
+
+  @override
+  String get turnOnLocationServices =>
+      'Turn on location services to see your address.';
+
+  @override
+  String get locationPermissionRequired =>
+      'Location permission is required to show your address.';
+
+  @override
+  String get unableToLoadLocation => 'Unable to load location.';
 }
