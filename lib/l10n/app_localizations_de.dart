@@ -15,170 +15,195 @@ class AppLocalizationsDe extends AppLocalizations {
   String get german => 'Deutsch';
 
   @override
-  String get continueTitle => 'Continue';
+  String get continueTitle => 'Weiter';
 
   @override
-  String get selectLangauge => 'Select Language';
+  String get selectLangauge => 'Sprache Wählen';
 
   @override
-  String get chooseLanguage => 'Choose your preferred language to continue';
+  String get chooseLanguage =>
+      'Wählen Sie Ihre bevorzugte Sprache um fortzufahren';
 
   @override
-  String get getStarted => 'Get Started';
+  String get getStarted => 'Loslegen';
 
   @override
-  String get onboardingTitle1 => 'Add Your Car';
+  String get onboardingTitle1 => 'Fügen Sie Ihr Auto Hinzu';
 
   @override
   String get onboardingDes1 =>
-      'Enter your car details like model, year, and registration number to manage your vehicle and get accurate support when needed.';
+      'Geben Sie Ihre Autodaten wie Modell, Jahr und Registrierungsnummer ein, um Ihr Fahrzeug zu verwalten und bei Bedarf genaue Unterstützung zu erhalten.';
 
   @override
-  String get onboardingTitle2 => 'Add Insurance';
+  String get onboardingTitle2 => 'Versicherung Hinzufügen';
 
   @override
   String get onboardingDes2 =>
-      'Save your insurance provider, policy number, and expiry date so we can quickly assist you with claims and support.';
+      'Speichern Sie Ihren Versicherungsanbieter, die Policennummer und das Ablaufdatum, um Ihnen schnell bei Ansprüchen und Unterstützung zu helfen.';
 
   @override
-  String get onboardingTitle3 => 'Report Accidents Faster';
+  String get onboardingTitle3 => 'Unfälle Schneller Melden';
 
   @override
   String get onboardingDes3 =>
-      'Quickly report accidents by adding photos, location, and details. We’ll notify your insurance company and help speed up the process.';
+      'Melden Sie Unfälle schnell, indem Sie Fotos, Standort und Details hinzufügen. Wir benachrichtigen Ihre Versicherungsgesellschaft und helfen, den Prozess zu beschleunigen.';
 
   @override
-  String get checkYourEmail => 'Check your Email!';
+  String get checkYourEmail => 'Überprüfen Sie Ihre E-Mail!';
 
   @override
   String get otpSentDescription =>
-      'Your OTP has been sent successfully. \nvalid for 10 minutes.';
+      'Ihr OTP wurde erfolgreich gesendet.\nGültig für 10 Minuten.';
 
   @override
-  String get enterOtp => 'Enter OTP';
+  String get enterOtp => 'OTP Eingeben';
 
   @override
-  String get resetPasswordTitle => 'Reset Password';
+  String get resetPasswordTitle => 'Passwort Zurücksetzen';
 
   @override
   String get resetPasswordDescription =>
-      'Your password must be different from\npreviously used passwords';
+      'Ihr Passwort muss sich von\npreviously verwendeten Passwörtern unterscheiden';
 
   @override
-  String get newPassword => 'New Password';
+  String get newPassword => 'Neues Passwort';
 
   @override
-  String get confirmPassword => 'Confirm Password';
+  String get confirmPassword => 'Passwort Bestätigen';
 
   @override
-  String get resetPasswordButton => 'Reset password';
+  String get resetPasswordButton => 'Passwort zurücksetzen';
 
   @override
-  String get passwordChangedTitle => 'Password Changed';
+  String get passwordChangedTitle => 'Passwort Geändert';
 
   @override
   String get passwordChangedDescription =>
-      'Your account password has been updated,\nyou can already login with your new password.';
+      'Ihr Kontokennwort wurde aktualisiert,\nSie können sich bereits mit Ihrem neuen Passwort anmelden.';
 
   @override
-  String get signInButton => 'Sign In';
+  String get signInButton => 'Anmelden';
 
   @override
-  String get personalAccountTitle => 'Personal Account';
+  String get password => 'Passwort';
+
+  @override
+  String get forgetPassword => 'Passwort Vergessen';
+
+  @override
+  String get dontHaveAccount => 'Sie haben kein Konto?';
+
+  @override
+  String get signUp => 'Registrieren';
+
+  @override
+  String get acceptTermsMessage =>
+      'Bitte akzeptieren Sie die Nutzungsbedingungen und die Datenschutzrichtlinie.';
+
+  @override
+  String get personalAccountTitle => 'Persönliches Konto';
 
   @override
   String get personalAccountSubtitle =>
-      'For individual drivers and car owners.';
+      'Für einzelne Fahrer und Fahrzeughalter.';
 
   @override
-  String get companyAccountTitle => 'Company Account';
+  String get companyAccountTitle => 'Unternehmenskonto';
 
   @override
-  String get companyAccountSubtitle => 'For businesses and fleet management.';
+  String get companyAccountSubtitle => 'Für Unternehmen und Flottenmanagement.';
 
   @override
   String get personalAccountDescription =>
-      'For individual users managing their own car, insurance, and accident reports.';
+      'Für einzelne Benutzer, die ihr eigenes Auto, ihre Versicherung und Unfallberichte verwalten.';
 
   @override
   String get companyAccountDescription =>
-      'For businesses managing multiple vehicles, drivers, and insurance processes.';
+      'Für Unternehmen, die mehrere Fahrzeuge, Fahrer und Versicherungsprozesse verwalten.';
 
   @override
-  String get personalRegistrationTitle => 'Personal Registration';
+  String get personalRegistrationTitle => 'Persönliche Registrierung';
 
   @override
-  String get firstName => 'First name';
+  String get firstName => 'Vorname';
 
   @override
-  String get lastName => 'Last name';
+  String get lastName => 'Nachname';
 
   @override
-  String get dateOfBirth => 'DD/MM/YY';
+  String get dateOfBirth => 'TT/MM/JJ';
 
   @override
-  String get male => 'Male';
+  String get male => 'Männlich';
 
   @override
-  String get female => 'Female';
+  String get female => 'Weiblich';
 
   @override
-  String get driver => 'Driver';
+  String get driver => 'Fahrer';
 
   @override
-  String get emailAddress => 'Email Address';
+  String get emailAddress => 'E-Mail-Adresse';
 
   @override
-  String get mobileNumber => 'Mobile number';
+  String get mobileNumber => 'Handynummer';
 
   @override
-  String get drivingLicenseFront => 'Driving License Front';
+  String get drivingLicenseFront => 'Führerschein Vorderseite';
 
   @override
-  String get drivingLicenseBack => 'Driving License Back';
+  String get drivingLicenseBack => 'Führerschein Rückseite';
 
   @override
-  String get idDocumentFront => 'ID Document Front';
+  String get idDocumentFront => 'Ausweisdokument Vorderseite';
 
   @override
-  String get idDocumentBack => 'ID Document Back';
+  String get idDocumentBack => 'Ausweisdokument Rückseite';
 
   @override
-  String get address => 'Address';
+  String get address => 'Adresse';
 
   @override
-  String get street => 'Street';
+  String get street => 'Straße';
 
   @override
-  String get houseNumber => 'House Number';
+  String get houseNumber => 'Hausnummer';
 
   @override
-  String get postalCode => 'Postal Code';
+  String get postalCode => 'Postleitzahl';
 
   @override
-  String get city => 'City';
+  String get city => 'Stadt';
 
   @override
-  String get termsAndConditionsAcceptance => 'Terms & Conditions Acceptance';
+  String get termsAndConditionsAcceptance =>
+      'Nutzungsbedingungen und Datenschutzrichtlinie akzeptieren.';
 
   @override
-  String get privacyPolicyAcceptance => 'Privacy Policy Acceptance';
+  String get privacyPolicyAcceptance => 'Datenschutzerklärung akzeptieren';
 
   @override
-  String get register => 'Register';
+  String get termsConditionAndThePrivcyPolicy =>
+      'terms & conditions and the privacy policy';
 
   @override
-  String get alreadyHaveAccount => 'Already Have an Account?';
+  String get register => 'Registrieren';
 
   @override
-  String get logIn => 'Log In';
+  String get alreadyHaveAccount => 'Haben Sie bereits ein Konto?';
 
   @override
-  String get addCarTitle => 'Add Car';
+  String get logIn => 'Anmelden';
 
   @override
-  String get myCarsTitle => 'My Cars';
+  String get addCarTitle => 'Auto Hinzufügen';
 
   @override
-  String get changeLanguage => 'Change Language';
+  String get myCarsTitle => 'Meine Autos';
+
+  @override
+  String get changeLanguage => 'Sprache Ändern';
+
+  @override
+  String get orContinueWith => 'or continue with';
 }

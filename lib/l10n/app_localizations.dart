@@ -236,6 +236,36 @@ abstract class AppLocalizations {
   /// **'Sign In'**
   String get signInButton;
 
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @forgetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forget Password'**
+  String get forgetPassword;
+
+  /// No description provided for @dontHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAccount;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// No description provided for @acceptTermsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please accept the terms & conditions and the privacy policy.'**
+  String get acceptTermsMessage;
+
   /// No description provided for @personalAccountTitle.
   ///
   /// In en, this message translates to:
@@ -392,6 +422,12 @@ abstract class AppLocalizations {
   /// **'Privacy Policy Acceptance'**
   String get privacyPolicyAcceptance;
 
+  /// No description provided for @termsConditionAndThePrivcyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'terms & conditions and the privacy policy'**
+  String get termsConditionAndThePrivcyPolicy;
+
   /// No description provided for @register.
   ///
   /// In en, this message translates to:
@@ -427,6 +463,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change Language'**
   String get changeLanguage;
+
+  /// No description provided for @orContinueWith.
+  ///
+  /// In en, this message translates to:
+  /// **'or continue with'**
+  String get orContinueWith;
 }
 
 class _AppLocalizationsDelegate

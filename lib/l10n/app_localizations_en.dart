@@ -84,6 +84,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInButton => 'Sign In';
 
   @override
+  String get password => 'Password';
+
+  @override
+  String get forgetPassword => 'Forget Password';
+
+  @override
+  String get dontHaveAccount => 'Don\'t have an account?';
+
+  @override
+  String get signUp => 'Sign Up';
+
+  @override
+  String get acceptTermsMessage =>
+      'Please accept the terms & conditions and the privacy policy.';
+
+  @override
   String get personalAccountTitle => 'Personal Account';
 
   @override
@@ -165,6 +181,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyPolicyAcceptance => 'Privacy Policy Acceptance';
 
   @override
+  String get termsConditionAndThePrivcyPolicy =>
+      'terms & conditions and the privacy policy';
+
+  @override
   String get register => 'Register';
 
   @override
@@ -181,4 +201,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get changeLanguage => 'Change Language';
+
+  @override
+  String get orContinueWith => 'or continue with';
 }

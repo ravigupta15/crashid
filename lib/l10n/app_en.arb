@@ -22,6 +22,11 @@
   "passwordChangedTitle" : "Password Changed",
   "passwordChangedDescription" : "Your account password has been updated,\nyou can already login with your new password.",
   "signInButton" : "Sign In",
+  "password" : "Password",
+  "forgetPassword" : "Forget Password",
+  "dontHaveAccount" : "Don't have an account?",
+  "signUp" : "Sign Up",
+  "acceptTermsMessage" : "Please accept the terms & conditions and the privacy policy.",
   "personalAccountTitle" : "Personal Account",
   "personalAccountSubtitle" : "For individual drivers and car owners.",
   "companyAccountTitle" : "Company Account",
@@ -48,10 +53,12 @@
   "city" : "City",
   "termsAndConditionsAcceptance" : "Terms & Conditions Acceptance",
   "privacyPolicyAcceptance" : "Privacy Policy Acceptance",
+  "termsConditionAndThePrivcyPolicy" : "terms & conditions and the privacy policy",
   "register" : "Register",
   "alreadyHaveAccount" : "Already Have an Account?",
   "logIn" : "Log In",
   "addCarTitle" : "Add Car",
   "myCarsTitle" : "My Cars",
-  "changeLanguage" : "Change Language"
+  "changeLanguage" : "Change Language",
+  "orContinueWith" : "or continue with"
 }

@@ -74,7 +74,7 @@ final signinNotifierProvider =
           child: Column(
             children: [
               Text(
-                "Sign In",
+                AppLocalizations.of(context)!.signInButton,
                 style: context.titleLarge.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -104,7 +104,7 @@ final signinNotifierProvider =
              
               const SizedBox(height: 29),
               AppTextFormField(
-                hintText: "Password",
+                hintText: AppLocalizations.of(context)!.password,
                 obscure: (sendModel?.password ?? '').isEmpty ? false : true,
                 inputFormatters: [
                     Validator.emojiRestrict(),
@@ -124,7 +124,7 @@ final signinNotifierProvider =
               Row(
                 children: [
                   AppCheckbox(
-                    label: "terms & conditions and the privacy policy.",
+                    label: AppLocalizations.of(context)!.termsConditionAndThePrivcyPolicy,
                     activeColor: AppColors.primaryColor,
                     labelStyle: context.labelMedium.copyWith(
                       fontSize: 9,
@@ -138,7 +138,7 @@ final signinNotifierProvider =
                   InkWell(
                     onTap: _openForgetPasswordScreen,
                     child: Text(
-                      "Forget Password",
+                      AppLocalizations.of(context)!.forgetPassword,
                       style: context.titleMedium.copyWith(
                         fontSize: 10,
                         color: AppColors.darkGrayColor.withValues(alpha: .6),
@@ -149,7 +149,7 @@ final signinNotifierProvider =
               ),
               const SizedBox(height: 33),
               AppElevatedButton.withTitle(
-                title: "Sign In",
+                title: AppLocalizations.of(context)!.signInButton,
                 onPressed: _submitSignIn,
               ),
               const SizedBox(height: 20),
@@ -187,7 +187,7 @@ final signinNotifierProvider =
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 6),
           child: Text(
-            "or continue with",
+            AppLocalizations.of(context)!.orContinueWith,
             style: context.bodyMedium.copyWith(
               fontSize: 11,
               color: AppColors.darkGrayColor.withValues(alpha: .6),
@@ -215,14 +215,14 @@ final signinNotifierProvider =
         const SizedBox(height: 20),
         Text.rich(
           TextSpan(
-            text: "Don’t have an account?",
+            text: AppLocalizations.of(context)!.dontHaveAccount,
             style: context.bodyMedium.copyWith(
               fontSize: 12,
               color: AppColors.darkGrayColor,
             ),
             children: [
               TextSpan(
-                text: " Sign Up",
+                text: " ${AppLocalizations.of(context)!.signUp}",
                 recognizer: TapGestureRecognizer()
                   ..onTap = () => _openChooseAccountTypeScreen(),
                 style: context.titleMedium.copyWith(
@@ -264,7 +264,7 @@ final signinNotifierProvider =
     _formKey.currentState!.save();
     if (!(sendModel?.acceptTerms ?? false)) {
       showFeedbackMessage(
-        'Please accept the terms & conditions and the privacy policy.',
+        AppLocalizations.of(context)!.acceptTermsMessage,
         context: context,
         feedbackStyle: FeedbackStyle.snackBar,
         snackBarBgColor: AppColors.redColor,
