@@ -3,6 +3,7 @@ import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/my_insurance/provider/insurance_notifier.dart';
 import 'package:crashid/features/my_insurance/provider/insurane_state.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/no_data_found/no_data_found.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _MyInsuranceScreenState extends ConsumerState<MyInsuranceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "My Insurance",
+        title: AppLocalizations.of(context)!.myInsuranceTitle,
         
       ),
       body: _screenContent(),
@@ -121,7 +122,7 @@ class _InsurancePolicyCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              if (isActive) const _StatusBadge(label: 'Active'),
+              if (isActive) _StatusBadge(label: AppLocalizations.of(context)!.active),
             ],
           ),
           const SizedBox(height: 8),
@@ -139,14 +140,14 @@ class _InsurancePolicyCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _LabeledField(
-                  label: 'Plate Number',
+                  label: AppLocalizations.of(context)!.plateNumber,
                   value: plateNumber,
                 ),
               ),
               const SizedBox(width: 16),
               Expanded(
                 child: _LabeledField(
-                  label: 'Insurance Email',
+                  label: AppLocalizations.of(context)!.insuranceEmail,
                   value: insuranceEmail,
                 ),
               ),

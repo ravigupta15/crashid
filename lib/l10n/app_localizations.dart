@@ -827,14 +827,14 @@ abstract class AppLocalizations {
   /// No description provided for @paymentWebViewError.
   ///
   /// In en, this message translates to:
-  /// **'Error'**
-  String get paymentWebViewError;
+  /// **'Error: {description}'**
+  String paymentWebViewError(String description);
 
   /// No description provided for @paymentHttpError.
   ///
   /// In en, this message translates to:
-  /// **'HTTP Error'**
-  String get paymentHttpError;
+  /// **'HTTP Error: {statusCode}'**
+  String paymentHttpError(int statusCode);
 
   /// No description provided for @isAddressCorrect.
   ///
@@ -1073,14 +1073,14 @@ abstract class AppLocalizations {
   /// No description provided for @accidentDate.
   ///
   /// In en, this message translates to:
-  /// **'Accident Date'**
-  String get accidentDate;
+  /// **'Accident Date: {date}'**
+  String accidentDate(String date);
 
   /// No description provided for @caseId.
   ///
   /// In en, this message translates to:
-  /// **'Case Id'**
-  String get caseId;
+  /// **'Case Id: {caseNumber}'**
+  String caseId(String caseNumber);
 
   /// No description provided for @caseDetailsRetryPayment.
   ///
@@ -1145,8 +1145,8 @@ abstract class AppLocalizations {
   /// No description provided for @caseDetailsPaymentStatus.
   ///
   /// In en, this message translates to:
-  /// **'PAYMENT STATUS'**
-  String get caseDetailsPaymentStatus;
+  /// **'PAYMENT STATUS: {status}'**
+  String caseDetailsPaymentStatus(String status);
 
   /// No description provided for @caseDetailsCloseCaseTitle.
   ///
@@ -1219,6 +1219,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Emergency contact added\nsuccessfully'**
   String get emergencyContactAddedSuccess;
+
+  /// No description provided for @homeAddAccident.
+  ///
+  /// In en, this message translates to:
+  /// **'ADD ACCIDENT'**
+  String get homeAddAccident;
+
+  /// No description provided for @homeMyCar.
+  ///
+  /// In en, this message translates to:
+  /// **'MY CAR'**
+  String get homeMyCar;
+
+  /// No description provided for @homeMyInsurance.
+  ///
+  /// In en, this message translates to:
+  /// **'MY INSURANCE'**
+  String get homeMyInsurance;
+
+  /// No description provided for @emergencyContactRequiredMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add an emergency contact number'**
+  String get emergencyContactRequiredMessage;
+
+  /// No description provided for @addButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get addButton;
+
+  /// No description provided for @sosMessageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a message or just send'**
+  String get sosMessageHint;
+
+  /// No description provided for @sendButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get sendButton;
+
+  /// No description provided for @deleteCarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Car'**
+  String get deleteCarTitle;
+
+  /// No description provided for @deleteCarConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this car?'**
+  String get deleteCarConfirmation;
+
+  /// No description provided for @carDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Car Details'**
+  String get carDetailsTitle;
+
+  /// No description provided for @carName.
+  ///
+  /// In en, this message translates to:
+  /// **'Car Name'**
+  String get carName;
+
+  /// No description provided for @registrationDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Date'**
+  String get registrationDate;
+
+  /// No description provided for @mileageKm.
+  ///
+  /// In en, this message translates to:
+  /// **'Mileage (Km)'**
+  String get mileageKm;
+
+  /// No description provided for @insuranceExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance Expiry'**
+  String get insuranceExpiry;
+
+  /// No description provided for @lastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: {date}'**
+  String lastUpdated(String date);
+
+  /// No description provided for @myInsuranceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Insurance'**
+  String get myInsuranceTitle;
+
+  /// No description provided for @insuranceEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance Email'**
+  String get insuranceEmail;
 }
 
 class _AppLocalizationsDelegate

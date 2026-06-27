@@ -1,5 +1,6 @@
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
 import 'package:crashid/utils/validators/validator.dart';
@@ -40,14 +41,14 @@ final formKey = GlobalKey<FormState>();
                 maxLines: 3,
                 borderRadius: 1,
                 controller: controller,
-                hintText: "Write a message or just send",
+                hintText: AppLocalizations.of(context)!.sosMessageHint,
                 inputFormatters: [
                   Validator.removeLeadingWhiteSpace(),
                 ],
                 validator: validateEmpty,
               ),
               const SizedBox(height: 23,),
-              AppElevatedButton.withTitle(title: "Send", onPressed: _onValidation,)
+              AppElevatedButton.withTitle(title: AppLocalizations.of(context)!.sendButton, onPressed: _onValidation,)
             ],
           ),
         ),

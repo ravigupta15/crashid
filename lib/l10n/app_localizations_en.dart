@@ -387,10 +387,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payment => 'Payment';
 
   @override
-  String get paymentWebViewError => 'Error';
+  String paymentWebViewError(String description) {
+    return 'Error: $description';
+  }
 
   @override
-  String get paymentHttpError => 'HTTP Error';
+  String paymentHttpError(int statusCode) {
+    return 'HTTP Error: $statusCode';
+  }
 
   @override
   String get isAddressCorrect => 'Is this address correct?';
@@ -515,10 +519,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get caseDetailsSummaryTitle => 'Case Summary';
 
   @override
-  String get accidentDate => 'Accident Date';
+  String accidentDate(String date) {
+    return 'Accident Date: $date';
+  }
 
   @override
-  String get caseId => 'Case Id';
+  String caseId(String caseNumber) {
+    return 'Case Id: $caseNumber';
+  }
 
   @override
   String get caseDetailsRetryPayment => 'Retry Payment';
@@ -551,7 +559,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get caseDetailsNoDescription => 'No description available.';
 
   @override
-  String get caseDetailsPaymentStatus => 'PAYMENT STATUS';
+  String caseDetailsPaymentStatus(String status) {
+    return 'PAYMENT STATUS: $status';
+  }
 
   @override
   String get caseDetailsCloseCaseTitle => 'Close Case';
@@ -592,4 +602,59 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get emergencyContactAddedSuccess =>
       'Emergency contact added\nsuccessfully';
+
+  @override
+  String get homeAddAccident => 'ADD ACCIDENT';
+
+  @override
+  String get homeMyCar => 'MY CAR';
+
+  @override
+  String get homeMyInsurance => 'MY INSURANCE';
+
+  @override
+  String get emergencyContactRequiredMessage =>
+      'Please add an emergency contact number';
+
+  @override
+  String get addButton => 'Add';
+
+  @override
+  String get sosMessageHint => 'Write a message or just send';
+
+  @override
+  String get sendButton => 'Send';
+
+  @override
+  String get deleteCarTitle => 'Delete Car';
+
+  @override
+  String get deleteCarConfirmation =>
+      'Are you sure you want to delete this car?';
+
+  @override
+  String get carDetailsTitle => 'Car Details';
+
+  @override
+  String get carName => 'Car Name';
+
+  @override
+  String get registrationDate => 'Registration Date';
+
+  @override
+  String get mileageKm => 'Mileage (Km)';
+
+  @override
+  String get insuranceExpiry => 'Insurance Expiry';
+
+  @override
+  String lastUpdated(String date) {
+    return 'Last updated: $date';
+  }
+
+  @override
+  String get myInsuranceTitle => 'My Insurance';
+
+  @override
+  String get insuranceEmail => 'Insurance Email';
 }

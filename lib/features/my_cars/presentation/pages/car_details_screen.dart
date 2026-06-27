@@ -4,6 +4,7 @@ import 'package:crashid/features/my_cars/presentation/widgets/car_detail_info_ro
 import 'package:crashid/features/my_cars/provider/my_car_notifier.dart';
 import 'package:crashid/features/my_cars/provider/my_car_state.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
@@ -48,7 +49,7 @@ class _CarDetailsScreenState extends ConsumerState<CarDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Car Details"),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.carDetailsTitle),
 
       body: _screenContent(),
     );
@@ -102,56 +103,56 @@ class _CarDetailsScreenState extends ConsumerState<CarDetailsScreen> {
                       // ),
                     ),
                     const SizedBox(height: 20),
-                    CarDetailInfoRow(label: 'Brand', value: model.brand ?? '-'),
+                    CarDetailInfoRow(label: AppLocalizations.of(context)!.brand, value: model.brand ?? '-'),
                     const SizedBox(height: 20),
-                    CarDetailInfoRow(label: 'Model', value: model.model ?? '-'),
+                    CarDetailInfoRow(label: AppLocalizations.of(context)!.model, value: model.model ?? '-'),
                     const SizedBox(height: 20),
                     CarDetailInfoRow(
-                      label: 'Car Name',
+                      label: AppLocalizations.of(context)!.carName,
                       value: model.carName ?? '',
                     ),
                     const SizedBox(height: 20),
                     CarDetailInfoRow(
-                      label: 'Fuel Type',
+                      label: AppLocalizations.of(context)!.fuelType,
                       value: model.fuelType ?? '-',
                     ),
                     const SizedBox(height: 20),
                     CarDetailInfoRow(
-                      label: 'Registration Date',
+                      label: AppLocalizations.of(context)!.registrationDate,
                       value: AppDateFormat.formatDate(model.registrationDate),
                     ),
                     const SizedBox(height: 20),
-                    CarDetailInfoRow(label: 'Color', value: model.color ?? '-'),
+                    CarDetailInfoRow(label: AppLocalizations.of(context)!.color, value: model.color ?? '-'),
                     const SizedBox(height: 20),
                     CarDetailInfoRow(
-                      label: 'FIN/VIN',
+                      label: AppLocalizations.of(context)!.finVin,
                       value: model.finVin ?? '-',
                     ),const SizedBox(height: 20),
                     CarDetailInfoRow(
-                      label: 'HP/PS',
+                      label: AppLocalizations.of(context)!.hpPs,
                       value: (model.hpPs ?? '-').toString(),
                     ),const SizedBox(height: 20),
                     CarDetailInfoRow(
-                      label: 'Mileage (Km)',
+                      label: AppLocalizations.of(context)!.mileageKm,
                       value: (model.mileageKm ?? '-').toString(),
                     ),const SizedBox(height: 20),
                     CarDetailInfoRow(
-                      label: 'TÜV Date',
+                      label: AppLocalizations.of(context)!.tuvDate,
                       value: AppDateFormat.formatDate(model.tuevDate ?? ''),
                     ),
                     const SizedBox(height: 20),
                     CarDetailInfoRow(
-                      label: 'Insurance Company',
+                      label: AppLocalizations.of(context)!.insuranceCompany,
                       value: model.insuranceCompanyName ?? '-',
                     ),
                     const SizedBox(height: 20),
                     CarDetailInfoRow(
-                      label: 'Insurance Number',
+                      label: AppLocalizations.of(context)!.insuranceNumber,
                       value: model.insuranceNumber ?? '-',
                     ),
                     const SizedBox(height: 20),
                     CarDetailInfoRow(
-                      label: 'Insurance Expiry',
+                      label: AppLocalizations.of(context)!.insuranceExpiry,
                       value: AppDateFormat.formatDate(model.validUntil),
                     ),
                     if ((model.insuranceImage ?? '').isNotEmpty) ...[
@@ -211,8 +212,8 @@ class _CarDetailsScreenState extends ConsumerState<CarDetailsScreen> {
     AppDialogBox().openBox(
       
     maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
-      title: 'Delete Car',
-      subTitle: 'Are you sure you want to delete this car?',
+      title: AppLocalizations.of(context)!.deleteCarTitle,
+      subTitle: AppLocalizations.of(context)!.deleteCarConfirmation,
       yesTap: () {
         Navigator.pop(context);
         _deleteMyVehicle();
@@ -268,7 +269,7 @@ class _InsurancePdfCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Insurance PDF',
+                  AppLocalizations.of(context)!.insurancePdf,
                   style: context.bodySmall.copyWith(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
@@ -277,7 +278,7 @@ class _InsurancePdfCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Last updated: ${date ?? ''}',
+                   '${AppLocalizations.of(context)!.lastUpdated}: ${date ?? ''}',
                   style: context.bodySmall.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,

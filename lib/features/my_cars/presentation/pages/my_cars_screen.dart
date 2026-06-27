@@ -124,8 +124,8 @@ class _MyCarsScreenState extends ConsumerState<MyCarsScreen> {
   void _openDialogBox(String? carId) {
     AppDialogBox().openBox(
     maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
-      title: 'Delete Car',
-      subTitle: 'Are you sure you want to delete this car?',
+      title: AppLocalizations.of(context)!.deleteCarTitle,
+      subTitle: AppLocalizations.of(context)!.deleteCarConfirmation,
       yesTap: () {
         Navigator.pop(context);
         _deleteMyVehicle(carId ?? '');

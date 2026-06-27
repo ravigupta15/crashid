@@ -1,6 +1,7 @@
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/my_cars/model/my_car_response_model.dart';
 import 'package:crashid/features/my_cars/presentation/widgets/car_detail_info_row_widget.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_cached_network/app_cached_network_images.dart';
@@ -135,13 +136,13 @@ class MyCarCardWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            CarDetailInfoRow(label: 'Fuel Type', value: model?.fuelType ?? ''),
+            CarDetailInfoRow(label: AppLocalizations.of(context)!.fuelType, value: model?.fuelType ?? ''),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Image.asset(AppAssetPaths.horizontalLineImg),
             ),
             CarDetailInfoRow(
-              label: 'Insurance Number',
+              label: AppLocalizations.of(context)!.insuranceNumber,
               value: model?.insuranceNumber ?? '',
             ),
           ],

@@ -11,6 +11,7 @@ import 'package:crashid/features/home/presentation/widgets/add_emergency_contact
 import 'package:crashid/core/service/location_service.dart';
 import 'package:crashid/features/home/presentation/widgets/home_action_widget.dart';
 import 'package:crashid/features/home/presentation/widgets/sos_widget.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/features/my_cars/presentation/pages/my_cars_screen.dart';
 import 'package:crashid/features/my_cars/provider/my_car_notifier.dart';
 import 'package:crashid/features/my_cars/provider/my_car_state.dart';
@@ -104,7 +105,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Expanded(
                 child: HomeActionWidget(
                   iconAsset: AppAssetPaths.crashedCarIcon,
-                  label: 'ADD ACCIDENT',
+                  label: AppLocalizations.of(context)!.homeAddAccident,
                   onTap: () {
                     if (GetIt.I.get<UserManager>().carAdded) {
                       _openAddAccidentScreen();
@@ -118,7 +119,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Expanded(
                 child: HomeActionWidget(
                   iconAsset: AppAssetPaths.myCarIcon,
-                  label: 'MY CAR',
+                  label: AppLocalizations.of(context)!.homeMyCar,
                   onTap: _openMycarScreen,
                 ),
               ),
@@ -131,7 +132,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Expanded(
                 child: HomeActionWidget(
                   iconAsset: AppAssetPaths.myInsuranceIcon,
-                  label: 'MY INSURANCE',
+                  label: AppLocalizations.of(context)!.homeMyInsurance,
                   onTap: _openInsuranceScreen,
                 ),
               ),
