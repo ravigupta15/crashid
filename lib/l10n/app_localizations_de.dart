@@ -205,5 +205,38 @@ class AppLocalizationsDe extends AppLocalizations {
   String get changeLanguage => 'Sprache Ändern';
 
   @override
-  String get orContinueWith => 'or continue with';
+  String get orContinueWith => 'oder fortfahren mit';
+
+  @override
+  String get companyRegistrationTitle => 'Unternehmensregistrierung';
+
+  @override
+  String get legalCompanyName => 'Offizielle Unternehmensname';
+
+  @override
+  String get registeredCompanyName =>
+      'Registrierter Unternehmensname (Optional)';
+
+  @override
+  String get generalCompanyEmail => 'Allgemeine Unternehmens-E-Mail';
+
+  @override
+  String get companyPhoneNumber => 'Unternehmenstelefonnummer';
+
+  @override
+  String get vitId => 'VIT ID';
+
+  @override
+  String get industryType => 'Branchentyp';
+
+  @override
+  String get required => 'Erforderlich';
+
+  @override
+  String get pleaseAcceptTermsAndConditions =>
+      'Bitte akzeptieren Sie die Nutzungsbedingungen.';
+
+  @override
+  String get pleaseAcceptPrivacyPolicy =>
+      'Bitte akzeptieren Sie die Datenschutzrichtlinie.';
 }

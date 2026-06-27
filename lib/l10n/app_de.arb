@@ -59,5 +59,16 @@
       "addCarTitle" : "Auto Hinzufügen",
       "myCarsTitle" : "Meine Autos",
       "changeLanguage" : "Sprache Ändern",
-      "orContinueWith" : "or continue with","termsConditionAndThePrivcyPolicy" : "terms & conditions and the privacy policy"
+      "orContinueWith" : "oder fortfahren mit",
+      "companyRegistrationTitle" : "Unternehmensregistrierung",
+      "legalCompanyName" : "Offizielle Unternehmensname",
+      "registeredCompanyName" : "Registrierter Unternehmensname (Optional)",
+      "generalCompanyEmail" : "Allgemeine Unternehmens-E-Mail",
+      "companyPhoneNumber" : "Unternehmenstelefonnummer",
+      "vitId" : "VIT ID",
+      "industryType" : "Branchentyp",
+      "confirmPassword" : "Passwort Bestätigen",
+      "required" : "Erforderlich",
+      "pleaseAcceptTermsAndConditions" : "Bitte akzeptieren Sie die Nutzungsbedingungen.",
+      "pleaseAcceptPrivacyPolicy" : "Bitte akzeptieren Sie die Datenschutzrichtlinie."
 }

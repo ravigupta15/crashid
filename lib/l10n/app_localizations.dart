@@ -209,7 +209,7 @@ abstract class AppLocalizations {
   /// No description provided for @confirmPassword.
   ///
   /// In en, this message translates to:
-  /// **'Confirm Password'**
+  /// **'Comfirm Password'**
   String get confirmPassword;
 
   /// No description provided for @resetPasswordButton.
@@ -469,6 +469,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'or continue with'**
   String get orContinueWith;
+
+  /// No description provided for @companyRegistrationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Registration'**
+  String get companyRegistrationTitle;
+
+  /// No description provided for @legalCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal Company Name'**
+  String get legalCompanyName;
+
+  /// No description provided for @registeredCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered Company Name (Optional)'**
+  String get registeredCompanyName;
+
+  /// No description provided for @generalCompanyEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'General Company Email'**
+  String get generalCompanyEmail;
+
+  /// No description provided for @companyPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Phone Number'**
+  String get companyPhoneNumber;
+
+  /// No description provided for @vitId.
+  ///
+  /// In en, this message translates to:
+  /// **'VIT ID'**
+  String get vitId;
+
+  /// No description provided for @industryType.
+  ///
+  /// In en, this message translates to:
+  /// **'Industry Type'**
+  String get industryType;
+
+  /// No description provided for @required.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get required;
+
+  /// No description provided for @pleaseAcceptTermsAndConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Please accept the terms and conditions.'**
+  String get pleaseAcceptTermsAndConditions;
+
+  /// No description provided for @pleaseAcceptPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Please accept the privacy policy.'**
+  String get pleaseAcceptPrivacyPolicy;
 }
 
 class _AppLocalizationsDelegate

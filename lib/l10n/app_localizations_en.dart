@@ -68,7 +68,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newPassword => 'New Password';
 
   @override
-  String get confirmPassword => 'Confirm Password';
+  String get confirmPassword => 'Comfirm Password';
 
   @override
   String get resetPasswordButton => 'Reset password';
@@ -204,4 +204,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get orContinueWith => 'or continue with';
+
+  @override
+  String get companyRegistrationTitle => 'Company Registration';
+
+  @override
+  String get legalCompanyName => 'Legal Company Name';
+
+  @override
+  String get registeredCompanyName => 'Registered Company Name (Optional)';
+
+  @override
+  String get generalCompanyEmail => 'General Company Email';
+
+  @override
+  String get companyPhoneNumber => 'Company Phone Number';
+
+  @override
+  String get vitId => 'VIT ID';
+
+  @override
+  String get industryType => 'Industry Type';
+
+  @override
+  String get required => 'Required';
+
+  @override
+  String get pleaseAcceptTermsAndConditions =>
+      'Please accept the terms and conditions.';
+
+  @override
+  String get pleaseAcceptPrivacyPolicy => 'Please accept the privacy policy.';
 }

@@ -60,5 +60,16 @@
   "addCarTitle" : "Add Car",
   "myCarsTitle" : "My Cars",
   "changeLanguage" : "Change Language",
-  "orContinueWith" : "or continue with"
+  "orContinueWith" : "or continue with",
+  "companyRegistrationTitle" : "Company Registration",
+  "legalCompanyName" : "Legal Company Name",
+  "registeredCompanyName" : "Registered Company Name (Optional)",
+  "generalCompanyEmail" : "General Company Email",
+  "companyPhoneNumber" : "Company Phone Number",
+  "vitId" : "VIT ID",
+  "industryType" : "Industry Type",
+  "confirmPassword" : "Comfirm Password",
+  "required" : "Required",
+  "pleaseAcceptTermsAndConditions" : "Please accept the terms and conditions.",
+  "pleaseAcceptPrivacyPolicy" : "Please accept the privacy policy."
 }

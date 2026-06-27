@@ -59,7 +59,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Company Registration",isShowAction: false,),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.companyRegistrationTitle,isShowAction: false,),
       body: _screenContent(),
     );
   }
@@ -76,7 +76,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppTextFormField(hintText: 'Legal Company Name',
+            AppTextFormField(hintText: AppLocalizations.of(context)!.legalCompanyName,
               inputFormatters: [
                     Validator.emojiRestrict(),
                     Validator.removeLeadingWhiteSpace(),
@@ -88,7 +88,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
                   }),
             ),
             const SizedBox(height: 24),
-            AppTextFormField(hintText: 'Registered Company Name (Optional)',
+            AppTextFormField(hintText: AppLocalizations.of(context)!.registeredCompanyName,
               inputFormatters: [
                     Validator.emojiRestrict(),
                     Validator.removeLeadingWhiteSpace(),
@@ -99,7 +99,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
                   }),
             ),
             const SizedBox(height: 24),
-            AppTextFormField(hintText: 'General Company Email',
+            AppTextFormField(hintText: AppLocalizations.of(context)!.generalCompanyEmail,
               inputFormatters: [
                     Validator.emojiRestrict(),
                     Validator.removeWhiteSpace(),
@@ -111,7 +111,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
                   }),
             ),
             const SizedBox(height: 24),
-            AppTextFormField(hintText: 'Company Phone Number',
+            AppTextFormField(hintText: AppLocalizations.of(context)!.companyPhoneNumber,
               prefixWidth: 63,
             prefixIcon: CountryCodeWidget(
               onTap: countryPicker,
@@ -129,7 +129,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
                   }),
             ),
             const SizedBox(height: 24),
-            AppTextFormField(hintText: 'VIT ID',
+            AppTextFormField(hintText: AppLocalizations.of(context)!.vitId,
               inputFormatters: [
                     Validator.emojiRestrict(),
                     Validator.removeLeadingWhiteSpace(),
@@ -141,7 +141,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
                   }),),
             const SizedBox(height: 24),
             CustomDropDownFormFiledWidget(
-              hintText: "Industry Type",
+              hintText: AppLocalizations.of(context)!.industryType,
               items: AppDropdownItemWidget.industryTypeList,
               onSaved: (newValue) {
                 setState(() {
@@ -150,14 +150,14 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
               },
               validator: (val) {
                 if (val == null ) {
-                  return 'Required';
+                  return AppLocalizations.of(context)!.required;
                 }
                 return null;
               },
             ),
             const SizedBox(height: 24),
             AppTextFormField(
-              hintText: 'Password',
+              hintText: AppLocalizations.of(context)!.password,
               obscure: (sendModel?.password ?? '').isNotEmpty,
               inputFormatters: [
                 Validator.emojiRestrict(),
@@ -170,7 +170,7 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
             ),
             const SizedBox(height: 24),
             AppTextFormField(
-              hintText: 'Comfirm Password',
+              hintText: AppLocalizations.of(context)!.confirmPassword,
               obscure: (sendModel?.confirmPassword ?? '').isNotEmpty,
               inputFormatters: [
                 Validator.emojiRestrict(),
@@ -270,14 +270,14 @@ class _CompanyRegistrationScreenState extends ConsumerState<CompanyRegistrationS
     if (!_formKey.currentState!.validate()) return;
     if (!(sendModel?.termsAccepted ?? false)) {
       showFeedbackMessage(
-        'Please accept the terms and conditions.',
+        AppLocalizations.of(context)!.pleaseAcceptTermsAndConditions,
         context: context,
       );
       return;
     }
     if (!(sendModel?.privacyAccepted ?? false)) {
       showFeedbackMessage(
-        'Please accept the privacy policy.',
+        AppLocalizations.of(context)!.pleaseAcceptPrivacyPolicy,
         context: context,
       );
       return;
