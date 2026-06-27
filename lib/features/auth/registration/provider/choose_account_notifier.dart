@@ -5,6 +5,7 @@ import 'package:crashid/data_sources/local_storage/user_manager.dart';
 import 'package:crashid/features/app_navigation/presentation/pages/app_navigation_screen.dart';
 import 'package:crashid/features/auth/aut_repository/auth_repository.dart';
 import 'package:crashid/features/auth/registration/provider/choose_account_state.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/loader/loader_service.dart';
@@ -32,7 +33,7 @@ class ChooseAccountNotifier extends AsyncNotifier<ChooseAccountState> {
     } catch (_) {
       if (context.mounted) {
         showFeedbackMessage(
-          'Something went wrong. Please try again.',
+          AppLocalizations.of(context)!.somethingWentWrong,
           context: context,
           feedbackStyle: FeedbackStyle.snackBar,
           snackBarBgColor: AppColors.redColor,

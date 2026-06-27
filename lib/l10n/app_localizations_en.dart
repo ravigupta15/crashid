@@ -235,4 +235,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pleaseAcceptPrivacyPolicy => 'Please accept the privacy policy.';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get invalidOtp => 'Invalid OTP';
+
+  @override
+  String get didntGetOtp => 'Didn\'t Get OTP?';
+
+  @override
+  String get resendOtp => 'Resend OTP';
+
+  @override
+  String get otpSentMessageTitle => 'A magic code to sign in was sent to';
+
+  @override
+  String get otpResentSuccessfully => 'OTP resent successfully.';
+
+  @override
+  String get pleaseUploadAllRequiredDocuments =>
+      'Please upload all required documents.';
+
+  @override
+  String get divers => 'Divers';
 }

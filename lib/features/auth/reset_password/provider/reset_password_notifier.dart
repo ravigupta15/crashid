@@ -6,6 +6,7 @@ import 'package:crashid/features/auth/reset_password/model/reset_password_send_m
 import 'package:crashid/features/auth/reset_password/presentation/widgets/password_change_confirmation_widget.dart';
 import 'package:crashid/features/auth/reset_password/provider/reset_password_state.dart';
 import 'package:crashid/features/auth/signin/presentation/pages/signin_screen.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
@@ -32,7 +33,7 @@ class ResetPasswordNotifier extends AsyncNotifier<ResetPasswordState> {
     } catch (_) {
       if (context.mounted) {
         showFeedbackMessage(
-          'Something went wrong. Please try again.',
+          AppLocalizations.of(context)!.somethingWentWrong,
           context: context,
           feedbackStyle: FeedbackStyle.snackBar,
           snackBarBgColor: AppColors.redColor,

@@ -7,6 +7,7 @@ import 'package:crashid/features/auth/forget_password/presentation/widgets/check
 import 'package:crashid/features/auth/registration/model/registration_response_model.dart';
 import 'package:crashid/features/auth/registration/model/registration_send_model.dart';
 import 'package:crashid/features/auth/registration/provider/registration_state.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/app_dialog_box/app_dialog_box.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
@@ -35,7 +36,7 @@ class RegistrationNotifier extends AsyncNotifier<RegistrationState> {
     } catch (_) {
       if (context.mounted) {
         showFeedbackMessage(
-          'Something went wrong. Please try again.',
+          AppLocalizations.of(context)!.somethingWentWrong,
           context: context,
           feedbackStyle: FeedbackStyle.snackBar,
           snackBarBgColor: AppColors.redColor,
@@ -63,7 +64,7 @@ class RegistrationNotifier extends AsyncNotifier<RegistrationState> {
     } catch (_) {
       if (context.mounted) {
         showFeedbackMessage(
-          'Something went wrong. Please try again.',
+          AppLocalizations.of(context)!.somethingWentWrong,
           context: context,
           feedbackStyle: FeedbackStyle.snackBar,
           snackBarBgColor: AppColors.redColor,

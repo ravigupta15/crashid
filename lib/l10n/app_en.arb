@@ -71,5 +71,13 @@
   "confirmPassword" : "Comfirm Password",
   "required" : "Required",
   "pleaseAcceptTermsAndConditions" : "Please accept the terms and conditions.",
-  "pleaseAcceptPrivacyPolicy" : "Please accept the privacy policy."
+  "pleaseAcceptPrivacyPolicy" : "Please accept the privacy policy.",
+  "somethingWentWrong" : "Something went wrong. Please try again.",
+  "invalidOtp" : "Invalid OTP",
+  "didntGetOtp" : "Didn't Get OTP?",
+  "resendOtp" : "Resend OTP",
+  "otpSentMessageTitle" : "A magic code to sign in was sent to",
+  "otpResentSuccessfully" : "OTP resent successfully.",
+  "pleaseUploadAllRequiredDocuments" : "Please upload all required documents.",
+  "divers" : "Divers"
 }

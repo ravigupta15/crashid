@@ -8,6 +8,7 @@ import 'package:crashid/features/auth/otp/model/otp_send_model.dart';
 import 'package:crashid/features/auth/otp/provider/otp_state.dart';
 import 'package:crashid/features/auth/reset_password/presentation/pages/reset_password_screen.dart';
 import 'package:crashid/features/auth/signin/model/signin_response_model.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/loader/loader_service.dart';
@@ -63,7 +64,7 @@ class OtpNotifier extends AsyncNotifier<OtpState> {
       final response = await repo.resendOtp(model: model);
       if (response?.statusCode == 200) {
         showFeedbackMessage(
-          response?.data['message'] ?? 'OTP resent successfully.',
+          response?.data['message'] ?? AppLocalizations.of(context)!.otpResentSuccessfully,
         );
         return true;
       }
@@ -71,7 +72,7 @@ class OtpNotifier extends AsyncNotifier<OtpState> {
     } catch (_) {
       if (context.mounted) {
         showFeedbackMessage(
-          'Something went wrong. Please try again.',
+          AppLocalizations.of(context)!.somethingWentWrong,
           context: context,
           feedbackStyle: FeedbackStyle.snackBar,
           snackBarBgColor: AppColors.redColor,

@@ -529,6 +529,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please accept the privacy policy.'**
   String get pleaseAcceptPrivacyPolicy;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get somethingWentWrong;
+
+  /// No description provided for @invalidOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid OTP'**
+  String get invalidOtp;
+
+  /// No description provided for @didntGetOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t Get OTP?'**
+  String get didntGetOtp;
+
+  /// No description provided for @resendOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend OTP'**
+  String get resendOtp;
+
+  /// No description provided for @otpSentMessageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A magic code to sign in was sent to'**
+  String get otpSentMessageTitle;
+
+  /// No description provided for @otpResentSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'OTP resent successfully.'**
+  String get otpResentSuccessfully;
+
+  /// No description provided for @pleaseUploadAllRequiredDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload all required documents.'**
+  String get pleaseUploadAllRequiredDocuments;
+
+  /// No description provided for @divers.
+  ///
+  /// In en, this message translates to:
+  /// **'Divers'**
+  String get divers;
 }
 
 class _AppLocalizationsDelegate

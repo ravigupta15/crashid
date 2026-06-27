@@ -194,7 +194,7 @@ Widget _screenContent() {
                         AppRadioBtnWithOptionalTitle(
                           selectedIndex: selectedGenderIndex,
                           index: 2,
-                          title: "Divers",
+                          title: AppLocalizations.of(context)!.divers,
                           onChanged: _onGenderChanged,
                           isTitleFirst: true,
                         ),
@@ -348,7 +348,7 @@ Widget _screenContent() {
                     Validator.emojiRestrict(),
                     Validator.removeWhiteSpace(),
                   ],
-              hintText: "Password", 
+              hintText: AppLocalizations.of(context)!.password, 
                 textInputAction: TextInputAction.done,
                 initialValue: sendModel?.password,
                 validator: validatePassword,
@@ -473,19 +473,19 @@ Widget _screenContent() {
     if (!_isAllDocumentSelected()) {
       showFeedbackMessage(  
         context: context,
-         'Please upload all required documents.',
+         AppLocalizations.of(context)!.pleaseUploadAllRequiredDocuments,
         
       );
       return;
     } else if (sendModel?.termsAccepted != true) {
       showFeedbackMessage(
         context: context,
-         'Please accept the terms and conditions.',
+         AppLocalizations.of(context)!.pleaseAcceptTermsAndConditions,
       );
       return;
     } else if (sendModel?.privacyAccepted != true) {
       showFeedbackMessage(context: context, 
-       'Please accept the privacy policy.',
+       AppLocalizations.of(context)!.pleaseAcceptPrivacyPolicy,
       );
       return;
     }

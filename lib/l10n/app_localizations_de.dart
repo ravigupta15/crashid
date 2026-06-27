@@ -239,4 +239,31 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get pleaseAcceptPrivacyPolicy =>
       'Bitte akzeptieren Sie die Datenschutzrichtlinie.';
+
+  @override
+  String get somethingWentWrong =>
+      'Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get invalidOtp => 'Ungültiges OTP';
+
+  @override
+  String get didntGetOtp => 'OTP nicht erhalten?';
+
+  @override
+  String get resendOtp => 'OTP erneut senden';
+
+  @override
+  String get otpSentMessageTitle =>
+      'Ein Sicherheitscode zum Anmelden wurde gesendet an';
+
+  @override
+  String get otpResentSuccessfully => 'OTP erfolgreich erneut gesendet.';
+
+  @override
+  String get pleaseUploadAllRequiredDocuments =>
+      'Bitte laden Sie alle erforderlichen Dokumente hoch.';
+
+  @override
+  String get divers => 'Divers';
 }

@@ -70,5 +70,13 @@
       "confirmPassword" : "Passwort Bestätigen",
       "required" : "Erforderlich",
       "pleaseAcceptTermsAndConditions" : "Bitte akzeptieren Sie die Nutzungsbedingungen.",
-      "pleaseAcceptPrivacyPolicy" : "Bitte akzeptieren Sie die Datenschutzrichtlinie."
+      "pleaseAcceptPrivacyPolicy" : "Bitte akzeptieren Sie die Datenschutzrichtlinie.",
+      "somethingWentWrong" : "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.",
+      "invalidOtp" : "Ungültiges OTP",
+      "didntGetOtp" : "OTP nicht erhalten?",
+      "resendOtp" : "OTP erneut senden",
+      "otpSentMessageTitle" : "Ein Sicherheitscode zum Anmelden wurde gesendet an",
+      "otpResentSuccessfully" : "OTP erfolgreich erneut gesendet.",
+      "pleaseUploadAllRequiredDocuments" : "Bitte laden Sie alle erforderlichen Dokumente hoch.",
+      "divers" : "Divers"
 }

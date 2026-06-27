@@ -64,7 +64,7 @@ final forgetPasswordProvider =
           child: Column(
             children: [
               Text(
-                "Forget Password ",
+                AppLocalizations.of(context)!.forgetPassword,
                 style: context.titleLarge.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -86,7 +86,7 @@ final forgetPasswordProvider =
                   height: 12,
                   width: 16,
                 ),
-                hintText: 'Email Address',
+                hintText: AppLocalizations.of(context)!.emailAddress,
                 textInputType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.done,
                 initialValue: sendModel?.email,

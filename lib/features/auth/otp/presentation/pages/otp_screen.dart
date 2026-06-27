@@ -4,6 +4,7 @@ import 'package:crashid/features/auth/otp/model/otp_send_model.dart';
 import 'package:crashid/features/auth/otp/provider/otp_notifier.dart';
 import 'package:crashid/features/auth/otp/provider/otp_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/gestures.dart';
@@ -94,7 +95,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Enter OTP',
+                AppLocalizations.of(context)!.enterOtp,
                 style: context.titleLarge.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -104,7 +105,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
               Image.asset(AppAssetPaths.otpImg, height: 190),
               const SizedBox(height: 32),
               Text(
-                'A magic code to sign in was sent to',
+                AppLocalizations.of(context)!.otpSentMessageTitle,
                 textAlign: TextAlign.center,
                 style: context.bodyMedium.copyWith(
                   fontSize: 12,
@@ -136,7 +137,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           AppElevatedButton.withTitle(
-            title: 'Continue',
+            title: AppLocalizations.of(context)!.continueTitle,
             onPressed: _validateOtp,
           ),
           const SizedBox(height: 30),
@@ -149,7 +150,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
               ),
               children: [
                 TextSpan(
-                  text: 'Didn’t Get OTP? ',
+                  text: AppLocalizations.of(context)!.didntGetOtp,
                   style: context.bodyMedium.copyWith(
                     fontWeight: FontWeight.w500,
                     fontSize: 12,
@@ -157,7 +158,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                   ),
                 ),
                 TextSpan(
-                  text: 'Resend OTP',
+                  text: AppLocalizations.of(context)!.resendOtp,
                   style: context.titleMedium.copyWith(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
@@ -205,10 +206,10 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
       enableActiveFill: true,
       validator: (val) {
         if (val == null || val.isEmpty) {
-          return 'Required';
+          return AppLocalizations.of(context)!.required;
         }
         if (val.length < 6) {
-          return 'Invalid OTP';
+          return AppLocalizations.of(context)!.invalidOtp;
         }
         return null;
       },
