@@ -72,7 +72,7 @@ class AppDateFormat {
 
 static String convertToIsoFormat(String dateString) {
   try {
-    DateFormat inputFormat = DateFormat("MMMM dd, yyyy");
+    DateFormat inputFormat = DateFormat("MMM dd, yyyy");
     
     DateTime parsedDate = inputFormat.parse(dateString);
     

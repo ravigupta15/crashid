@@ -6,6 +6,7 @@ import 'package:crashid/features/add_car/model/colors_model.dart';
 import 'package:crashid/features/add_car/model/md_model.dart';
 import 'package:crashid/features/add_car/provider/add_car_state.dart';
 import 'package:crashid/features/add_car/repository/add_car_repository.dart';
+import 'package:crashid/features/my_insurance/model/insurance_response_model.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/loader/loader_service.dart';
@@ -60,6 +61,18 @@ class AddCarNotifier extends AsyncNotifier<AddCarState> {
     } catch (_) {
      } finally {
       LoaderService().hideLoader();
+    }
+  }
+
+  Future insurance() async {
+    try {
+      final repo = ref.read(addCarRepositoryProvider);
+      final response = await repo.insurance();
+      if (response?.statusCode == 201 || response?.statusCode == 200) {
+        state = AsyncData(state.value!.copyWith(insuranceResponseModel: InsuranceResponseModel.fromJson(response?.data)));
+      }
+    } catch (_) {
+     } finally {
     }
   }
 

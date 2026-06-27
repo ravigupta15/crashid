@@ -126,6 +126,18 @@ class _CarDetailsScreenState extends ConsumerState<CarDetailsScreen> {
                     CarDetailInfoRow(
                       label: 'FIN/VIN',
                       value: model.finVin ?? '-',
+                    ),const SizedBox(height: 20),
+                    CarDetailInfoRow(
+                      label: 'HP/PS',
+                      value: (model.hpPs ?? '-').toString(),
+                    ),const SizedBox(height: 20),
+                    CarDetailInfoRow(
+                      label: 'Mileage (Km)',
+                      value: (model.mileageKm ?? '-').toString(),
+                    ),const SizedBox(height: 20),
+                    CarDetailInfoRow(
+                      label: 'TÜV Date',
+                      value: AppDateFormat.formatDate(model.tuevDate ?? ''),
                     ),
                     const SizedBox(height: 20),
                     CarDetailInfoRow(
@@ -157,6 +169,21 @@ class _CarDetailsScreenState extends ConsumerState<CarDetailsScreen> {
                         ),
                       ),
                     ],
+                    if ((model.tuevDocumentUrl ?? '').isNotEmpty) ...[
+                      const SizedBox(height: 24),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: _InsurancePdfCard(
+                          date: AppDateFormat.formatMonthYear(model.createdAt),
+                          onView: () {
+                            print(model.tuevDocumentUrl ?? '');
+                            LaunchURLUtils().launchStringURL(
+                              model.tuevDocumentUrl ?? '',
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                     Padding(
                       padding: const EdgeInsets.only(top: 19),
                       child: Divider(color: Color(0xffF6F7F9)),
@@ -182,6 +209,8 @@ class _CarDetailsScreenState extends ConsumerState<CarDetailsScreen> {
 
   void _openDialogBox() {
     AppDialogBox().openBox(
+      
+    maxWidthMinWidth: MediaQuery.of(context).size.width * .8,
       title: 'Delete Car',
       subTitle: 'Are you sure you want to delete this car?',
       yesTap: () {

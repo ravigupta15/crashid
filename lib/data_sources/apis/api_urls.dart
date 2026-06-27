@@ -23,6 +23,7 @@ abstract class ApiUrls {
   static const carBrandsUrl = "${baseUrl}vehicle-masters/brands";
   static const carColorUrl = "${baseUrl}vehicle-masters/colors";
   static const vehicleUrl = "${baseUrl}user/vehicles";
+  static const insuranceCompanyUrl = "${baseUrl}user/vehicles/insurance";
 
   // notification
   static const fcmTokenUrl = "${baseUrl}user/auth/fcm-token";

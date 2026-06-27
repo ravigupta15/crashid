@@ -29,8 +29,17 @@ Future<Response?> carBrands() async{
       method: ApiMethod.get,
     );
   }
+
+  Future<Response?> insurance() async {
+    return _apiService.sendRequest(
+      apiUrl: ApiUrls.insuranceUrl,
+      method: ApiMethod.get,
+    );
+  }
+
   Future<Response?> addCar({AddCarSendModel? model}) async{
     FormData formData = await model!.toFormData();
+     print(formData.fields);
     return _apiService.sendRequest(
       apiUrl: ApiUrls.vehicleUrl,
       method: ApiMethod.post,

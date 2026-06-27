@@ -8,6 +8,9 @@ class AddCarSendModel {
   String? carName;
   String? fuelType;
   String? registrationDateFrom;
+  String? hpPs;
+  String? mileage;
+  String? tuevDate;
   String? color;
   String? vinNumber;
   String? insuranceCompany;
@@ -17,6 +20,7 @@ class AddCarSendModel {
   String? insuranceEndDate;
   List<File> selectedCarImages;
   File? selectedInsurancePdf;
+  File? selectedTuevReportPdf;
 
   AddCarSendModel({
     this.plateNumber,
@@ -25,6 +29,9 @@ class AddCarSendModel {
     this.carName,
     this.fuelType,
     this.registrationDateFrom,
+    this.hpPs,
+    this.mileage,
+    this.tuevDate,
     this.color,
     this.vinNumber,
     this.insuranceCompany,
@@ -33,6 +40,7 @@ class AddCarSendModel {
     this.insuranceStartDate,
     this.insuranceEndDate,
     this.selectedInsurancePdf,
+    this.selectedTuevReportPdf,
     this.selectedCarImages = const [],
   });
   
@@ -44,6 +52,9 @@ class AddCarSendModel {
       "car_name": carName,
       "fuel_type": fuelType,
       "registration_date": registrationDateFrom,
+      "hp_ps": hpPs,
+      "mileage_km": mileage,
+      "tuev_date": tuevDate,
       "color_id": color,
       "fin_vin": vinNumber,
       "insurance_company_name": insuranceCompany,
@@ -56,6 +67,10 @@ class AddCarSendModel {
     // Handle Files - Only add if they are not null
     if (selectedInsurancePdf != null) {
       map["insurance_image"] = await MultipartFile.fromFile(selectedInsurancePdf!.path);
+    }
+
+    if (selectedTuevReportPdf != null) {
+      map["tuev_document"] = await MultipartFile.fromFile(selectedTuevReportPdf!.path);
     }
     
     if (selectedCarImages.isNotEmpty) {

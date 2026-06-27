@@ -1,3 +1,4 @@
+import 'package:crashid/features/my_insurance/model/insurance_response_model.dart';
 import 'package:crashid/features/widgets/app_textfield/custom_dropdown_widget.dart';
 
 class AppDropdownItemWidget {
@@ -13,6 +14,18 @@ class AppDropdownItemWidget {
     CustomDropDownItem(key: "EV", value: "EV"),
     CustomDropDownItem(key: "Cng", value: "Cng"),
   ];
+
+  static List<CustomDropDownItem> insuranceCompanies(
+      List<InsuranceModel>? insuranceList) {
+    return insuranceList
+            ?.map((insurance) => CustomDropDownItem(
+                  key: '${insurance.insuranceId}',
+                  value: '${insurance.insuranceCompanyName ?? ''}',
+                ))
+            .toList() ??
+        [];
+  }
+
   // static List<CustomDropDownItem> operatorDropdown(List<Operators> list) {
   //   final List<CustomDropDownItem> menuItems = [];
   //   for (final item in list) {

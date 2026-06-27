@@ -36,6 +36,9 @@ class CarDetailsModel {
   dynamic colorHex;
   dynamic registrationDate;
   dynamic finVin;
+  dynamic hpPs;
+  dynamic mileageKm;
+  dynamic tuevDate;
   dynamic isDefault;
   dynamic createdAt;
   dynamic updatedAt;
@@ -47,6 +50,7 @@ class CarDetailsModel {
   dynamic validUntil;
   dynamic insuranceImage;
   dynamic insuranceImageUrl;
+  dynamic tuevDocumentUrl;
   List<Images>? images;
 
   CarDetailsModel(
@@ -63,6 +67,9 @@ class CarDetailsModel {
       this.colorHex,
       this.registrationDate,
       this.finVin,
+      this.hpPs,
+      this.mileageKm,
+      this.tuevDate,
       this.isDefault,
       this.createdAt,
       this.updatedAt,
@@ -74,6 +81,7 @@ class CarDetailsModel {
       this.validUntil,
       this.insuranceImage,
       this.insuranceImageUrl,
+      this.tuevDocumentUrl,
       this.images});
 
   CarDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -90,6 +98,9 @@ class CarDetailsModel {
     colorHex = json['color_hex'];
     registrationDate = json['registration_date'];
     finVin = json['fin_vin'];
+    hpPs = json['hp_ps'];
+    mileageKm = json['mileage_km'];
+    tuevDate = json['tuev_date'];
     isDefault = json['is_default'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -101,6 +112,7 @@ class CarDetailsModel {
     validUntil = json['valid_until'];
     insuranceImage = json['insurance_image'];
     insuranceImageUrl = json['insurance_image_url'];
+    tuevDocumentUrl = json['tuev_document_url'];
     if (json['images'] != null) {
       images = <Images>[];
       json['images'].forEach((v) {
@@ -124,6 +136,9 @@ class CarDetailsModel {
     data['color_hex'] = colorHex;
     data['registration_date'] = registrationDate;
     data['fin_vin'] = finVin;
+    data['hp_ps'] = hpPs;
+    data['mileage_km'] = mileageKm;
+    data['tuev_date'] = tuevDate;
     data['is_default'] = isDefault;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
@@ -135,6 +150,7 @@ class CarDetailsModel {
     data['valid_until'] = validUntil;
     data['insurance_image'] = insuranceImage;
     data['insurance_image_url'] = insuranceImageUrl;
+    data['tuev_document_url'] = tuevDocumentUrl;
     if (images != null) {
       data['images'] = images?.map((v) => v.toJson()).toList();
     }

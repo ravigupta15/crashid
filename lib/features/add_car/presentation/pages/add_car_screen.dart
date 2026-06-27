@@ -39,6 +39,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
   final _formKey = GlobalKey<FormState>();
   AddCarSendModel? sendModel;
   final _registrationDateController = TextEditingController();
+  final _tuevDateController = TextEditingController();
   final _insuranceStartDateController = TextEditingController();
   final _insuranceEndDateController = TextEditingController();
 
@@ -52,11 +53,13 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
   void _callInitFunction() {
     ref.read(addCarNotifierProvider.notifier).carBrands(context);
     ref.read(addCarNotifierProvider.notifier).carColors();
+    ref.read(addCarNotifierProvider.notifier).insurance();
   }
 
   @override
   void dispose() {
     _registrationDateController.dispose();
+    _tuevDateController.dispose();
     _insuranceStartDateController.dispose();
     _insuranceEndDateController.dispose();
     super.dispose();
@@ -94,6 +97,10 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               CustomDropDownItem(key: '${color.id}', value: '${color.name}'),
         )
         .toList();
+
+    final insuranceCompanies = AppDropdownItemWidget.insuranceCompanies(
+      addCarState.value?.insuranceResponseModel?.data,
+    );
 
     return SingleChildScrollView(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30, top: 20),
@@ -140,17 +147,17 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               validator: _validateDropdown,
               onChanged: (value) => sendModel?.model = value?.key,
             ),
-            const SizedBox(height: 20),
-            AppTextFormField(
-              hintText: "Car Name",
-              inputFormatters: [
-                Validator.emojiRestrict(),
-                Validator.removeLeadingWhiteSpace(),
-              ],
-              validator: validateEmpty,
-              onChanged: (value) => sendModel?.carName = value,
-              textInputAction: TextInputAction.next,
-            ),
+            // const SizedBox(height: 20),
+            // AppTextFormField(
+            //   hintText: "Car Name",
+            //   inputFormatters: [
+            //     Validator.emojiRestrict(),
+            //     Validator.removeLeadingWhiteSpace(),
+            //   ],
+            //   validator: validateEmpty,
+            //   onChanged: (value) => sendModel?.carName = value,
+            //   textInputAction: TextInputAction.next,
+            // ),
             const SizedBox(height: 20),
             CustomDropDownFormFiledWidget(
               hintText: "Fuel Type",
@@ -171,6 +178,42 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               textInputAction: TextInputAction.next,
               validator: validateEmpty,
               onTap: () => _pickDate(_registrationDateController),
+            ),
+            const SizedBox(height: 20),
+            AppTextFormField(
+              hintText: "HP/PS",
+              initialValue: sendModel?.hpPs,
+              textInputAction: TextInputAction.next,
+              textInputType: TextInputType.number,
+              inputFormatters: [
+                Validator.removeLeadingWhiteSpace(),
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              validator: validateEmpty,
+              onSaved: (value) => sendModel?.hpPs = value?.trim(),
+            ),
+            const SizedBox(height: 20),
+            AppTextFormField(
+              hintText: "Mileage",
+              initialValue: sendModel?.mileage,
+              textInputType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                Validator.removeLeadingWhiteSpace(),
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              validator: validateEmpty,
+              onSaved: (value) => sendModel?.mileage = value?.trim(),
+            ),
+            const SizedBox(height: 20),
+            AppTextFormField(
+              hintText: "TÜV Date",
+              controller: _tuevDateController,
+              textColor: AppColors.darkGrayColor,
+              isReadOnly: true,
+              textInputAction: TextInputAction.next,
+              validator: validateEmpty,
+              onTap: () => _pickDate(_tuevDateController),
             ),
             const SizedBox(height: 20),
             CustomDropDownFormFiledWidget(
@@ -199,16 +242,19 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
               _selectedCarImagesWidget(),
             ],
             const SizedBox(height: 20),
-            AppTextFormField(
-              hintText: "Insurance Company",
-              initialValue: sendModel?.insuranceCompany,
-              textInputAction: TextInputAction.next,
-              inputFormatters: [
-                Validator.emojiRestrict(),
-                Validator.removeLeadingWhiteSpace(),
-              ],
-              validator: validateEmpty,
-              onSaved: (value) => sendModel?.insuranceCompany = value?.trim(),
+            CustomDropDownFormFiledWidget(
+              items: insuranceCompanies,
+              hintText: 'Insurance Company',
+              validator: _validateDropdown,
+              initialValue: _selectedItem(
+                insuranceCompanies,
+                sendModel?.insuranceCompany,
+              ),
+              onChanged: (value) {
+                setState(() {
+                  sendModel?.insuranceCompany = value?.value;
+                });
+              },
             ),
 
             const SizedBox(height: 20),
@@ -286,6 +332,17 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
             if (sendModel?.selectedInsurancePdf != null) ...[
               const SizedBox(height: 10),
               _selectedPdfWidget(),
+            ],
+            const SizedBox(height: 20),
+            _buildUploadField(
+              title: sendModel?.selectedTuevReportPdf == null
+                  ? 'TÜV Report (Optional)'
+                  : _fileNameFromPath(sendModel!.selectedTuevReportPdf!.path),
+              onTap: _pickTuevReport,
+            ),
+            if (sendModel?.selectedTuevReportPdf != null) ...[
+              const SizedBox(height: 10),
+              _selectedTuevReportWidget(),
             ],
             const SizedBox(height: 20),
             AppElevatedButton.withTitle(
@@ -449,6 +506,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
     }
     _formKey.currentState!.save();
     sendModel?.registrationDateFrom = _registrationDateController.text.trim();
+    sendModel?.tuevDate = _tuevDateController.text.trim();
     sendModel?.insuranceStartDate = _insuranceStartDateController.text.trim();
     sendModel?.insuranceEndDate = _insuranceEndDateController.text.trim();
     await ref
@@ -460,6 +518,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
     final pickedDate = await DatePickerService.pickDob(
       context,
       previousYearLimit: DateTime.now().year,
+      lastDate: DateTime(2100),
       initialDate: controller.text.isEmpty
           ? null
           : _parseCurrentText(controller.text),
@@ -553,6 +612,51 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
     setState(() {
       sendModel?.selectedInsurancePdf = file;
     });
+  }
+
+  Future<void> _pickTuevReport() async {
+    final file = await ImagePickerService.pickPdfFile();
+    if (file == null) return;
+    setState(() {
+      sendModel?.selectedTuevReportPdf = file;
+    });
+  }
+
+  Widget _selectedTuevReportWidget() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.lightGrayColor),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.picture_as_pdf, color: AppColors.primaryColor),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              _fileNameFromPath(sendModel?.selectedTuevReportPdf?.path ?? ''),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: context.bodyMedium.copyWith(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: AppColors.darkGrayColor,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              setState(() {
+                sendModel?.selectedTuevReportPdf = null;
+              });
+            },
+            child: const Icon(Icons.close, size: 18),
+          ),
+        ],
+      ),
+    );
   }
 
   void _removeCarImage(int index) {

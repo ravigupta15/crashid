@@ -1,7 +1,7 @@
 class InsuranceResponseModel {
-  bool? success;
-  String? message;
-  List<InsuranceModel>? data;
+  dynamic success;
+  dynamic message;
+  List<Data>? data;
 
   InsuranceResponseModel({this.success, this.message, this.data});
 
@@ -9,9 +9,9 @@ class InsuranceResponseModel {
     success = json['success'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <InsuranceModel>[];
+      data = <Data>[];
       json['data'].forEach((v) {
-        data!.add( InsuranceModel.fromJson(v));
+        data?.add(Data.fromJson(v));
       });
     }
   }
@@ -27,7 +27,7 @@ class InsuranceResponseModel {
   }
 }
 
-class InsuranceModel {
+class Data {
   dynamic insuranceId;
   dynamic insuranceCompanyName;
   dynamic insuranceNumber;
@@ -44,7 +44,7 @@ class InsuranceModel {
   dynamic colorHex;
   dynamic insuranceImageUrl;
 
-  InsuranceModel(
+  Data(
       {this.insuranceId,
       this.insuranceCompanyName,
       this.insuranceNumber,
@@ -61,7 +61,7 @@ class InsuranceModel {
       this.colorHex,
       this.insuranceImageUrl});
 
-  InsuranceModel.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     insuranceId = json['insurance_id'];
     insuranceCompanyName = json['insurance_company_name'];
     insuranceNumber = json['insurance_number'];
