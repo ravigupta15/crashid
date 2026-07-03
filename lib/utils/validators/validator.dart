@@ -1,8 +1,12 @@
+import 'package:crashid/app_routes/app_routes.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/utils/extensions/extension_string.dart';
 import 'package:flutter/services.dart';
 
 class Validator {
   static final regEmail = RegExp(r'[\x20-\x7E]');
+
+  static final context = AppRouter.mainNavigatorKey.currentContext;
 
   static final RegExp vehicleRegExp = RegExp(
     r'^([A-Z]{1,3})\s*([A-Z]{1,2})\s*([1-9][0-9]{0,3})[EH]?$',
@@ -93,102 +97,79 @@ class Validator {
 
   static String? validateEmail(String? val) {
     if (val.isNullOrEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     } else if (!isEmail(val!)) {
-      return "Invalid Email";
+      return AppLocalizations.of(context!)!.invalidEmail;
     }
     return null;
   }
 
   static String? validateEmpty(String? val) {
     if (val.isNullOrEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     }
     return null;
   }
 
-  static String? validateMeterAmount(String? val, String? min, String? max) {
-    if (val == null || val.isEmpty) {
-      return 'Required';
-    }
 
-    final amount = double.tryParse(val);
-    final minValue = double.tryParse(min ?? '');
-    final maxValue = double.tryParse(max ?? '');
+  // static String? validatePassword(String? val) {
+  //   if (val.isNullOrEmpty) {
+  //     return 'Required';
+  //   } else if (!isPassword(val!)) {
+  //     return 'Password must be at least 8 characters long, include at least one uppercase letter and one number.';
+  //   }
+  //   return null;
+  // }
 
-    if (amount == null) {
-      return 'Enter a valid number';
-    }
-
-    if (minValue != null && amount < minValue) {
-      return 'Amount must be at least $min';
-    }
-
-    if (maxValue != null && amount > maxValue) {
-      return 'Amount must not exceed $max';
-    }
-
-    return null;
-  }
-
-  static String? validatePassword(String? val) {
-    if (val.isNullOrEmpty) {
-      return 'Required';
-    } else if (!isPassword(val!)) {
-      return 'Password must be at least 8 characters long, include at least one uppercase letter and one number.';
-    }
-    return null;
-  }
-
-  static String? validateConfirmPassword(
-    String? val,
-    String? previousPassword,
-  ) {
-    if (val.isNullOrEmpty) {
-      return 'Required';
-    } else if (!isPassword(val!)) {
-      return 'Password must be at least 8 characters long, include at least one uppercase letter and one number.';
-    } else if (val != previousPassword) {
-      return "Password does not match";
-    }
-    return null;
-  }
+  // static String? validateConfirmPassword(
+  //   String? val,
+  //   String? previousPassword,
+  // ) {
+  //   if (val.isNullOrEmpty) {
+  //     return AppLocalizations.of(context!)!.required;
+  //   } else if (!isPassword(val!)) {
+  //     return 'Password must be at least 8 characters long, include at least one uppercase letter and one number.';
+  //   } else if (val != previousPassword) {
+  //     return AppLocalizations.of(context!)!.passcodeDoesNotMatch;
+  //   }
+  //   return null;
+  // }
 
   static String? validatePhoneNumber(String? val) {
     if (val.isNullOrEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     } else if (val!.length < 10) {
-      return "Invalid Number";
+      return AppLocalizations.of(context!)!.invalidNumber;
     }
     return null;
   }
 
   static String? validateBvnNumber(String? val) {
     if (val.isNullOrEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     } else if (val!.length < 11) {
-      return "BVN Number must be 11";
+      return AppLocalizations.of(context!)!.bvnLengthInvalid;
     }
     return null;
   }
 
-  static String? validatePasscode(String? val) {
-    if (val.isNullOrEmpty) {
-      return "Required";
-    } else if (val!.length < 6) {
-      return "Passcode must be 6 digit";
-    }
-    return null;
-  }
+  // static String? validatePasscode(String? val) {
+  //   if (val.isNullOrEmpty) {
+  //     return AppLocalizations.of(context!)!.required;
+  //   } else if (val!.length < 6) {
+  //     return AppLocalizations.of(context!)!.passcodeLengthInvalid;
+  //   }
+  //   return null;
+  // }
 
-  static String? validateConfirmPasscode(String? val, String? previous) {
-    if (val.isNullOrEmpty) {
-      return "Required";
-    } else if (val != previous) {
-      return "Passcode does not match";
-    }
-    return null;
-  }
+  // static String? validateConfirmPasscode(String? val, String? previous) {
+  //   if (val.isNullOrEmpty) {
+  //     return AppLocalizations.of(context!)!.required;
+  //   } else if (val != previous) {
+  //     return AppLocalizations.of(context!)!.passcodeDoesNotMatch;
+  //   }
+  //   return null;
+  // }
 
   static bool isUrl(String url) {
     String pattern =

@@ -1,11 +1,20 @@
+import 'package:crashid/app_routes/app_routes.dart';
+import 'package:crashid/data_sources/local_storage/user_manager.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/utils/extensions/extension_string.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 
 class AppDateFormat {
+
+ static final context = AppRouter.mainNavigatorKey.currentContext;
+
+ static final currentLanguage = GetIt.I<UserManager>().language == 'de' ? 'de' : 'en';
+
   static String formatUtcTimestamp(String utcTimestamp) {
     if (utcTimestamp.isNotNullOrNotEmpty) {
       DateTime dateTime = DateTime.parse(utcTimestamp).toLocal();
-      DateFormat formatter = DateFormat('MM/dd/yyyy - h:mma');
+      DateFormat formatter = DateFormat('MM/dd/yyyy - h:mma', currentLanguage);
       return formatter.format(dateTime);
     }
     return '';
@@ -34,62 +43,74 @@ class AppDateFormat {
   static String formatMonthYear(String utcTimestamp) {
     if (utcTimestamp.isNotNullOrNotEmpty) {
       DateTime dateTime = DateTime.parse(utcTimestamp).toLocal();
-      DateFormat formatter = DateFormat('MMM yyyy');
+      DateFormat formatter = DateFormat('MMM yyyy',currentLanguage);
       return formatter.format(dateTime);
     }
     return '';
   }
 
-  static String formatUtcToOrder(String utcTimestamp) {
-    if (utcTimestamp.isNotNullOrNotEmpty) {
-      DateTime dateTime = DateTime.parse(utcTimestamp).toLocal();
-      DateFormat formatter = DateFormat("MMMM d, yyyy 'at' h:mma");
-      String formatted = formatter.format(dateTime);
-      return formatted.replaceAll('AM', 'am').replaceAll('PM', 'pm');
+  static String formatUtcToOrder(String utcTimestamp, String currentLanguage) {
+  if (utcTimestamp.isNotNullOrNotEmpty) {
+    DateTime dateTime = DateTime.parse(utcTimestamp).toLocal();
+    String pattern;
+    if (currentLanguage == 'de') {
+      pattern = "d. MMMM yyyy 'um' HH:mm";
+    } else {
+      pattern = "MMMM d, yyyy 'at' h:mma";
     }
-    return '';
+
+    DateFormat formatter = DateFormat(pattern, currentLanguage);
+    String formatted = formatter.format(dateTime);
+    
+    if (currentLanguage != 'de') {
+      formatted = formatted.replaceAll('AM', 'am').replaceAll('PM', 'pm');
+    }
+    
+    return formatted;
   }
+  return '';
+}
 
 /// Local date for accident summary cards (e.g. Apr 24, 2024).
   static String formatMonthDateYear(String utcTimestamp) {
      if (utcTimestamp.isNotNullOrNotEmpty) {
          DateTime dateTime = DateTime.parse(utcTimestamp).toLocal();
-    return DateFormat('MMM d, yyyy').format(dateTime.toLocal());
+    return DateFormat('MMM d, yyyy', currentLanguage).format(dateTime.toLocal());
   }
   return '';
   }
   /// Local date for accident summary cards (e.g. Apr 24, 2024).
   static String formatAccidentCardDate(DateTime dateTime) {
-    return DateFormat('MMM d, yyyy').format(dateTime.toLocal());
+    return DateFormat('MMM d, yyyy', currentLanguage).format(dateTime.toLocal());
   }
 
   /// Local time for accident summary cards (e.g. 9:41 AM).
   static String formatAccidentCardTime(DateTime dateTime) {
-    return DateFormat('h:mm a').format(dateTime.toLocal());
+    return DateFormat('h:mm a', currentLanguage).format(dateTime.toLocal());
   }
 
 
 
 static String convertToIsoFormat(String dateString) {
   try {
-    DateFormat inputFormat = DateFormat("MMM dd, yyyy");
+    DateFormat inputFormat = DateFormat("MMM dd, yyyy", currentLanguage);
     
     DateTime parsedDate = inputFormat.parse(dateString);
     
     return DateFormat("yyyy-MM-dd").format(parsedDate);
   } catch (e) {
-    return "Invalid Date Format";
+    return AppLocalizations.of(context!)!.invalidDateFormat;
   }
 }
 
 
 static String convertTo24Hour(String time12) {
   try {
-    DateFormat inputFormat = DateFormat("hh:mm a");
+    DateFormat inputFormat = DateFormat("hh:mm a", currentLanguage);
     DateTime date = inputFormat.parse(time12);
     return DateFormat("HH:mm").format(date);
   } catch (e) {
-    return "Invalid Time";
+    return AppLocalizations.of(context!)!.invalidTime;
   }
 }
 
@@ -97,7 +118,7 @@ static String convertTo24Hour(String time12) {
 static String formatMonthDay(String utcTimestamp) {
   if (utcTimestamp.isNotNullOrNotEmpty) {
     DateTime dateTime = DateTime.parse(utcTimestamp).toLocal();
-    DateFormat formatter = DateFormat('MMM dd');
+    DateFormat formatter = DateFormat('MMM dd', currentLanguage);
     return formatter.format(dateTime);
   }
   return '';
@@ -107,16 +128,17 @@ static String formatMonthDay(String utcTimestamp) {
 static String formatTime(String time24) {
   try {
     if (time24.isNotNullOrNotEmpty) {
-      DateFormat inputFormat = DateFormat('HH:mm:ss');
+      DateFormat inputFormat = DateFormat('HH:mm:ss', currentLanguage);
       DateTime dateTime = inputFormat.parse(time24);
-      DateFormat outputFormat = DateFormat('h:mm a');
+      DateFormat outputFormat = DateFormat('h:mm a', currentLanguage);
       return outputFormat.format(dateTime);
     }
     return '';
   } catch (e) {
-    return 'Invalid Time';
+    return AppLocalizations.of(context!)!.invalidTime;
   }
 }
+
 
  static String timeAgo(String isoDateString) {
   try {
@@ -129,27 +151,60 @@ static String formatTime(String time24) {
     Duration difference = now.difference(givenDate);
 
     if (difference.inSeconds < 60) {
-      return 'just now';
+      return AppLocalizations.of(context!)!.justNow;
     } else if (difference.inMinutes < 60) {
       int minutes = difference.inMinutes;
-      return '$minutes minute${minutes > 1 ? 's' : ''} ago';
+      return '$minutes ${AppLocalizations.of(context!)!.minuteTitle} ${AppLocalizations.of(context!)!.agoTitle}';
     } else if (difference.inHours < 24) {
       int hours = difference.inHours;
-      return '$hours hour${hours > 1 ? 's' : ''} ago';
+      return '$hours ${AppLocalizations.of(context!)!.hourTitle} ${AppLocalizations.of(context!)!.agoTitle}';
     } else if (difference.inDays < 30) {
       int days = difference.inDays;
-      return '$days day${days > 1 ? 's' : ''} ago';
+      return '$days ${AppLocalizations.of(context!)!.dayTitle} ${AppLocalizations.of(context!)!.agoTitle}';
     } else if (difference.inDays < 365) {
       int months = (difference.inDays / 30).floor();
-      return '$months month${months > 1 ? 's' : ''} ago';
+      return '$months ${AppLocalizations.of(context!)!.monthTitle} ${AppLocalizations.of(context!)!.agoTitle}';
     } else {
       int years = (difference.inDays / 365).floor();
-      return '$years year${years > 1 ? 's' : ''} ago';
+      return '$years ${AppLocalizations.of(context!)!.yearTitle} ${AppLocalizations.of(context!)!.agoTitle}';
     }
   } catch (e) {
     return '';
   }
 }
+
+//  static String timeAgo(String isoDateString) {
+//   try {
+//     if (isoDateString.isEmpty) {
+//       return '';
+//     }
+
+//     DateTime givenDate = DateTime.parse(isoDateString).toLocal();
+//     DateTime now = DateTime.now();
+//     Duration difference = now.difference(givenDate);
+
+//     if (difference.inSeconds < 60) {
+//       return AppLocalizations.of(context!)!.justNow;
+//     } else if (difference.inMinutes < 60) {
+//       int minutes = difference.inMinutes;
+//       return '$minutes ${AppLocalizations.of(context!).minute}${minutes > 1 ? 's' : ''} ${AppLocalizations.of(context!).ago}';
+//     } else if (difference.inHours < 24) {
+//       int hours = difference.inHours;
+//       return '$hours ${AppLocalizations.of(context!).hour}${hours > 1 ? 's' : ''} ${AppLocalizations.of(context!).ago}';
+//     } else if (difference.inDays < 30) {
+//       int days = difference.inDays;
+//       return '$days ${AppLocalizations.of(context!).day}${days > 1 ? 's' : ''} ${AppLocalizations.of(context!).ago}';
+//     } else if (difference.inDays < 365) {
+//       int months = (difference.inDays / 30).floor();
+//       return '$months ${AppLocalizations.of(context!).month}${months > 1 ? 's' : ''} ${AppLocalizations.of(context!).ago}';
+//     } else {
+//       int years = (difference.inDays / 365).floor();
+//       return '$years ${AppLocalizations.of(context!).year}${years > 1 ? 's' : ''} ${AppLocalizations.of(context!).ago}';
+//     }
+//   } catch (e) {
+//     return '';
+//   }
+// }
 }
 
 

@@ -71,7 +71,7 @@ class _EmergencyScreenState extends ConsumerState<EmergencyScreen> {
               child: AppElevatedButton.withTitleAndIcon(
                           icon: Icon(Icons.add, color: AppColors.whiteColor,),
                            title: AppLocalizations.of(context)!.emergencyAddNew, 
-                           width: 120,
+                           width: 160,
                            height: 48,
                            textColor: AppColors.whiteColor,
                            onPressed: _openAddEmergencyScreen,),

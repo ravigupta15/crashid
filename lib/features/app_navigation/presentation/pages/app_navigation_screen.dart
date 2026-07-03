@@ -1,4 +1,5 @@
 import 'package:crashid/app_routes/app_routes_path.dart';
+import 'package:crashid/core/lookup/language_provider.dart';
 import 'package:crashid/core/service/location_service.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/data_sources/local_storage/user_manager.dart';
@@ -15,6 +16,7 @@ import 'package:crashid/features/my_cars/provider/my_car_state.dart';
 import 'package:crashid/features/notification/provider/notification_notifier.dart';
 import 'package:crashid/features/profile/presentation/pages/profile_screen.dart';
 import 'package:crashid/features/profile/provider/profile_notifier.dart';
+import 'package:crashid/features/profile/provider/profile_state.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
@@ -97,6 +99,9 @@ class _AppNavigationScreenState extends ConsumerState<AppNavigationScreen> {
   final myCarNotifierProvider =
       AsyncNotifierProvider<MyCarNotifier, MyCarState>(MyCarNotifier.new);
 
+  final profileNotifierProvider =
+      AsyncNotifierProvider<ProfileNotifier, ProfileState>(ProfileNotifier.new);    
+
   @override
   void initState() {
     _selectedBarIndex = widget.initialIndex ?? 0;
@@ -119,6 +124,8 @@ class _AppNavigationScreenState extends ConsumerState<AppNavigationScreen> {
 
       // call fcm token API to register the device for push notifications
       await ref.read(notificationProvider.notifier).fcmToken();
+
+      await ref.read(profileNotifierProvider.notifier).updateProfileLanguage();
     });
   }
 

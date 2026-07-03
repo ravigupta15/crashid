@@ -1,3 +1,5 @@
+import 'package:crashid/app_routes/app_routes.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -156,7 +158,7 @@ class LocationService {
   }
 
   static String _formatPlacemark(List<Placemark> placemarks) {
-    if (placemarks.isEmpty) return 'Unknown address';
+    if (placemarks.isEmpty) return AppLocalizations.of(AppRouter.mainNavigatorKey.currentContext!)!.unknownAddress; 
     final p = placemarks.first;
 
     final parts = <String?>[

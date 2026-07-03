@@ -1,6 +1,7 @@
 import 'package:crashid/app_routes/app_routes.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -69,7 +70,8 @@ class AppDialogBox {
                           children: [
                             Expanded(
                               child: AppElevatedButton.withTitle(
-                                title: leftBtnTitle ?? "No",
+                                title: leftBtnTitle ?? AppLocalizations.of(AppRouter.mainNavigatorKey.currentContext!)!.no,
+                                
                                 onPressed: () {
                                   Navigator.pop(
                                     AppRouter.mainNavigatorKey.currentContext!,
@@ -80,7 +82,7 @@ class AppDialogBox {
                             const SizedBox(width: 20),
                             Expanded(
                               child: AppElevatedButton.withTitle(
-                                title: rightBtnTitle ?? "Yes",
+                                title: rightBtnTitle ?? AppLocalizations.of(AppRouter.mainNavigatorKey.currentContext!)!.yes,
                                 onPressed: yesTap,
                               ),
                             ),

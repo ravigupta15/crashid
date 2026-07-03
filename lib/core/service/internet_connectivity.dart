@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:crashid/app_routes/app_routes.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
 
 class InternetConnectivity {
@@ -18,7 +20,7 @@ class InternetConnectivity {
         .checkConnectivity());
 
     if (connectivityResult.contains(ConnectivityResult.none)) {
-      showFeedbackMessage("No internet connection");
+      showFeedbackMessage(AppLocalizations.of(AppRouter.mainNavigatorKey.currentContext!)!.noInternetConnection);
       print('No network connectivity (Wi-Fi, Mobile, etc.)');
       return false;
     } else {

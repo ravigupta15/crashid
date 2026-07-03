@@ -827,14 +827,14 @@ abstract class AppLocalizations {
   /// No description provided for @paymentWebViewError.
   ///
   /// In en, this message translates to:
-  /// **'Error: {description}'**
-  String paymentWebViewError(String description);
+  /// **'Error'**
+  String get paymentWebViewError;
 
   /// No description provided for @paymentHttpError.
   ///
   /// In en, this message translates to:
-  /// **'HTTP Error: {statusCode}'**
-  String paymentHttpError(int statusCode);
+  /// **'HTTP Error'**
+  String get paymentHttpError;
 
   /// No description provided for @isAddressCorrect.
   ///
@@ -1073,14 +1073,14 @@ abstract class AppLocalizations {
   /// No description provided for @accidentDate.
   ///
   /// In en, this message translates to:
-  /// **'Accident Date: {date}'**
-  String accidentDate(String date);
+  /// **'Accident Date'**
+  String get accidentDate;
 
   /// No description provided for @caseId.
   ///
   /// In en, this message translates to:
-  /// **'Case Id: {caseNumber}'**
-  String caseId(String caseNumber);
+  /// **'Case Id'**
+  String get caseId;
 
   /// No description provided for @caseDetailsRetryPayment.
   ///
@@ -1145,8 +1145,8 @@ abstract class AppLocalizations {
   /// No description provided for @caseDetailsPaymentStatus.
   ///
   /// In en, this message translates to:
-  /// **'PAYMENT STATUS: {status}'**
-  String caseDetailsPaymentStatus(String status);
+  /// **'PAYMENT STATUS'**
+  String get caseDetailsPaymentStatus;
 
   /// No description provided for @caseDetailsCloseCaseTitle.
   ///
@@ -1307,8 +1307,8 @@ abstract class AppLocalizations {
   /// No description provided for @lastUpdated.
   ///
   /// In en, this message translates to:
-  /// **'Last updated: {date}'**
-  String lastUpdated(String date);
+  /// **'Last updated'**
+  String get lastUpdated;
 
   /// No description provided for @myInsuranceTitle.
   ///
@@ -1321,6 +1321,450 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Insurance Email'**
   String get insuranceEmail;
+
+  /// No description provided for @editProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfileTitle;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @profilePersonalDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Details'**
+  String get profilePersonalDetails;
+
+  /// No description provided for @profileFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get profileFullName;
+
+  /// No description provided for @profileGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get profileGender;
+
+  /// No description provided for @profileContactInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Info'**
+  String get profileContactInfo;
+
+  /// No description provided for @profilePhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get profilePhoneNumber;
+
+  /// No description provided for @profileResidentialAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Residential address'**
+  String get profileResidentialAddress;
+
+  /// No description provided for @profileDrivingLicense.
+  ///
+  /// In en, this message translates to:
+  /// **'Driving License'**
+  String get profileDrivingLicense;
+
+  /// No description provided for @profileIdDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'ID Document'**
+  String get profileIdDocument;
+
+  /// No description provided for @profileCompanyInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Information'**
+  String get profileCompanyInformation;
+
+  /// No description provided for @profileLegalCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal company name'**
+  String get profileLegalCompanyName;
+
+  /// No description provided for @profileRegisteredName.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered name'**
+  String get profileRegisteredName;
+
+  /// No description provided for @profileVatId.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT ID'**
+  String get profileVatId;
+
+  /// No description provided for @profileCommercialRegNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Comm. reg. number'**
+  String get profileCommercialRegNumber;
+
+  /// No description provided for @profileCompanyEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Company email'**
+  String get profileCompanyEmail;
+
+  /// No description provided for @profileIndustry.
+  ///
+  /// In en, this message translates to:
+  /// **'Industry'**
+  String get profileIndustry;
+
+  /// No description provided for @profilePrimaryContactPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Contact Person'**
+  String get profilePrimaryContactPerson;
+
+  /// No description provided for @profileJobTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Job title'**
+  String get profileJobTitle;
+
+  /// No description provided for @profileWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get profileWebsite;
+
+  /// No description provided for @profileBusinessAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Address'**
+  String get profileBusinessAddress;
+
+  /// No description provided for @profileBillingAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Address'**
+  String get profileBillingAddress;
+
+  /// No description provided for @notAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'NA'**
+  String get notAvailable;
+
+  /// No description provided for @documentFront.
+  ///
+  /// In en, this message translates to:
+  /// **'Front'**
+  String get documentFront;
+
+  /// No description provided for @documentBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get documentBack;
+
+  /// No description provided for @profileUpdateDocs.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Docs'**
+  String get profileUpdateDocs;
+
+  /// No description provided for @legalFormPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal Form PDF'**
+  String get legalFormPdf;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// No description provided for @commercialRegisteredNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Commercial Registered Number'**
+  String get commercialRegisteredNumber;
+
+  /// No description provided for @primaryFirstName.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary First Name'**
+  String get primaryFirstName;
+
+  /// No description provided for @primaryLastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Last Name'**
+  String get primaryLastName;
+
+  /// No description provided for @profileContactEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Email'**
+  String get profileContactEmail;
+
+  /// No description provided for @primaryPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Phone Number'**
+  String get primaryPhoneNumber;
+
+  /// No description provided for @profileWebsiteLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Website link'**
+  String get profileWebsiteLink;
+
+  /// No description provided for @profileBusinessStreet.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Street'**
+  String get profileBusinessStreet;
+
+  /// No description provided for @profileBusinessHouseNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Business House Number'**
+  String get profileBusinessHouseNumber;
+
+  /// No description provided for @profileBusinessPostalCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Postal Code'**
+  String get profileBusinessPostalCode;
+
+  /// No description provided for @profileBusinessCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Business City'**
+  String get profileBusinessCity;
+
+  /// No description provided for @profileBillingStreet.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Street'**
+  String get profileBillingStreet;
+
+  /// No description provided for @profileBillingHouseNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing House Number'**
+  String get profileBillingHouseNumber;
+
+  /// No description provided for @profileBillingPostalCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Postal Code'**
+  String get profileBillingPostalCode;
+
+  /// No description provided for @profileBillingCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing City'**
+  String get profileBillingCity;
+
+  /// No description provided for @pleaseUploadLegalFormPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload legal form PDF.'**
+  String get pleaseUploadLegalFormPdf;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTitle;
+
+  /// No description provided for @acceptRequestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Request'**
+  String get acceptRequestTitle;
+
+  /// No description provided for @acceptRequestConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to accept this request?'**
+  String get acceptRequestConfirmation;
+
+  /// No description provided for @sosIAmComing.
+  ///
+  /// In en, this message translates to:
+  /// **'I am Coming'**
+  String get sosIAmComing;
+
+  /// No description provided for @caseIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Case ID'**
+  String get caseIdLabel;
+
+  /// No description provided for @dateTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Date/Time'**
+  String get dateTime;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get location;
+
+  /// No description provided for @noInternetConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get noInternetConnection;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @unknownAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown address'**
+  String get unknownAddress;
+
+  /// No description provided for @passcodeDoesNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Password does not match'**
+  String get passcodeDoesNotMatch;
+
+  /// No description provided for @passcodeLengthInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The password must be at least 8 characters.'**
+  String get passcodeLengthInvalid;
+
+  /// No description provided for @bvnLengthInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'BVN Number must be 11'**
+  String get bvnLengthInvalid;
+
+  /// No description provided for @invalidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Number'**
+  String get invalidNumber;
+
+  /// No description provided for @invalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Email'**
+  String get invalidEmail;
+
+  /// No description provided for @invalidNumberPlate.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Number Plate'**
+  String get invalidNumberPlate;
+
+  /// No description provided for @invalidDateFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Date Format'**
+  String get invalidDateFormat;
+
+  /// No description provided for @invalidTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Time'**
+  String get invalidTime;
+
+  /// No description provided for @justNow.
+  ///
+  /// In en, this message translates to:
+  /// **'just now'**
+  String get justNow;
+
+  /// No description provided for @minuteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'minute'**
+  String get minuteTitle;
+
+  /// No description provided for @agoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ago'**
+  String get agoTitle;
+
+  /// No description provided for @hourTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'hour'**
+  String get hourTitle;
+
+  /// No description provided for @dayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'day'**
+  String get dayTitle;
+
+  /// No description provided for @monthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'month'**
+  String get monthTitle;
+
+  /// No description provided for @yearTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'year'**
+  String get yearTitle;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @map.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get map;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @enterAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Address'**
+  String get enterAddress;
+
+  /// No description provided for @noDataFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No data found'**
+  String get noDataFound;
 }
 
 class _AppLocalizationsDelegate

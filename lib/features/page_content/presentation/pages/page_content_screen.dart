@@ -55,7 +55,7 @@ final pageContentNotifier =
   Widget build(BuildContext context) {
     final refState = ref.watch(pageContentNotifier);
     var model = refState.value?.pageContentResponseModel?.data;
-    final cleanHtml = (model?.contentEn ?? '').replaceAll('&nbsp;', ' ');
+    final cleanHtml = (currentLng == 'en' ? model?.contentEn : model?.contentDe) ?? ''.replaceAll('&nbsp;', ' ');
     return Scaffold(
       appBar: CustomAppBar(
         title: currentLng == 'en' ? model?.titleEn : model?.titleDe,

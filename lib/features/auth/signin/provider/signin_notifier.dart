@@ -14,6 +14,7 @@ import 'package:crashid/features/auth/signin/model/sign_in_model.dart';
 import 'package:crashid/features/auth/signin/model/signin_response_model.dart';
 import 'package:crashid/features/auth/signin/model/social_sign_in_model.dart';
 import 'package:crashid/features/auth/signin/provider/signin_state.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/loader/loader_service.dart';
@@ -38,7 +39,7 @@ class SigninNotifier extends AsyncNotifier<SigninState> {
       }
     } catch (_) {
       showFeedbackMessage(
-        'Something went wrong. Please try again.',
+        AppLocalizations.of(context)!.somethingWentWrong,
         context: context,
         feedbackStyle: FeedbackStyle.snackBar,
         snackBarBgColor: AppColors.redColor,
@@ -88,7 +89,7 @@ class SigninNotifier extends AsyncNotifier<SigninState> {
     } catch (error) {
       print("Error occurred during social sign-in: $error");
       showFeedbackMessage(
-        'Something went wrong. Please try again.',
+        AppLocalizations.of(context)!.somethingWentWrong,
         context: context,
         feedbackStyle: FeedbackStyle.snackBar,
         snackBarBgColor: AppColors.redColor,

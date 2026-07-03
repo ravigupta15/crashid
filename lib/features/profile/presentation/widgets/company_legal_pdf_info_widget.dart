@@ -46,7 +46,7 @@ class CompanyLegalPdfInfoWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  AppLocalizations.of(context)!.lastUpdated(date ?? ''),
+                  "${AppLocalizations.of(context)!.lastUpdated}: ${date ?? ''}",
                   style: context.bodySmall.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,

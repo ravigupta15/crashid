@@ -600,7 +600,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen>
     });
     if (files.length > availableSlots && context.mounted) {
       showFeedbackMessage(
-        AppLocalizations.of(context)!.carImagesExtraIgnored,
+        'Only 5 images are allowed. Extra images were ignored.',
         context: context,
       );
     }

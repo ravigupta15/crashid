@@ -130,7 +130,7 @@ class NotificationCardWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      (model?.type ?? '')
+                      (model?.typeLabel ?? '')
                           .toString()
                           .replaceAll('_', ' ')
                           .capitalize,

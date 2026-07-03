@@ -71,7 +71,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-             '${AppLocalizations.of(context)!.caseId}: ${caseDetails?.caseNumber}',
+             '${AppLocalizations.of(context)!.caseId}: ${caseDetails?.caseNumber ?? ''}',
             style: context.bodyMedium.copyWith(
               color: AppColors.blackColor,
               fontSize: 15,
@@ -414,7 +414,7 @@ class _CaseDetailsScreenState extends ConsumerState<CaseDetailsScreen> {
           ),
           const SizedBox(width: 6),
           Text(
-             "${AppLocalizations.of(context)!.caseDetailsPaymentStatus}: ${paymentStatus.toUpperCase()}",
+             "${AppLocalizations.of(context)!.caseDetailsPaymentStatus}: ${(model?.paymentStatusLabel ?? '').toUpperCase()}",
             style: context.bodyMedium.copyWith(
               fontSize: 12,
               fontWeight: FontWeight.w700,

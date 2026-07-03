@@ -45,9 +45,9 @@ Widget _screenContent(BuildContext context) {
            const SizedBox(height: 41,),
            Row(
             children: [
-           Expanded(child: AppElevatedButton.withTitle(title: AppLocalizations.of(context)!.yesCorrect, onPressed: onClickCorrect,)),
+           Expanded(child: AppElevatedButton.withTitle(title: AppLocalizations.of(context)!.yesCorrect, onPressed: onClickCorrect, fontSize: 13,)),
            const SizedBox(width: 10,),
-           Expanded(child: AppElevatedButton.withTitle(title: AppLocalizations.of(context)!.editAddress, onPressed: onClickEdit,))
+           Expanded(child: AppElevatedButton.withTitle(title: AppLocalizations.of(context)!.editAddress, onPressed: onClickEdit, fontSize: 13,padding: EdgeInsets.all(0),))
             ],
            )
       ],

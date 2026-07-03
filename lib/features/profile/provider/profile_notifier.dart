@@ -36,6 +36,20 @@ class ProfileNotifier extends AsyncNotifier<ProfileState> {
     }
   }
 
+  Future<void> updateProfileLanguage() async {
+    try {
+      LoaderService().showLoader();
+      final repo = ref.read(profileRepositoryProvider);
+      final response = await repo.updateProfileLanguage();
+      if (response?.statusCode == 200 ) {
+      }
+    } catch (_) {
+    }
+     finally {
+      LoaderService().hideLoader();
+    }
+  }
+
   
   Future<void> editProfile(ProfileSendModel? sendModel) async {
     try {

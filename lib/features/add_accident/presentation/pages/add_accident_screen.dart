@@ -195,8 +195,8 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
   Widget _uploadPhotoWidget({required int index}) {
     final bool hasData = index < (sendModel?.uploadedPhotos ?? []).length;
     return SizedBox(
-      width: 55,
-      height: 55,
+      width: 57,
+      height: 62,
       child: InkWell(
         onTap: () => _pickAccidentPhoto(index: index),
         child: hasData
@@ -232,6 +232,7 @@ class _AddAccidentScreenState extends ConsumerState<AddAccidentScreen>
                       const Icon(Icons.camera_alt_outlined, size: 22),
                       Text(
                           AppLocalizations.of(context)!.addPhoto,
+                          textAlign: TextAlign.center,
                         style: context.bodyMedium.copyWith(
                           fontSize: 8,
                           fontWeight: FontWeight.w800,

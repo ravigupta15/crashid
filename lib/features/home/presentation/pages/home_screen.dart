@@ -80,7 +80,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: Column(
         children: [
           _heroCarSection(),
-          const SizedBox(height: 28),
+          const SizedBox(height: 60),
           _actionGridWidget(),
         ],
       ),
@@ -90,7 +90,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _heroCarSection() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 35),
-      child: Image.asset(AppAssetPaths.logoCarImg),
+      child: Image.asset(AppAssetPaths.crashidMonogramIcon),
     );
   }
 

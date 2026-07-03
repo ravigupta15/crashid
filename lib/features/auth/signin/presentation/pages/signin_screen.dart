@@ -122,19 +122,22 @@ final signinNotifierProvider =
               ),
               const SizedBox(height: 10),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppCheckbox(
-                    label: AppLocalizations.of(context)!.termsConditionAndThePrivcyPolicy,
-                    activeColor: AppColors.primaryColor,
-                    labelStyle: context.labelMedium.copyWith(
-                      fontSize: 9,
-                      color: AppColors.darkGrayColor.withValues(alpha: .6),
-                      fontWeight: FontWeight.w500,
+                  Expanded(
+                    child: AppCheckbox(
+                      label: AppLocalizations.of(context)!.termsConditionAndThePrivcyPolicy,
+                      activeColor: AppColors.primaryColor,
+                      labelStyle: context.labelMedium.copyWith(
+                        fontSize: 9,
+                        color: AppColors.darkGrayColor.withValues(alpha: .6),
+                        fontWeight: FontWeight.w500,
+                      ),
+                      value: sendModel?.acceptTerms ?? false,
+                      onChanged: _onChangedCheckbox,
                     ),
-                    value: sendModel?.acceptTerms ?? false,
-                    onChanged: _onChangedCheckbox,
                   ),
-                  const Spacer(),
+                  // const Spacer(),
                   InkWell(
                     onTap: _openForgetPasswordScreen,
                     child: Text(

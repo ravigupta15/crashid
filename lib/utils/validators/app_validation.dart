@@ -1,67 +1,71 @@
+import 'package:crashid/app_routes/app_routes.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/utils/extensions/extension_string.dart';
 import 'package:crashid/utils/validators/validator.dart';
 import 'package:flutter/services.dart';
 
 mixin AppValidation {
+  static final context = AppRouter.mainNavigatorKey.currentContext;
+  
   String? validatePhoneNumber(String? val) {
     if (val.isNullOrEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     } else if (val!.length < 10) {
-      return "Invalid Number";
+      return AppLocalizations.of(context!)!.invalidNumber;
     }
     return null;
   }
 
   String? validateEmail(String? val) {
     if (val.isNullOrEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     } else if (!Validator.isEmail(val!)) {
-      return "Invalid Email";
+      return AppLocalizations.of(context!)!.invalidEmail;
     }
     return null;
   }
 
   String? validateNumberPlate(String? val) {
     if (val.isNullOrEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     } else if (!Validator.vehicleRegExp.hasMatch(val!)) {
-      return "Invalid Number Plate";
+      return AppLocalizations.of(context!)!.invalidNumberPlate;
     }
     return null;
   }
 
   String? validateEmpty(String? val) {
     if (val.isNullOrEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     }
     return null;
   }
 
   String? validateUserNameEmpty(String? val) {
     if (val.isNullOrEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     } else if ((val ?? '').length <= 3) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     }
     return null;
   }
 
   String? validatePassword(String? val) {
     if (val.isNullOrEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     } else if ((val ?? '').length < 8) {
-      return 'The password must be at least 8 characters.';
+      return AppLocalizations.of(context!)!.passcodeLengthInvalid;
     }
     return null;
   }
 
   String? validateConfirmPassword(String? val, String? previousPassword) {
     if (val.isNullOrEmpty) {
-      return 'Required';
+      return AppLocalizations.of(context!)!.required;
     } else if ((val ?? '').length < 8) {
-      return 'Password must be at least 8 characters.';
+      return AppLocalizations.of(context!)!.passcodeLengthInvalid;
     } else if (val != previousPassword) {
-      return "Password does not match";
+      return AppLocalizations.of(context!)!.passcodeDoesNotMatch;
     }
     return null;
   }

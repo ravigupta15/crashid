@@ -11,6 +11,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:crashid/l10n/app_localizations.dart';
 
 class GoogleMapAddressScreen extends StatefulWidget {
   static const kLat = "/kLat";
@@ -155,17 +156,16 @@ class _GoogleMapAddressScreenState extends State<GoogleMapAddressScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(selectedAddressModel?.fullAddress);
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Map",
+        title: AppLocalizations.of(context)!.map,
         isShowAction: false,
          actions: [
           if (_marker != null)
             Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               child: _btn(
-                title: "Done",
+                title: AppLocalizations.of(context)!.done,
                 onTap: () {
                   Navigator.pop(context, selectedAddressModel);
                 },
@@ -188,7 +188,7 @@ class _GoogleMapAddressScreenState extends State<GoogleMapAddressScreen> {
                     style: TextStyle(fontSize: 16),
                     decoration: InputDecoration(
                       isDense: true,
-                      hintText: "Enter Address",
+                      hintText: AppLocalizations.of(context)!.enterAddress,
                       hintStyle: const TextStyle(fontSize: 13),
                       border: UnderlineInputBorder(
                         borderSide: BorderSide(color: AppColors.primaryColor),
@@ -198,7 +198,7 @@ class _GoogleMapAddressScreenState extends State<GoogleMapAddressScreen> {
                 ),
                 const SizedBox(width: 10),
                 _btn(
-                  title: "Search",
+                  title:  AppLocalizations.of(context)!.search,
                   onTap: () {
                     _onSearch(_searchController.text);
                   },

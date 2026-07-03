@@ -100,7 +100,7 @@ class _CaseHistoryScreenState extends ConsumerState<CaseHistoryScreen> {
               address: model?.address ?? '',
               thumbnailAssets: model?.previewImages ?? [],
               overflowCount: 2,
-              statusLabel: isCurrent ? model?.status : AppLocalizations.of(context)!.caseHistoryClosureDateLabel,
+              statusLabel: isCurrent ? model?.statusLabel : AppLocalizations.of(context)!.caseHistoryClosureDateLabel,
               clouserDate: isCurrent ? null : AppDateFormat.formatMonthDateYear((model?.closedAt ?? '')),
               onViewSummary: () => _openCaseDetailsScreen((model?.id ?? '').toString()),
             ),

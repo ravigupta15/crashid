@@ -2,6 +2,8 @@ import 'package:crashid/app_routes/app_routes_path.dart';
 import 'package:crashid/core/lookup/language_provider.dart';
 import 'package:crashid/core/theme/app_theme_extensions.dart';
 import 'package:crashid/data_sources/local_storage/user_manager.dart';
+import 'package:crashid/features/profile/provider/profile_notifier.dart';
+import 'package:crashid/features/profile/provider/profile_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_radio_button/app_radio_button.dart';
 import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
@@ -10,11 +12,12 @@ import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/res/app_colors.dart';
 import 'package:crashid/utils/empty/empty_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class LanguageScreen extends StatefulWidget {
+class LanguageScreen extends ConsumerStatefulWidget {
   static const kRoute = "/kRoute";
   
   final bool? isChangeLanguageRoute;
@@ -29,12 +32,16 @@ class LanguageScreen extends StatefulWidget {
   const LanguageScreen({super.key, this.isChangeLanguageRoute});
 
   @override
-  State<LanguageScreen> createState() => _LanguageScreenState();
+  ConsumerState<LanguageScreen> createState() => _LanguageScreenState();
 }
 
-class _LanguageScreenState extends State<LanguageScreen> {
+class _LanguageScreenState extends ConsumerState<LanguageScreen> {
 
   int _selectedLanguageIndex = 0;
+
+    final profileNotifierProvider =
+      AsyncNotifierProvider<ProfileNotifier, ProfileState>(ProfileNotifier.new);    
+
 
   @override
   void initState() {
@@ -185,5 +192,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
     final locale = _selectedLanguageIndex == 0 ? const Locale('de') : const Locale('en');
     Provider.of<LanguageProvider>(context, listen: false).setLocale(locale);
     GetIt.I<UserManager>().setLanguage = _selectedLanguageIndex == 0 ? "de" : "en";
+    if (widget.isChangeLanguageRoute ?? false) {
+      _updateProfileLanguage();
+    }
+  }
+
+  void _updateProfileLanguage() async {
+    await ref.read(profileNotifierProvider.notifier).updateProfileLanguage();
   }
 }

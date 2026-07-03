@@ -27,6 +27,7 @@ class CaseDetails {
   dynamic caseNumber;
   dynamic status;
   dynamic paymentStatus;
+  dynamic paymentStatusLabel;
   dynamic closedAt;
   dynamic createdAt;
   dynamic requestStatus;
@@ -40,6 +41,7 @@ class CaseDetails {
       this.caseNumber,
       this.status,
       this.paymentStatus,
+      this.paymentStatusLabel,
       this.closedAt,
       this.createdAt,
       this.requestStatus,
@@ -53,6 +55,7 @@ class CaseDetails {
     caseNumber = json['case_number'];
     status = json['status'];
     paymentStatus = json['payment_status'];
+    paymentStatusLabel = json['payment_status_label'];
     closedAt = json['closed_at'];
     createdAt = json['created_at'];
     myRole = json['my_role'];
@@ -76,6 +79,7 @@ class CaseDetails {
     data['case_number'] = caseNumber;
     data['status'] = status;
     data['payment_status'] = paymentStatus;
+    data['payment_status_label'] = paymentStatusLabel;
     data['request_status'] = requestStatus;
     data['closed_at'] = closedAt;
     data['created_at'] = createdAt;
@@ -167,6 +171,7 @@ class Participants {
   dynamic id;
   dynamic username;
   dynamic status;
+  dynamic statusLabel;
   dynamic submissionStatus;
   dynamic plate;
   dynamic description;
@@ -184,6 +189,7 @@ class Participants {
       this.id,
       this.username,
       this.status,
+      this.statusLabel,
       this.submissionStatus,
       this.plate,
       this.description,
@@ -201,6 +207,7 @@ class Participants {
     id = json['id'];
     username = json['username'];
     status = json['status'];
+    statusLabel = json['status_label'];
     submissionStatus = json['submission_status'];
     plate = json['plate'];
     description = json['description'];
@@ -230,6 +237,7 @@ class Participants {
     data['id'] = id;
     data['username'] = username;
     data['status'] = status;
+    data['status_label'] = statusLabel;
     data['submission_status'] = submissionStatus;
     data['plate'] = plate;
     data['description'] = description;

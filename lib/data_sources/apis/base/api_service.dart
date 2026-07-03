@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:crashid/app_routes/app_routes.dart';
+import 'package:crashid/core/lookup/language_provider.dart';
 import 'package:crashid/core/service/internet_connectivity.dart';
 import 'package:crashid/data_sources/local_storage/secure_storage.dart';
 import 'package:crashid/features/lookup/repository/refresh_token_repository.dart';
@@ -8,6 +10,7 @@ import 'package:crashid/utils/extensions/extension_string.dart';
 import 'package:crashid/utils/feedback/feedback_message.dart';
 import 'package:crashid/utils/logout/app_logout.dart';
 import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
 
 enum ApiMethod { get, post, put, delete }
@@ -24,7 +27,6 @@ class ApiService {
     Dio dio = Dio();
     final headers = await getAuthHeaders();
     Options options = Options(method: method.name, headers: headers);
-
     try {
       bool isConnected = await InternetConnectivity.isConnected();
       if (!isConnected) {
@@ -70,9 +72,12 @@ class ApiService {
 
   Future<Map<String, String>> getAuthHeaders() async {
     final String? token = await GetIt.I<SecureStorage>().getUserToken();
+    final current =  Provider.of<LanguageProvider>(AppRouter.mainNavigatorKey.currentContext!, listen: false).locale;
     print("token...$token");
     return {
       if (token.isNotNullOrNotEmpty) 'Authorization': "Bearer $token",
+       'Accept-Language': current.languageCode == 'de' ? 'de' : 'en',
+       'Content-Type': 'application/json'
     };
   }
 

@@ -1,4 +1,5 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:crashid/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 mixin CountryPickerMixin<T extends StatefulWidget> on State<T> {
@@ -15,7 +16,7 @@ mixin CountryPickerMixin<T extends StatefulWidget> on State<T> {
         useSafeArea: true,
         countryListTheme: CountryListThemeData(
          inputDecoration: InputDecoration(
-      hintText: 'Search',
+      hintText: AppLocalizations.of(context)!.search,
       prefixIcon: const Icon(Icons.search),
       border: OutlineInputBorder(
         borderSide: BorderSide(

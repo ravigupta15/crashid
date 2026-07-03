@@ -18,68 +18,68 @@ class AppLocalizationsDe extends AppLocalizations {
   String get continueTitle => 'Weiter';
 
   @override
-  String get selectLangauge => 'Sprache Wählen';
+  String get selectLangauge => 'Sprache auswählen';
 
   @override
   String get chooseLanguage =>
-      'Wählen Sie Ihre bevorzugte Sprache um fortzufahren';
+      'Wählen Sie Ihre bevorzugte Sprache, um fortzufahren';
 
   @override
   String get getStarted => 'Loslegen';
 
   @override
-  String get onboardingTitle1 => 'Fügen Sie Ihr Auto Hinzu';
+  String get onboardingTitle1 => 'Auto hinzufügen';
 
   @override
   String get onboardingDes1 =>
-      'Geben Sie Ihre Autodaten wie Modell, Jahr und Registrierungsnummer ein, um Ihr Fahrzeug zu verwalten und bei Bedarf genaue Unterstützung zu erhalten.';
+      'Geben Sie Ihre Fahrzeugdaten wie Modell, Jahr und Kennzeichen ein, um Ihr Fahrzeug zu verwalten und im Bedarfsfall genaue Unterstützung zu erhalten.';
 
   @override
-  String get onboardingTitle2 => 'Versicherung Hinzufügen';
+  String get onboardingTitle2 => 'Versicherung hinzufügen';
 
   @override
   String get onboardingDes2 =>
-      'Speichern Sie Ihren Versicherungsanbieter, die Policennummer und das Ablaufdatum, um Ihnen schnell bei Ansprüchen und Unterstützung zu helfen.';
+      'Speichern Sie Ihre Versicherung, Policennummer und das Ablaufdatum, damit wir Ihnen schnell bei Ansprüchen und Support helfen können.';
 
   @override
-  String get onboardingTitle3 => 'Unfälle Schneller Melden';
+  String get onboardingTitle3 => 'Unfälle schneller melden';
 
   @override
   String get onboardingDes3 =>
-      'Melden Sie Unfälle schnell, indem Sie Fotos, Standort und Details hinzufügen. Wir benachrichtigen Ihre Versicherungsgesellschaft und helfen, den Prozess zu beschleunigen.';
+      'Melden Sie Unfälle schnell, indem Sie Fotos, Standort und Details hinzufügen. Wir benachrichtigen Ihre Versicherung und helfen, den Prozess zu beschleunigen.';
 
   @override
-  String get checkYourEmail => 'Überprüfen Sie Ihre E-Mail!';
+  String get checkYourEmail => 'Überprüfen Sie Ihre E-Mails!';
 
   @override
   String get otpSentDescription =>
-      'Ihr OTP wurde erfolgreich gesendet.\nGültig für 10 Minuten.';
+      'Ihr OTP wurde erfolgreich gesendet. \nGültig für 10 Minuten.';
 
   @override
-  String get enterOtp => 'OTP Eingeben';
+  String get enterOtp => 'OTP eingeben';
 
   @override
-  String get resetPasswordTitle => 'Passwort Zurücksetzen';
+  String get resetPasswordTitle => 'Passwort zurücksetzen';
 
   @override
   String get resetPasswordDescription =>
-      'Ihr Passwort muss sich von\npreviously verwendeten Passwörtern unterscheiden';
+      'Ihr Passwort muss sich von\nvorherigen Passwörtern unterscheiden.';
 
   @override
   String get newPassword => 'Neues Passwort';
 
   @override
-  String get confirmPassword => 'Passwort Bestätigen';
+  String get confirmPassword => 'Passwort bestätigen';
 
   @override
   String get resetPasswordButton => 'Passwort zurücksetzen';
 
   @override
-  String get passwordChangedTitle => 'Passwort Geändert';
+  String get passwordChangedTitle => 'Passwort geändert';
 
   @override
   String get passwordChangedDescription =>
-      'Ihr Kontokennwort wurde aktualisiert,\nSie können sich bereits mit Ihrem neuen Passwort anmelden.';
+      'Ihr Kontopasswort wurde aktualisiert,\nSie können sich bereits mit Ihrem neuen Passwort anmelden.';
 
   @override
   String get signInButton => 'Anmelden';
@@ -88,38 +88,38 @@ class AppLocalizationsDe extends AppLocalizations {
   String get password => 'Passwort';
 
   @override
-  String get forgetPassword => 'Passwort Vergessen';
+  String get forgetPassword => 'Passwort vergessen';
 
   @override
-  String get dontHaveAccount => 'Sie haben kein Konto?';
+  String get dontHaveAccount => 'Haben Sie noch kein Konto?';
 
   @override
   String get signUp => 'Registrieren';
 
   @override
   String get acceptTermsMessage =>
-      'Bitte akzeptieren Sie die Nutzungsbedingungen und die Datenschutzrichtlinie.';
+      'Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen (AGB) und die Datenschutzrichtlinie.';
 
   @override
   String get personalAccountTitle => 'Persönliches Konto';
 
   @override
-  String get personalAccountSubtitle =>
-      'Für einzelne Fahrer und Fahrzeughalter.';
+  String get personalAccountSubtitle => 'Für Einzelfahrer und Autobesitzer.';
 
   @override
-  String get companyAccountTitle => 'Unternehmenskonto';
+  String get companyAccountTitle => 'Firmenkonto';
 
   @override
-  String get companyAccountSubtitle => 'Für Unternehmen und Flottenmanagement.';
+  String get companyAccountSubtitle =>
+      'Für Unternehmen und Fuhrparkmanagement.';
 
   @override
   String get personalAccountDescription =>
-      'Für einzelne Benutzer, die ihr eigenes Auto, ihre Versicherung und Unfallberichte verwalten.';
+      'Für Einzelnutzer zur Verwaltung ihres eigenen Autos, ihrer Versicherung und von Unfallberichten.';
 
   @override
   String get companyAccountDescription =>
-      'Für Unternehmen, die mehrere Fahrzeuge, Fahrer und Versicherungsprozesse verwalten.';
+      'Für Unternehmen zur Verwaltung mehrerer Fahrzeuge, Fahrer und Versicherungsprozesse.';
 
   @override
   String get personalRegistrationTitle => 'Persönliche Registrierung';
@@ -146,7 +146,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get emailAddress => 'E-Mail-Adresse';
 
   @override
-  String get mobileNumber => 'Handynummer';
+  String get mobileNumber => 'Mobilnummer';
 
   @override
   String get drivingLicenseFront => 'Führerschein Vorderseite';
@@ -155,10 +155,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get drivingLicenseBack => 'Führerschein Rückseite';
 
   @override
-  String get idDocumentFront => 'Ausweisdokument Vorderseite';
+  String get idDocumentFront => 'Ausweis Vorderseite';
 
   @override
-  String get idDocumentBack => 'Ausweisdokument Rückseite';
+  String get idDocumentBack => 'Ausweis Rückseite';
 
   @override
   String get address => 'Adresse';
@@ -176,15 +176,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get city => 'Stadt';
 
   @override
-  String get termsAndConditionsAcceptance =>
-      'Nutzungsbedingungen und Datenschutzrichtlinie akzeptieren.';
+  String get termsAndConditionsAcceptance => 'Zustimmung zu den AGB';
 
   @override
-  String get privacyPolicyAcceptance => 'Datenschutzerklärung akzeptieren';
+  String get privacyPolicyAcceptance => 'Zustimmung zur Datenschutzrichtlinie';
 
   @override
   String get termsConditionAndThePrivcyPolicy =>
-      'terms & conditions and the privacy policy';
+      'Allgemeinen Geschäftsbedingungen (AGB) und der Datenschutzrichtlinie';
 
   @override
   String get register => 'Registrieren';
@@ -193,48 +192,47 @@ class AppLocalizationsDe extends AppLocalizations {
   String get alreadyHaveAccount => 'Haben Sie bereits ein Konto?';
 
   @override
-  String get logIn => 'Anmelden';
+  String get logIn => 'Einloggen';
 
   @override
-  String get addCarTitle => 'Auto Hinzufügen';
+  String get addCarTitle => 'Auto hinzufügen';
 
   @override
   String get myCarsTitle => 'Meine Autos';
 
   @override
-  String get changeLanguage => 'Sprache Ändern';
+  String get changeLanguage => 'Sprache ändern';
 
   @override
-  String get orContinueWith => 'oder fortfahren mit';
+  String get orContinueWith => 'oder weiter mit';
 
   @override
   String get companyRegistrationTitle => 'Unternehmensregistrierung';
 
   @override
-  String get legalCompanyName => 'Offizielle Unternehmensname';
+  String get legalCompanyName => 'Offizieller Firmenname';
 
   @override
-  String get registeredCompanyName =>
-      'Registrierter Unternehmensname (Optional)';
+  String get registeredCompanyName => 'Eingetragener Firmenname (Optional)';
 
   @override
-  String get generalCompanyEmail => 'Allgemeine Unternehmens-E-Mail';
+  String get generalCompanyEmail => 'Allgemeine Firmen-E-Mail';
 
   @override
-  String get companyPhoneNumber => 'Unternehmenstelefonnummer';
+  String get companyPhoneNumber => 'Firmentelefonnummer';
 
   @override
-  String get vitId => 'VIT ID';
+  String get vitId => 'USt-IdNr.';
 
   @override
-  String get industryType => 'Branchentyp';
+  String get industryType => 'Branche';
 
   @override
   String get required => 'Erforderlich';
 
   @override
   String get pleaseAcceptTermsAndConditions =>
-      'Bitte akzeptieren Sie die Nutzungsbedingungen.';
+      'Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen.';
 
   @override
   String get pleaseAcceptPrivacyPolicy =>
@@ -242,20 +240,20 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get somethingWentWrong =>
-      'Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.';
+      'Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.';
 
   @override
   String get invalidOtp => 'Ungültiges OTP';
 
   @override
-  String get didntGetOtp => 'OTP nicht erhalten?';
+  String get didntGetOtp => 'Kein OTP erhalten?';
 
   @override
   String get resendOtp => 'OTP erneut senden';
 
   @override
   String get otpSentMessageTitle =>
-      'Ein Sicherheitscode zum Anmelden wurde gesendet an';
+      'Ein Bestätigungscode zum Anmelden wurde gesendet an';
 
   @override
   String get otpResentSuccessfully => 'OTP erfolgreich erneut gesendet.';
@@ -265,13 +263,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Bitte laden Sie alle erforderlichen Dokumente hoch.';
 
   @override
-  String get divers => 'Divers';
+  String get divers => 'Sonstiges';
 
   @override
-  String get addAccident => 'Unfall Hinzufügen';
+  String get addAccident => 'Unfall hinzufügen';
 
   @override
-  String get selectOwnPlateNumber => 'Eigenes Nummernschild auswählen';
+  String get selectOwnPlateNumber => 'Eigenes Kennzeichen auswählen';
 
   @override
   String get textDescription => 'Textbeschreibung';
@@ -283,20 +281,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uploadUpTo5Images => 'Bis zu 5 Bilder hochladen';
 
   @override
-  String get addPhoto => 'Foto Hinzufügen';
+  String get addPhoto => 'Foto hinzufügen';
 
   @override
-  String get clickHereToRecordAccident =>
-      'Klicken Sie hier, um den Unfall aufzuzeichnen';
+  String get clickHereToRecordAccident => 'Hier klicken, um Unfall aufzunehmen';
 
   @override
-  String get videoSelected => 'Video Ausgewählt:';
+  String get videoSelected => 'Video ausgewählt:';
 
   @override
   String get pleaseUploadPhotos => 'Bitte laden Sie Fotos hoch';
 
   @override
-  String get plateNumber => 'Nummernschild';
+  String get plateNumber => 'Kennzeichen';
 
   @override
   String get brand => 'Marke';
@@ -305,19 +302,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get model => 'Modell';
 
   @override
-  String get fuelType => 'Kraftstofftyp';
+  String get fuelType => 'Kraftstoffart';
 
   @override
-  String get registrationDateFrom => 'Registrierungsdatum ab';
+  String get registrationDateFrom => 'Erstzulassung ab';
 
   @override
   String get hpPs => 'PS';
 
   @override
-  String get mileage => 'Laufleistung';
+  String get mileage => 'Kilometerstand';
 
   @override
-  String get tuvDate => 'TÜV Datum';
+  String get tuvDate => 'TÜV-Fälligkeit';
 
   @override
   String get color => 'Farbe';
@@ -326,19 +323,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get finVin => 'FIN/VIN';
 
   @override
-  String get carImage => 'Autobild';
+  String get carImage => 'Fahrzeugbild';
 
   @override
   String get insuranceCompany => 'Versicherungsgesellschaft';
 
   @override
-  String get insuranceEmailAddress => 'Versicherungs-E-Mail-Adresse';
+  String get insuranceEmailAddress => 'E-Mail-Adresse der Versicherung';
 
   @override
   String get insuranceNumber => 'Versicherungsnummer';
 
   @override
-  String get validFrom => 'Gültig von';
+  String get validFrom => 'Gültig ab';
 
   @override
   String get validTo => 'Gültig bis';
@@ -353,315 +350,532 @@ class AppLocalizationsDe extends AppLocalizations {
   String get carAddedSuccessfully => 'Auto erfolgreich hinzugefügt.';
 
   @override
-  String get otherDriver => 'Other Driver';
+  String get otherDriver => 'Anderer Fahrer';
 
   @override
-  String get vehiclePlateNumber => 'Vehicle plate number';
+  String get vehiclePlateNumber => 'Fahrzeug-Kennzeichen';
 
   @override
-  String get witness => 'Witness';
+  String get witness => 'Zeuge';
 
   @override
-  String get gettingLocation => 'Getting location…';
+  String get gettingLocation => 'Standort wird ermittelt…';
 
   @override
-  String get locationUnavailable => 'Location unavailable';
+  String get locationUnavailable => 'Standort nicht verfügbar';
 
   @override
   String get turnOnLocationServices =>
-      'Turn on location services to see your address.';
+      'Aktivieren Sie die Standortdienste, um Ihre Adresse zu sehen.';
 
   @override
   String get locationPermissionRequired =>
-      'Location permission is required to show your address.';
+      'Die Standortberechtigung ist erforderlich, um Ihre Adresse anzuzeigen.';
 
   @override
-  String get unableToLoadLocation => 'Unable to load location.';
+  String get unableToLoadLocation => 'Standort konnte nicht geladen werden.';
 
   @override
-  String get searchMyCar => 'Search my car';
+  String get searchMyCar => 'Mein Auto suchen';
 
   @override
-  String get chooseYourCar => 'Choose your car';
+  String get chooseYourCar => 'Wählen Sie Ihr Auto';
 
   @override
-  String get paymentSuccessful => 'Payment successful!';
+  String get paymentSuccessful => 'Zahlung erfolgreich!';
 
   @override
-  String get paymentFailedTryAgain => 'Payment failed. Please try again.';
+  String get paymentFailedTryAgain =>
+      'Zahlung fehlgeschlagen. Bitte versuchen Sie es erneut.';
 
   @override
-  String get payment => 'Payment';
+  String get payment => 'Zahlung';
 
   @override
-  String paymentWebViewError(String description) {
-    return 'Error: $description';
-  }
+  String get paymentWebViewError => 'Fehler';
 
   @override
-  String paymentHttpError(int statusCode) {
-    return 'HTTP Error: $statusCode';
-  }
+  String get paymentHttpError => 'HTTP-Fehler';
 
   @override
-  String get isAddressCorrect => 'Is this address correct?';
+  String get isAddressCorrect => 'Ist diese Adresse korrekt?';
 
   @override
-  String get yesCorrect => 'Yes, Correct';
+  String get yesCorrect => 'Ja, korrekt';
 
   @override
-  String get editAddress => 'Edit Address';
+  String get editAddress => 'Adresse bearbeiten';
 
   @override
-  String get paymentMethod => 'Payment Method';
+  String get paymentMethod => 'Zahlungsmethode';
 
   @override
-  String get serviceCharge => 'Service Charge';
+  String get serviceCharge => 'Servicegebühr';
 
   @override
-  String get vat => 'VAT';
+  String get vat => 'MwSt.';
 
   @override
-  String get totalAmount => 'Total Amount';
+  String get totalAmount => 'Gesamtbetrag';
 
   @override
-  String get creditCard => 'Credit Card';
+  String get creditCard => 'Kreditkarte';
 
   @override
-  String get accidentDetails => 'Accident Details';
+  String get accidentDetails => 'Unfalldetails';
 
   @override
   String get date => 'Date';
 
   @override
-  String get time => 'Time';
+  String get time => 'Uhrzeit';
 
   @override
-  String get currentLocation => 'Current Location';
+  String get currentLocation => 'Aktueller Standort';
 
   @override
   String get pleaseUploadAtLeastOneCarImage =>
-      'Please upload at least one car image.';
+      'Bitte laden Sie mindestens ein Fahrzeugbild hoch.';
 
   @override
-  String get pleaseUploadInsurancePdf => 'Please upload insurance PDF.';
+  String get pleaseUploadInsurancePdf =>
+      'Bitte laden Sie das Versicherungs-PDF hoch.';
 
   @override
   String get pleaseSelectValidFromDateFirst =>
-      'Please select Valid From date first.';
+      'Bitte wählen Sie zuerst das \'Gültig ab\'-Datum.';
 
   @override
   String get carImagesUploadLimitReached =>
-      'You can upload up to 5 car images.';
+      'Sie können bis zu 5 Fahrzeugbilder hochladen.';
 
   @override
   String get carImagesExtraIgnored =>
-      'Only 5 images are allowed. Extra images were ignored.';
+      'Es sind nur 5 Bilder erlaubt. Zusätzliche Bilder wurden ignoriert.';
 
   @override
   String get dateRangeSeparator => '—';
 
   @override
-  String get drawerMyProfile => 'My Profile';
+  String get drawerMyProfile => 'Mein Profil';
 
   @override
-  String get caseHistoryTitle => 'Case History';
+  String get caseHistoryTitle => 'Fallhistorie';
 
   @override
-  String get drawerEmergencySettings => 'Emergency Settings';
+  String get drawerEmergencySettings => 'Notfalleinstellungen';
 
   @override
-  String get drawerImprint => 'Imprint';
+  String get drawerImprint => 'Impressum';
 
   @override
   String get drawerAgb => 'AGB';
 
   @override
-  String get drawerDataSecurity => 'Data Security';
+  String get drawerDataSecurity => 'Datenschutz';
 
   @override
-  String get drawerPrivacyPolicy => 'Privacy Policy';
+  String get drawerPrivacyPolicy => 'Datenschutzrichtlinie';
 
   @override
-  String get drawerLogOut => 'Log Out';
+  String get drawerLogOut => 'Abmelden';
 
   @override
-  String get logoutTitle => 'Logout';
+  String get logoutTitle => 'Abmelden';
 
   @override
-  String get logoutConfirmationMessage => 'Are you sure you want to logout?';
+  String get logoutConfirmationMessage =>
+      'Sind Sie sicher, dass Sie sich abmelden möchten?';
 
   @override
-  String get drawerWelcomeBack => 'Welcome Back';
+  String get drawerWelcomeBack => 'Willkommen zurück';
 
   @override
-  String get addCarToContinueTitle => 'Add Car to Continue';
+  String get addCarToContinueTitle => 'Auto hinzufügen, um fortzufahren';
 
   @override
   String get addCarToContinueDescription =>
-      ' It looks like you haven\'t added your car yet.\nPlease add your car details to continue\nreporting an accident.';
+      'Es sieht so aus, als hätten Sie Ihr Auto noch nicht hinzugefügt.\nBitte fügen Sie Ihre Fahrzeugdaten hinzu, um\neinen Unfall zu melden.';
 
   @override
-  String get caseHistoryCurrentCases => 'Current Cases';
+  String get caseHistoryCurrentCases => 'Aktuelle Fälle';
 
   @override
-  String get caseHistoryPastCases => 'Past Cases';
+  String get caseHistoryPastCases => 'Vergangene Fälle';
 
   @override
-  String get active => 'Active';
+  String get active => 'Aktiv';
 
   @override
-  String get closed => 'Closed';
+  String get closed => 'Geschlossen';
 
   @override
-  String get caseHistoryClosureDateLabel => 'CLOSURE DATE';
+  String get caseHistoryClosureDateLabel => 'SCHLIESSUNGSDATUM';
 
   @override
-  String get caseHistoryDownloadPdf => 'Download Case PDF';
+  String get caseHistoryDownloadPdf => 'Fall-PDF herunterladen';
 
   @override
-  String get caseHistoryViewSummary => 'View Summary';
+  String get caseHistoryViewSummary => 'Zusammenfassung anzeigen';
 
   @override
-  String get caseDetailsSummaryTitle => 'Case Summary';
+  String get caseDetailsSummaryTitle => 'Fallzusammenfassung';
 
   @override
-  String accidentDate(String date) {
-    return 'Accident Date: $date';
-  }
+  String get accidentDate => 'Unfalldatum';
 
   @override
-  String caseId(String caseNumber) {
-    return 'Case Id: $caseNumber';
-  }
+  String get caseId => 'Fall-ID';
 
   @override
-  String get caseDetailsRetryPayment => 'Retry Payment';
+  String get caseDetailsRetryPayment => 'Zahlung wiederholen';
 
   @override
-  String get accept => 'Accept';
+  String get accept => 'Akzeptieren';
 
   @override
-  String get reject => 'Reject';
+  String get reject => 'Ablehnen';
 
   @override
-  String get caseDetailsRejectedMessage => 'You have rejected this case';
+  String get caseDetailsRejectedMessage => 'Sie haben diesen Fall abgelehnt';
 
   @override
-  String get caseDetailsCloseAccidentCase => 'Close Accident Case';
+  String get caseDetailsCloseAccidentCase => 'Unfallfall schließen';
 
   @override
-  String get unknown => 'Unknown';
+  String get unknown => 'Unbekannt';
 
   @override
-  String get caseDetailsEvidenceImages => 'Evidence Images';
+  String get caseDetailsEvidenceImages => 'Beweisbilder';
 
   @override
-  String get caseDetailsEvidenceVideos => 'Evidence Videos';
+  String get caseDetailsEvidenceVideos => 'Beweisvideos';
 
   @override
-  String get caseDetailsDescriptionTitle => 'Case Description';
+  String get caseDetailsDescriptionTitle => 'Fallbeschreibung';
 
   @override
-  String get caseDetailsNoDescription => 'No description available.';
+  String get caseDetailsNoDescription => 'Keine Beschreibung verfügbar.';
 
   @override
-  String caseDetailsPaymentStatus(String status) {
-    return 'PAYMENT STATUS: $status';
-  }
+  String get caseDetailsPaymentStatus => 'ZAHLUNGSSTATUS';
 
   @override
-  String get caseDetailsCloseCaseTitle => 'Close Case';
+  String get caseDetailsCloseCaseTitle => 'Fall schließen';
 
   @override
   String get caseDetailsCloseCaseConfirmation =>
-      'Are you sure you want to close this case?';
+      'Sind Sie sicher, dass Sie diesen Fall schließen möchten?';
 
   @override
-  String get caseDetailsRejectRequestTitle => 'Reject Request';
+  String get caseDetailsRejectRequestTitle => 'Anfrage ablehnen';
 
   @override
   String get caseDetailsRejectRequestConfirmation =>
-      'Are you sure you want to reject this request?';
+      'Sind Sie sicher, dass Sie diese Anfrage ablehnen möchten?';
 
   @override
-  String get emergencyTitle => 'Emergency';
+  String get emergencyTitle => 'Notfall';
 
   @override
-  String get emergencyAddNew => 'Add New';
+  String get emergencyAddNew => 'Neu hinzufügen';
 
   @override
-  String get emergencyTrustedFriends => 'Trusted Friends';
+  String get emergencyTrustedFriends => 'Vertrauenswürdige Kontakte';
 
   @override
-  String get emergencyActiveBadge => 'Active';
+  String get emergencyActiveBadge => 'Aktiv';
 
   @override
   String get emergencySearchHint => 'alex@example.com';
 
   @override
-  String get confirmTitle => 'Are you sure';
+  String get confirmTitle => 'Sind Sie sicher?';
 
   @override
   String get emergencyAddConfirmationMessage =>
-      'Are you sure, you want to add?';
+      'Sind Sie sicher, dass Sie diesen Kontakt hinzufügen möchten?';
 
   @override
   String get emergencyContactAddedSuccess =>
-      'Emergency contact added\nsuccessfully';
+      'Notfallkontakt erfolgreich\nhinzugefügt';
 
   @override
-  String get homeAddAccident => 'ADD ACCIDENT';
+  String get homeAddAccident => 'UNFALL HINZUFÜGEN';
 
   @override
-  String get homeMyCar => 'MY CAR';
+  String get homeMyCar => 'MEIN AUTO';
 
   @override
-  String get homeMyInsurance => 'MY INSURANCE';
+  String get homeMyInsurance => 'MEINE VERSICHERUNG';
 
   @override
   String get emergencyContactRequiredMessage =>
-      'Please add an emergency contact number';
+      'Bitte fügen Sie eine Notfallkontaktnummer hinzu';
 
   @override
-  String get addButton => 'Add';
+  String get addButton => 'Hinzufügen';
 
   @override
-  String get sosMessageHint => 'Write a message or just send';
+  String get sosMessageHint =>
+      'Schreiben Sie eine Nachricht oder senden Sie einfach';
 
   @override
-  String get sendButton => 'Send';
+  String get sendButton => 'Senden';
 
   @override
-  String get deleteCarTitle => 'Delete Car';
+  String get deleteCarTitle => 'Auto löschen';
 
   @override
   String get deleteCarConfirmation =>
-      'Are you sure you want to delete this car?';
+      'Sind Sie sicher, dass Sie dieses Auto löschen möchten?';
 
   @override
-  String get carDetailsTitle => 'Car Details';
+  String get carDetailsTitle => 'Fahrzeugdaten';
 
   @override
-  String get carName => 'Car Name';
+  String get carName => 'Fahrzeugname';
 
   @override
-  String get registrationDate => 'Registration Date';
+  String get registrationDate => 'Zulassungsdatum';
 
   @override
-  String get mileageKm => 'Mileage (Km)';
+  String get mileageKm => 'Kilometerstand (km)';
 
   @override
-  String get insuranceExpiry => 'Insurance Expiry';
+  String get insuranceExpiry => 'Ablauf der Versicherung';
 
   @override
-  String lastUpdated(String date) {
-    return 'Last updated: $date';
-  }
+  String get lastUpdated => 'Zuletzt aktualisiert';
 
   @override
-  String get myInsuranceTitle => 'My Insurance';
+  String get myInsuranceTitle => 'Meine Versicherung';
 
   @override
-  String get insuranceEmail => 'Insurance Email';
+  String get insuranceEmail => 'Versicherungs-E-Mail';
+
+  @override
+  String get editProfileTitle => 'Profil bearbeiten';
+
+  @override
+  String get edit => 'Bearbeiten';
+
+  @override
+  String get profilePersonalDetails => 'Persönliche Daten';
+
+  @override
+  String get profileFullName => 'Vollständiger Name';
+
+  @override
+  String get profileGender => 'Geschlecht';
+
+  @override
+  String get profileContactInfo => 'Kontaktinformationen';
+
+  @override
+  String get profilePhoneNumber => 'Telefonnummer';
+
+  @override
+  String get profileResidentialAddress => 'Wohnadresse';
+
+  @override
+  String get profileDrivingLicense => 'Führerschein';
+
+  @override
+  String get profileIdDocument => 'Ausweisdokument';
+
+  @override
+  String get profileCompanyInformation => 'Unternehmensinformationen';
+
+  @override
+  String get profileLegalCompanyName => 'Offizieller Firmenname';
+
+  @override
+  String get profileRegisteredName => 'Eingetragener Name';
+
+  @override
+  String get profileVatId => 'USt-IdNr.';
+
+  @override
+  String get profileCommercialRegNumber => 'Handelsregisternummer';
+
+  @override
+  String get profileCompanyEmail => 'Firmen-E-Mail';
+
+  @override
+  String get profileIndustry => 'Branche';
+
+  @override
+  String get profilePrimaryContactPerson => 'Primäre Kontaktperson';
+
+  @override
+  String get profileJobTitle => 'Berufsbezeichnung';
+
+  @override
+  String get profileWebsite => 'Webseite';
+
+  @override
+  String get profileBusinessAddress => 'Geschäftsadresse';
+
+  @override
+  String get profileBillingAddress => 'Rechnungsadresse';
+
+  @override
+  String get notAvailable => 'N/V';
+
+  @override
+  String get documentFront => 'Vorderseite';
+
+  @override
+  String get documentBack => 'Rückseite';
+
+  @override
+  String get profileUpdateDocs => 'Dokumente aktualisieren';
+
+  @override
+  String get legalFormPdf => 'Rechtsform-PDF';
+
+  @override
+  String get saveChanges => 'Änderungen speichern';
+
+  @override
+  String get commercialRegisteredNumber => 'Handelsregisternummer';
+
+  @override
+  String get primaryFirstName => 'Vorname der Kontaktperson';
+
+  @override
+  String get primaryLastName => 'Nachname der Kontaktperson';
+
+  @override
+  String get profileContactEmail => 'Kontakt-E-Mail';
+
+  @override
+  String get primaryPhoneNumber => 'Telefonnummer der Kontaktperson';
+
+  @override
+  String get profileWebsiteLink => 'Webseiten-Link';
+
+  @override
+  String get profileBusinessStreet => 'Geschäftsstraße';
+
+  @override
+  String get profileBusinessHouseNumber => 'Geschäftshausnummer';
+
+  @override
+  String get profileBusinessPostalCode => 'Geschäftspostleitzahl';
+
+  @override
+  String get profileBusinessCity => 'Geschäftsstadt';
+
+  @override
+  String get profileBillingStreet => 'Rechnungsstraße';
+
+  @override
+  String get profileBillingHouseNumber => 'Rechnungshausnummer';
+
+  @override
+  String get profileBillingPostalCode => 'Rechnungspostleitzahl';
+
+  @override
+  String get profileBillingCity => 'Rechnungsstadt';
+
+  @override
+  String get pleaseUploadLegalFormPdf =>
+      'Bitte laden Sie das Rechtsform-PDF hoch.';
+
+  @override
+  String get notificationsTitle => 'Benachrichtigungen';
+
+  @override
+  String get acceptRequestTitle => 'Anfrage akzeptieren';
+
+  @override
+  String get acceptRequestConfirmation =>
+      'Sind Sie sicher, dass Sie diese Anfrage akzeptieren möchten?';
+
+  @override
+  String get sosIAmComing => 'Ich komme';
+
+  @override
+  String get caseIdLabel => 'Fall-ID';
+
+  @override
+  String get dateTime => 'Datum/Uhrzeit';
+
+  @override
+  String get location => 'Standort';
+
+  @override
+  String get noInternetConnection => 'Keine Internetverbindung';
+
+  @override
+  String get no => 'Nein';
+
+  @override
+  String get yes => 'Ja';
+
+  @override
+  String get unknownAddress => 'Unbekannte Adresse';
+
+  @override
+  String get passcodeDoesNotMatch => 'Passwörter stimmen nicht überein';
+
+  @override
+  String get passcodeLengthInvalid =>
+      'Das Passwort muss mindestens 8 Zeichen lang sein.';
+
+  @override
+  String get bvnLengthInvalid => 'Die BVN-Nummer muss 11-stellig sein';
+
+  @override
+  String get invalidNumber => 'Ungültige Nummer';
+
+  @override
+  String get invalidEmail => 'Ungültige E-Mail-Adresse';
+
+  @override
+  String get invalidNumberPlate => 'Ungültiges Kennzeichen';
+
+  @override
+  String get invalidDateFormat => 'Ungültiges Datumsformat';
+
+  @override
+  String get invalidTime => 'Ungültige Uhrzeit';
+
+  @override
+  String get justNow => 'gerade eben';
+
+  @override
+  String get minuteTitle => 'Minute';
+
+  @override
+  String get agoTitle => 'vor';
+
+  @override
+  String get hourTitle => 'Stunde';
+
+  @override
+  String get dayTitle => 'Tag';
+
+  @override
+  String get monthTitle => 'Monat';
+
+  @override
+  String get yearTitle => 'Jahr';
+
+  @override
+  String get search => 'Suche';
+
+  @override
+  String get map => 'Karte';
+
+  @override
+  String get done => 'Fertig';
+
+  @override
+  String get enterAddress => 'Adresse eingeben';
+
+  @override
+  String get noDataFound => 'Keine Daten gefunden';
 }

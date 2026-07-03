@@ -52,6 +52,7 @@ class Data {
 class Notifications {
   dynamic id;
   dynamic type;
+  dynamic typeLabel;
   dynamic caseId;
   dynamic sosId;
   dynamic title;
@@ -65,11 +66,13 @@ class Notifications {
   dynamic accidentTime;
   dynamic location;
   dynamic requestStatus;
+  dynamic requestStatusLabel;
   Sos? sos;
 
   Notifications(
       {this.id,
       this.type,
+      this.typeLabel,
       this.caseId,
       this.sosId,
       this.title,
@@ -83,11 +86,13 @@ class Notifications {
       this.accidentTime,
       this.location,
       this.requestStatus,
+      this.requestStatusLabel,
       this.sos});
 
   Notifications.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
+    typeLabel = json['type_label'];
     caseId = json['case_id'];
     sosId = json['sos_id'];
     title = json['title'];
@@ -101,6 +106,7 @@ class Notifications {
     accidentTime = json['accident_time'];
     location = json['location'];
     requestStatus = json['request_status'];
+    requestStatusLabel = json['request_status_label'];
     sos = json['sos'] != null ? Sos.fromJson(json['sos']) : null;
   }
 
@@ -108,6 +114,7 @@ class Notifications {
     final Map<String, dynamic> data =  Map<String, dynamic>();
     data['id'] = id;
     data['type'] = type;
+    data['type_label'] = typeLabel;
     data['case_id'] = caseId;
     data['sos_id'] = sosId;
     data['title'] = title;
@@ -121,6 +128,7 @@ class Notifications {
     data['accident_time'] = accidentTime;
     data['location'] = location;
     data['request_status'] = requestStatus;
+    data['request_status_label'] = requestStatusLabel;
     if (sos != null) {
       data['sos'] = sos!.toJson();
     }

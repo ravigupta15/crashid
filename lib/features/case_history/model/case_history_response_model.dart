@@ -34,6 +34,7 @@ class Data {
   dynamic accidentTime;
   dynamic address;
   dynamic status;
+  dynamic statusLabel;
   dynamic paymentStatus;
   dynamic userBPlate;
   dynamic closedAt;
@@ -52,6 +53,7 @@ class Data {
       this.accidentTime,
       this.address,
       this.status,
+      this.statusLabel,
       this.paymentStatus,
       this.userBPlate,
       this.closedAt,
@@ -70,6 +72,7 @@ class Data {
     accidentTime = json['accident_time'];
     address = json['address'];
     status = json['status'];
+    statusLabel = json['status_label'];
     paymentStatus = json['payment_status'];
     userBPlate = json['user_b_plate'];
     closedAt = json['closed_at'];
@@ -90,6 +93,7 @@ class Data {
     data['accident_time'] = accidentTime;
     data['address'] = address;
     data['status'] = status;
+    data['status_label'] = statusLabel;
     data['payment_status'] = paymentStatus;
     data['user_b_plate'] = userBPlate;
     data['closed_at'] = closedAt;

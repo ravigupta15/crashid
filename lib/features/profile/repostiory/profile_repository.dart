@@ -1,8 +1,10 @@
 import 'package:crashid/data_sources/apis/api_urls.dart';
 import 'package:crashid/data_sources/apis/base/api_service.dart';
+import 'package:crashid/data_sources/local_storage/user_manager.dart';
 import 'package:crashid/features/profile/model/profile_send_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 
 class ProfileRepository {
   final ApiService _apiService;
@@ -13,6 +15,14 @@ class ProfileRepository {
     return _apiService.sendRequest(
       apiUrl: ApiUrls.profileUrl,
       method: ApiMethod.get,
+    );
+  }
+
+  Future<Response?> updateProfileLanguage() async {
+    return _apiService.sendRequest(
+      apiUrl: ApiUrls.profileUrl,
+      method: ApiMethod.put,
+      data: {"language": GetIt.I<UserManager>().language == 'de' ? 'de' : 'en'},
     );
   }
 

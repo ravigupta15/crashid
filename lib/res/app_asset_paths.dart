@@ -72,4 +72,5 @@ class AppAssetPaths {
   static const retryPaymentIcon = "assets/icons/retry_payment_ic.png";
 
   static const deleteIcon = "assets/icons/delete_ic.png";
+  static const crashidMonogramIcon = "assets/icons/crashid_monogram_ic.png";
 }

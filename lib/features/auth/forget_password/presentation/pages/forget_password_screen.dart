@@ -5,6 +5,7 @@ import 'package:crashid/features/auth/forget_password/provider/forget_password_n
 import 'package:crashid/features/auth/forget_password/provider/forget_password_state.dart';
 import 'package:crashid/features/widgets/app_buttons/app_elevated_button.dart';
 import 'package:crashid/features/widgets/app_textfield/app_textform_filled_widget.dart';
+import 'package:crashid/features/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:crashid/l10n/app_localizations.dart';
 import 'package:crashid/res/app_asset_paths.dart';
 import 'package:crashid/utils/validators/app_validation.dart';
@@ -46,6 +47,7 @@ final forgetPasswordProvider =
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: CustomAppBar(isShowAction: false,),
       body: _screenContent(),
     );
   }

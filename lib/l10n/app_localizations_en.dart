@@ -387,14 +387,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payment => 'Payment';
 
   @override
-  String paymentWebViewError(String description) {
-    return 'Error: $description';
-  }
+  String get paymentWebViewError => 'Error';
 
   @override
-  String paymentHttpError(int statusCode) {
-    return 'HTTP Error: $statusCode';
-  }
+  String get paymentHttpError => 'HTTP Error';
 
   @override
   String get isAddressCorrect => 'Is this address correct?';
@@ -519,14 +515,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get caseDetailsSummaryTitle => 'Case Summary';
 
   @override
-  String accidentDate(String date) {
-    return 'Accident Date: $date';
-  }
+  String get accidentDate => 'Accident Date';
 
   @override
-  String caseId(String caseNumber) {
-    return 'Case Id: $caseNumber';
-  }
+  String get caseId => 'Case Id';
 
   @override
   String get caseDetailsRetryPayment => 'Retry Payment';
@@ -559,9 +551,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get caseDetailsNoDescription => 'No description available.';
 
   @override
-  String caseDetailsPaymentStatus(String status) {
-    return 'PAYMENT STATUS: $status';
-  }
+  String get caseDetailsPaymentStatus => 'PAYMENT STATUS';
 
   @override
   String get caseDetailsCloseCaseTitle => 'Close Case';
@@ -648,13 +638,235 @@ class AppLocalizationsEn extends AppLocalizations {
   String get insuranceExpiry => 'Insurance Expiry';
 
   @override
-  String lastUpdated(String date) {
-    return 'Last updated: $date';
-  }
+  String get lastUpdated => 'Last updated';
 
   @override
   String get myInsuranceTitle => 'My Insurance';
 
   @override
   String get insuranceEmail => 'Insurance Email';
+
+  @override
+  String get editProfileTitle => 'Edit Profile';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get profilePersonalDetails => 'Personal Details';
+
+  @override
+  String get profileFullName => 'Full name';
+
+  @override
+  String get profileGender => 'Gender';
+
+  @override
+  String get profileContactInfo => 'Contact Info';
+
+  @override
+  String get profilePhoneNumber => 'Phone number';
+
+  @override
+  String get profileResidentialAddress => 'Residential address';
+
+  @override
+  String get profileDrivingLicense => 'Driving License';
+
+  @override
+  String get profileIdDocument => 'ID Document';
+
+  @override
+  String get profileCompanyInformation => 'Company Information';
+
+  @override
+  String get profileLegalCompanyName => 'Legal company name';
+
+  @override
+  String get profileRegisteredName => 'Registered name';
+
+  @override
+  String get profileVatId => 'VAT ID';
+
+  @override
+  String get profileCommercialRegNumber => 'Comm. reg. number';
+
+  @override
+  String get profileCompanyEmail => 'Company email';
+
+  @override
+  String get profileIndustry => 'Industry';
+
+  @override
+  String get profilePrimaryContactPerson => 'Primary Contact Person';
+
+  @override
+  String get profileJobTitle => 'Job title';
+
+  @override
+  String get profileWebsite => 'Website';
+
+  @override
+  String get profileBusinessAddress => 'Business Address';
+
+  @override
+  String get profileBillingAddress => 'Billing Address';
+
+  @override
+  String get notAvailable => 'NA';
+
+  @override
+  String get documentFront => 'Front';
+
+  @override
+  String get documentBack => 'Back';
+
+  @override
+  String get profileUpdateDocs => 'Update Docs';
+
+  @override
+  String get legalFormPdf => 'Legal Form PDF';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get commercialRegisteredNumber => 'Commercial Registered Number';
+
+  @override
+  String get primaryFirstName => 'Primary First Name';
+
+  @override
+  String get primaryLastName => 'Primary Last Name';
+
+  @override
+  String get profileContactEmail => 'Contact Email';
+
+  @override
+  String get primaryPhoneNumber => 'Primary Phone Number';
+
+  @override
+  String get profileWebsiteLink => 'Website link';
+
+  @override
+  String get profileBusinessStreet => 'Business Street';
+
+  @override
+  String get profileBusinessHouseNumber => 'Business House Number';
+
+  @override
+  String get profileBusinessPostalCode => 'Business Postal Code';
+
+  @override
+  String get profileBusinessCity => 'Business City';
+
+  @override
+  String get profileBillingStreet => 'Billing Street';
+
+  @override
+  String get profileBillingHouseNumber => 'Billing House Number';
+
+  @override
+  String get profileBillingPostalCode => 'Billing Postal Code';
+
+  @override
+  String get profileBillingCity => 'Billing City';
+
+  @override
+  String get pleaseUploadLegalFormPdf => 'Please upload legal form PDF.';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get acceptRequestTitle => 'Accept Request';
+
+  @override
+  String get acceptRequestConfirmation =>
+      'Are you sure you want to accept this request?';
+
+  @override
+  String get sosIAmComing => 'I am Coming';
+
+  @override
+  String get caseIdLabel => 'Case ID';
+
+  @override
+  String get dateTime => 'Date/Time';
+
+  @override
+  String get location => 'Location';
+
+  @override
+  String get noInternetConnection => 'No internet connection';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get unknownAddress => 'Unknown address';
+
+  @override
+  String get passcodeDoesNotMatch => 'Password does not match';
+
+  @override
+  String get passcodeLengthInvalid =>
+      'The password must be at least 8 characters.';
+
+  @override
+  String get bvnLengthInvalid => 'BVN Number must be 11';
+
+  @override
+  String get invalidNumber => 'Invalid Number';
+
+  @override
+  String get invalidEmail => 'Invalid Email';
+
+  @override
+  String get invalidNumberPlate => 'Invalid Number Plate';
+
+  @override
+  String get invalidDateFormat => 'Invalid Date Format';
+
+  @override
+  String get invalidTime => 'Invalid Time';
+
+  @override
+  String get justNow => 'just now';
+
+  @override
+  String get minuteTitle => 'minute';
+
+  @override
+  String get agoTitle => 'ago';
+
+  @override
+  String get hourTitle => 'hour';
+
+  @override
+  String get dayTitle => 'day';
+
+  @override
+  String get monthTitle => 'month';
+
+  @override
+  String get yearTitle => 'year';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get map => 'Map';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get enterAddress => 'Enter Address';
+
+  @override
+  String get noDataFound => 'No data found';
 }
